@@ -68,7 +68,7 @@ function CheckIn(props, context) {
             <div style={{ width: '100%', maxWidth: '1280px', margin: 'auto' }}>
               <Row>
                 <Col xs={9}>
-                  <Field name="item.barcode" placeholder="Enter Barcode" aria-label="Item ID" fullWidth id="barcode" component={TextField} />
+                  <Field name="item.barcode" validationEnabled={false} placeholder="Enter Barcode" aria-label="Item ID" fullWidth id="barcode" component={TextField} />
                 </Col>
                 <Col xs={3}>
                   <Button buttonStyle="primary noRadius" fullWidth type="submit" disabled={submitting}>+ Add item</Button>
