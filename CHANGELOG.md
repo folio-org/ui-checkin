@@ -1,4 +1,4 @@
-# Change history for ui-checkin 
+# Change history for ui-checkin
 
 
 ## [0.0.1](https://github.com/folio-org/ui-checkin/tree/v0.0.1) (2017-08-10)
