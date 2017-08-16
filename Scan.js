@@ -11,18 +11,13 @@ class Scan extends React.Component {
   }
 
   static propTypes = {
-    data: PropTypes.shape({
+    resources: PropTypes.shape({
       scannedItems: PropTypes.arrayOf(
         PropTypes.shape({
           id: PropTypes.string,
         }),
       ),
       patrons: PropTypes.arrayOf(
-        PropTypes.shape({
-          id: PropTypes.string,
-        }),
-      ),
-      userIdentifierPref: PropTypes.arrayOf(
         PropTypes.shape({
           id: PropTypes.string,
         }),
@@ -42,7 +37,6 @@ class Scan extends React.Component {
   };
 
   static defaultProps = {
-    data: {},
     mutator: {},
   };
 
@@ -94,6 +88,7 @@ class Scan extends React.Component {
         }
       });
   }
+
   fetchLoanByItemId(itemId) {
     return fetch(`${this.okapiUrl}/circulation/loans?query=(itemId=${itemId} AND status="Open")`, { headers: this.httpHeaders })
       .then(loansResponse => loansResponse.json())
@@ -136,7 +131,7 @@ class Scan extends React.Component {
           }).then((extLoans) => {
             const scannedItems = [];
             scannedItems.push(extLoans);
-            return this.props.mutator.scannedItems.replace(scannedItems.concat(this.props.data.scannedItems));
+            return this.props.mutator.scannedItems.replace(scannedItems.concat(this.props.resources.scannedItems));
           });
       }),
     );
@@ -158,7 +153,7 @@ class Scan extends React.Component {
   }
 
   render() {
-    const { data: { scannedItems, patrons } } = this.props;
+    const { resources: { scannedItems, patrons } } = this.props;
 
     return React.createElement(CheckIn, {
       submithandler: this.onClickCheckin,
