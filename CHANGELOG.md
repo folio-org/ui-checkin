@@ -1,5 +1,7 @@
 # Change history for ui-checkin
 
+## 1.1.0 (IN PROGRESS)
+
 ## [1.0.0](https://github.com/folio-org/ui-checkin/tree/v1.0.0) (2017-08-21)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v0.0.1...v1.0.0)
 
