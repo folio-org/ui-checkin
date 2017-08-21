@@ -68,13 +68,14 @@ function CheckIn(props, context) {
             <div style={{ width: '100%', maxWidth: '1280px', margin: 'auto' }}>
               <Row>
                 <Col xs={9}>
-                  <Field name="item.barcode" validationEnabled={false} placeholder="Enter Barcode" aria-label="Item ID" fullWidth id="barcode" component={TextField} />
+                  <Field name="item.barcode" validationEnabled={false} placeholder="Enter Barcode" aria-label="Item ID" fullWidth id="input-item-barcode" component={TextField} />
                 </Col>
                 <Col xs={3}>
                   <Button buttonStyle="primary noRadius" fullWidth type="submit" disabled={submitting}>+ Add item</Button>
                 </Col>
               </Row>
               <MultiColumnList
+                id="list-items-checked-in"
                 visibleColumns={['barcode', 'title', 'location', 'patron', 'Date Loaned', 'Date Returned', 'status']}
                 rowMetadata={['id']}
                 contentData={props.scannedItems}
