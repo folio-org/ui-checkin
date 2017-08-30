@@ -1,6 +1,10 @@
 # Change history for ui-checkin
 
-## 1.1.0 (IN PROGRESS)
+## [1.1.0](https://github.com/folio-org/ui-checkin/tree/v1.1.0) (2017-08-30)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.0.0...v1.1.0)
+
+* Make settings.loan-policies.all permission visible. For UIS-50.
+* Testing: Add test stub for automated UI testing. FOLIO-801
 
 ## [1.0.0](https://github.com/folio-org/ui-checkin/tree/v1.0.0) (2017-08-21)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v0.0.1...v1.0.0)
