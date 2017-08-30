@@ -60,7 +60,7 @@
           "circulation-storage.loan-policies.collection.delete",
           "settings.enabled"
         ],
-        "visible": false
+        "visible": true
       }
     ]
   },
