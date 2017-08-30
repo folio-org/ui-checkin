@@ -1,3 +1,3 @@
-module.exports.test = function(stripesnightmare) {
+module.exports.test = function(uiTestCtx) {
 
 }
