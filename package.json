@@ -29,38 +29,17 @@
         "displayName": "UI: Check-in module is enabled"
       },
       {
-        "permissionName": "circulation.all",
-        "displayName": "Circulation: All permissions",
-        "description": "Entire set of permissions needed to use the circulation",
+        "permissionName": "ui-checkin.all",
+        "displayName": "Checkin: All permissions",
+        "description": "Entire set of permissions needed to use Checkin",
         "visible": true,
         "subPermissions": [
-          "circulation.loans.collection.get",
-          "circulation.loans.item.get",
-          "circulation.loans.item.post",
-          "circulation.loans.item.put",
-          "circulation.loans.item.delete",
-          "circulation.loans.collection.delete",
-          "module.scan.enabled",
+          "circulation.all",
           "circulation-storage.all",
           "configuration.all",
-          "inventory-storage.items.item.get",
-          "inventory-storage.items.item.put",
-          "users.collection.get"
+          "users.collection.get",
+          "module.checkin.enabled"
         ]
-      },
-      {
-        "permissionName": "settings.loan-policies.all",
-        "displayName": "Settings (Circ): Can create, edit and remove loan policies",
-        "subPermissions": [
-          "circulation-storage.loan-policies.collection.get",
-          "circulation-storage.loan-policies.item.get",
-          "circulation-storage.loan-policies.item.post",
-          "circulation-storage.loan-policies.item.put",
-          "circulation-storage.loan-policies.item.delete",
-          "circulation-storage.loan-policies.collection.delete",
-          "settings.enabled"
-        ],
-        "visible": true
       }
     ]
   },
