@@ -30,7 +30,7 @@
       },
       {
         "permissionName": "ui-checkin.all",
-        "displayName": "Checkin: All permissions",
+        "displayName": "Check-in: All permissions",
         "description": "Entire set of permissions needed to use Checkin",
         "visible": true,
         "subPermissions": [
