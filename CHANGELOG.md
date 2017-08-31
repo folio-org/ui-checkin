@@ -1,7 +1,11 @@
 # Change history for ui-checkin
 
-## Prepared for release 1.2.0
+## Release 1.2.0 in progress
 
+## [1.1.1](https://github.com/folio-org/ui-checkin/tree/v1.1.1) (2017-08-31)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.1.0...v1.1.1)
+
+* Update permissions. Completes STRIPES-435 for ui-checkin.
 
 ## [1.1.0](https://github.com/folio-org/ui-checkin/tree/v1.1.0) (2017-08-30)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.0.0...v1.1.0)
