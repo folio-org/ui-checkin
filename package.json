@@ -26,11 +26,11 @@
     "permissionSets": [
       {
         "permissionName": "module.checkin.enabled",
-        "displayName": "UI: Check-in module is enabled"
+        "displayName": "UI: Check in module is enabled"
       },
       {
         "permissionName": "ui-checkin.all",
-        "displayName": "Check-in: All permissions",
+        "displayName": "Check in: All permissions",
         "description": "Entire set of permissions needed to use Checkin",
         "visible": true,
         "subPermissions": [
