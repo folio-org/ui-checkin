@@ -17,7 +17,7 @@
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v0.0.1...v1.0.0)
 
 *  Switch from props.data to props.resources. Fixes UIS-66.
-*  Assign element ID's for automated testing. STRIPES-300.
+*  Assign element IDs for automated testing. STRIPES-300.
 
 ## [0.0.1](https://github.com/folio-org/ui-checkin/tree/v0.0.1) (2017-08-10)
 
