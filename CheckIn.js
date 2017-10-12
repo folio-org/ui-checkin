@@ -1,8 +1,7 @@
 import _ from 'lodash';
-import React, { PropTypes } from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
-
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Button from '@folio/stripes-components/lib/Button';
@@ -11,7 +10,7 @@ import { Row, Col } from 'react-bootstrap';
 import TextField from '@folio/stripes-components/lib/TextField';
 
 const propTypes = {
-  scannedItems: React.PropTypes.arrayOf(React.PropTypes.object),
+  scannedItems: PropTypes.arrayOf(PropTypes.object),
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func,
   pristine: PropTypes.bool,
