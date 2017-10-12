@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import Scan from './Scan';
@@ -7,7 +7,7 @@ import Scan from './Scan';
 class CheckInRouting extends React.Component {
 
   static childContextTypes = {
-    history: React.PropTypes.object,
+    history: PropTypes.object,
   };
 
   static propTypes = {
