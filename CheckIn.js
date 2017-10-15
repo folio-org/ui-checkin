@@ -12,10 +12,7 @@ import TextField from '@folio/stripes-components/lib/TextField';
 const propTypes = {
   scannedItems: PropTypes.arrayOf(PropTypes.object),
   handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func,
-  pristine: PropTypes.bool,
   submitting: PropTypes.bool,
-  onCancel: PropTypes.func,
   submithandler: PropTypes.func,
 };
 
@@ -52,11 +49,9 @@ function CheckIn(props, context) {
 
   const {
     handleSubmit,
-    reset,  // eslint-disable-line no-unused-vars
-    pristine, // eslint-disable-line no-unused-vars
     submitting, // eslint-disable-line no-unused-vars
-    onCancel, // eslint-disable-line no-unused-vars
     submithandler,
+    scannedItems,
   } = props;
 
   return (
@@ -77,7 +72,7 @@ function CheckIn(props, context) {
                 id="list-items-checked-in"
                 visibleColumns={['barcode', 'title', 'location', 'patron', 'Date Loaned', 'Date Returned', 'status']}
                 rowMetadata={['id']}
-                contentData={props.scannedItems}
+                contentData={scannedItems}
                 formatter={itemListFormatter}
                 isEmptyMessage="No items have been entered yet."
                 fullWidth
