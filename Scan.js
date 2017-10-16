@@ -125,8 +125,7 @@ class Scan extends React.Component {
         throw new SubmissionError({ patron: { identifier: `User with ${loan.userId} does not exist`, _error: 'Scan failed' } });
       }
 
-      Object.assing(loan, { patron: patrons[0] });
-      return loan;
+      return Object.assign(loan, { patron: patrons[0] });
     });
   }
 
