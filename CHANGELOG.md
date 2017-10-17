@@ -1,8 +1,9 @@
 # Change history for ui-checkin
 
 ## Release 1.2.0 in progress
-* use PropTypes, not React.PropTypes. Refs FOLIO-427.
+* use PropTypes, not React.PropTypes. Refs STRIPES-427.
 * Refactor to use pure stripes-connect. Fixes UICHKIN-4.
+* Use our implementations of `<Row>, <Col>`. Refs STRIPES-427.
 
 ## [1.1.1](https://github.com/folio-org/ui-checkin/tree/v1.1.1) (2017-08-31)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.1.0...v1.1.1)
