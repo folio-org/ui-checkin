@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
+import Link from 'react-router-dom/Link';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Button from '@folio/stripes-components/lib/Button';
@@ -30,17 +31,13 @@ function CheckIn(props, context) {
     position: 'absolute',
   };
 
-  function onClickPatron(url) {
-    context.history.push(url);
-  }
-
   const itemListFormatter = {
     barcode: loan => `${_.get(loan, ['item', 'barcode'])}`,
     title: loan => `${_.get(loan, ['item', 'title'])}`,
     location: loan => `${_.get(loan, ['item', 'location', 'name'])}`,
     patron: (loan) => {
-      const url = `/users/view/${_.get(loan, ['patron', 'id'])}/${_.get(loan, ['patron', 'username'])}`;
-      return <a href={url} onClick={() => { onClickPatron(url); }}>{ _.get(loan, ['patron', 'personal', 'lastName']) }, { _.get(loan, ['patron', 'personal', 'firstName']) }</a>;
+      const url = `/users/view/${_.get(loan, ['patron', 'id'])}`;
+      return <Link to={url}>{ _.get(loan, ['patron', 'personal', 'lastName']) }, { _.get(loan, ['patron', 'personal', 'firstName']) }</Link>;
     },
     'Date Loaned': loan => loan.loanDate.substr(0, 10),
     'Date Returned': loan => loan.returnDate.substr(0, 10),
