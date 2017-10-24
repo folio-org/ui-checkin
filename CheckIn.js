@@ -17,11 +17,7 @@ const propTypes = {
   submithandler: PropTypes.func,
 };
 
-const contextTypes = {
-  history: PropTypes.object,
-};
-
-function CheckIn(props, context) {
+function CheckIn(props) {
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -83,8 +79,6 @@ function CheckIn(props, context) {
 }
 
 CheckIn.propTypes = propTypes;
-
-CheckIn.contextTypes = contextTypes;
 
 export default reduxForm({
   form: 'CheckIn',

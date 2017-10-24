@@ -79,6 +79,7 @@ class Scan extends React.Component {
     return this.fetchItemByBarcode(data.item.barcode)
       .then(item => this.fetchLoanByItemId(item.id))
       .then(loan => this.putReturn(loan))
+      .then(loan => this.fetchLoanById(loan.id))
       .then(loan => this.fetchPatron(loan))
       .then(loan => this.addScannedItem(loan))
       .then(() => this.clearField('CheckIn', 'item.barcode'));
@@ -98,10 +99,19 @@ class Scan extends React.Component {
 
   fetchLoanByItemId(itemId) {
     const query = `(itemId=${itemId} AND status="Open")`;
+    return this.fetchLoan(query);
+  }
+
+  fetchLoanById(loanId) {
+    const query = `(id=${loanId})`;
+    return this.fetchLoan(query);
+  }
+
+  fetchLoan(query) {
     this.props.mutator.loans.reset();
     return this.props.mutator.loans.GET({ params: { query } }).then((loans) => {
       if (!loans.length) {
-        throw new SubmissionError({ item: { barcode: 'Loan with this item id does not exist', _error: 'Scan failed' } });
+        throw new SubmissionError({ item: { barcode: 'Loan does not exist', _error: 'Scan failed' } });
       }
       return loans[0];
     });
