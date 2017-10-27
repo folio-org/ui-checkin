@@ -1,6 +1,7 @@
 # Change history for ui-checkin
 
 ## Release 1.2.0 in progress
+* Dependency on item-storage: 4.0
 * use PropTypes, not React.PropTypes. Refs STRIPES-427.
 * Refactor to use pure stripes-connect. Fixes UICHKIN-4.
 * Use our implementations of `<Row>, <Col>`. Refs STRIPES-427.

@@ -19,7 +19,7 @@
     "okapiInterfaces": {
       "circulation": "2.2",
       "configuration": "2.0",
-      "item-storage": "3.0",
+      "item-storage": "4.0",
       "loan-policy-storage": "1.0",
       "users": "14.0"
     },
