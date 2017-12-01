@@ -46,7 +46,7 @@ class Scan extends React.Component {
     items: {
       type: 'okapi',
       records: 'items',
-      path: 'item-storage/items',
+      path: 'inventory/items',
       accumulate: 'true',
       fetch: false,
     },
