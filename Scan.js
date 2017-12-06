@@ -86,8 +86,7 @@ class Scan extends React.Component {
   }
 
   fetchItemByBarcode(barcode) {
-    // TODO: remove asterisk after UICHKOUT-39 is fixed
-    const query = `(barcode="${barcode}*")`;
+    const query = `(barcode="${barcode}")`;
     this.props.mutator.items.reset();
     return this.props.mutator.items.GET({ params: { query } }).then((items) => {
       if (!items.length) {
