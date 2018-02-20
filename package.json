@@ -16,6 +16,13 @@
     "displayName": "Check in",
     "route": "/checkin",
     "hasSettings": false,
+    "icons": [
+     {
+       "name": "icon",
+       "alt": "Check in items",
+       "title": "Checkout"
+     }
+    ],
     "okapiInterfaces": {
       "circulation": "2.2",
       "configuration": "2.0",
