@@ -2,7 +2,6 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
-import Link from 'react-router-dom/Link';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Button from '@folio/stripes-components/lib/Button';
@@ -17,6 +16,7 @@ const propTypes = {
   scannedItems: PropTypes.arrayOf(PropTypes.object),
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool,
+  pristine: PropTypes.bool,
   submithandler: PropTypes.func,
 };
 
@@ -42,7 +42,7 @@ function CheckIn(props) {
     submitting, // eslint-disable-line no-unused-vars
     submithandler,
     scannedItems,
-    pristine
+    pristine,
   } = props;
 
   return (
@@ -52,16 +52,16 @@ function CheckIn(props) {
           <Pane paneTitle="Scanned Items" defaultWidth="100%">
             <div style={{ width: '100%', maxWidth: '1280px', margin: 'auto' }}>
               <Row>
-                  <Col xs={9} sm={4}>
-                    <Layout className="marginTopLabelSpacer">
-                      <Field id="input-item-barcode" name="item.barcode" validationEnabled={false} placeholder="Scan or enter barcode to check-in item" aria-label="Item ID" fullWidth component={TextField} />
-                    </Layout>
-                  </Col>
-                  <Col xs={3} sm={1}>
-                    <Layout className="marginTopLabelSpacer">
-                      <Button id="clickable-add-item" buttonStyle="primary" fullWidth type="submit" disabled={pristine}>Enter</Button>
-                    </Layout>
-                  </Col>
+                <Col xs={9} sm={4}>
+                  <Layout className="marginTopLabelSpacer">
+                    <Field id="input-item-barcode" name="item.barcode" validationEnabled={false} placeholder="Scan or enter barcode to check-in item" aria-label="Item ID" fullWidth component={TextField} />
+                  </Layout>
+                </Col>
+                <Col xs={3} sm={1}>
+                  <Layout className="marginTopLabelSpacer">
+                    <Button id="clickable-add-item" buttonStyle="primary" fullWidth type="submit" disabled={pristine}>Enter</Button>
+                  </Layout>
+                </Col>
                 <Col xs={12} smOffset={2} sm={2}>
                   <Field
                     name="item.checkinTime"
@@ -75,7 +75,7 @@ function CheckIn(props) {
                 </Col>
                 <Col xs={12} sm={1}>
                   <Layout className="marginTopLabelSpacer">
-                    <Button id="clickable-end-session" buttonStyle="default" style={{minWidth:'90px'}} fullWidth type="submit" disabled={submitting}>End session</Button>
+                    <Button id="clickable-end-session" buttonStyle="default" style={{ minWidth: '90px' }} fullWidth type="submit" disabled={submitting}>End session</Button>
                   </Layout>
                 </Col>
               </Row>

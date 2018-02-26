@@ -154,7 +154,7 @@ class Scan extends React.Component {
       <CheckIn
         submithandler={this.onClickCheckin}
         scannedItems={scannedItems}
-        initialValues={{item: { checkinTime : new Date() }}}
+        initialValues={{ item: { checkinTime: new Date() } }}
         {...this.props}
       />
     );
