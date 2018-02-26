@@ -92,7 +92,6 @@ class Scan extends React.Component {
       if (!items.length) {
         throw new SubmissionError({ item: { barcode: 'Item with this barcode does not exist', _error: 'Scan failed' } });
       }
-
       return items[0];
     });
   }
@@ -155,6 +154,7 @@ class Scan extends React.Component {
       <CheckIn
         submithandler={this.onClickCheckin}
         scannedItems={scannedItems}
+        initialValues={{item: { checkinTime : new Date() }}}
         {...this.props}
       />
     );
