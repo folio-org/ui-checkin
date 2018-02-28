@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import dateFormat from 'dateformat';
+import Button from '@folio/stripes-components/lib/Button';
+import DropdownMenu from '@folio/stripes-components/lib/DropdownMenu';
+import MenuItem from '@folio/stripes-components/lib/MenuItem';
 import { SubmissionError, change } from 'redux-form';
+import { UncontrolledDropdown } from '@folio/stripes-components/lib/Dropdown';
 
 import CheckIn from './CheckIn';
 
@@ -48,6 +52,10 @@ class Scan extends React.Component {
     }),
   };
 
+  static contextTypes = {
+    history: PropTypes.object,
+  };
+
   static manifest = Object.freeze({
     scannedItems: { initialValue: [] },
     items: {
@@ -75,13 +83,57 @@ class Scan extends React.Component {
       type: 'okapi',
       records: 'holdingsRecords',
       path: 'holdings-storage/holdings',
+      accumulate: 'true',
       fetch: false,
     },
   });
 
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
+    this.context = context;
     this.onClickCheckin = this.onClickCheckin.bind(this);
+    this.renderActions = this.renderActions.bind(this);
+    this.handleOptionsChange = this.handleOptionsChange.bind(this);
+  }
+
+  handleOptionsChange(key, e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (key.action && this[key.action]) {
+      this[key.action](key.loan, e);
+    }
+  }
+
+  showLoanDetails(loan) {
+    this.context.history.push(`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`);
+  }
+
+  showLoanDetails(loan) {
+    this.context.history.push(`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`);
+  }
+  
+  renderActions(loan) {
+    return (
+      <UncontrolledDropdown
+        onSelectItem={this.handleOptionsChange}
+      >
+        <Button data-role="toggle" buttonStyle="hover dropdownActive"><strong>•••</strong></Button>
+        <DropdownMenu data-role="menu" overrideStyle={{ padding: '6px 0' }}>
+          <MenuItem itemMeta={{ loan, action: 'showLoanDetails' }}>
+            <Button buttonStyle="dropdownItem">Loan details</Button>
+          </MenuItem>
+          <MenuItem itemMeta={{ loan, action: 'showPatronDetails' }}>
+            <Button buttonStyle="dropdownItem">Patron details</Button>
+          </MenuItem>
+        </DropdownMenu>
+      </UncontrolledDropdown>
+    );
+  }
+
+
+  log(data){
+    console.log(data);
   }
 
   onClickCheckin(data) {
@@ -94,6 +146,7 @@ class Scan extends React.Component {
       .then(loan => this.putReturn(loan))
       .then(loan => this.fetchLoanById(loan.id))
       .then(loan => this.fetchPatron(loan))
+      .then(loan => this.fetchHoldings(loan))
       .then(loan => this.addScannedItem(loan))
       .then(() => this.clearField('CheckIn', 'item.barcode'));
   }
@@ -151,6 +204,13 @@ class Scan extends React.Component {
     });
   }
 
+  fetchHoldings(loan) {
+    const query = `(id="${loan.userId}")`;
+    return this.props.mutator.holdings.GET({ params: { query } }).then((holdings) => {
+      return Object.assign(loan, { holding: holdings[0] });
+    });
+  }
+
   addScannedItem(loan) {
     const scannedItems = [loan].concat(this.props.resources.scannedItems);
     return this.props.mutator.scannedItems.replace(scannedItems);
@@ -166,6 +226,7 @@ class Scan extends React.Component {
     return (
       <CheckIn
         submithandler={this.onClickCheckin}
+        renderActions={this.renderActions}
         scannedItems={scannedItems}
         initialValues={{ item: { checkinTime: new Date() } }}
         {...this.props}

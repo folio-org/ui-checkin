@@ -20,6 +20,7 @@ const propTypes = {
   submithandler: PropTypes.func,
 };
 
+
 function CheckIn(props) {
   const containerStyle = {
     display: 'flex',
@@ -30,11 +31,13 @@ function CheckIn(props) {
     position: 'absolute',
   };
 
+
   const itemListFormatter = {
     Title: loan => `${_.get(loan, ['item', 'title'])}`,
     Barcode: loan => `${_.get(loan, ['item', 'barcode'])}`,
-    Location: loan => `${_.get(loan, ['item', 'location', 'name'])}`,
     Status: loan => `${_.get(loan, ['item', 'status', 'name'])}`,
+    Location: loan => `${_.get(loan, ['item', 'location', 'name'])}`,
+    ' ': loan => props.renderActions(loan),
   };
 
   const {
@@ -54,7 +57,7 @@ function CheckIn(props) {
               <Row>
                 <Col xs={9} sm={4}>
                   <Layout className="marginTopLabelSpacer">
-                    <Field id="input-item-barcode" name="item.barcode" validationEnabled={false} placeholder="Scan or enter barcode to check-in item" aria-label="Item ID" fullWidth component={TextField} />
+                    <Field id="input-item-barcode" name="item.barcode" validationEnabled={false} rounded={true} placeholder="Scan or enter barcode to check-in item" aria-label="Item ID" fullWidth component={TextField} />
                   </Layout>
                 </Col>
                 <Col xs={3} sm={1}>
@@ -67,6 +70,7 @@ function CheckIn(props) {
                     name="item.checkinTime"
                     aria-label="checkin time"
                     label="Process as:"
+                    rounded={true}
                     component={Datepicker}
                   />
                 </Col>
@@ -81,12 +85,14 @@ function CheckIn(props) {
               </Row>
               <MultiColumnList
                 id="list-items-checked-in"
-                visibleColumns={['Title', 'Barcode', 'Location', 'Status']}
+                fullWidth
+                visibleColumns={['Title', 'Barcode', 'Status', 'Location', ' ']}
+                columnWidths={{ ' ': 28, barcode: 150, title: 350 }}
+                columnOverflow={{ ' ': true }}
                 rowMetadata={['id']}
                 contentData={scannedItems}
                 formatter={itemListFormatter}
                 isEmptyMessage="No items have been entered yet."
-                fullWidth
               />
             </div>
           </Pane>
