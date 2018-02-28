@@ -20,6 +20,9 @@ class Scan extends React.Component {
       items: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
+      holdings: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
     }),
     mutator: PropTypes.shape({
       patrons: PropTypes.shape({
@@ -33,6 +36,10 @@ class Scan extends React.Component {
       loans: PropTypes.shape({
         GET: PropTypes.func,
         PUT: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      holdings: PropTypes.shape({
+        GET: PropTypes.func,
         reset: PropTypes.func,
       }),
       scannedItems: PropTypes.shape({
@@ -62,6 +69,12 @@ class Scan extends React.Component {
       records: 'loans',
       accumulate: 'true',
       path: 'circulation/loans',
+      fetch: false,
+    },
+    holdings: {
+      type: 'okapi',
+      records: 'holdingsRecords',
+      path: 'holdings-storage/holdings',
       fetch: false,
     },
   });
