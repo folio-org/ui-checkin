@@ -1,13 +1,17 @@
+import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import dateFormat from 'dateformat';
+import moment from 'moment'; // eslint-disable-line import/no-extraneous-dependencies
 import Button from '@folio/stripes-components/lib/Button';
 import DropdownMenu from '@folio/stripes-components/lib/DropdownMenu';
 import MenuItem from '@folio/stripes-components/lib/MenuItem';
-import { SubmissionError, change } from 'redux-form';
+import { SubmissionError, change, reset } from 'redux-form';
 import { UncontrolledDropdown } from '@folio/stripes-components/lib/Dropdown';
-
+import InfoPopover from '@folio/stripes-components/lib/structures/InfoPopover';
 import CheckIn from './CheckIn';
+import { formatDateTime } from './util';
+
 
 class Scan extends React.Component {
   static propTypes = {
@@ -91,8 +95,11 @@ class Scan extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.context = context;
+    this.store = props.stripes.store;
     this.onClickCheckin = this.onClickCheckin.bind(this);
     this.renderActions = this.renderActions.bind(this);
+    this.showInfo = this.showInfo.bind(this);
+    this.onSessionEnd = this.onSessionEnd.bind(this);
     this.handleOptionsChange = this.handleOptionsChange.bind(this);
   }
 
@@ -109,10 +116,11 @@ class Scan extends React.Component {
     this.context.history.push(`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`);
   }
 
-  showLoanDetails(loan) {
-    this.context.history.push(`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`);
+  showPatronDetails(loan) {
+    const userId = `${_.get(loan, ['patron', 'id'])}`;
+    this.context.history.push(`/users/view/${userId}`);
   }
-  
+
   renderActions(loan) {
     return (
       <UncontrolledDropdown
@@ -131,9 +139,38 @@ class Scan extends React.Component {
     );
   }
 
+  showInfo(loan) {
+    this.systemReturnDate = loan.systemReturnDate;
+    const content =
+    (
+      <div style={{ textAlign: 'left' }}>
+        <div><strong>Processed as:</strong></div>
+        <div>{formatDateTime(this.systemReturnDate)}</div>
+        <br />
+        <div><strong>Actual:</strong></div>
+        <div>{formatDateTime(new Date())}</div>
+      </div>
+    );
 
-  log(data){
-    console.log(data);
+    return (
+      <InfoPopover content={content} />
+    );
+  }
+
+  onSessionEnd() {
+    this.clearResources();
+    this.clearForm('CheckIn');
+  }
+
+  clearForm(formName) {
+    this.store.dispatch(reset(formName));
+  }
+
+  clearResources() {
+    this.props.mutator.scannedItems.replace([]);
+    this.props.mutator.patrons.reset();
+    this.props.mutator.items.reset();
+    this.props.mutator.loans.reset();
   }
 
   onClickCheckin(data) {
@@ -143,7 +180,7 @@ class Scan extends React.Component {
 
     return this.fetchItemByBarcode(data.item.barcode)
       .then(item => this.fetchLoanByItemId(item.id))
-      .then(loan => this.putReturn(loan))
+      .then(loan => this.putReturn(loan, data.item.checkinDate, data.item.checkinTime))
       .then(loan => this.fetchLoanById(loan.id))
       .then(loan => this.fetchPatron(loan))
       .then(loan => this.fetchHoldings(loan))
@@ -182,13 +219,24 @@ class Scan extends React.Component {
     });
   }
 
-  putReturn(loan) {
+  putReturn(loan, checkinDate, checkinTime) {
+    const SystemcheckinTime = (checkinTime === 'now') ? moment().local().format().split('T')[1] : checkinTime;
+    const SystemcheckinDate = (checkinDate === 'today') ? moment().format() : checkinDate;
+
+    const formatDateUTC = `${dateFormat(SystemcheckinDate, 'yyyy-mm-dd')}T${SystemcheckinTime}`;
+    //  grab the local time from the generated UTC date and time from formatdateUTC
+    const localTime = moment(formatDateUTC).local().format().split('T')[1];
+    //  build a new object with date and local time
+    const localDateTime = `${dateFormat(SystemcheckinDate, 'yyyy-mm-dd')}T${localTime}`;
+    //  convert dateTime to utc to send down to the backend
+    const systemReturnDateUTC = moment(localDateTime).utc().format();
+
     Object.assign(loan, {
+      systemReturnDate: systemReturnDateUTC,
       returnDate: dateFormat(new Date(), "yyyy-mm-dd'T'HH:MM:ss'Z'"),
       status: { name: 'Closed' },
       action: 'checkedin',
     });
-
     return this.props.mutator.loans.PUT(loan);
   }
 
@@ -206,9 +254,7 @@ class Scan extends React.Component {
 
   fetchHoldings(loan) {
     const query = `(id="${loan.userId}")`;
-    return this.props.mutator.holdings.GET({ params: { query } }).then((holdings) => {
-      return Object.assign(loan, { holding: holdings[0] });
-    });
+    return this.props.mutator.holdings.GET({ params: { query } }).then(holdings => Object.assign(loan, { holding: holdings[0] }));
   }
 
   addScannedItem(loan) {
@@ -227,8 +273,16 @@ class Scan extends React.Component {
       <CheckIn
         submithandler={this.onClickCheckin}
         renderActions={this.renderActions}
+        showInfo={this.showInfo}
+        onSessionEnd={this.onSessionEnd}
         scannedItems={scannedItems}
-        initialValues={{ item: { checkinTime: new Date() } }}
+        initialValues={
+          { item:
+            {
+              checkinDate: 'today',
+              checkinTime: 'now',
+            } }
+        }
         {...this.props}
       />
     );
