@@ -10,7 +10,7 @@ import { SubmissionError, change, reset } from 'redux-form';
 import { UncontrolledDropdown } from '@folio/stripes-components/lib/Dropdown';
 import InfoPopover from '@folio/stripes-components/lib/structures/InfoPopover';
 import CheckIn from './CheckIn';
-import { formatDateTime } from './util';
+import { formatDateTime, formatDateTimePicker } from './util';
 
 
 class Scan extends React.Component {
@@ -222,14 +222,7 @@ class Scan extends React.Component {
   putReturn(loan, checkinDate, checkinTime) {
     const SystemcheckinTime = (checkinTime === 'now') ? moment().local().format().split('T')[1] : checkinTime;
     const SystemcheckinDate = (checkinDate === 'today') ? moment().format() : checkinDate;
-
-    const formatDateUTC = `${dateFormat(SystemcheckinDate, 'yyyy-mm-dd')}T${SystemcheckinTime}`;
-    //  grab the local time from the generated UTC date and time from formatdateUTC
-    const localTime = moment(formatDateUTC).local().format().split('T')[1];
-    //  build a new object with date and local time
-    const localDateTime = `${dateFormat(SystemcheckinDate, 'yyyy-mm-dd')}T${localTime}`;
-    //  convert dateTime to utc to send down to the backend
-    const systemReturnDateUTC = moment(localDateTime).utc().format();
+    const systemReturnDateUTC = formatDateTimePicker(SystemcheckinDate, SystemcheckinTime);
 
     Object.assign(loan, {
       systemReturnDate: systemReturnDateUTC,
