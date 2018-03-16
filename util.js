@@ -17,7 +17,7 @@ export function formatDateTimePicker(date, time) {
   const formatDateUTC = `${dateFormat(date, 'yyyy-mm-dd')}T${time}`;
   //  grab the local time from the generated UTC date and time from formatdateUTC
   const localTime = moment(formatDateUTC).local().format().split('T')[1];
-  //  build a new object with date and local time
+  //  build a new string with date and local time
   const localDateTime = `${dateFormat(date, 'yyyy-mm-dd')}T${localTime}`;
   //  convert dateTime to utc to send down to the backend
   const systemReturnDateUTC = moment(localDateTime).utc().format();
