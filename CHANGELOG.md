@@ -6,6 +6,7 @@
 * Refactor to use pure stripes-connect. Fixes UICHKIN-4.
 * Use our implementations of `<Row>, <Col>`. Refs STRIPES-427.
 * Use more-current stripes-components. Refs STRIPES-495. 
+* Ignore yarn-error.log file. Refs STRIPES-517.
 
 ## [1.1.1](https://github.com/folio-org/ui-checkin/tree/v1.1.1) (2017-08-31)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.1.0...v1.1.1)
