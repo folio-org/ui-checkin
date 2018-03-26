@@ -6,12 +6,12 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Button from '@folio/stripes-components/lib/Button';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import TextField from '@folio/stripes-components/lib/TextField';
 import Datepicker from '@folio/stripes-components/lib/Datepicker';
 import Timepicker from '@folio/stripes-components/lib/Timepicker';
-import { FormattedTime } from 'react-intl'; // eslint-disable-line import/no-extraneous-dependencies
+import IconButton from '@folio/stripes-components/lib/IconButton'; // eslint-disable-line import/no-extraneous-dependencies
 import Layout from '@folio/stripes-components/lib/Layout';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 
 
 const propTypes = {
@@ -23,6 +23,7 @@ const propTypes = {
   showInfo: PropTypes.func,
   onSessionEnd: PropTypes.func,
   renderActions: PropTypes.func,
+  stripes: PropTypes.object,
 };
 
 
@@ -45,17 +46,13 @@ function CheckIn(props) {
     pristine,
     showInfo,
     renderActions,
+    stripes,
   } = props;
-
-  function formatTime(dateStr) {
-    if (!dateStr) return dateStr;
-    return (<FormattedTime value={dateStr} />);
-  }
 
   const itemListFormatter = {
     'Time Returned': loan => (
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <div>{formatTime(`${_.get(loan, ['systemReturnDate'])}`)}</div>
+        <div>{stripes.formatTime(`${_.get(loan, ['systemReturnDate'])}`)}</div>
         <div key={loan.id}>{showInfo(loan)}</div>
       </div>
     ),
@@ -72,6 +69,10 @@ function CheckIn(props) {
       return callNumber !== 'undefined' ? callNumber : ' ';
     },
     ' ': loan => renderActions(loan),
+  };
+
+  const columnMapping = {
+    ' ': <IconButton style={{ marginLeft: '-6px' }} icon="gear" aria-label="action settings" />,
   };
 
   return (
@@ -121,6 +122,7 @@ function CheckIn(props) {
                 id="list-items-checked-in"
                 fullWidth
                 visibleColumns={['Time Returned', 'Title', 'Barcode', 'CallNumber', 'Location', 'Status', ' ']}
+                columnMapping={columnMapping}
                 columnWidths={{ 'Time Returned': 120, ' ': 80, Title: 300, Barcode: 200, CallNumber: 200, Location: 200, Status: 120 }}
                 columnOverflow={{ ' ': true }}
                 rowMetadata={['id']}

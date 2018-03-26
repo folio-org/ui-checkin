@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import dateFormat from 'dateformat';
-import moment from 'moment'; // eslint-disable-line import/no-extraneous-dependencies
+import moment from 'moment-timezone'; // eslint-disable-line import/no-extraneous-dependencies
 import Button from '@folio/stripes-components/lib/Button';
 import DropdownMenu from '@folio/stripes-components/lib/DropdownMenu';
 import MenuItem from '@folio/stripes-components/lib/MenuItem';
@@ -10,7 +10,7 @@ import { SubmissionError, change, reset } from 'redux-form';
 import { UncontrolledDropdown } from '@folio/stripes-components/lib/Dropdown';
 import InfoPopover from '@folio/stripes-components/lib/structures/InfoPopover';
 import CheckIn from './CheckIn';
-import { formatDateTime, formatDateTimePicker } from './util';
+import { formatDateTimePicker } from './util';
 
 
 class Scan extends React.Component {
@@ -96,7 +96,10 @@ class Scan extends React.Component {
     super(props, context);
     this.context = context;
     this.store = props.stripes.store;
+    this.formatDateTime = props.stripes.formatDateTime;
+    this.getDateTime = props.stripes.getDateTime;
     this.onClickCheckin = this.onClickCheckin.bind(this);
+    this.dateTime = props.stripes.dateTime;
     this.renderActions = this.renderActions.bind(this);
     this.showInfo = this.showInfo.bind(this);
     this.onSessionEnd = this.onSessionEnd.bind(this);
@@ -144,11 +147,11 @@ class Scan extends React.Component {
     const content =
     (
       <div style={{ textAlign: 'left' }}>
-        <div><strong>Processed as:</strong></div>
-        <div>{formatDateTime(this.systemReturnDate)}</div>
+        <div><strong>Processed As:</strong></div>
+        <div>{this.formatDateTime(this.systemReturnDate)}</div>
         <br />
         <div><strong>Actual:</strong></div>
-        <div>{formatDateTime(new Date())}</div>
+        <div>{this.formatDateTime(new Date())}</div>
       </div>
     );
 
@@ -222,8 +225,9 @@ class Scan extends React.Component {
   putReturn(loan, checkinDate, checkinTime) {
     const SystemcheckinTime = (checkinTime === 'now') ? moment().local().format().split('T')[1] : checkinTime;
     const SystemcheckinDate = (checkinDate === 'today') ? moment().format() : checkinDate;
-    const systemReturnDateUTC = formatDateTimePicker(SystemcheckinDate, SystemcheckinTime);
-
+    const localDateTime = formatDateTimePicker(SystemcheckinDate, SystemcheckinTime);
+    // Convert the returned local dateTime into UTC to send it to the backend
+    const systemReturnDateUTC = moment(localDateTime).tz('UTC').format();
     Object.assign(loan, {
       systemReturnDate: systemReturnDateUTC,
       returnDate: dateFormat(new Date(), "yyyy-mm-dd'T'HH:MM:ss'Z'"),
