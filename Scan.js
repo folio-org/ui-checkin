@@ -10,8 +10,7 @@ import { SubmissionError, change, reset } from 'redux-form';
 import { UncontrolledDropdown } from '@folio/stripes-components/lib/Dropdown';
 import InfoPopover from '@folio/stripes-components/lib/structures/InfoPopover';
 import CheckIn from './CheckIn';
-import { formatDateTimePicker } from './util';
-
+import formatDateTimePicker from './util';
 
 class Scan extends React.Component {
   static propTypes = {
@@ -97,8 +96,8 @@ class Scan extends React.Component {
     this.context = context;
     this.store = props.stripes.store;
     this.formatDateTime = props.stripes.formatDateTime;
-    this.getDateTime = props.stripes.getDateTime;
     this.onClickCheckin = this.onClickCheckin.bind(this);
+    this.timezone = this.props.stripes.timezone;
     this.dateTime = props.stripes.dateTime;
     this.renderActions = this.renderActions.bind(this);
     this.showInfo = this.showInfo.bind(this);
@@ -223,11 +222,13 @@ class Scan extends React.Component {
   }
 
   putReturn(loan, checkinDate, checkinTime) {
-    const SystemcheckinTime = (checkinTime === 'now') ? moment().local().format().split('T')[1] : checkinTime;
-    const SystemcheckinDate = (checkinDate === 'today') ? moment().format() : checkinDate;
-    const localDateTime = formatDateTimePicker(SystemcheckinDate, SystemcheckinTime);
+    // if checkintime == now, convert to UTC Datetime and extract the time string
+    const SystemcheckinTime = (checkinTime === 'now') ?
+      (moment.tz(moment.tz(this.timezone).format(), 'UTC').format().split('T')[1]) : checkinTime;
+    const SystemcheckinDate = (checkinDate === 'today') ? moment.tz(this.timezone).format() : checkinDate;
+    const localDateTime = formatDateTimePicker(SystemcheckinDate, SystemcheckinTime, this.timezone);
     // Convert the returned local dateTime into UTC to send it to the backend
-    const systemReturnDateUTC = moment(localDateTime).tz('UTC').format();
+    const systemReturnDateUTC = moment.tz(localDateTime, this.timezone).tz('UTC').format();
     Object.assign(loan, {
       systemReturnDate: systemReturnDateUTC,
       returnDate: dateFormat(new Date(), "yyyy-mm-dd'T'HH:MM:ss'Z'"),
