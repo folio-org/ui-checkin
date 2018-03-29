@@ -56,15 +56,15 @@ function CheckIn(props) {
         <div key={loan.id}>{showInfo(loan)}</div>
       </div>
     ),
-    Title: (loan) => {
+    'Title': (loan) => {
       const title = `${_.get(loan, ['item', 'title'])}`;
       const materialType = `${_.get(loan, ['item', 'materialType', 'name'])}`;
       return `${title} (${materialType})`;
     },
-    Barcode: loan => `${_.get(loan, ['item', 'barcode'])}`,
-    Location: loan => `${_.get(loan, ['item', 'location', 'name'])}`,
-    Status: loan => `${_.get(loan, ['item', 'status', 'name'])}`,
-    CallNumber: (loan) => {
+    'Barcode': loan => `${_.get(loan, ['item', 'barcode'])}`,
+    'Location': loan => `${_.get(loan, ['item', 'location', 'name'])}`,
+    'Status': loan => `${_.get(loan, ['item', 'status', 'name'])}`,
+    'CallNumber': (loan) => {
       const callNumber = `${_.get(loan, ['item', 'callNumber'])}`;
       return callNumber !== 'undefined' ? callNumber : ' ';
     },
@@ -123,7 +123,7 @@ function CheckIn(props) {
                 fullWidth
                 visibleColumns={['Time Returned', 'Title', 'Barcode', 'CallNumber', 'Location', 'Status', ' ']}
                 columnMapping={columnMapping}
-                columnWidths={{ 'Time Returned': 120, ' ': 80, Title: 300, Barcode: 200, CallNumber: 200, Location: 200, Status: 120 }}
+                columnWidths={{ 'Time Returned': 120, ' ': 80, 'Title': 300, 'Barcode': 200, 'CallNumber': 200, 'Location': 200, 'Status': 120 }}
                 columnOverflow={{ ' ': true }}
                 rowMetadata={['id']}
                 contentData={scannedItems}
