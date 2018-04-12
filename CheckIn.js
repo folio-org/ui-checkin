@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
+import { FormattedMessage } from 'react-intl';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Button from '@folio/stripes-components/lib/Button';
@@ -50,21 +51,21 @@ function CheckIn(props) {
   } = props;
 
   const itemListFormatter = {
-    'Time Returned': loan => (
+    'timeReturned': loan => (
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div>{stripes.formatTime(`${_.get(loan, ['systemReturnDate'])}`)}</div>
         <div key={loan.id}>{showInfo(loan)}</div>
       </div>
     ),
-    'Title': (loan) => {
+    'title': (loan) => {
       const title = `${_.get(loan, ['item', 'title'])}`;
       const materialType = `${_.get(loan, ['item', 'materialType', 'name'])}`;
       return `${title} (${materialType})`;
     },
-    'Barcode': loan => `${_.get(loan, ['item', 'barcode'])}`,
-    'Location': loan => `${_.get(loan, ['item', 'location', 'name'])}`,
-    'Status': loan => `${_.get(loan, ['item', 'status', 'name'])}`,
-    'CallNumber': (loan) => {
+    'barcode': loan => `${_.get(loan, ['item', 'barcode'])}`,
+    'location': loan => `${_.get(loan, ['item', 'location', 'name'])}`,
+    'status': loan => `${_.get(loan, ['item', 'status', 'name'])}`,
+    'callNumber': (loan) => {
       const callNumber = `${_.get(loan, ['item', 'callNumber'])}`;
       return callNumber !== 'undefined' ? callNumber : ' ';
     },
@@ -72,8 +73,21 @@ function CheckIn(props) {
   };
 
   const columnMapping = {
+    timeReturned: stripes.intl.formatMessage({id: 'ui-checkin.timeReturned'}),
+    title: stripes.intl.formatMessage({id: 'ui-checkin.title'}),
+    barcode: stripes.intl.formatMessage({id: 'ui-checkin.barcode'}),
+    callNumber: stripes.intl.formatMessage({id: 'ui-checkin.callNumber'}),
+    location: stripes.intl.formatMessage({id: 'ui-checkin.location'}),
+    status: stripes.intl.formatMessage({id: 'ui-checkin.status'}),
     ' ': <IconButton style={{ marginLeft: '-6px' }} icon="gear" aria-label="action settings" />,
   };
+  const scanBarcodeMsg = stripes.intl.formatMessage({id: 'ui-checkin.scanBarcode'});
+  const itemIdLabel = stripes.intl.formatMessage({id: 'ui-checkin.itemId'});
+  const processLabel = stripes.intl.formatMessage({id: 'ui-checkin.processAs'});
+  const checkinDateLabel = stripes.intl.formatMessage({id: 'ui-checkin.checkinDate'});
+  const checkinTimeLabel = stripes.intl.formatMessage({id: 'ui-checkin.checkinTime'});
+  const timeReturnedLabel = stripes.intl.formatMessage({id: 'ui-checkin.timeReturnedLabel'});
+  const noItemsLabel = stripes.intl.formatMessage({id: 'ui-checkin.noItems'});
 
   return (
     <form onSubmit={handleSubmit(submithandler)}>
@@ -84,19 +98,21 @@ function CheckIn(props) {
               <Row>
                 <Col xs={9} sm={4}>
                   <Layout className="marginTopLabelSpacer">
-                    <Field id="input-item-barcode" name="item.barcode" validationEnabled={false} rounded placeholder="Scan or enter barcode to check-in item" aria-label="Item ID" fullWidth component={TextField} />
+                    <Field id="input-item-barcode" name="item.barcode" validationEnabled={false} rounded placeholder={scanBarcodeMsg} aria-label={itemIdLabel} fullWidth component={TextField} />
                   </Layout>
                 </Col>
                 <Col xs={3} sm={1}>
                   <Layout className="marginTopLabelSpacer">
-                    <Button id="clickable-add-item" buttonStyle="primary" fullWidth type="submit" disabled={pristine}>Enter</Button>
+                    <Button id="clickable-add-item" buttonStyle="primary" fullWidth type="submit" disabled={pristine}>
+                      <FormattedMessage id="ui-checkin.enter" />
+                    </Button>
                   </Layout>
                 </Col>
                 <Col xs={12} smOffset={2} sm={2}>
                   <Field
                     name="item.checkinDate"
-                    aria-label="checkin Date"
-                    label="Process as:"
+                    aria-label={checkinDateLabel}
+                    label={processLabel}
                     rounded
                     component={Datepicker}
                     passThroughValue="today"
@@ -105,8 +121,8 @@ function CheckIn(props) {
                 <Col xs={12} sm={2}>
                   <Field
                     name="item.checkinTime"
-                    aria-label="checkin Time"
-                    label="Time returned:"
+                    aria-label={checkinTimeLabel}
+                    label={timeReturnedLabel}
                     rounded
                     component={Timepicker}
                     passThroughValue="now"
@@ -114,21 +130,23 @@ function CheckIn(props) {
                 </Col>
                 <Col xs={12} sm={1}>
                   <Layout className="marginTopLabelSpacer">
-                    <Button id="clickable-end-session" buttonStyle="default" style={{ minWidth: '90px' }} fullWidth onClick={onSessionEnd}>End session</Button>
+                    <Button id="clickable-end-session" buttonStyle="default" style={{ minWidth: '90px' }} fullWidth onClick={onSessionEnd}>
+                      <FormattedMessage id="ui-checkin.endSession" />
+                    </Button>
                   </Layout>
                 </Col>
               </Row>
               <MultiColumnList
                 id="list-items-checked-in"
                 fullWidth
-                visibleColumns={['Time Returned', 'Title', 'Barcode', 'CallNumber', 'Location', 'Status', ' ']}
+                visibleColumns={['timeReturned', 'title', 'barcode', 'callNumber', 'location', 'status', ' ']}
                 columnMapping={columnMapping}
-                columnWidths={{ 'Time Returned': 120, ' ': 80, 'Title': 300, 'Barcode': 200, 'CallNumber': 200, 'Location': 200, 'Status': 120 }}
+                columnWidths={{ 'timeReturned': 120, ' ': 80, 'title': 300, 'barcode': 200, 'callNumber': 200, 'location': 200, 'status': 120 }}
                 columnOverflow={{ ' ': true }}
                 rowMetadata={['id']}
                 contentData={scannedItems}
                 formatter={itemListFormatter}
-                isEmptyMessage="No items have been entered yet."
+                isEmptyMessage={noItemsLabel}
               />
             </div>
           </Pane>
