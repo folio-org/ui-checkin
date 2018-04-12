@@ -51,21 +51,21 @@ function CheckIn(props) {
   } = props;
 
   const itemListFormatter = {
-    'timeReturned': loan => (
+    timeReturned: loan => (
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div>{stripes.formatTime(`${_.get(loan, ['systemReturnDate'])}`)}</div>
         <div key={loan.id}>{showInfo(loan)}</div>
       </div>
     ),
-    'title': (loan) => {
+    title: (loan) => {
       const title = `${_.get(loan, ['item', 'title'])}`;
       const materialType = `${_.get(loan, ['item', 'materialType', 'name'])}`;
       return `${title} (${materialType})`;
     },
-    'barcode': loan => `${_.get(loan, ['item', 'barcode'])}`,
-    'location': loan => `${_.get(loan, ['item', 'location', 'name'])}`,
-    'status': loan => `${_.get(loan, ['item', 'status', 'name'])}`,
-    'callNumber': (loan) => {
+    barcode: loan => `${_.get(loan, ['item', 'barcode'])}`,
+    location: loan => `${_.get(loan, ['item', 'location', 'name'])}`,
+    status: loan => `${_.get(loan, ['item', 'status', 'name'])}`,
+    callNumber: (loan) => {
       const callNumber = `${_.get(loan, ['item', 'callNumber'])}`;
       return callNumber !== 'undefined' ? callNumber : ' ';
     },
@@ -73,21 +73,21 @@ function CheckIn(props) {
   };
 
   const columnMapping = {
-    timeReturned: stripes.intl.formatMessage({id: 'ui-checkin.timeReturned'}),
-    title: stripes.intl.formatMessage({id: 'ui-checkin.title'}),
-    barcode: stripes.intl.formatMessage({id: 'ui-checkin.barcode'}),
-    callNumber: stripes.intl.formatMessage({id: 'ui-checkin.callNumber'}),
-    location: stripes.intl.formatMessage({id: 'ui-checkin.location'}),
-    status: stripes.intl.formatMessage({id: 'ui-checkin.status'}),
+    timeReturned: stripes.intl.formatMessage({ id: 'ui-checkin.timeReturned' }),
+    title: stripes.intl.formatMessage({ id: 'ui-checkin.title' }),
+    barcode: stripes.intl.formatMessage({ id: 'ui-checkin.barcode' }),
+    callNumber: stripes.intl.formatMessage({ id: 'ui-checkin.callNumber' }),
+    location: stripes.intl.formatMessage({ id: 'ui-checkin.location' }),
+    status: stripes.intl.formatMessage({ id: 'ui-checkin.status' }),
     ' ': <IconButton style={{ marginLeft: '-6px' }} icon="gear" aria-label="action settings" />,
   };
-  const scanBarcodeMsg = stripes.intl.formatMessage({id: 'ui-checkin.scanBarcode'});
-  const itemIdLabel = stripes.intl.formatMessage({id: 'ui-checkin.itemId'});
-  const processLabel = stripes.intl.formatMessage({id: 'ui-checkin.processAs'});
-  const checkinDateLabel = stripes.intl.formatMessage({id: 'ui-checkin.checkinDate'});
-  const checkinTimeLabel = stripes.intl.formatMessage({id: 'ui-checkin.checkinTime'});
-  const timeReturnedLabel = stripes.intl.formatMessage({id: 'ui-checkin.timeReturnedLabel'});
-  const noItemsLabel = stripes.intl.formatMessage({id: 'ui-checkin.noItems'});
+  const scanBarcodeMsg = stripes.intl.formatMessage({ id: 'ui-checkin.scanBarcode' });
+  const itemIdLabel = stripes.intl.formatMessage({ id: 'ui-checkin.itemId' });
+  const processLabel = stripes.intl.formatMessage({ id: 'ui-checkin.processAs' });
+  const checkinDateLabel = stripes.intl.formatMessage({ id: 'ui-checkin.checkinDate' });
+  const checkinTimeLabel = stripes.intl.formatMessage({ id: 'ui-checkin.checkinTime' });
+  const timeReturnedLabel = stripes.intl.formatMessage({ id: 'ui-checkin.timeReturnedLabel' });
+  const noItemsLabel = stripes.intl.formatMessage({ id: 'ui-checkin.noItems' });
 
   return (
     <form onSubmit={handleSubmit(submithandler)}>
@@ -141,7 +141,7 @@ function CheckIn(props) {
                 fullWidth
                 visibleColumns={['timeReturned', 'title', 'barcode', 'callNumber', 'location', 'status', ' ']}
                 columnMapping={columnMapping}
-                columnWidths={{ 'timeReturned': 120, ' ': 80, 'title': 300, 'barcode': 200, 'callNumber': 200, 'location': 200, 'status': 120 }}
+                columnWidths={{ timeReturned: 120, ' ': 80, title: 300, barcode: 200, callNumber: 200, location: 200, status: 120 }}
                 columnOverflow={{ ' ': true }}
                 rowMetadata={['id']}
                 contentData={scannedItems}

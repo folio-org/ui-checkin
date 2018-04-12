@@ -151,14 +151,18 @@ class Scan extends React.Component {
     const content =
     (
       <div style={{ textAlign: 'left' }}>
-        <div><strong>
-          <FormattedMessage id="ui-checkin.processedAs" />
-        </strong></div>
+        <div>
+          <strong>
+            <FormattedMessage id="ui-checkin.processedAs" />
+          </strong>
+        </div>
         <div>{this.formatDateTime(this.systemReturnDate)}</div>
         <br />
-        <div><strong>
-          <FormattedMessage id="ui-checkin.actual" />
-        </strong></div>
+        <div>
+          <strong>
+            <FormattedMessage id="ui-checkin.actual" />
+          </strong>
+        </div>
         <div>{this.formatDateTime(new Date())}</div>
       </div>
     );
@@ -185,7 +189,7 @@ class Scan extends React.Component {
   }
 
   onClickCheckin(data) {
-    const fillOutMsg = this.props.stripes.intl.formatMessage({id: 'ui-checkin.fillOut'});
+    const fillOutMsg = this.props.stripes.intl.formatMessage({ id: 'ui-checkin.fillOut' });
     if (!data.item || !data.item.barcode) {
       throw new SubmissionError({ item: { barcode: fillOutMsg } });
     }
@@ -201,7 +205,7 @@ class Scan extends React.Component {
   }
 
   fetchItemByBarcode(barcode) {
-    const itemNoExistMsg = this.props.stripes.intl.formatMessage({id: 'ui-checkin.itemNoExist'});
+    const itemNoExistMsg = this.props.stripes.intl.formatMessage({ id: 'ui-checkin.itemNoExist' });
     const query = `(barcode="${barcode}")`;
     this.props.mutator.items.reset();
     return this.props.mutator.items.GET({ params: { query } }).then((items) => {
@@ -223,7 +227,7 @@ class Scan extends React.Component {
   }
 
   fetchLoan(query) {
-    const loanNoExistMsg = this.props.stripes.intl.formatMessage({id: 'ui-checkin.loanNoExist'});
+    const loanNoExistMsg = this.props.stripes.intl.formatMessage({ id: 'ui-checkin.loanNoExist' });
     this.props.mutator.loans.reset();
     return this.props.mutator.loans.GET({ params: { query } }).then((loans) => {
       if (!loans.length) {
@@ -251,7 +255,7 @@ class Scan extends React.Component {
   }
 
   fetchPatron(loan) {
-    const userNoExistMsg = this.props.stripes.intl.formatMessage({id: 'ui-checkin.userNoExist'}, {userId: loan.userId});
+    const userNoExistMsg = this.props.stripes.intl.formatMessage({ id: 'ui-checkin.userNoExist' }, { userId: loan.userId });
     const query = `(id="${loan.userId}")`;
     this.props.mutator.patrons.reset();
     return this.props.mutator.patrons.GET({ params: { query } }).then((patrons) => {
