@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dateFormat from 'dateformat';
 import moment from 'moment-timezone'; // eslint-disable-line import/no-extraneous-dependencies
+import { FormattedMessage } from 'react-intl';
 import Button from '@folio/stripes-components/lib/Button';
 import DropdownMenu from '@folio/stripes-components/lib/DropdownMenu';
 import MenuItem from '@folio/stripes-components/lib/MenuItem';
@@ -131,10 +132,14 @@ class Scan extends React.Component {
         <Button data-role="toggle" buttonStyle="hover dropdownActive"><strong>•••</strong></Button>
         <DropdownMenu data-role="menu" overrideStyle={{ padding: '6px 0' }}>
           <MenuItem itemMeta={{ loan, action: 'showLoanDetails' }}>
-            <Button buttonStyle="dropdownItem">Loan details</Button>
+            <Button buttonStyle="dropdownItem">
+              <FormattedMessage id="ui-checkin.loanDetails" />
+            </Button>
           </MenuItem>
           <MenuItem itemMeta={{ loan, action: 'showPatronDetails' }}>
-            <Button buttonStyle="dropdownItem">Patron details</Button>
+            <Button buttonStyle="dropdownItem">
+              <FormattedMessage id="ui-checkin.patronDetails" />
+            </Button>
           </MenuItem>
         </DropdownMenu>
       </UncontrolledDropdown>
@@ -146,10 +151,18 @@ class Scan extends React.Component {
     const content =
     (
       <div style={{ textAlign: 'left' }}>
-        <div><strong>Processed As:</strong></div>
+        <div>
+          <strong>
+            <FormattedMessage id="ui-checkin.processedAs" />
+          </strong>
+        </div>
         <div>{this.formatDateTime(this.systemReturnDate)}</div>
         <br />
-        <div><strong>Actual:</strong></div>
+        <div>
+          <strong>
+            <FormattedMessage id="ui-checkin.actual" />
+          </strong>
+        </div>
         <div>{this.formatDateTime(new Date())}</div>
       </div>
     );
@@ -176,8 +189,9 @@ class Scan extends React.Component {
   }
 
   onClickCheckin(data) {
+    const fillOutMsg = this.props.stripes.intl.formatMessage({ id: 'ui-checkin.fillOut' });
     if (!data.item || !data.item.barcode) {
-      throw new SubmissionError({ item: { barcode: 'Please fill this out to continue' } });
+      throw new SubmissionError({ item: { barcode: fillOutMsg } });
     }
 
     return this.fetchItemByBarcode(data.item.barcode)
@@ -191,11 +205,12 @@ class Scan extends React.Component {
   }
 
   fetchItemByBarcode(barcode) {
+    const itemNoExistMsg = this.props.stripes.intl.formatMessage({ id: 'ui-checkin.itemNoExist' });
     const query = `(barcode="${barcode}")`;
     this.props.mutator.items.reset();
     return this.props.mutator.items.GET({ params: { query } }).then((items) => {
       if (!items.length) {
-        throw new SubmissionError({ item: { barcode: 'Item with this barcode does not exist', _error: 'Scan failed' } });
+        throw new SubmissionError({ item: { barcode: itemNoExistMsg, _error: 'Scan failed' } });
       }
       return items[0];
     });
@@ -212,10 +227,11 @@ class Scan extends React.Component {
   }
 
   fetchLoan(query) {
+    const loanNoExistMsg = this.props.stripes.intl.formatMessage({ id: 'ui-checkin.loanNoExist' });
     this.props.mutator.loans.reset();
     return this.props.mutator.loans.GET({ params: { query } }).then((loans) => {
       if (!loans.length) {
-        throw new SubmissionError({ item: { barcode: 'Loan does not exist', _error: 'Scan failed' } });
+        throw new SubmissionError({ item: { barcode: loanNoExistMsg, _error: 'Scan failed' } });
       }
       return loans[0];
     });
@@ -239,11 +255,12 @@ class Scan extends React.Component {
   }
 
   fetchPatron(loan) {
+    const userNoExistMsg = this.props.stripes.intl.formatMessage({ id: 'ui-checkin.userNoExist' }, { userId: loan.userId });
     const query = `(id="${loan.userId}")`;
     this.props.mutator.patrons.reset();
     return this.props.mutator.patrons.GET({ params: { query } }).then((patrons) => {
       if (!patrons.length) {
-        throw new SubmissionError({ patron: { identifier: `User with ${loan.userId} does not exist`, _error: 'Scan failed' } });
+        throw new SubmissionError({ patron: { identifier: userNoExistMsg, _error: 'Scan failed' } });
       }
 
       return Object.assign(loan, { patron: patrons[0] });
