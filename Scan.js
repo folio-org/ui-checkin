@@ -2,7 +2,6 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import dateFormat from 'dateformat';
-import moment from 'moment-timezone'; // eslint-disable-line import/no-extraneous-dependencies
 import Button from '@folio/stripes-components/lib/Button';
 import DropdownMenu from '@folio/stripes-components/lib/DropdownMenu';
 import MenuItem from '@folio/stripes-components/lib/MenuItem';
@@ -222,13 +221,8 @@ class Scan extends React.Component {
   }
 
   putReturn(loan, checkinDate, checkinTime) {
-    // if checkintime == now, convert to UTC Datetime and extract the time string
-    const SystemcheckinTime = (checkinTime === 'now') ?
-      (moment.tz(moment.tz(this.timezone).format(), 'UTC').format().split('T')[1]) : checkinTime;
-    const SystemcheckinDate = (checkinDate === 'today') ? moment.tz(this.timezone).format() : checkinDate;
-    const localDateTime = formatDateTimePicker(SystemcheckinDate, SystemcheckinTime, this.timezone);
-    // Convert the returned local dateTime into UTC to send it to the backend
-    const systemReturnDateUTC = moment.tz(localDateTime, this.timezone).tz('UTC').format();
+    //  Get the Date Time combo in UTC to be sent down to the server
+    const systemReturnDateUTC = formatDateTimePicker(checkinDate, checkinTime, this.timezone);
     Object.assign(loan, {
       systemReturnDate: systemReturnDateUTC,
       returnDate: dateFormat(new Date(), "yyyy-mm-dd'T'HH:MM:ss'Z'"),
