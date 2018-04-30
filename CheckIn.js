@@ -98,7 +98,7 @@ function CheckIn(props) {
               <Row>
                 <Col xs={9} sm={4}>
                   <Layout className="marginTopLabelSpacer">
-                    <Field id="input-item-barcode" name="item.barcode" validationEnabled={false} rounded placeholder={scanBarcodeMsg} aria-label={itemIdLabel} fullWidth component={TextField} />
+                    <Field id="input-item-barcode" name="item.barcode" validationEnabled={false} placeholder={scanBarcodeMsg} aria-label={itemIdLabel} fullWidth component={TextField} />
                   </Layout>
                 </Col>
                 <Col xs={3} sm={1}>
@@ -113,7 +113,6 @@ function CheckIn(props) {
                     name="item.checkinDate"
                     aria-label={checkinDateLabel}
                     label={processLabel}
-                    rounded
                     component={Datepicker}
                     passThroughValue="today"
                   />
@@ -123,7 +122,6 @@ function CheckIn(props) {
                     name="item.checkinTime"
                     aria-label={checkinTimeLabel}
                     label={timeReturnedLabel}
-                    rounded
                     component={Timepicker}
                     passThroughValue="now"
                   />
