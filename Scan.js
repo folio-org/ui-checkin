@@ -216,7 +216,7 @@ class Scan extends React.Component {
   }
 
   fetchLoanByItemId(itemId) {
-    const query = `(itemId==${itemId} AND status="Open")`;
+    const query = `(itemId==${itemId} AND status.name=="Open")`;
     return this.fetchLoan(query);
   }
 
