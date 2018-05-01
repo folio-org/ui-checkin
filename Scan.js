@@ -205,7 +205,7 @@ class Scan extends React.Component {
 
   fetchItemByBarcode(barcode) {
     const itemNoExistMsg = this.props.stripes.intl.formatMessage({ id: 'ui-checkin.itemNoExist' });
-    const query = `(barcode="${barcode}")`;
+    const query = `(barcode=="${barcode}")`;
     this.props.mutator.items.reset();
     return this.props.mutator.items.GET({ params: { query } }).then((items) => {
       if (!items.length) {
@@ -216,12 +216,12 @@ class Scan extends React.Component {
   }
 
   fetchLoanByItemId(itemId) {
-    const query = `(itemId=${itemId} AND status="Open")`;
+    const query = `(itemId==${itemId} AND status.name=="Open")`;
     return this.fetchLoan(query);
   }
 
   fetchLoanById(loanId) {
-    const query = `(id=${loanId})`;
+    const query = `(id==${loanId})`;
     return this.fetchLoan(query);
   }
 
@@ -250,7 +250,7 @@ class Scan extends React.Component {
 
   fetchPatron(loan) {
     const userNoExistMsg = this.props.stripes.intl.formatMessage({ id: 'ui-checkin.userNoExist' }, { userId: loan.userId });
-    const query = `(id="${loan.userId}")`;
+    const query = `(id=="${loan.userId}")`;
     this.props.mutator.patrons.reset();
     return this.props.mutator.patrons.GET({ params: { query } }).then((patrons) => {
       if (!patrons.length) {
@@ -262,7 +262,7 @@ class Scan extends React.Component {
   }
 
   fetchHoldings(loan) {
-    const query = `(id="${loan.userId}")`;
+    const query = `(id=="${loan.userId}")`;
     return this.props.mutator.holdings.GET({ params: { query } }).then(holdings => Object.assign(loan, { holding: holdings[0] }));
   }
 
