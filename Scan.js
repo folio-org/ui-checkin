@@ -123,6 +123,10 @@ class Scan extends React.Component {
     this.context.history.push(`/users/view/${userId}`);
   }
 
+  showItemDetails(loan) {
+    this.context.history.push(`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`);
+  }
+
   renderActions(loan) {
     return (
       <UncontrolledDropdown
@@ -138,6 +142,11 @@ class Scan extends React.Component {
           <MenuItem itemMeta={{ loan, action: 'showPatronDetails' }}>
             <Button buttonStyle="dropdownItem">
               <FormattedMessage id="ui-checkin.patronDetails" />
+            </Button>
+          </MenuItem>
+          <MenuItem itemMeta={{ loan, action: 'showItemDetails' }}>
+            <Button buttonStyle="dropdownItem">
+              <FormattedMessage id="ui-checkin.itemDetails" />
             </Button>
           </MenuItem>
         </DropdownMenu>

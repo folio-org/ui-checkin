@@ -17,6 +17,7 @@
   "location": "Location",
   "status": "Status",
   "loanDetails": "Loan details",
+  "itemDetails": "Item details",
   "patronDetails": "Patron details",
   "loanNoExist": "Loan does not exist",
   "itemNoExist": "Item with this barcode does not exist",
