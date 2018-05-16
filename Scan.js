@@ -102,50 +102,37 @@ class Scan extends React.Component {
     this.renderActions = this.renderActions.bind(this);
     this.showInfo = this.showInfo.bind(this);
     this.onSessionEnd = this.onSessionEnd.bind(this);
-    this.handleOptionsChange = this.handleOptionsChange.bind(this);
+    this.navigate = this.navigate.bind(this);
   }
 
-  handleOptionsChange(key, e) {
+  navigate(url, e) {
     e.preventDefault();
     e.stopPropagation();
 
-    if (key.action && this[key.action]) {
-      this[key.action](key.loan, e);
-    }
-  }
-
-  showLoanDetails(loan) {
-    this.context.history.push(`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`);
-  }
-
-  showPatronDetails(loan) {
-    const userId = `${_.get(loan, ['patron', 'id'])}`;
-    this.context.history.push(`/users/view/${userId}`);
-  }
-
-  showItemDetails(loan) {
-    this.context.history.push(`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`);
+    if (url) this.context.history.push(url);
   }
 
   renderActions(loan) {
+    const loanDetailsUrl = `/users/view/${loan.userId}?layer=loan&loan=${loan.id}`;
+    const patronDetailsUrl = `/users/view/${_.get(loan, ['patron', 'id'])}`;
+    const itemDetailsUrl = `/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`
+
     return (
-      <UncontrolledDropdown
-        onSelectItem={this.handleOptionsChange}
-      >
+      <UncontrolledDropdown onSelectItem={this.navigate}>
         <Button data-role="toggle" buttonStyle="hover dropdownActive"><strong>•••</strong></Button>
         <DropdownMenu data-role="menu" overrideStyle={{ padding: '6px 0' }}>
-          <MenuItem itemMeta={{ loan, action: 'showLoanDetails' }}>
-            <Button buttonStyle="dropdownItem">
+          <MenuItem itemMeta={loanDetailsUrl}>
+            <Button buttonStyle="dropdownItem" href={loanDetailsUrl}>
               <FormattedMessage id="ui-checkin.loanDetails" />
             </Button>
           </MenuItem>
-          <MenuItem itemMeta={{ loan, action: 'showPatronDetails' }}>
-            <Button buttonStyle="dropdownItem">
+          <MenuItem itemMeta={patronDetailsUrl}>
+            <Button buttonStyle="dropdownItem" href={patronDetailsUrl}>
               <FormattedMessage id="ui-checkin.patronDetails" />
             </Button>
           </MenuItem>
-          <MenuItem itemMeta={{ loan, action: 'showItemDetails' }}>
-            <Button buttonStyle="dropdownItem">
+          <MenuItem itemMeta={itemDetailsUrl}>
+            <Button buttonStyle="dropdownItem" href={itemDetailsUrl}>
               <FormattedMessage id="ui-checkin.itemDetails" />
             </Button>
           </MenuItem>
