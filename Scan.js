@@ -115,7 +115,7 @@ class Scan extends React.Component {
   renderActions(loan) {
     const loanDetailsUrl = `/users/view/${loan.userId}?layer=loan&loan=${loan.id}`;
     const patronDetailsUrl = `/users/view/${_.get(loan, ['patron', 'id'])}`;
-    const itemDetailsUrl = `/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`
+    const itemDetailsUrl = `/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`;
 
     return (
       <UncontrolledDropdown onSelectItem={this.navigate}>
