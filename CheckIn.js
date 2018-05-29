@@ -142,6 +142,7 @@ function CheckIn(props) {
                 columnWidths={{ 'timeReturned': 120, ' ': 80, 'title': 300, 'barcode': 200, 'callNumber': 200, 'location': 200, 'status': 120 }}
                 columnOverflow={{ ' ': true }}
                 rowMetadata={['id']}
+                interactive={false}
                 contentData={scannedItems}
                 formatter={itemListFormatter}
                 isEmptyMessage={noItemsLabel}
