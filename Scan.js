@@ -103,6 +103,8 @@ class Scan extends React.Component {
     this.showInfo = this.showInfo.bind(this);
     this.onSessionEnd = this.onSessionEnd.bind(this);
     this.navigate = this.navigate.bind(this);
+    this.getChildRef = this.getChildRef.bind(this);
+    this.barcodeElement = null;
   }
 
   navigate(url, e) {
@@ -196,7 +198,11 @@ class Scan extends React.Component {
       .then(loan => this.fetchPatron(loan))
       .then(loan => this.fetchHoldings(loan))
       .then(loan => this.addScannedItem(loan))
-      .then(() => this.clearField('CheckIn', 'item.barcode'));
+      .then(() => {
+        this.clearField('CheckIn', 'item.barcode');
+        const input = this.barcodeElement.getRenderedComponent().input;
+        setTimeout(() => input.focus());
+      });
   }
 
   fetchItemByBarcode(barcode) {
@@ -271,6 +277,10 @@ class Scan extends React.Component {
     this.props.stripes.store.dispatch(change(formName, fieldName, ''));
   }
 
+  getChildRef(r) {
+    this.barcodeElement = r;
+  }
+
   render() {
     const scannedItems = this.props.resources.scannedItems || [];
 
@@ -281,6 +291,7 @@ class Scan extends React.Component {
         showInfo={this.showInfo}
         onSessionEnd={this.onSessionEnd}
         scannedItems={scannedItems}
+        retrieveRef={this.getChildRef}
         initialValues={
           { item:
             {
