@@ -348,6 +348,11 @@ class Scan extends React.Component {
     throw this.error;
   }
 
+  throwError(error) {
+    this.error = error;
+    throw this.error;
+  }
+
   render() {
     const scannedItems = this.props.resources.scannedItems || [];
     const item = this.props.resources.items || {};
