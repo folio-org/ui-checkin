@@ -221,7 +221,6 @@ class Scan extends React.Component {
     }
 
     const checkInInst = this.checkInRef.current.wrappedInstance;
-
     return this.fetchItemByBarcode(data.item.barcode)
       .then(item => this.fetchLoanByItemId(item.id))
       .then(loan => this.putReturn(loan, data.item.checkinDate, data.item.checkinTime))
@@ -235,6 +234,7 @@ class Scan extends React.Component {
       })
       .catch((error) => {
         setTimeout(() => checkInInst.focusInput());
+
         throw new SubmissionError(error);
       });
   }
@@ -308,6 +308,11 @@ class Scan extends React.Component {
 
   clearField(formName, fieldName) {
     this.props.stripes.store.dispatch(change(formName, fieldName, ''));
+  }
+
+  throwError(error) {
+    this.error = error;
+    throw this.error;
   }
 
   throwError(error) {
