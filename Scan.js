@@ -191,6 +191,7 @@ class Scan extends React.Component {
       throw new SubmissionError({ item: { barcode: fillOutMsg } });
     }
 
+    const input = this.barcodeElement.getRenderedComponent().input;
     return this.fetchItemByBarcode(data.item.barcode)
       .then(item => this.fetchLoanByItemId(item.id))
       .then(loan => this.putReturn(loan, data.item.checkinDate, data.item.checkinTime))
@@ -200,8 +201,11 @@ class Scan extends React.Component {
       .then(loan => this.addScannedItem(loan))
       .then(() => {
         this.clearField('CheckIn', 'item.barcode');
-        const input = this.barcodeElement.getRenderedComponent().input;
         setTimeout(() => input.focus());
+      })
+      .catch((error) => {
+        setTimeout(() => input.select());
+        throw new SubmissionError(error);
       });
   }
 
@@ -211,7 +215,7 @@ class Scan extends React.Component {
     this.props.mutator.items.reset();
     return this.props.mutator.items.GET({ params: { query } }).then((items) => {
       if (!items.length) {
-        throw new SubmissionError({ item: { barcode: itemNoExistMsg, _error: 'Scan failed' } });
+        this.throwError({ item: { barcode: itemNoExistMsg, _error: 'Scan failed' } });
       }
       return items[0];
     });
@@ -232,7 +236,7 @@ class Scan extends React.Component {
     this.props.mutator.loans.reset();
     return this.props.mutator.loans.GET({ params: { query } }).then((loans) => {
       if (!loans.length) {
-        throw new SubmissionError({ item: { barcode: loanNoExistMsg, _error: 'Scan failed' } });
+        this.throwError({ item: { barcode: loanNoExistMsg, _error: 'Scan failed' } });
       }
       return loans[0];
     });
@@ -256,9 +260,8 @@ class Scan extends React.Component {
     this.props.mutator.patrons.reset();
     return this.props.mutator.patrons.GET({ params: { query } }).then((patrons) => {
       if (!patrons.length) {
-        throw new SubmissionError({ patron: { identifier: userNoExistMsg, _error: 'Scan failed' } });
+        this.throwError({ patron: { identifier: userNoExistMsg, _error: 'Scan failed' } });
       }
-
       return Object.assign(loan, { patron: patrons[0] });
     });
   }
@@ -279,6 +282,11 @@ class Scan extends React.Component {
 
   getChildRef(r) {
     this.barcodeElement = r;
+  }
+
+  throwError(error) {
+    this.error = error;
+    throw this.error;
   }
 
   render() {
