@@ -8,7 +8,7 @@ import DropdownMenu from '@folio/stripes-components/lib/DropdownMenu';
 import MenuItem from '@folio/stripes-components/lib/MenuItem';
 import { SubmissionError, change, reset } from 'redux-form';
 import { UncontrolledDropdown } from '@folio/stripes-components/lib/Dropdown';
-import InfoPopover from '@folio/stripes-components/lib/structures/InfoPopover';
+import InfoPopover from '@folio/stripes-components/lib/InfoPopover';
 import CheckIn from './CheckIn';
 import formatDateTimePicker from './util';
 
