@@ -15,6 +15,7 @@
     "type": "app",
     "displayName": "Check in",
     "route": "/checkin",
+    "queryResource": "query",
     "hasSettings": false,
     "icons": [
       {

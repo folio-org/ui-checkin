@@ -32,6 +32,7 @@ class Scan extends React.Component {
       }),
     }),
     mutator: PropTypes.shape({
+      query: {},
       patrons: PropTypes.shape({
         GET: PropTypes.func,
         reset: PropTypes.func,
@@ -61,6 +62,7 @@ class Scan extends React.Component {
 
   static manifest = Object.freeze({
     scannedItems: { initialValue: [] },
+    query: { initialValue: {} },
     items: {
       type: 'okapi',
       records: 'items',
@@ -102,39 +104,60 @@ class Scan extends React.Component {
     this.renderActions = this.renderActions.bind(this);
     this.showInfo = this.showInfo.bind(this);
     this.onSessionEnd = this.onSessionEnd.bind(this);
-    this.navigate = this.navigate.bind(this);
+    this.handleOptionsChange = this.handleOptionsChange.bind(this);
     this.getChildRef = this.getChildRef.bind(this);
     this.barcodeElement = null;
   }
 
-  navigate(url, e) {
+  handleOptionsChange(itemMeta, e) {
     e.preventDefault();
     e.stopPropagation();
 
-    if (url) this.context.history.push(url);
+    const { loan, action } = itemMeta;
+
+    if (action && this[action]) {
+      this[action](loan);
+    }
+  }
+
+  showLoanDetails(loan, e) {
+    if (e) e.preventDefault();
+    this.props.mutator.query.update({
+      _path: `/users/view/${loan.userId}?layer=loan&loan=${loan.id}`,
+    });
+  }
+
+  showPatronDetails(loan, e) {
+    if (e) e.preventDefault();
+    this.props.mutator.query.update({
+      _path: `/users/view/${_.get(loan, ['patron', 'id'])}`,
+    });
+  }
+
+  showItemDetails(loan, e) {
+    if (e) e.preventDefault();
+    this.props.mutator.query.update({
+      _path: `/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`,
+    });
   }
 
   renderActions(loan) {
-    const loanDetailsUrl = `/users/view/${loan.userId}?layer=loan&loan=${loan.id}`;
-    const patronDetailsUrl = `/users/view/${_.get(loan, ['patron', 'id'])}`;
-    const itemDetailsUrl = `/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`;
-
     return (
-      <UncontrolledDropdown onSelectItem={this.navigate}>
+      <UncontrolledDropdown onSelectItem={this.handleOptionsChange}>
         <Button data-role="toggle" buttonStyle="hover dropdownActive"><strong>•••</strong></Button>
         <DropdownMenu data-role="menu" overrideStyle={{ padding: '6px 0' }}>
-          <MenuItem itemMeta={loanDetailsUrl}>
-            <Button buttonStyle="dropdownItem" href={loanDetailsUrl}>
+          <MenuItem itemMeta={{ loan, action: 'showLoanDetails' }}>
+            <Button buttonStyle="dropdownItem" href={`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`}>
               <FormattedMessage id="ui-checkin.loanDetails" />
             </Button>
           </MenuItem>
-          <MenuItem itemMeta={patronDetailsUrl}>
-            <Button buttonStyle="dropdownItem" href={patronDetailsUrl}>
+          <MenuItem itemMeta={{ loan, action: 'showPatronDetails' }}>
+            <Button buttonStyle="dropdownItem" href={`/users/view/${_.get(loan, ['patron', 'id'])}`}>
               <FormattedMessage id="ui-checkin.patronDetails" />
             </Button>
           </MenuItem>
-          <MenuItem itemMeta={itemDetailsUrl}>
-            <Button buttonStyle="dropdownItem" href={itemDetailsUrl}>
+          <MenuItem itemMeta={{ loan, action: 'showItemDetails' }}>
+            <Button buttonStyle="dropdownItem" href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`}>
               <FormattedMessage id="ui-checkin.itemDetails" />
             </Button>
           </MenuItem>
