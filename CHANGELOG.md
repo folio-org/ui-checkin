@@ -6,7 +6,7 @@
 * use PropTypes, not React.PropTypes. Refs STRIPES-427.
 * Refactor to use pure stripes-connect. Fixes UICHKIN-4.
 * Use our implementations of `<Row>, <Col>`. Refs STRIPES-427.
-* Use more-current stripes-components. Refs STRIPES-495. 
+* Use more-current stripes-components. Refs STRIPES-495.
 * Ignore yarn-error.log file. Refs STRIPES-517.
 * Change back-end queries by id to use exact match (==). UICHKIN-22.
 * Update to current users interface. Refs UIU-495.
