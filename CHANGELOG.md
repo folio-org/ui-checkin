@@ -10,6 +10,7 @@
 * Ignore yarn-error.log file. Refs STRIPES-517.
 * Change back-end queries by id to use exact match (==). UICHKIN-22.
 * Update to current users interface. Refs UIU-495.
+* Update import paths for some stripes-components. Refs STCOM-277.
 
 ## [1.1.1](https://github.com/folio-org/ui-checkin/tree/v1.1.1) (2017-08-31)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.1.0...v1.1.1)
