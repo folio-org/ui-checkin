@@ -13,53 +13,6 @@ import CheckIn from './CheckIn';
 import formatDateTimePicker from './util';
 
 class Scan extends React.Component {
-  static propTypes = {
-    stripes: PropTypes.object,
-    resources: PropTypes.shape({
-      scannedItems: PropTypes.arrayOf(
-        PropTypes.shape({
-          id: PropTypes.string,
-        }),
-      ),
-      patrons: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      items: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      holdings: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-    }),
-    mutator: PropTypes.shape({
-      query: {},
-      patrons: PropTypes.shape({
-        GET: PropTypes.func,
-        reset: PropTypes.func,
-      }),
-      items: PropTypes.shape({
-        GET: PropTypes.func,
-        reset: PropTypes.func,
-      }),
-      loans: PropTypes.shape({
-        GET: PropTypes.func,
-        PUT: PropTypes.func,
-        reset: PropTypes.func,
-      }),
-      holdings: PropTypes.shape({
-        GET: PropTypes.func,
-        reset: PropTypes.func,
-      }),
-      scannedItems: PropTypes.shape({
-        replace: PropTypes.func,
-      }),
-    }),
-  };
-
-  static contextTypes = {
-    history: PropTypes.object,
-  };
-
   static manifest = Object.freeze({
     scannedItems: { initialValue: [] },
     query: { initialValue: {} },
@@ -93,6 +46,59 @@ class Scan extends React.Component {
     },
   });
 
+  static propTypes = {
+    stripes: PropTypes.object,
+    resources: PropTypes.shape({
+      scannedItems: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string,
+        }),
+      ),
+      patrons: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      items: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      holdings: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      loans: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+    }),
+
+    mutator: PropTypes.shape({
+      query: PropTypes.shape({
+        update: PropTypes.func,
+      }),
+      patrons: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      items: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      loans: PropTypes.shape({
+        GET: PropTypes.func,
+        PUT: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      holdings: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      scannedItems: PropTypes.shape({
+        replace: PropTypes.func,
+      }),
+    }),
+  };
+
+  static contextTypes = {
+    history: PropTypes.object,
+  };
+
   constructor(props, context) {
     super(props, context);
     this.context = context;
@@ -105,8 +111,8 @@ class Scan extends React.Component {
     this.showInfo = this.showInfo.bind(this);
     this.onSessionEnd = this.onSessionEnd.bind(this);
     this.handleOptionsChange = this.handleOptionsChange.bind(this);
-    this.getChildRef = this.getChildRef.bind(this);
-    this.barcodeElement = null;
+
+    this.checkInRef = React.createRef();
   }
 
   handleOptionsChange(itemMeta, e) {
@@ -214,7 +220,8 @@ class Scan extends React.Component {
       throw new SubmissionError({ item: { barcode: fillOutMsg } });
     }
 
-    const input = this.barcodeElement.getRenderedComponent().input;
+    const checkInInst = this.checkInRef.current.wrappedInstance;
+
     return this.fetchItemByBarcode(data.item.barcode)
       .then(item => this.fetchLoanByItemId(item.id))
       .then(loan => this.putReturn(loan, data.item.checkinDate, data.item.checkinTime))
@@ -224,10 +231,10 @@ class Scan extends React.Component {
       .then(loan => this.addScannedItem(loan))
       .then(() => {
         this.clearField('CheckIn', 'item.barcode');
-        setTimeout(() => input.focus());
+        setTimeout(() => checkInInst.focusInput());
       })
       .catch((error) => {
-        setTimeout(() => input.select());
+        setTimeout(() => checkInInst.focusInput());
         throw new SubmissionError(error);
       });
   }
@@ -303,10 +310,6 @@ class Scan extends React.Component {
     this.props.stripes.store.dispatch(change(formName, fieldName, ''));
   }
 
-  getChildRef(r) {
-    this.barcodeElement = r;
-  }
-
   throwError(error) {
     this.error = error;
     throw this.error;
@@ -322,7 +325,7 @@ class Scan extends React.Component {
         showInfo={this.showInfo}
         onSessionEnd={this.onSessionEnd}
         scannedItems={scannedItems}
-        retrieveRef={this.getChildRef}
+        ref={this.checkInRef}
         initialValues={
           { item:
             {

@@ -5,10 +5,6 @@ import Switch from 'react-router-dom/Switch';
 import Scan from './Scan';
 
 class CheckInRouting extends React.Component {
-  static childContextTypes = {
-    history: PropTypes.object,
-  };
-
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
@@ -16,7 +12,11 @@ class CheckInRouting extends React.Component {
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
-  }
+  };
+
+  static childContextTypes = {
+    history: PropTypes.object,
+  };
 
   constructor(props) {
     super(props);
