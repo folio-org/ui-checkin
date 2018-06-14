@@ -25,18 +25,15 @@ class CheckIn extends React.Component {
     onSessionEnd: PropTypes.func,
     renderActions: PropTypes.func,
     stripes: PropTypes.object,
-    retrieveRef: PropTypes.func,
   };
 
   constructor() {
     super();
-    this.barcodeElement = null;
-    this.handleRef = this.handleRef.bind(this);
+    this.barcodeEl = React.createRef();
   }
 
-  handleRef(barcodeElement) {
-    this.barcodeElement = barcodeElement;
-    this.props.retrieveRef(barcodeElement);
+  focusInput() {
+    this.barcodeEl.current.getRenderedComponent().focusInput();
   }
 
   render() {
@@ -114,7 +111,7 @@ class CheckIn extends React.Component {
                         validationEnabled={false}
                         placeholder={scanBarcodeMsg}
                         aria-label={itemIdLabel}
-                        ref={(barcodeElement) => this.handleRef(barcodeElement)}
+                        ref={this.barcodeEl}
                         withRef
                         fullWidth
                         component={TextField}
