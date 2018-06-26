@@ -13,7 +13,7 @@
   "main": "index.js",
   "stripes": {
     "type": "app",
-    "displayName": "Check in",
+    "displayName": "ui-checkin.meta.title",
     "route": "/checkin",
     "queryResource": "query",
     "hasSettings": false,
