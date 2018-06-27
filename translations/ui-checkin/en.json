@@ -1,4 +1,5 @@
 {
+  "meta.title": "Check in",
   "scanBarcode": "Scan or enter barcode to check-in item",
   "itemId": "Item ID",
   "enter": "Enter",
