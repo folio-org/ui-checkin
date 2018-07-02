@@ -46,6 +46,39 @@ class Scan extends React.Component {
     },
   });
 
+  static manifest = Object.freeze({
+    scannedItems: { initialValue: [] },
+    query: { initialValue: {} },
+    items: {
+      type: 'okapi',
+      records: 'items',
+      path: 'inventory/items',
+      accumulate: 'true',
+      fetch: false,
+    },
+    patrons: {
+      type: 'okapi',
+      records: 'users',
+      path: 'users',
+      accumulate: 'true',
+      fetch: false,
+    },
+    loans: {
+      type: 'okapi',
+      records: 'loans',
+      accumulate: 'true',
+      path: 'circulation/loans',
+      fetch: false,
+    },
+    holdings: {
+      type: 'okapi',
+      records: 'holdingsRecords',
+      path: 'holdings-storage/holdings',
+      accumulate: 'true',
+      fetch: false,
+    },
+  });
+
   static propTypes = {
     stripes: PropTypes.object,
     resources: PropTypes.shape({
@@ -99,39 +132,6 @@ class Scan extends React.Component {
     history: PropTypes.object,
   };
 
-  static manifest = Object.freeze({
-    scannedItems: { initialValue: [] },
-    query: { initialValue: {} },
-    items: {
-      type: 'okapi',
-      records: 'items',
-      path: 'inventory/items',
-      accumulate: 'true',
-      fetch: false,
-    },
-    patrons: {
-      type: 'okapi',
-      records: 'users',
-      path: 'users',
-      accumulate: 'true',
-      fetch: false,
-    },
-    loans: {
-      type: 'okapi',
-      records: 'loans',
-      accumulate: 'true',
-      path: 'circulation/loans',
-      fetch: false,
-    },
-    holdings: {
-      type: 'okapi',
-      records: 'holdingsRecords',
-      path: 'holdings-storage/holdings',
-      accumulate: 'true',
-      fetch: false,
-    },
-  });
-
   constructor(props, context) {
     super(props, context);
     this.context = context;
@@ -163,20 +163,6 @@ class Scan extends React.Component {
     if (e) e.preventDefault();
     this.props.mutator.query.update({
       _path: `/users/view/${loan.userId}?layer=loan&loan=${loan.id}`,
-    });
-  }
-
-  showPatronDetails(loan, e) {
-    if (e) e.preventDefault();
-    this.props.mutator.query.update({
-      _path: `/users/view/${_.get(loan, ['patron', 'id'])}`,
-    });
-  }
-
-  showItemDetails(loan, e) {
-    if (e) e.preventDefault();
-    this.props.mutator.query.update({
-      _path: `/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`,
     });
   }
 
@@ -362,13 +348,9 @@ class Scan extends React.Component {
     throw this.error;
   }
 
-  throwError(error) {
-    this.error = error;
-    throw this.error;
-  }
-
   render() {
     const scannedItems = this.props.resources.scannedItems || [];
+    const item = this.props.resources.items || [];
 
     return (
       <CheckIn
@@ -377,6 +359,7 @@ class Scan extends React.Component {
         showInfo={this.showInfo}
         onSessionEnd={this.onSessionEnd}
         scannedItems={scannedItems}
+        item={item}
         ref={this.checkInRef}
         initialValues={
           { item:
