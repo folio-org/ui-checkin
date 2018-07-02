@@ -46,39 +46,6 @@ class Scan extends React.Component {
     },
   });
 
-  static manifest = Object.freeze({
-    scannedItems: { initialValue: [] },
-    query: { initialValue: {} },
-    items: {
-      type: 'okapi',
-      records: 'items',
-      path: 'inventory/items',
-      accumulate: 'true',
-      fetch: false,
-    },
-    patrons: {
-      type: 'okapi',
-      records: 'users',
-      path: 'users',
-      accumulate: 'true',
-      fetch: false,
-    },
-    loans: {
-      type: 'okapi',
-      records: 'loans',
-      accumulate: 'true',
-      path: 'circulation/loans',
-      fetch: false,
-    },
-    holdings: {
-      type: 'okapi',
-      records: 'holdingsRecords',
-      path: 'holdings-storage/holdings',
-      accumulate: 'true',
-      fetch: false,
-    },
-  });
-
   static propTypes = {
     stripes: PropTypes.object,
     resources: PropTypes.shape({
