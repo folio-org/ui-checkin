@@ -46,6 +46,39 @@ class Scan extends React.Component {
     },
   });
 
+  static manifest = Object.freeze({
+    scannedItems: { initialValue: [] },
+    query: { initialValue: {} },
+    items: {
+      type: 'okapi',
+      records: 'items',
+      path: 'inventory/items',
+      accumulate: 'true',
+      fetch: false,
+    },
+    patrons: {
+      type: 'okapi',
+      records: 'users',
+      path: 'users',
+      accumulate: 'true',
+      fetch: false,
+    },
+    loans: {
+      type: 'okapi',
+      records: 'loans',
+      accumulate: 'true',
+      path: 'circulation/loans',
+      fetch: false,
+    },
+    holdings: {
+      type: 'okapi',
+      records: 'holdingsRecords',
+      path: 'holdings-storage/holdings',
+      accumulate: 'true',
+      fetch: false,
+    },
+  });
+
   static propTypes = {
     stripes: PropTypes.object,
     resources: PropTypes.shape({
@@ -221,7 +254,6 @@ class Scan extends React.Component {
     }
 
     const checkInInst = this.checkInRef.current.wrappedInstance;
-
     return this.fetchItemByBarcode(data.item.barcode)
       .then(item => this.fetchLoanByItemId(item.id))
       .then(loan => this.putReturn(loan, data.item.checkinDate, data.item.checkinTime))
@@ -235,6 +267,7 @@ class Scan extends React.Component {
       })
       .catch((error) => {
         setTimeout(() => checkInInst.focusInput());
+
         throw new SubmissionError(error);
       });
   }
@@ -317,6 +350,7 @@ class Scan extends React.Component {
 
   render() {
     const scannedItems = this.props.resources.scannedItems || [];
+    const item = this.props.resources.items || {};
 
     return (
       <CheckIn
@@ -325,6 +359,7 @@ class Scan extends React.Component {
         showInfo={this.showInfo}
         onSessionEnd={this.onSessionEnd}
         scannedItems={scannedItems}
+        item={item}
         ref={this.checkInRef}
         initialValues={
           { item:
