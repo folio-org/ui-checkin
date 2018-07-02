@@ -350,7 +350,7 @@ class Scan extends React.Component {
 
   render() {
     const scannedItems = this.props.resources.scannedItems || [];
-    const item = this.props.resources.items || [];
+    const item = this.props.resources.items || {};
 
     return (
       <CheckIn
