@@ -9,22 +9,13 @@ class CheckInRouting extends React.Component {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
-    history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
-  };
-
-  static childContextTypes = {
-    history: PropTypes.object,
   };
 
   constructor(props) {
     super(props);
     this.connectedApp = props.stripes.connect(Scan);
-  }
-
-  getChildContext() {
-    return { history: this.props.history };
   }
 
   NoMatch() {

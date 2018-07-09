@@ -95,13 +95,8 @@ class Scan extends React.Component {
     }),
   };
 
-  static contextTypes = {
-    history: PropTypes.object,
-  };
-
-  constructor(props, context) {
-    super(props, context);
-    this.context = context;
+  constructor(props) {
+    super(props);
     this.store = props.stripes.store;
     this.formatDateTime = props.stripes.formatDateTime;
     this.onClickCheckin = this.onClickCheckin.bind(this);
