@@ -25,7 +25,6 @@ class CheckIn extends React.Component {
     onSessionEnd: PropTypes.func,
     renderActions: PropTypes.func,
     stripes: PropTypes.object,
-    item: PropTypes.object,
   };
 
   constructor() {
@@ -57,10 +56,8 @@ class CheckIn extends React.Component {
       showInfo,
       renderActions,
       stripes,
-      item,
     } = this.props;
 
-    const itemObj = item.records ? item.records[0] : null;
     const itemListFormatter = {
       'timeReturned': loan => (
         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -74,7 +71,7 @@ class CheckIn extends React.Component {
         return `${title} (${materialType})`;
       },
       'barcode': loan => `${_.get(loan, ['item', 'barcode'])}`,
-      'location': () => `${_.get(itemObj, ['effectiveLocation', 'name'], '')}`,
+      'location': loan => `${_.get(loan, ['item', 'location', 'name'])}`,
       'status': loan => `${_.get(loan, ['item', 'status', 'name'])}`,
       'callNumber': (loan) => {
         const callNumber = `${_.get(loan, ['item', 'callNumber'])}`;

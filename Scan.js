@@ -317,7 +317,6 @@ class Scan extends React.Component {
 
   render() {
     const scannedItems = this.props.resources.scannedItems || [];
-    const item = this.props.resources.items || {};
 
     return (
       <CheckIn
@@ -326,7 +325,6 @@ class Scan extends React.Component {
         showInfo={this.showInfo}
         onSessionEnd={this.onSessionEnd}
         scannedItems={scannedItems}
-        item={item}
         ref={this.checkInRef}
         initialValues={
           { item:
