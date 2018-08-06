@@ -59,7 +59,7 @@ class CheckIn extends React.Component {
     } = this.props;
 
     const itemListFormatter = {
-      timeReturned: loan => (
+      'timeReturned': loan => (
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <div>{stripes.formatTime(`${_.get(loan, ['systemReturnDate'])}`)}</div>
           <div key={loan.id}>{showInfo(loan)}</div>
