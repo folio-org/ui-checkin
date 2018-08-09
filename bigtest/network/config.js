@@ -1,5 +1,5 @@
-import { okapi } from 'stripes-config'; // eslint-disable-line import/no-unresolved
-import { Response } from '@bigtest/mirage';
+import { okapi } from 'stripes-config'; // eslint-disable-line
+import CQLParser, { CQLBoolean } from './cql';
 
 // typical mirage config export
 export default function configure() {
@@ -14,34 +14,10 @@ export default function configure() {
     ssoEnabled: false
   });
 
-  // mod-users
-  this.get('/users', []);
-
-  // mod-config
   this.get('/configurations/entries', {
     configs: []
   });
 
-  // mod-users-bl
-  this.post('/bl-users/login', () => {
-    return new Response(201, {
-      'X-Okapi-Token': `myOkapiToken:${Date.now()}`
-    }, {
-      user: {
-        username: 'testuser',
-        personal: {
-          lastName: 'User',
-          firstName: 'Test',
-          email: 'person@folio.org',
-        }
-      },
-      permissions: {
-        permissions: []
-      }
-    });
-  });
-
-  // mod-notify
   this.get('/notify/_self', {
     notifications: [],
     totalRecords: 0
@@ -49,6 +25,61 @@ export default function configure() {
 
   this.get('/notify', {
     notifications: [],
+    totalRecords: 0
+  });
+
+  // users
+  this.get('/users', ({ users }, request) => {
+    if (request.queryParams.query) {
+      const cqlParser = new CQLParser();
+      cqlParser.parse(request.queryParams.query);
+      return users.where({
+        id: cqlParser.tree.term
+      });
+    } else {
+      return [];
+    }
+  });
+
+  // item-storage
+  this.get('/service-points', {});
+
+  this.get('/inventory/items', ({ items }, request) => {
+    if (request.queryParams.query) {
+      const cqlParser = new CQLParser();
+      cqlParser.parse(request.queryParams.query);
+      return items.where({
+        barcode: cqlParser.tree.term
+      });
+    } else {
+      return items.all();
+    }
+  });
+
+  this.get('/circulation/loans', ({ loans }, request) => {
+    if (request.queryParams.query) {
+      const cqlParser = new CQLParser();
+      cqlParser.parse(request.queryParams.query);
+      if (cqlParser.tree instanceof CQLBoolean) {
+        return loans.where({
+          itemId: cqlParser.tree.left.term
+        });
+      } else {
+        return loans.where({
+          itemId: cqlParser.tree.term
+        });
+      }
+    } else {
+      return loans.all();
+    }
+  });
+
+  this.put('/circulation/loans/:id', (_, request) => {
+    return JSON.parse(request.requestBody);
+  });
+
+  this.get('/holdings-storage/holdings', {
+    holdingsRecords: [],
     totalRecords: 0
   });
 

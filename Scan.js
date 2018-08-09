@@ -314,22 +314,24 @@ class Scan extends React.Component {
     const scannedItems = this.props.resources.scannedItems || [];
 
     return (
-      <CheckIn
-        submithandler={this.onClickCheckin}
-        renderActions={this.renderActions}
-        showInfo={this.showInfo}
-        onSessionEnd={this.onSessionEnd}
-        scannedItems={scannedItems}
-        ref={this.checkInRef}
-        initialValues={
-          { item:
-            {
-              checkinDate: 'today',
-              checkinTime: 'now',
-            } }
-        }
-        {...this.props}
-      />
+      <div data-test-check-in-scan>
+        <CheckIn
+          submithandler={this.onClickCheckin}
+          renderActions={this.renderActions}
+          showInfo={this.showInfo}
+          onSessionEnd={this.onSessionEnd}
+          scannedItems={scannedItems}
+          ref={this.checkInRef}
+          initialValues={
+            { item:
+              {
+                checkinDate: 'today',
+                checkinTime: 'now',
+              } }
+          }
+          {...this.props}
+        />
+      </div>
     );
   }
 }

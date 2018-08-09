@@ -115,6 +115,7 @@ class CheckIn extends React.Component {
                         withRef
                         fullWidth
                         component={TextField}
+                        data-test-check-in-barcode
                       />
                     </Layout>
                   </Col>
