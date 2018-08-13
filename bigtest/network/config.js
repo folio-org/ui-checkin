@@ -1,4 +1,5 @@
 import { okapi } from 'stripes-config'; // eslint-disable-line
+import { Response } from '@bigtest/mirage';
 import CQLParser, { CQLBoolean } from './cql';
 
 // typical mirage config export
@@ -16,6 +17,24 @@ export default function configure() {
 
   this.get('/configurations/entries', {
     configs: []
+  });
+
+  this.post('/bl-users/login', () => {
+    return new Response(201, {
+      'X-Okapi-Token': `myOkapiToken:${Date.now()}`
+    }, {
+      user: {
+        username: 'testuser',
+        personal: {
+          lastName: 'User',
+          firstName: 'Test',
+          email: 'user@folio.org',
+        }
+      },
+      permissions: {
+        permissions: []
+      }
+    });
   });
 
   this.get('/notify/_self', {
