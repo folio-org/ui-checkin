@@ -33,7 +33,9 @@ class CheckIn extends React.Component {
   }
 
   focusInput() {
-    this.barcodeEl.current.getRenderedComponent().focusInput();
+    if (this.barcodeEl.current) {
+      this.barcodeEl.current.getRenderedComponent().focusInput();
+    }
   }
 
   render() {
@@ -127,22 +129,26 @@ class CheckIn extends React.Component {
                     </Layout>
                   </Col>
                   <Col xs={12} smOffset={2} sm={2}>
-                    <Field
-                      name="item.checkinDate"
-                      aria-label={checkinDateLabel}
-                      label={processLabel}
-                      component={Datepicker}
-                      passThroughValue="today"
-                    />
+                    <div data-test-process-date>
+                      <Field
+                        name="item.checkinDate"
+                        aria-label={checkinDateLabel}
+                        label={processLabel}
+                        component={Datepicker}
+                        passThroughValue="today"
+                      />
+                    </div>
                   </Col>
                   <Col xs={12} sm={2}>
-                    <Field
-                      name="item.checkinTime"
-                      aria-label={checkinTimeLabel}
-                      label={timeReturnedLabel}
-                      component={Timepicker}
-                      passThroughValue="now"
-                    />
+                    <div data-test-process-time>
+                      <Field
+                        name="item.checkinTime"
+                        aria-label={checkinTimeLabel}
+                        label={timeReturnedLabel}
+                        component={Timepicker}
+                        passThroughValue="now"
+                      />
+                    </div>
                   </Col>
                   <Col xs={12} sm={1}>
                     <Layout className="marginTopLabelSpacer">

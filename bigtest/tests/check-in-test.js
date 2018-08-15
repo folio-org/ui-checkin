@@ -55,4 +55,31 @@ describeApplication('CheckIn', () => {
       });
     });
   });
+
+  describe('changing check-in date and time', () => {
+    let body;
+    beforeEach(async function () {
+      this.server.put('/circulation/loans/:id', (_, request) => {
+        body = JSON.parse(request.requestBody);
+        return body;
+      });
+
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472500,
+        title: 'Best Book Ever',
+        materialType: {
+          name: 'book'
+        }
+      });
+
+      await checkIn.processDate.fillAndBlur('04/25/2018');
+      await checkIn.processTime.fillInput('4:25 PM');
+      await checkIn.barcode('9676761472500').clickEnter();
+    });
+
+    it('changes the date and time in the payload', () => {
+      expect(body.systemReturnDate).to.include('2018-04-25');
+      expect(body.systemReturnDate).to.include('16:25:00');
+    });
+  });
 });
