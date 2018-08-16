@@ -144,26 +144,32 @@ class Scan extends React.Component {
 
   renderActions(loan) {
     return (
-      <UncontrolledDropdown onSelectItem={this.handleOptionsChange}>
-        <Button data-role="toggle" buttonStyle="hover dropdownActive"><strong>•••</strong></Button>
-        <DropdownMenu data-role="menu" overrideStyle={{ padding: '6px 0' }}>
-          <MenuItem itemMeta={{ loan, action: 'showLoanDetails' }}>
-            <Button buttonStyle="dropdownItem" href={`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`}>
-              <FormattedMessage id="ui-checkin.loanDetails" />
-            </Button>
-          </MenuItem>
-          <MenuItem itemMeta={{ loan, action: 'showPatronDetails' }}>
-            <Button buttonStyle="dropdownItem" href={`/users/view/${_.get(loan, ['patron', 'id'])}`}>
-              <FormattedMessage id="ui-checkin.patronDetails" />
-            </Button>
-          </MenuItem>
-          <MenuItem itemMeta={{ loan, action: 'showItemDetails' }}>
-            <Button buttonStyle="dropdownItem" href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`}>
-              <FormattedMessage id="ui-checkin.itemDetails" />
-            </Button>
-          </MenuItem>
-        </DropdownMenu>
-      </UncontrolledDropdown>
+      <div data-test-elipse-select>
+        <UncontrolledDropdown onSelectItem={this.handleOptionsChange}>
+          <Button data-role="toggle" buttonStyle="hover dropdownActive"><strong>•••</strong></Button>
+          <DropdownMenu data-role="menu" overrideStyle={{ padding: '6px 0' }}>
+            <MenuItem itemMeta={{ loan, action: 'showLoanDetails' }}>
+              <div data-test-loan-details>
+                <Button buttonStyle="dropdownItem" href={`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`}>
+                  <FormattedMessage id="ui-checkin.loanDetails" />
+                </Button>
+              </div>
+            </MenuItem>
+            <MenuItem itemMeta={{ loan, action: 'showPatronDetails' }}>
+              <div data-test-patron-details>
+                <Button buttonStyle="dropdownItem" href={`/users/view/${_.get(loan, ['patron', 'id'])}`}>
+                  <FormattedMessage id="ui-checkin.patronDetails" />
+                </Button>
+              </div>
+            </MenuItem>
+            <MenuItem itemMeta={{ loan, action: 'showItemDetails' }}>
+              <Button buttonStyle="dropdownItem" href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`}>
+                <FormattedMessage id="ui-checkin.itemDetails" />
+              </Button>
+            </MenuItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+      </div>
     );
   }
 

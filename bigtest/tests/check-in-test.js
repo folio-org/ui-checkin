@@ -82,4 +82,58 @@ describeApplication('CheckIn', () => {
       expect(body.systemReturnDate).to.include('16:25:00');
     });
   });
+
+  describe('navigating to loan details', () => {
+    let body;
+    beforeEach(async function () {
+      this.server.put('/circulation/loans/:id', (_, request) => {
+        body = JSON.parse(request.requestBody);
+        return body;
+      });
+
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472500,
+        title: 'Best Book Ever',
+        materialType: {
+          name: 'book'
+        }
+      });
+
+      await checkIn.barcode('9676761472500').clickEnter();
+      await checkIn.selectElipse();
+      await checkIn.selectLoanDetails();
+    });
+
+    it('directs to loan details page', function () {
+      const { search, pathname } = this.app.history.location;
+      expect(pathname + search).to.include('/users/view/6?layer=loan&loan=6'); // i don't actually know where this came from
+    });
+  });
+
+  describe('navigating to patron details', () => {
+    let body;
+    beforeEach(async function () {
+      this.server.put('/circulation/loans/:id', (_, request) => {
+        body = JSON.parse(request.requestBody);
+        return body;
+      });
+
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472500,
+        title: 'Best Book Ever',
+        materialType: {
+          name: 'book'
+        }
+      });
+
+      await checkIn.barcode('9676761472500').clickEnter();
+      await checkIn.selectElipse();
+      await checkIn.selectPatronDetails();
+    });
+
+    it('directs to patron details page', function () {
+      const { search, pathname } = this.app.history.location;
+      expect(pathname + search).to.include('/users/view/6'); // i don't actually know where this came from
+    });
+  });
 });

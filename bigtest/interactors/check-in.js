@@ -12,6 +12,9 @@ import TimepickerInteractor from '@folio/stripes-components/lib/Timepicker/tests
 export default interactor(class CheckInInteractor {
   processDate = new DatepickerInteractor('[data-test-process-date]')
   processTime = new TimepickerInteractor('[data-test-process-time]')
+  selectElipse = clickable('[data-test-elipse-select]');
+  selectLoanDetails = clickable('[data-test-loan-details]');
+  selectPatronDetails = clickable('[data-test-patron-details]');
   barcodePresent = isPresent('[data-test-check-in-barcode]');
   barcode = fillable('#input-item-barcode');
   clickEnter = clickable('#clickable-add-item');
