@@ -16,6 +16,7 @@ export default interactor(class CheckInInteractor {
   selectLoanDetails = clickable('[data-test-loan-details]');
   selectPatronDetails = clickable('[data-test-patron-details]');
   selectItemDetails = clickable('[data-test-item-details]');
+  fillOutError = text('[data-test-check-in-scan] [class^="feedbackError"]');
   barcodePresent = isPresent('[data-test-check-in-barcode]');
   barcode = fillable('#input-item-barcode');
   clickEnter = clickable('#clickable-add-item');

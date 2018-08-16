@@ -56,6 +56,25 @@ describeApplication('CheckIn', () => {
     });
   });
 
+  describe('submitting the check-in without a barcode', () => {
+    beforeEach(async function () {
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472500,
+        title: 'Best Book Ever',
+        materialType: {
+          name: 'book'
+        }
+      });
+
+      await checkIn.processDate.fillAndBlur('04/25/2018');
+      await checkIn.processTime.fillInput('4:25 PM').clickEnter();
+    });
+
+    it('throws the fillOut error', () => {
+      expect(checkIn.fillOutError).to.equal('Please fill this out to continue');
+    });
+  });
+
   describe('changing check-in date and time', () => {
     let body;
     beforeEach(async function () {
