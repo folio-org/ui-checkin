@@ -121,22 +121,19 @@ class Scan extends React.Component {
     }
   }
 
-  showLoanDetails(loan, e) {
-    if (e) e.preventDefault();
+  showLoanDetails(loan) {
     this.props.mutator.query.update({
       _path: `/users/view/${loan.userId}?layer=loan&loan=${loan.id}`,
     });
   }
 
-  showPatronDetails(loan, e) {
-    if (e) e.preventDefault();
+  showPatronDetails(loan) {
     this.props.mutator.query.update({
       _path: `/users/view/${_.get(loan, ['patron', 'id'])}`,
     });
   }
 
-  showItemDetails(loan, e) {
-    if (e) e.preventDefault();
+  showItemDetails(loan) {
     this.props.mutator.query.update({
       _path: `/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`,
     });
@@ -163,9 +160,11 @@ class Scan extends React.Component {
               </div>
             </MenuItem>
             <MenuItem itemMeta={{ loan, action: 'showItemDetails' }}>
-              <Button buttonStyle="dropdownItem" href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`}>
-                <FormattedMessage id="ui-checkin.itemDetails" />
-              </Button>
+              <div data-test-item-details>
+                <Button buttonStyle="dropdownItem" href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`}>
+                  <FormattedMessage id="ui-checkin.itemDetails" />
+                </Button>
+              </div>
             </MenuItem>
           </DropdownMenu>
         </UncontrolledDropdown>

@@ -84,13 +84,7 @@ describeApplication('CheckIn', () => {
   });
 
   describe('navigating to loan details', () => {
-    let body;
     beforeEach(async function () {
-      this.server.put('/circulation/loans/:id', (_, request) => {
-        body = JSON.parse(request.requestBody);
-        return body;
-      });
-
       this.server.create('item', 'withLoan', {
         barcode: 9676761472500,
         title: 'Best Book Ever',
@@ -106,18 +100,12 @@ describeApplication('CheckIn', () => {
 
     it('directs to loan details page', function () {
       const { search, pathname } = this.app.history.location;
-      expect(pathname + search).to.include('/users/view/6?layer=loan&loan=6'); // i don't actually know where this came from
+      expect(pathname + search).to.include('/users/view/6?layer=loan&loan=6');
     });
   });
 
   describe('navigating to patron details', () => {
-    let body;
     beforeEach(async function () {
-      this.server.put('/circulation/loans/:id', (_, request) => {
-        body = JSON.parse(request.requestBody);
-        return body;
-      });
-
       this.server.create('item', 'withLoan', {
         barcode: 9676761472500,
         title: 'Best Book Ever',
@@ -133,7 +121,30 @@ describeApplication('CheckIn', () => {
 
     it('directs to patron details page', function () {
       const { search, pathname } = this.app.history.location;
-      expect(pathname + search).to.include('/users/view/6'); // i don't actually know where this came from
+      expect(pathname + search).to.include('/users/view/6');
+    });
+  });
+
+  describe('navigating to item details', () => {
+    beforeEach(async function () {
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472500,
+        title: 'Best Book Ever',
+        materialType: {
+          name: 'book'
+        },
+        instanceId : 'lychee',
+        holdingsRecordId : 'apple'
+      });
+
+      await checkIn.barcode('9676761472500').clickEnter();
+      await checkIn.selectElipse();
+      await checkIn.selectItemDetails();
+    });
+
+    it('directs to item details page', function () {
+      const { search, pathname } = this.app.history.location;
+      expect(pathname + search).to.include('/inventory/view/lychee/apple/6');
     });
   });
 });
