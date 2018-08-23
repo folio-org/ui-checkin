@@ -22,5 +22,6 @@
     "loanNoExist": "El préstamo no existe",
     "itemNoExist": "El artículo con este código de barras no existe",
     "userNoExist": "El usuario {userId} no existe",
-    "fillOut": "Por favor, complete ésto para continuar"
+    "fillOut": "Por favor, complete ésto para continuar",
+    "meta.title": "Registrarse"
 }
