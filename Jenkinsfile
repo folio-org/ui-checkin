@@ -3,5 +3,5 @@ buildNPM {
   publishModDescriptor = 'yes'
   runLint = 'yes'
   runTest = 'yes'
-  stripesPlatform = 'platform-core'
+  runTestOptions = '--karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage'
 }
