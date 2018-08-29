@@ -66,6 +66,7 @@ describeApplication('CheckIn', () => {
         }
       });
 
+      await checkIn.clickChangeDate();
       await checkIn.processDate.fillAndBlur('04/25/2018');
       await checkIn.processTime.fillInput('4:25 PM').clickEnter();
     });
@@ -91,6 +92,7 @@ describeApplication('CheckIn', () => {
         }
       });
 
+      await checkIn.clickChangeTime();
       await checkIn.processDate.fillAndBlur('04/25/2018');
       await checkIn.processTime.fillInput('4:25 PM');
       await checkIn.barcode('9676761472500').clickEnter();

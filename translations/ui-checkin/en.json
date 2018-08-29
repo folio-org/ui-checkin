@@ -23,5 +23,7 @@
   "loanNoExist": "Loan does not exist",
   "itemNoExist": "Item with this barcode does not exist",
   "userNoExist": "User {userId} does not exist",
-  "fillOut": "Please fill this out to continue"
+  "fillOut": "Please fill this out to continue",
+  "today": "today",
+  "now": "now"
 }

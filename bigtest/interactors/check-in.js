@@ -24,4 +24,6 @@ export default interactor(class CheckInInteractor {
   barcodeError = text('[data-test-check-in-scan] [class^="feedbackError"]');
   endSession = clickable('#clickable-end-session');
   hasCheckedInItems = isPresent('#list-items-checked-in');
+  clickChangeDate = clickable('[data-test-checkin-modify-date]');
+  clickChangeTime = clickable('[data-test-checkin-modify-time]');
 });
