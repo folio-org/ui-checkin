@@ -11,12 +11,5 @@ module.exports = (config) => {
     preprocessors
   };
 
-  // Set output directory for junit reporter
-  if (config.junitReporter) {
-    configuration.junitReporter = {
-      outputDir: 'artifacts/junit/Karma'
-    };
-  }
-
   config.set(configuration);
 };
