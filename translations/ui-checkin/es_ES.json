@@ -23,5 +23,7 @@
     "itemNoExist": "El artículo con este código de barras no existe",
     "userNoExist": "El usuario {userId} no existe",
     "fillOut": "Por favor, complete ésto para continuar",
-    "meta.title": "Registrarse"
+    "meta.title": "Registrarse",
+    "today": "today",
+    "now": "now"
 }
