@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dateFormat from 'dateformat';
 import { FormattedMessage } from 'react-intl';
+import moment from 'moment-timezone';
 import Button from '@folio/stripes-components/lib/Button';
 import DropdownMenu from '@folio/stripes-components/lib/DropdownMenu';
 import MenuItem from '@folio/stripes-components/lib/MenuItem';
@@ -10,7 +11,6 @@ import { SubmissionError, change, reset } from 'redux-form';
 import { UncontrolledDropdown } from '@folio/stripes-components/lib/Dropdown';
 import InfoPopover from '@folio/stripes-components/lib/InfoPopover';
 import CheckIn from './CheckIn';
-import formatDateTimePicker from './util';
 
 class Scan extends React.Component {
   static manifest = Object.freeze({
@@ -272,11 +272,24 @@ class Scan extends React.Component {
     });
   }
 
+  buildDateTime = (date, time) => {
+    if (date && time) {
+      let timeString = time;
+
+      if (time.indexOf('T') > -1) {
+        timeString = time.split('T')[1];
+      }
+
+      return `${date.substring(0, 10)}T${timeString}`;
+    } else {
+      return moment().tz('UTC').format();
+    }
+  }
+
   putReturn(loan, checkinDate, checkinTime) {
     //  Get the Date Time combo in UTC to be sent down to the server
-    const systemReturnDateUTC = formatDateTimePicker(checkinDate, checkinTime, this.timezone);
     Object.assign(loan, {
-      systemReturnDate: systemReturnDateUTC,
+      systemReturnDate: this.buildDateTime(checkinDate, checkinTime),
       returnDate: dateFormat(new Date(), "yyyy-mm-dd'T'HH:MM:ss'Z'"),
       status: { name: 'Closed' },
       action: 'checkedin',
@@ -330,8 +343,8 @@ class Scan extends React.Component {
           initialValues={
             { item:
               {
-                checkinDate: 'today',
-                checkinTime: 'now',
+                checkinDate: '',
+                checkinTime: '',
               } }
           }
           {...this.props}
