@@ -23,5 +23,7 @@
     "itemNoExist": "Tétel ilyen vonalkóddal nem létezik",
     "userNoExist": "{userId} felhasználó nem létezik",
     "fillOut": "Kérem, töltse ki ezt a folytatáshoz",
-    "meta.title": "Naptár"
+    "meta.title": "Naptár",
+    "today": "today",
+    "now": "now"
 }
