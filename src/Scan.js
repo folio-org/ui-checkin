@@ -201,6 +201,8 @@ class Scan extends React.Component {
   onSessionEnd() {
     this.clearResources();
     this.clearForm('CheckIn');
+    const checkInInst = this.checkInRef.current.wrappedInstance;
+    setTimeout(() => checkInInst.focusInput());
   }
 
   clearForm(formName) {

@@ -36,6 +36,10 @@ class CheckIn extends React.Component {
     this.barcodeEl = React.createRef();
   }
 
+  componentDidMount(){
+    setTimeout(() => this.focusInput());
+  }
+
   state = {
     showPickers: false
   };
