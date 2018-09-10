@@ -37,13 +37,6 @@ class Scan extends React.Component {
       path: 'circulation/loans',
       fetch: false,
     },
-    holdings: {
-      type: 'okapi',
-      records: 'holdingsRecords',
-      path: 'holdings-storage/holdings',
-      accumulate: 'true',
-      fetch: false,
-    },
   });
 
   static propTypes = {
@@ -58,9 +51,6 @@ class Scan extends React.Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
       items: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      holdings: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
       loans: PropTypes.shape({
@@ -83,10 +73,6 @@ class Scan extends React.Component {
       loans: PropTypes.shape({
         GET: PropTypes.func,
         PUT: PropTypes.func,
-        reset: PropTypes.func,
-      }),
-      holdings: PropTypes.shape({
-        GET: PropTypes.func,
         reset: PropTypes.func,
       }),
       scannedItems: PropTypes.shape({
@@ -228,7 +214,6 @@ class Scan extends React.Component {
       .then(loan => this.putReturn(loan, data.item.checkinDate, data.item.checkinTime))
       .then(loan => this.fetchLoanById(loan.id))
       .then(loan => this.fetchPatron(loan))
-      .then(loan => this.fetchHoldings(loan))
       .then(loan => this.addScannedItem(loan))
       .then(() => {
         this.clearField('CheckIn', 'item.barcode');
@@ -309,11 +294,6 @@ class Scan extends React.Component {
       }
       return Object.assign(loan, { patron: patrons[0] });
     });
-  }
-
-  fetchHoldings(loan) {
-    const query = `(id=="${loan.userId}")`;
-    return this.props.mutator.holdings.GET({ params: { query } }).then(holdings => Object.assign(loan, { holding: holdings[0] }));
   }
 
   addScannedItem(loan) {
