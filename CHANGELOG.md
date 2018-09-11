@@ -1,8 +1,8 @@
 # Change history for ui-checkin
 
 ## Release 1.2.0 in progress
+
 * Dependency on item-storage: 5.0
-* Dependency on circulation: 3.0
 * use PropTypes, not React.PropTypes. Refs STRIPES-427.
 * Refactor to use pure stripes-connect. Fixes UICHKIN-4.
 * Use our implementations of `<Row>, <Col>`. Refs STRIPES-427.
@@ -10,8 +10,15 @@
 * Ignore yarn-error.log file. Refs STRIPES-517.
 * Change back-end queries by id to use exact match (==). UICHKIN-22.
 * Update to current users interface. Refs UIU-495.
+* Add test for item status UICHKIN-7
+* Use inventory API for items UICHKIN-9.
+* Checkin refinement UICHKIN-10.
+* Show item details at checkin UICHKIN-29.
+* Relocate language files UICHKIN-30.
 * Fix focus issues. Fixes UICHKIN-31.
+* Deny access to check in app if no service point is selected.
 * Depend on v3.0 or 4.0 of `circulation` UICHKIN-36
+* Bug fixes without a separate change log entry: UICHKIN-31, UICHKIN-27, UICHKIN-25, UICHKIN-24, UICHKIN-23
 
 ## [1.1.1](https://github.com/folio-org/ui-checkin/tree/v1.1.1) (2017-08-31)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.1.0...v1.1.1)
