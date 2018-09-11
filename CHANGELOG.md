@@ -11,6 +11,7 @@
 * Change back-end queries by id to use exact match (==). UICHKIN-22.
 * Update to current users interface. Refs UIU-495.
 * Fix focus issues. Fixes UICHKIN-31.
+* Depend on v3.0 or 4.0 of `circulation` UICHKIN-36
 
 ## [1.1.1](https://github.com/folio-org/ui-checkin/tree/v1.1.1) (2017-08-31)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.1.0...v1.1.1)
