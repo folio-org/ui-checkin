@@ -24,6 +24,6 @@
     "userNoExist": "O usuário {userId} não existe",
     "fillOut": "Por favor, retire o preenchimento disto para continuar",
     "meta.title": "Devolução",
-    "today": "today",
-    "now": "now"
+    "today": "hoje",
+    "now": "agora"
 }
