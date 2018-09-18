@@ -39,9 +39,9 @@ export function describeApplication(name, setup, describe = window.describe) {
           this.server.logging = false;
 
           this.server.block = function block() {
-            let { pretender } = this;
-            let blocks = [];
-            let _handlerFor = pretender._handlerFor;
+            const { pretender } = this;
+            const blocks = [];
+            const _handlerFor = pretender._handlerFor;
             pretender._handlerFor = (...args) => {
               return {
                 handler(request) {
@@ -76,7 +76,7 @@ export function describeApplication(name, setup, describe = window.describe) {
       this.visit = visit.bind(null, this); // eslint-disable-line no-use-before-define
     });
 
-    let doSetup = typeof setup.suite === 'function' ? setup.suite : setup;
+    const doSetup = typeof setup.suite === 'function' ? setup.suite : setup;
     doSetup.call(this);
   });
 }
