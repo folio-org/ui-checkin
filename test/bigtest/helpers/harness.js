@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 /* eslint-disable import/first */
-import createMemoryHistory from 'history/createMemoryHistory';
+import createMemoryHistory from 'history/createMemoryHistory'; // eslint-disable-line import/no-extraneous-dependencies
 import { okapi, config } from 'stripes-config'; // eslint-disable-line import/no-unresolved
 import configureEpics from '@folio/stripes-core/src/configureEpics';
 import configureLogger from '@folio/stripes-core/src/configureLogger';
@@ -11,7 +11,7 @@ import gatherActions from '@folio/stripes-core/src/gatherActions';
 import { setOkapiReady } from '@folio/stripes-core/src/okapiActions';
 
 // load these in our tests
-import 'typeface-source-sans-pro';
+import 'typeface-source-sans-pro'; // eslint-disable-line import/no-extraneous-dependencies
 import '@folio/stripes-components/lib/global.css';
 
 import Root from '@folio/stripes-core/src/components/Root';

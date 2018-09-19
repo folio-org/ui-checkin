@@ -55,7 +55,7 @@
     "start": "stripes serve",
     "build": "stripes build",
     "test": "stripes test karma",
-    "lint": "eslint *.js"
+    "lint": "eslint ."
   },
   "devDependencies": {
     "@bigtest/convergence": "^0.10.0",
@@ -63,26 +63,25 @@
     "@bigtest/mirage": "^0.0.1",
     "@bigtest/mocha": "^0.5.0",
     "@bigtest/react": "^0.1.2",
-    "@folio/eslint-config-stripes": "^3.1.0",
-    "@folio/stripes-cli": "^1.2.0",
-    "@folio/stripes-core": "^2.10.2",
-    "babel-core": "^6.17.0",
+    "@folio/eslint-config-stripes": "^3.2.1",
+    "@folio/stripes-cli": "^1.4.0",
+    "@folio/stripes-core": "^2.13.0",
+    "babel-eslint": "^9.0.0",
     "babel-polyfill": "^6.26.0",
     "chai": "^4.1.2",
     "chai-jquery": "^2.0.0",
-    "eslint": "^4.8.0",
+    "eslint": "^5.6.0",
     "jquery": "^3.3.1",
-    "karma-webpack": "2.0.6",
     "mocha": "^5.2.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "react-trigger-change": "^1.0.2",
-    "redux": "^3.0.0",
+    "redux": "^4.0.0",
     "webpack": "^4.16.0"
   },
   "dependencies": {
-    "@folio/stripes-components": "^3.0.8",
+    "@folio/stripes-components": "^3.1.0",
     "dateformat": "^2.0.0",
     "lodash": "^4.17.4",
     "moment-timezone": "^0.5.14",
@@ -93,10 +92,7 @@
   },
   "peerDependencies": {
     "@folio/stripes-connect": "^3.1.0",
-    "@folio/stripes-core": "^2.11.0",
+    "@folio/stripes-core": "^2.13.0",
     "react": "*"
-  },
-  "resolutions": {
-    "karma-webpack": "2.0.6"
   }
 }

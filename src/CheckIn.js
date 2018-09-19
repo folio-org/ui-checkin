@@ -36,13 +36,13 @@ class CheckIn extends React.Component {
     this.barcodeEl = React.createRef();
   }
 
-  componentDidMount(){
-    setTimeout(() => this.focusInput());
-  }
-
   state = {
     showPickers: false
   };
+
+  componentDidMount() {
+    setTimeout(() => this.focusInput());
+  }
 
   focusInput() {
     if (this.barcodeEl.current) {
@@ -173,6 +173,7 @@ class CheckIn extends React.Component {
                           data-test-checkin-modify-date
                           onClick={this.showPickers}
                           className={styles['modify-datetime-button']}
+                          type="button"
                         >
                           <Icon icon="edit" iconPosition="end">
                             <FormattedMessage id="ui-checkin.today" />
@@ -199,6 +200,7 @@ class CheckIn extends React.Component {
                           data-test-checkin-modify-time
                           onClick={this.showPickers}
                           className={styles['modify-datetime-button']}
+                          type="button"
                         >
                           <Icon icon="edit" iconPosition="end">
                             <FormattedMessage id="ui-checkin.now" />
