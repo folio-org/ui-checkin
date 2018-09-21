@@ -1,6 +1,10 @@
 # Change history for ui-checkin
 
-## Release 1.2.0 (https://github.com/folio-org/ui-checkin/tree/v1.2.0) (2018-09-12)
+## [1.3.0] Unreleased
+
+* Add alternate dependencey `item-storage` 6.0 UICHKIN-45
+
+## [1.2.0](https://github.com/folio-org/ui-checkin/tree/v1.2.0) (2018-09-12)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.1.1...v1.2.0)
 
 * Dependency on item-storage: 5.0
