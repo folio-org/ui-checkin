@@ -1,10 +1,12 @@
 import { beforeEach, describe, it } from '@bigtest/mocha';
 import { expect } from 'chai';
 
-import { describeApplication } from '../helpers/describe-application';
+import setupApplication from '../helpers/setup-application';
 import CheckInInteractor from '../interactors/check-in';
 
-describeApplication('CheckIn', () => {
+describe('CheckIn', () => {
+  setupApplication();
+
   const checkIn = new CheckInInteractor();
 
   beforeEach(function () {
@@ -120,7 +122,7 @@ describeApplication('CheckIn', () => {
     });
 
     it('directs to loan details page', function () {
-      const { search, pathname } = this.app.history.location;
+      const { search, pathname } = this.location;
       expect(pathname + search).to.include('/users/view/6?layer=loan&loan=6');
     });
   });
@@ -141,7 +143,7 @@ describeApplication('CheckIn', () => {
     });
 
     it('directs to patron details page', function () {
-      const { search, pathname } = this.app.history.location;
+      const { search, pathname } = this.location;
       expect(pathname + search).to.include('/users/view/6');
     });
   });
@@ -164,7 +166,7 @@ describeApplication('CheckIn', () => {
     });
 
     it('directs to item details page', function () {
-      const { search, pathname } = this.app.history.location;
+      const { search, pathname } = this.location;
       expect(pathname + search).to.include('/inventory/view/lychee/apple/6');
     });
   });
