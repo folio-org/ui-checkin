@@ -64,7 +64,7 @@
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^3.2.1",
     "@folio/stripes-cli": "^1.4.0",
-    "@folio/stripes-core": "folio-org/stripes-core#master",
+    "@folio/stripes-core": "frontside-folio/stripes-core#ww/update-test-helpers",
     "babel-eslint": "^9.0.0",
     "babel-polyfill": "^6.26.0",
     "chai": "^4.1.2",
@@ -74,6 +74,7 @@
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
+    "sinon": "^6.3.4",
     "webpack": "^4.16.0"
   },
   "dependencies": {
