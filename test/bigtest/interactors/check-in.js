@@ -1,13 +1,36 @@
 import {
+  blurrable,
   clickable,
   fillable,
   interactor,
   isPresent,
-  text
+  text,
+  triggerable
 } from '@bigtest/interactor';
 
-import DatepickerInteractor from '@folio/stripes-components/lib/Datepicker/tests/interactor';
-import TimepickerInteractor from '@folio/stripes-components/lib/Timepicker/tests/interactor';
+@interactor class DatepickerInteractor {
+  clickInput = clickable('input');
+  fillInput = fillable('input');
+  blurInput = blurrable('input');
+
+  pressEnter = triggerable('keydown', {
+    bubbles: true,
+    cancelable: true,
+    keyCode: 13
+  });
+
+  fillAndBlur(date) {
+    return this
+      .clickInput()
+      .fillInput(date)
+      .pressEnter()
+      .blurInput();
+  }
+}
+
+@interactor class TimepickerInteractor {
+  fillInput = fillable('input');
+}
 
 export default interactor(class CheckInInteractor {
   processDate = new DatepickerInteractor('[data-test-process-date]')
