@@ -24,6 +24,6 @@
     "userNoExist": "{userId} felhasználó nem létezik",
     "fillOut": "Kérem, töltse ki ezt a folytatáshoz",
     "meta.title": "Naptár",
-    "today": "today",
-    "now": "now"
+    "today": "ma",
+    "now": "most"
 }
