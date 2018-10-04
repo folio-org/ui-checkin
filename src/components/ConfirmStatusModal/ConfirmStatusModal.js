@@ -13,7 +13,6 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import css from './ConfirmStatusModal.css';
 
 class ConfirmStatusModal extends React.Component {
-
   static propTypes = {
     intl: intlShape.isRequired,
     onCancel: PropTypes.func.isRequired,
@@ -28,7 +27,7 @@ class ConfirmStatusModal extends React.Component {
     this.state = {};
   }
 
-  render () {
+  render() {
     const { intl, request, onConfirm, onCancel, open } = this.props;
     const { printSlip } = this.state;
     const testId = uniqueId('confirm-status-');
@@ -44,14 +43,15 @@ class ConfirmStatusModal extends React.Component {
             <ReactToPrint
               onBeforePrint={onConfirm}
               trigger={() => <Button buttonStyle="primary">{confirmLabel}</Button>}
-              content={() => this.printContentRef.current }
+              content={() => this.printContentRef.current}
             /> :
             <Button
               label={confirmLabel}
               onClick={onConfirm}
               id={`clickable-${testId}-confirm`}
               buttonStyle="primary"
-            >{confirmLabel}
+            >
+              {confirmLabel}
             </Button>
           }
           <Button
@@ -59,7 +59,8 @@ class ConfirmStatusModal extends React.Component {
             onClick={onCancel}
             id={`clickable-${testId}-cancel`}
             buttonStyle="default"
-          >{cancelLabel}
+          >
+            {cancelLabel}
           </Button>
         </Col>
       </Row>
@@ -85,7 +86,7 @@ class ConfirmStatusModal extends React.Component {
             <Checkbox
               name="printSlip"
               label={printHoldSlipLabel}
-              onChange={() => this.setState(prevState => ({ printSlip: !prevState.printSlip })) }
+              onChange={() => this.setState(prevState => ({ printSlip: !prevState.printSlip }))}
               value={this.state.printSlip}
             />
           </Col>
@@ -99,6 +100,6 @@ class ConfirmStatusModal extends React.Component {
       </Modal>
     );
   }
-};
+}
 
 export default injectIntl(ConfirmStatusModal);
