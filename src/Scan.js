@@ -4,12 +4,15 @@ import PropTypes from 'prop-types';
 import dateFormat from 'dateformat';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment-timezone';
-import Button from '@folio/stripes-components/lib/Button';
-import DropdownMenu from '@folio/stripes-components/lib/DropdownMenu';
-import MenuItem from '@folio/stripes-components/lib/MenuItem';
+import {
+  Button,
+  DropdownMenu,
+  MenuItem,
+  UncontrolledDropdown,
+  InfoPopover
+} from '@folio/stripes/components';
+
 import { SubmissionError, change, reset } from 'redux-form';
-import { UncontrolledDropdown } from '@folio/stripes-components/lib/Dropdown';
-import InfoPopover from '@folio/stripes-components/lib/InfoPopover';
 import CheckIn from './CheckIn';
 
 class Scan extends React.Component {
