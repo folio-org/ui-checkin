@@ -14,7 +14,7 @@ import {
 
 import { SubmissionError, change, reset } from 'redux-form';
 import CheckIn from './CheckIn';
-import ConfirmStatusModal from './ConfirmStatusModal';
+import ConfirmStatusModal from './components/ConfirmStatusModal';
 
 class Scan extends React.Component {
   static manifest = Object.freeze({
@@ -371,12 +371,14 @@ class Scan extends React.Component {
     const { nextRequest } = this.state;
     return (
       <div data-test-check-in-scan>
-        <ConfirmStatusModal
-          open={nextRequest}
-          request={nextRequest}
-          onConfirm={this.onConfirm}
-          onCancel={this.onCancel}
-        />
+        {nextRequest &&
+          <ConfirmStatusModal
+            open={nextRequest}
+            request={nextRequest}
+            onConfirm={this.onConfirm}
+            onCancel={this.onCancel}
+          />
+        }
         <CheckIn
           submithandler={this.onClickCheckin}
           renderActions={this.renderActions}
