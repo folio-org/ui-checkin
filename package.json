@@ -78,7 +78,7 @@
     "webpack": "^4.16.0"
   },
   "dependencies": {
-    "@folio/stripes-components": "^3.1.0",
+    "@folio/stripes-components": "^4.0.0",
     "dateformat": "^2.0.0",
     "lodash": "^4.17.4",
     "moment-timezone": "^0.5.14",
