@@ -14,6 +14,7 @@ import {
 
 import { SubmissionError, change, reset } from 'redux-form';
 import CheckIn from './CheckIn';
+import ConfirmStatusModal from './ConfirmStatusModal';
 
 class Scan extends React.Component {
   static manifest = Object.freeze({
@@ -40,6 +41,13 @@ class Scan extends React.Component {
       path: 'circulation/loans',
       fetch: false,
     },
+    requests: {
+      type: 'okapi',
+      records: 'requests',
+      accumulate: 'true',
+      path: 'circulation/requests',
+      fetch: false,
+    },
   });
 
   static propTypes = {
@@ -54,6 +62,9 @@ class Scan extends React.Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
       items: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      requests: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
       loans: PropTypes.shape({
@@ -78,6 +89,10 @@ class Scan extends React.Component {
         PUT: PropTypes.func,
         reset: PropTypes.func,
       }),
+      requests: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
       scannedItems: PropTypes.shape({
         replace: PropTypes.func,
       }),
@@ -95,8 +110,25 @@ class Scan extends React.Component {
     this.showInfo = this.showInfo.bind(this);
     this.onSessionEnd = this.onSessionEnd.bind(this);
     this.handleOptionsChange = this.handleOptionsChange.bind(this);
+    this.onConfirm = this.onConfirm.bind(this);
+    this.onCancel = this.onCancel.bind(this);
 
     this.checkInRef = React.createRef();
+    this.state = {
+      nextRequest: {
+        fulfilmentPreference: "Hold Shelf",
+        id: "f659de8a-b63d-4dc8-b90d-37b0a291113a",
+        item: {title: "14 cows for America", barcode: "5860825104574", holdingsRecordId: "7bb1120b-fcb9-4461-bbb0-d2f65c4a3194", instanceId: "d18cfe5b-dd0b-41cb-903c-8716291a2431" },
+        itemId: "e8c75c5b-c809-4850-9385-4b02dc0bc550",
+        metadata: {createdDate: "2018-10-04T16:09:48.639+0000", createdByUserId: "4aac4f96-cfb8-57ba-b257-f2630b3f7ccd", updatedDate: "2018-10-04T16:34:24.751+0000", updatedByUserId: "4aac4f96-cfb8-57ba-b257-f2630b3f7ccd"},
+        position: 2,
+        requestDate: "2018-10-04T16:09:46.000+0000",
+        requestType: "Hold",
+        requester: {firstName: "Zelma", lastName: "Brown", middleName: "Delbert", barcode: "983578324327762"},
+        requesterId: "12d94662-ef24-4a2f-bae3-a785886d0e6f",
+        status: "Open - Not yet filled"
+      },
+    };
   }
 
   handleOptionsChange(itemMeta, e) {
@@ -217,6 +249,7 @@ class Scan extends React.Component {
       .then(loan => this.putReturn(loan, data.item.checkinDate, data.item.checkinTime))
       .then(loan => this.fetchLoanById(loan.id))
       .then(loan => this.fetchPatron(loan))
+      .then(loan => this.fetchRequest(loan))
       .then(loan => this.addScannedItem(loan))
       .then(() => {
         this.clearField('CheckIn', 'item.barcode');
@@ -224,7 +257,6 @@ class Scan extends React.Component {
       })
       .catch((error) => {
         setTimeout(() => checkInInst.focusInput());
-
         throw new SubmissionError(error);
       });
   }
@@ -259,6 +291,18 @@ class Scan extends React.Component {
         this.throwError({ item: { barcode: loanNoExistMsg, _error: 'Scan failed' } });
       }
       return loans[0];
+    });
+  }
+
+  fetchRequest(loan) {
+    const query = `(itemId==${loan.itemId} and requestType=="Hold" and status=="Open - Not yet filled")`;
+    this.props.mutator.requests.reset();
+    return this.props.mutator.requests.GET({ params: { query } }).then((requests) => {
+      if (requests.length) {
+        const nextRequest = _.minBy(requests, 'position');
+        this.setState({ nextRequest });
+      }
+      return loan;
     });
   }
 
@@ -313,11 +357,26 @@ class Scan extends React.Component {
     throw this.error;
   }
 
+  onConfirm() {
+    // TODO: handle transit
+    this.setState({ nextRequest: null });
+  }
+
+  onCancel() {
+    this.setState({ nextRequest: null });
+  }
+
   render() {
     const scannedItems = this.props.resources.scannedItems || [];
-
+    const { nextRequest } = this.state;
     return (
       <div data-test-check-in-scan>
+        <ConfirmStatusModal
+          open={nextRequest}
+          request={nextRequest}
+          onConfirm={this.onConfirm}
+          onCancel={this.onCancel}
+        />
         <CheckIn
           submithandler={this.onClickCheckin}
           renderActions={this.renderActions}
