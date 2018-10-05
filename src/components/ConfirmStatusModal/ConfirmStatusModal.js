@@ -4,13 +4,16 @@ import PropTypes from 'prop-types';
 import uniqueId from 'lodash/uniqueId';
 import ReactToPrint from 'react-to-print';
 import HtmlToReact, { Parser } from 'html-to-react';
-import injectIntl from '@folio/stripes-components/lib/InjectIntl';
-import Modal from '@folio/stripes-components/lib//Modal';
-import Checkbox from '@folio/stripes-components/lib//Checkbox';
 import Barcode from 'react-barcode';
-import Button from '@folio/stripes-components/lib//Button';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import {
+  injectIntl,
+  Modal,
+  Button,
+  Checkbox,
+  Row,
+  Col
+} from '@folio/stripes/components';
 
 import { template } from '../../util';
 import css from './ConfirmStatusModal.css';
