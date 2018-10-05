@@ -56,4 +56,7 @@ export default function configure() {
     holdingsRecords: [],
     totalRecords: 0
   });
+
+  this.get('/staff-slips-storage/staff-slips?query=(name=="Hold")', {});
+
 }
