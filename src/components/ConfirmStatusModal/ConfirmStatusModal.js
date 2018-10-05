@@ -3,13 +3,16 @@ import { intlShape } from 'react-intl';
 import PropTypes from 'prop-types';
 import uniqueId from 'lodash/uniqueId';
 import ReactToPrint from 'react-to-print';
+import HtmlToReact, { Parser } from 'html-to-react';
 import injectIntl from '@folio/stripes-components/lib/InjectIntl';
 import Modal from '@folio/stripes-components/lib//Modal';
 import Checkbox from '@folio/stripes-components/lib//Checkbox';
+import Barcode from 'react-barcode';
 import Button from '@folio/stripes-components/lib//Button';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
+import { template } from '../../util';
 import css from './ConfirmStatusModal.css';
 
 class ConfirmStatusModal extends React.Component {
@@ -19,16 +22,32 @@ class ConfirmStatusModal extends React.Component {
     onConfirm: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
     request: PropTypes.object,
+    holdSlipTemplate: PropTypes.string,
   };
 
   constructor(props) {
     super(props);
     this.printContentRef = React.createRef();
     this.state = {};
+
+    const processNodeDefinitions = new HtmlToReact.ProcessNodeDefinitions(React);
+    this.rules = [
+      {
+        replaceChildren: true,
+        shouldProcessNode: node => node.name === 'barcode',
+        processNode: (node, children) => (<Barcode value={children[0] ? children[0].trim() : ' '} />),
+      },
+      {
+        shouldProcessNode: () => true,
+        processNode: processNodeDefinitions.processDefaultNode,
+      }
+    ];
+
+    this.parser = new Parser();
   }
 
   render() {
-    const { intl, request, onConfirm, onCancel, open } = this.props;
+    const { intl, request, onConfirm, onCancel, open, holdSlipTemplate } = this.props;
     const { printSlip } = this.state;
     const testId = uniqueId('confirm-status-');
     const cancelLabel = intl.formatMessage({ id: 'ui-checkin.statusModal.back' });
@@ -36,6 +55,19 @@ class ConfirmStatusModal extends React.Component {
     const heading = intl.formatMessage({ id: 'ui-checkin.statusModal.heading' });
     const printHoldSlipLabel = intl.formatMessage({ id: 'ui-checkin.statusModal.printHoldSlip' });
 
+    const data = {
+      'Item title': request.item.title,
+      'Item barcode': `<Barcode>${request.item.barcode}</Barcode>`,
+      'Transaction Id': request.id,
+      'Requester last name': request.requester.lastName,
+      'Requester first name': request.requester.firstName,
+      'Hold expiration': request.requestDate,
+      'Item call number': request.itemId,
+    };
+
+    const tmpl = template(holdSlipTemplate || '');
+    const componentStr = tmpl(data);
+    const contentComponent = this.parser.parseWithInstructions(componentStr, () => true, this.rules);
     const footer = (
       <Row>
         <Col xs>
@@ -94,7 +126,7 @@ class ConfirmStatusModal extends React.Component {
 
         <div className={css.hiddenContent}>
           <div className="ql-editor" ref={this.printContentRef}>
-            TODO: setup printing content
+            {contentComponent}
           </div>
         </div>
       </Modal>

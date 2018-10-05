@@ -48,6 +48,12 @@ class Scan extends React.Component {
       path: 'circulation/requests',
       fetch: false,
     },
+    staffSlips: {
+      type: 'okapi',
+      records: 'staffSlips',
+      path: 'staff-slips-storage/staff-slips?query=(name=="Hold")',
+      throwErrors: false,
+    },
   });
 
   static propTypes = {
@@ -68,6 +74,9 @@ class Scan extends React.Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
       loans: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      staffSlips: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
     }),
@@ -96,6 +105,9 @@ class Scan extends React.Component {
       scannedItems: PropTypes.shape({
         replace: PropTypes.func,
       }),
+      staffSlips: PropTypes.shape({
+        GET: PropTypes.func,
+      }),
     }),
   };
 
@@ -114,21 +126,7 @@ class Scan extends React.Component {
     this.onCancel = this.onCancel.bind(this);
 
     this.checkInRef = React.createRef();
-    this.state = {
-      nextRequest: {
-        fulfilmentPreference: 'Hold Shelf',
-        id: 'f659de8a-b63d-4dc8-b90d-37b0a291113a',
-        item: {title: '14 cows for America', barcode: '5860825104574', holdingsRecordId: '7bb1120b-fcb9-4461-bbb0-d2f65c4a3194', instanceId: 'd18cfe5b-dd0b-41cb-903c-8716291a2431' },
-        itemId: 'e8c75c5b-c809-4850-9385-4b02dc0bc550',
-        metadata: {createdDate: '2018-10-04T16:09:48.639+0000', createdByUserId: '4aac4f96-cfb8-57ba-b257-f2630b3f7ccd', updatedDate: '2018-10-04T16:34:24.751+0000', updatedByUserId: '4aac4f96-cfb8-57ba-b257-f2630b3f7ccd'},
-        position: 2,
-        requestDate: '2018-10-04T16:09:46.000+0000',
-        requestType: 'Hold',
-        requester: {firstName: 'Zelma', lastName: 'Brown', middleName: 'Delbert', barcode: '983578324327762'},
-        requesterId: '12d94662-ef24-4a2f-bae3-a785886d0e6f',
-        status: 'Open - Not yet filled'
-      },
-    };
+    this.state = {};
   }
 
   handleOptionsChange(itemMeta, e) {
@@ -367,15 +365,20 @@ class Scan extends React.Component {
   }
 
   render() {
-    const scannedItems = this.props.resources.scannedItems || [];
+    const { resources } = this.props;
     const { nextRequest } = this.state;
+    const scannedItems = resources.scannedItems || [];
+    const staffSlips = (resources.staffSlips || {}).records || [];
+    const holdSlip = staffSlips[0] || {};
+
     return (
       <div data-test-check-in-scan>
         {nextRequest &&
           <ConfirmStatusModal
-            open={nextRequest}
+            open={!!nextRequest}
             request={nextRequest}
             onConfirm={this.onConfirm}
+            holdSlipTemplate={holdSlip.template}
             onCancel={this.onCancel}
           />
         }
