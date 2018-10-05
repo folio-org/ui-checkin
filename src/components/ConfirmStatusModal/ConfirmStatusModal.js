@@ -6,8 +6,8 @@ import ReactToPrint from 'react-to-print';
 import HtmlToReact, { Parser } from 'html-to-react';
 import Barcode from 'react-barcode';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import { injectIntl } from 'react-intl';
 import {
-  injectIntl,
   Modal,
   Button,
   Checkbox,
