@@ -14,6 +14,7 @@ import {
 
 import { SubmissionError, change, reset } from 'redux-form';
 import CheckIn from './CheckIn';
+import ConfirmStatusModal from './components/ConfirmStatusModal';
 
 class Scan extends React.Component {
   static manifest = Object.freeze({
@@ -40,6 +41,19 @@ class Scan extends React.Component {
       path: 'circulation/loans',
       fetch: false,
     },
+    requests: {
+      type: 'okapi',
+      records: 'requests',
+      accumulate: 'true',
+      path: 'circulation/requests',
+      fetch: false,
+    },
+    staffSlips: {
+      type: 'okapi',
+      records: 'staffSlips',
+      path: 'staff-slips-storage/staff-slips?query=(name=="Hold")',
+      throwErrors: false,
+    },
   });
 
   static propTypes = {
@@ -56,7 +70,13 @@ class Scan extends React.Component {
       items: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
+      requests: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
       loans: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      staffSlips: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
     }),
@@ -78,8 +98,15 @@ class Scan extends React.Component {
         PUT: PropTypes.func,
         reset: PropTypes.func,
       }),
+      requests: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
       scannedItems: PropTypes.shape({
         replace: PropTypes.func,
+      }),
+      staffSlips: PropTypes.shape({
+        GET: PropTypes.func,
       }),
     }),
   };
@@ -95,8 +122,11 @@ class Scan extends React.Component {
     this.showInfo = this.showInfo.bind(this);
     this.onSessionEnd = this.onSessionEnd.bind(this);
     this.handleOptionsChange = this.handleOptionsChange.bind(this);
+    this.onConfirm = this.onConfirm.bind(this);
+    this.onCancel = this.onCancel.bind(this);
 
     this.checkInRef = React.createRef();
+    this.state = {};
   }
 
   handleOptionsChange(itemMeta, e) {
@@ -217,6 +247,7 @@ class Scan extends React.Component {
       .then(loan => this.putReturn(loan, data.item.checkinDate, data.item.checkinTime))
       .then(loan => this.fetchLoanById(loan.id))
       .then(loan => this.fetchPatron(loan))
+      .then(loan => this.fetchRequest(loan))
       .then(loan => this.addScannedItem(loan))
       .then(() => {
         this.clearField('CheckIn', 'item.barcode');
@@ -224,7 +255,6 @@ class Scan extends React.Component {
       })
       .catch((error) => {
         setTimeout(() => checkInInst.focusInput());
-
         throw new SubmissionError(error);
       });
   }
@@ -259,6 +289,18 @@ class Scan extends React.Component {
         this.throwError({ item: { barcode: loanNoExistMsg, _error: 'Scan failed' } });
       }
       return loans[0];
+    });
+  }
+
+  fetchRequest(loan) {
+    const query = `(itemId==${loan.itemId} and requestType=="Hold" and status=="Open - Not yet filled")`;
+    this.props.mutator.requests.reset();
+    return this.props.mutator.requests.GET({ params: { query } }).then((requests) => {
+      if (requests.length) {
+        const nextRequest = _.minBy(requests, 'position');
+        this.setState({ nextRequest });
+      }
+      return loan;
     });
   }
 
@@ -313,11 +355,33 @@ class Scan extends React.Component {
     throw this.error;
   }
 
+  onConfirm() {
+    // TODO: handle transit
+    this.setState({ nextRequest: null });
+  }
+
+  onCancel() {
+    this.setState({ nextRequest: null });
+  }
+
   render() {
-    const scannedItems = this.props.resources.scannedItems || [];
+    const { resources } = this.props;
+    const { nextRequest } = this.state;
+    const scannedItems = resources.scannedItems || [];
+    const staffSlips = (resources.staffSlips || {}).records || [];
+    const holdSlip = staffSlips[0] || {};
 
     return (
       <div data-test-check-in-scan>
+        {nextRequest &&
+          <ConfirmStatusModal
+            open={!!nextRequest}
+            request={nextRequest}
+            onConfirm={this.onConfirm}
+            holdSlipTemplate={holdSlip.template}
+            onCancel={this.onCancel}
+          />
+        }
         <CheckIn
           submithandler={this.onClickCheckin}
           renderActions={this.renderActions}
