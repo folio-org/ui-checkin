@@ -16,7 +16,10 @@ export default function configure() {
   });
 
   // item-storage
-  this.get('/service-points', {});
+  this.get('/service-points', {
+    servicepoints: [],
+    totalRecords: 0
+  });
 
   this.get('/inventory/items', ({ items }, request) => {
     if (request.queryParams.query) {
@@ -57,6 +60,19 @@ export default function configure() {
     totalRecords: 0
   });
 
-  this.get('/staff-slips-storage/staff-slips?query=(name=="Hold")', {});
+  this.get('/circulation/requests', {
+    requests: [],
+    totalRecords: 0
+  });
 
+  this.get('/service-points-users', {
+    servicePointsUsers: [],
+    totalRecords: 0
+  });
+
+  this.get('/staff-slips-storage/staff-slips', {});
+  this.get('/groups', {});
+  this.get('/addresstypes', {});
+  this.get('/users/:id', {});
+  this.get('/perms/users/:id/permissions', {});
 }
