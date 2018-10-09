@@ -1,12 +1,14 @@
-import _ from 'lodash';
+import get from 'lodash/get';
+import minBy from 'lodash/minBy';
 import React from 'react';
 import PropTypes from 'prop-types';
 import dateFormat from 'dateformat';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedTime, injectIntl, intlShape } from 'react-intl';
 import moment from 'moment-timezone';
 import {
   Button,
   DropdownMenu,
+  KeyValue,
   MenuItem,
   UncontrolledDropdown,
   InfoPopover
@@ -57,6 +59,7 @@ class Scan extends React.Component {
   });
 
   static propTypes = {
+    intl: intlShape,
     stripes: PropTypes.object,
     resources: PropTypes.shape({
       scannedItems: PropTypes.arrayOf(
@@ -114,10 +117,7 @@ class Scan extends React.Component {
   constructor(props) {
     super(props);
     this.store = props.stripes.store;
-    this.formatDateTime = props.stripes.formatDateTime;
     this.onClickCheckin = this.onClickCheckin.bind(this);
-    this.timezone = this.props.stripes.timezone;
-    this.dateTime = props.stripes.dateTime;
     this.renderActions = this.renderActions.bind(this);
     this.showInfo = this.showInfo.bind(this);
     this.onSessionEnd = this.onSessionEnd.bind(this);
@@ -148,7 +148,7 @@ class Scan extends React.Component {
 
   showPatronDetails(loan) {
     this.props.mutator.query.update({
-      _path: `/users/view/${_.get(loan, ['patron', 'id'])}`,
+      _path: `/users/view/${get(loan, ['patron', 'id'])}`,
     });
   }
 
@@ -173,7 +173,7 @@ class Scan extends React.Component {
             </MenuItem>
             <MenuItem itemMeta={{ loan, action: 'showPatronDetails' }}>
               <div data-test-patron-details>
-                <Button buttonStyle="dropdownItem" href={`/users/view/${_.get(loan, ['patron', 'id'])}`}>
+                <Button buttonStyle="dropdownItem" href={`/users/view/${get(loan, ['patron', 'id'])}`}>
                   <FormattedMessage id="ui-checkin.patronDetails" />
                 </Button>
               </div>
@@ -195,20 +195,13 @@ class Scan extends React.Component {
     this.systemReturnDate = loan.systemReturnDate;
     const content =
     (
-      <div style={{ textAlign: 'left' }}>
-        <div>
-          <strong>
-            <FormattedMessage id="ui-checkin.processedAs" />
-          </strong>
-        </div>
-        <div>{this.formatDateTime(this.systemReturnDate)}</div>
-        <br />
-        <div>
-          <strong>
-            <FormattedMessage id="ui-checkin.actual" />
-          </strong>
-        </div>
-        <div>{this.formatDateTime(new Date())}</div>
+      <div>
+        <KeyValue label={<FormattedMessage id="ui-checkin.processedAs" />}>
+          <FormattedTime value={this.systemReturnDate} day="numeric" month="numeric" year="numeric" />
+        </KeyValue>
+        <KeyValue label={<FormattedMessage id="ui-checkin.actual" />}>
+          <FormattedTime value={new Date()} day="numeric" month="numeric" year="numeric" />
+        </KeyValue>
       </div>
     );
 
@@ -236,7 +229,8 @@ class Scan extends React.Component {
   }
 
   onClickCheckin(data) {
-    const fillOutMsg = this.props.stripes.intl.formatMessage({ id: 'ui-checkin.fillOut' });
+    const { intl: { formatMessage } } = this.props;
+    const fillOutMsg = formatMessage({ id: 'ui-checkin.fillOut' });
     if (!data.item || !data.item.barcode) {
       throw new SubmissionError({ item: { barcode: fillOutMsg } });
     }
@@ -260,7 +254,8 @@ class Scan extends React.Component {
   }
 
   fetchItemByBarcode(barcode) {
-    const itemNoExistMsg = this.props.stripes.intl.formatMessage({ id: 'ui-checkin.itemNoExist' });
+    const { intl: { formatMessage } } = this.props;
+    const itemNoExistMsg = formatMessage({ id: 'ui-checkin.itemNoExist' });
     const query = `(barcode=="${barcode}")`;
     this.props.mutator.items.reset();
     return this.props.mutator.items.GET({ params: { query } }).then((items) => {
@@ -282,7 +277,8 @@ class Scan extends React.Component {
   }
 
   fetchLoan(query) {
-    const loanNoExistMsg = this.props.stripes.intl.formatMessage({ id: 'ui-checkin.loanNoExist' });
+    const { intl: { formatMessage } } = this.props;
+    const loanNoExistMsg = formatMessage({ id: 'ui-checkin.loanNoExist' });
     this.props.mutator.loans.reset();
     return this.props.mutator.loans.GET({ params: { query } }).then((loans) => {
       if (!loans.length) {
@@ -297,7 +293,7 @@ class Scan extends React.Component {
     this.props.mutator.requests.reset();
     return this.props.mutator.requests.GET({ params: { query } }).then((requests) => {
       if (requests.length) {
-        const nextRequest = _.minBy(requests, 'position');
+        const nextRequest = minBy(requests, 'position');
         this.setState({ nextRequest });
       }
       return loan;
@@ -330,7 +326,8 @@ class Scan extends React.Component {
   }
 
   fetchPatron(loan) {
-    const userNoExistMsg = this.props.stripes.intl.formatMessage({ id: 'ui-checkin.userNoExist' }, { userId: loan.userId });
+    const { intl: { formatMessage } } = this.props;
+    const userNoExistMsg = formatMessage({ id: 'ui-checkin.userNoExist' }, { userId: loan.userId });
     const query = `(id=="${loan.userId}")`;
     this.props.mutator.patrons.reset();
     return this.props.mutator.patrons.GET({ params: { query } }).then((patrons) => {
@@ -403,4 +400,4 @@ class Scan extends React.Component {
   }
 }
 
-export default Scan;
+export default injectIntl(Scan);

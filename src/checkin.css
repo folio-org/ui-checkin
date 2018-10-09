@@ -1,3 +1,10 @@
+@import "@folio/stripes-components/lib/variables";
+
 .modify-datetime-button {
   padding: 0.5em 0;
+}
+
+.field-label {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height);
 }

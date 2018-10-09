@@ -49,13 +49,13 @@ class ConfirmStatusModal extends React.Component {
   }
 
   render() {
-    const { intl, request, onConfirm, onCancel, open, holdSlipTemplate } = this.props;
+    const { intl: { formatMessage }, request, onConfirm, onCancel, open, holdSlipTemplate } = this.props;
     const { printSlip } = this.state;
     const testId = uniqueId('confirm-status-');
-    const cancelLabel = intl.formatMessage({ id: 'ui-checkin.statusModal.back' });
-    const confirmLabel = intl.formatMessage({ id: 'ui-checkin.statusModal.confirm' });
-    const heading = intl.formatMessage({ id: 'ui-checkin.statusModal.heading' });
-    const printHoldSlipLabel = intl.formatMessage({ id: 'ui-checkin.statusModal.printHoldSlip' });
+    const cancelLabel = formatMessage({ id: 'ui-checkin.statusModal.back' });
+    const confirmLabel = formatMessage({ id: 'ui-checkin.statusModal.confirm' });
+    const heading = formatMessage({ id: 'ui-checkin.statusModal.heading' });
+    const printHoldSlipLabel = formatMessage({ id: 'ui-checkin.statusModal.printHoldSlip' });
 
     const data = {
       'Item title': request.item.title,

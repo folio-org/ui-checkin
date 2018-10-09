@@ -1,8 +1,8 @@
-import _ from 'lodash';
+import get from 'lodash/get';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import moment from 'moment-timezone';
 import {
   Paneset,
@@ -23,6 +23,7 @@ import styles from './checkin.css';
 
 class CheckIn extends React.Component {
   static propTypes = {
+    intl: intlShape,
     scannedItems: PropTypes.arrayOf(PropTypes.object),
     handleSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
@@ -30,7 +31,6 @@ class CheckIn extends React.Component {
     showInfo: PropTypes.func,
     onSessionEnd: PropTypes.func,
     renderActions: PropTypes.func,
-    stripes: PropTypes.object,
     change: PropTypes.func
   };
 
@@ -60,8 +60,8 @@ class CheckIn extends React.Component {
   }
 
   showPickers = () => {
-    const { change, stripes: { timezone } } = this.props;
-    const now = moment.tz(timezone);
+    const { change, intl: { timeZone } } = this.props;
+    const now = moment.tz(timeZone);
     change('item.checkinDate', now.format());
     change('item.checkinTime', now.format());
     this.setState({ showPickers: true });
@@ -79,12 +79,12 @@ class CheckIn extends React.Component {
 
     const {
       handleSubmit,
+      intl: { formatDate, formatMessage, formatTime },
       submithandler,
       scannedItems,
       pristine,
       showInfo,
       renderActions,
-      stripes,
     } = this.props;
 
     const { showPickers } = this.state;
@@ -92,41 +92,41 @@ class CheckIn extends React.Component {
     const itemListFormatter = {
       'timeReturned': loan => (
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <div>{stripes.formatTime(`${_.get(loan, ['systemReturnDate'])}`)}</div>
+          <div>{formatTime(`${get(loan, ['systemReturnDate'])}`)}</div>
           <div key={loan.id}>{showInfo(loan)}</div>
         </div>
       ),
       'title': (loan) => {
-        const title = `${_.get(loan, ['item', 'title'])}`;
-        const materialType = `${_.get(loan, ['item', 'materialType', 'name'])}`;
+        const title = `${get(loan, ['item', 'title'])}`;
+        const materialType = `${get(loan, ['item', 'materialType', 'name'])}`;
         return `${title} (${materialType})`;
       },
-      'barcode': loan => `${_.get(loan, ['item', 'barcode'])}`,
-      'location': loan => `${_.get(loan, ['item', 'location', 'name'])}`,
-      'status': loan => `${_.get(loan, ['item', 'status', 'name'])}`,
+      'barcode': loan => `${get(loan, ['item', 'barcode'])}`,
+      'location': loan => `${get(loan, ['item', 'location', 'name'])}`,
+      'status': loan => `${get(loan, ['item', 'status', 'name'])}`,
       'callNumber': (loan) => {
-        const callNumber = `${_.get(loan, ['item', 'callNumber'])}`;
+        const callNumber = `${get(loan, ['item', 'callNumber'])}`;
         return callNumber !== 'undefined' ? callNumber : ' ';
       },
       ' ': loan => renderActions(loan),
     };
 
     const columnMapping = {
-      'timeReturned': stripes.intl.formatMessage({ id: 'ui-checkin.timeReturned' }),
-      'title': stripes.intl.formatMessage({ id: 'ui-checkin.title' }),
-      'barcode': stripes.intl.formatMessage({ id: 'ui-checkin.barcode' }),
-      'callNumber': stripes.intl.formatMessage({ id: 'ui-checkin.callNumber' }),
-      'location': stripes.intl.formatMessage({ id: 'ui-checkin.location' }),
-      'status': stripes.intl.formatMessage({ id: 'ui-checkin.status' }),
+      'timeReturned': formatMessage({ id: 'ui-checkin.timeReturned' }),
+      'title': formatMessage({ id: 'ui-checkin.title' }),
+      'barcode': formatMessage({ id: 'ui-checkin.barcode' }),
+      'callNumber': formatMessage({ id: 'ui-checkin.callNumber' }),
+      'location': formatMessage({ id: 'ui-checkin.location' }),
+      'status': formatMessage({ id: 'ui-checkin.status' }),
       ' ': <IconButton style={{ marginLeft: '-6px' }} icon="gear" aria-label="action settings" />,
     };
-    const scanBarcodeMsg = stripes.intl.formatMessage({ id: 'ui-checkin.scanBarcode' });
-    const itemIdLabel = stripes.intl.formatMessage({ id: 'ui-checkin.itemId' });
-    const processLabel = stripes.intl.formatMessage({ id: 'ui-checkin.processAs' });
-    const checkinDateLabel = stripes.intl.formatMessage({ id: 'ui-checkin.checkinDate' });
-    const checkinTimeLabel = stripes.intl.formatMessage({ id: 'ui-checkin.checkinTime' });
-    const timeReturnedLabel = stripes.intl.formatMessage({ id: 'ui-checkin.timeReturnedLabel' });
-    const noItemsLabel = stripes.intl.formatMessage({ id: 'ui-checkin.noItems' });
+    const scanBarcodeMsg = formatMessage({ id: 'ui-checkin.scanBarcode' });
+    const itemIdLabel = formatMessage({ id: 'ui-checkin.itemId' });
+    const processLabel = formatMessage({ id: 'ui-checkin.processAs' });
+    const checkinDateLabel = formatMessage({ id: 'ui-checkin.checkinDate' });
+    const checkinTimeLabel = formatMessage({ id: 'ui-checkin.checkinTime' });
+    const timeReturnedLabel = formatMessage({ id: 'ui-checkin.timeReturnedLabel' });
+    const noItemsLabel = formatMessage({ id: 'ui-checkin.noItems' });
     return (
       <form onSubmit={handleSubmit(submithandler)}>
         <div style={containerStyle}>
@@ -166,12 +166,12 @@ class CheckIn extends React.Component {
                           label={processLabel}
                           component={Datepicker}
                           autoComplete="off"
-                          format={(value) => (value ? stripes.intl.formatDate(value, { timeZone: 'UTC' }) : '')}
+                          format={(value) => (value ? formatDate(value, { timeZone: 'UTC' }) : '')}
                         />
                       </div>
                     ) : (
                       <div>
-                        <div>{processLabel}</div>
+                        <div className={styles['field-label']}>{processLabel}</div>
                         <button
                           data-test-checkin-modify-date
                           onClick={this.showPickers}
@@ -198,7 +198,7 @@ class CheckIn extends React.Component {
                       </div>
                     ) : (
                       <div>
-                        <div>{timeReturnedLabel}</div>
+                        <div className={styles['field-label']}>{timeReturnedLabel}</div>
                         <button
                           data-test-checkin-modify-time
                           onClick={this.showPickers}
@@ -244,4 +244,4 @@ class CheckIn extends React.Component {
 
 export default reduxForm({
   form: 'CheckIn',
-})(CheckIn);
+})(injectIntl(CheckIn));
