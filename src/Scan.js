@@ -289,7 +289,7 @@ class Scan extends React.Component {
   }
 
   fetchRequest(loan) {
-    const query = `(itemId==${loan.itemId} and requestType=="Hold" and status=="Open - Not yet filled")`;
+    const query = `(itemId==${loan.itemId} and requestType=="Hold" and (status=="Open - Not yet filled" or status=="Open - Awaiting pickup"))`;
     this.props.mutator.requests.reset();
     return this.props.mutator.requests.GET({ params: { query } }).then((requests) => {
       if (requests.length) {
