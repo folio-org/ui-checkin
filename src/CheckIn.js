@@ -55,7 +55,7 @@ class CheckIn extends React.Component {
   }
 
   onSubmit(data) {
-    this.props.submithandler(data, this);
+    return this.props.submithandler(data, this);
   }
 
   handleSessionEnd = () => {
