@@ -37,6 +37,7 @@ class CheckIn extends React.Component {
   constructor() {
     super();
     this.barcodeEl = React.createRef();
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   state = {
@@ -53,10 +54,15 @@ class CheckIn extends React.Component {
     }
   }
 
+  onSubmit(data) {
+    this.props.submithandler(data, this);
+  }
+
   handleSessionEnd = () => {
     const { onSessionEnd } = this.props;
     this.setState({ showPickers: false });
     onSessionEnd();
+    setTimeout(() => this.focusInput());
   }
 
   showPickers = () => {
@@ -80,7 +86,6 @@ class CheckIn extends React.Component {
     const {
       handleSubmit,
       intl: { formatDate, formatMessage, formatTime },
-      submithandler,
       scannedItems,
       pristine,
       showInfo,
@@ -128,7 +133,7 @@ class CheckIn extends React.Component {
     const timeReturnedLabel = formatMessage({ id: 'ui-checkin.timeReturnedLabel' });
     const noItemsLabel = formatMessage({ id: 'ui-checkin.noItems' });
     return (
-      <form onSubmit={handleSubmit(submithandler)}>
+      <form onSubmit={handleSubmit(this.onSubmit)}>
         <div style={containerStyle}>
           <Paneset static>
             <Pane paneTitle="Scanned Items" defaultWidth="100%">
@@ -244,4 +249,5 @@ class CheckIn extends React.Component {
 
 export default reduxForm({
   form: 'CheckIn',
+  withRef: true
 })(injectIntl(CheckIn));

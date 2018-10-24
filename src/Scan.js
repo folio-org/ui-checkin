@@ -213,8 +213,6 @@ class Scan extends React.Component {
   onSessionEnd() {
     this.clearResources();
     this.clearForm('CheckIn');
-    const checkInInst = this.checkInRef.current.wrappedInstance;
-    setTimeout(() => checkInInst.focusInput());
   }
 
   clearForm(formName) {
@@ -228,14 +226,14 @@ class Scan extends React.Component {
     this.props.mutator.loans.reset();
   }
 
-  onClickCheckin(data) {
+  onClickCheckin(data, checkInInst) {
     const { intl: { formatMessage } } = this.props;
     const fillOutMsg = formatMessage({ id: 'ui-checkin.fillOut' });
+
     if (!data.item || !data.item.barcode) {
       throw new SubmissionError({ item: { barcode: fillOutMsg } });
     }
 
-    const checkInInst = this.checkInRef.current.wrappedInstance;
     return this.fetchItemByBarcode(data.item.barcode)
       .then(item => this.fetchLoanByItemId(item.id))
       .then(loan => this.putReturn(loan, data.item.checkinDate, data.item.checkinTime))
