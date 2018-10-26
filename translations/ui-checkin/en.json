@@ -24,6 +24,7 @@
   "itemNoExist": "Item with this barcode does not exist",
   "userNoExist": "User {userId} does not exist",
   "fillOut": "Please fill this out to continue",
+  "scannedItems": "Scanned Items",
   "today": "today",
   "now": "now",
   "statusModal.back": "Back",
