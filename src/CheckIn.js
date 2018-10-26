@@ -132,11 +132,12 @@ class CheckIn extends React.Component {
     const checkinTimeLabel = formatMessage({ id: 'ui-checkin.checkinTime' });
     const timeReturnedLabel = formatMessage({ id: 'ui-checkin.timeReturnedLabel' });
     const noItemsLabel = formatMessage({ id: 'ui-checkin.noItems' });
+    const scannedItemsLabel = formatMessage({ id: 'ui-checkin.scannedItems' });
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <div style={containerStyle}>
           <Paneset static>
-            <Pane paneTitle="Scanned Items" defaultWidth="100%">
+            <Pane paneTitle={scannedItemsLabel} defaultWidth="100%">
               <div style={{ width: '100%', maxWidth: '1280px', margin: 'auto' }}>
                 <Row>
                   <Col xs={9} sm={4}>
