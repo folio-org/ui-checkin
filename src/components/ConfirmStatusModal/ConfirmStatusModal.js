@@ -21,7 +21,6 @@ import css from './ConfirmStatusModal.css';
 class ConfirmStatusModal extends React.Component {
   static propTypes = {
     intl: intlShape.isRequired,
-    onCancel: PropTypes.func.isRequired,
     onConfirm: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
     request: PropTypes.object,
