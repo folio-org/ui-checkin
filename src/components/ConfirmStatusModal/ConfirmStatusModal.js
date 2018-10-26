@@ -13,6 +13,7 @@ import {
   Row,
   Col
 } from '@folio/stripes/components';
+import mfCss from '@folio/stripes-components/lib/ModalFooter/ModalFooter.css';
 
 import { template } from '../../util';
 import css from './ConfirmStatusModal.css';
@@ -49,12 +50,12 @@ class ConfirmStatusModal extends React.Component {
   }
 
   render() {
-    const { intl: { formatMessage }, request, onConfirm, onCancel, open, holdSlipTemplate } = this.props;
+    const { intl: { formatMessage, formatDate }, request,
+      onConfirm, open, holdSlipTemplate } = this.props;
     const { printSlip } = this.state;
     const testId = uniqueId('confirm-status-');
-    const cancelLabel = formatMessage({ id: 'ui-checkin.statusModal.back' });
     const confirmLabel = formatMessage({ id: 'ui-checkin.statusModal.confirm' });
-    const heading = formatMessage({ id: 'ui-checkin.statusModal.heading' });
+    const heading = formatMessage({ id: 'ui-checkin.statusModal.hold.heading' });
     const printHoldSlipLabel = formatMessage({ id: 'ui-checkin.statusModal.printHoldSlip' });
 
     const data = {
@@ -63,7 +64,7 @@ class ConfirmStatusModal extends React.Component {
       'Transaction Id': request.id,
       'Requester last name': request.requester.lastName,
       'Requester first name': request.requester.firstName,
-      'Hold expiration': request.requestDate,
+      'Hold expiration':  formatDate(request.requestDate, { timeZone: 'UTC' }),
       'Item call number': request.itemId,
     };
 
@@ -71,33 +72,24 @@ class ConfirmStatusModal extends React.Component {
     const componentStr = tmpl(data);
     const contentComponent = this.parser.parseWithInstructions(componentStr, () => true, this.rules);
     const footer = (
-      <Row>
-        <Col xs>
-          {printSlip ?
-            <ReactToPrint
-              onBeforePrint={onConfirm}
-              trigger={() => <Button buttonStyle="primary">{confirmLabel}</Button>}
-              content={() => this.printContentRef.current}
-            /> :
-            <Button
-              label={confirmLabel}
-              onClick={onConfirm}
-              id={`clickable-${testId}-confirm`}
-              buttonStyle="primary"
-            >
-              {confirmLabel}
-            </Button>
-          }
+      <div className={mfCss.modalFooterButtons}>
+        {printSlip ?
+          <ReactToPrint
+            onBeforePrint={onConfirm}
+            trigger={() => <Button buttonStyle="primary" buttonClass={mfCss.modalFooterButton}>{confirmLabel}</Button>}
+            content={() => this.printContentRef.current}
+          /> :
           <Button
-            label={cancelLabel}
-            onClick={onCancel}
-            id={`clickable-${testId}-cancel`}
-            buttonStyle="default"
+            label={confirmLabel}
+            onClick={onConfirm}
+            id={`clickable-${testId}-confirm`}
+            buttonStyle="primary"
+            buttonClass={mfCss.modalFooterButton}
           >
-            {cancelLabel}
+            {confirmLabel}
           </Button>
-        </Col>
-      </Row>
+        }
+      </div>
     );
 
     return (
@@ -111,7 +103,7 @@ class ConfirmStatusModal extends React.Component {
       >
         <p>
           <SafeHTMLMessage
-            id="ui-checkin.statusModal.message"
+            id="ui-checkin.statusModal.hold.message"
             values={{ title: request.item.title, barcode: request.item.barcode }}
           />
         </p>
