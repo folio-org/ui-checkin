@@ -25,5 +25,10 @@
     "fillOut": "Please fill this out to continue",
     "meta.title": "Check in",
     "today": "today",
-    "now": "now"
+    "now": "now",
+    "statusModal.back": "Back",
+    "statusModal.confirm": "Confirm",
+    "statusModal.heading": "Confirm \"in transit\" status",
+    "statusModal.message": "<strong>{title}</strong> ({barcode}) will be <strong>in transit</strong>",
+    "statusModal.printHoldSlip": "Print Hold Slip"
 }
