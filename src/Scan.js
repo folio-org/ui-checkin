@@ -126,7 +126,21 @@ class Scan extends React.Component {
     this.onCancel = this.onCancel.bind(this);
 
     this.checkInRef = React.createRef();
-    this.state = {};
+    this.state = {
+      nextRequest: {
+        fulfilmentPreference: 'Hold Shelf',
+        id: 'f659de8a-b63d-4dc8-b90d-37b0a291113a',
+        item: {materialType: { name: "book" }, title: '14 cows for America', barcode: '5860825104574', holdingsRecordId: '7bb1120b-fcb9-4461-bbb0-d2f65c4a3194', instanceId: 'd18cfe5b-dd0b-41cb-903c-8716291a2431' },
+        itemId: 'e8c75c5b-c809-4850-9385-4b02dc0bc550',
+        metadata: {createdDate: '2018-10-04T16:09:48.639+0000', createdByUserId: '4aac4f96-cfb8-57ba-b257-f2630b3f7ccd', updatedDate: '2018-10-04T16:34:24.751+0000', updatedByUserId: '4aac4f96-cfb8-57ba-b257-f2630b3f7ccd'},
+        position: 2,
+        requestDate: '2018-10-04T16:09:46.000+0000',
+        requestType: 'Hold',
+        requester: {firstName: 'Zelma', lastName: 'Brown', middleName: 'Delbert', barcode: '983578324327762'},
+        requesterId: '12d94662-ef24-4a2f-bae3-a785886d0e6f',
+        status: 'Open - Not yet filled'
+      }
+    };
   }
 
   handleOptionsChange(itemMeta, e) {
@@ -292,6 +306,7 @@ class Scan extends React.Component {
     return this.props.mutator.requests.GET({ params: { query } }).then((requests) => {
       if (requests.length) {
         const nextRequest = minBy(requests, 'position');
+        nextRequest.item = loan.item;
         this.setState({ nextRequest });
       }
       return loan;

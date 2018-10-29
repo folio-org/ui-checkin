@@ -1,3 +1,4 @@
+import { get, upperFirst } from 'lodash';
 import React from 'react';
 import { intlShape, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
@@ -30,7 +31,7 @@ class ConfirmStatusModal extends React.Component {
   constructor(props) {
     super(props);
     this.printContentRef = React.createRef();
-    this.state = {};
+    this.state = { printSlip: true };
 
     const processNodeDefinitions = new HtmlToReact.ProcessNodeDefinitions(React);
     this.rules = [
@@ -55,7 +56,9 @@ class ConfirmStatusModal extends React.Component {
     const testId = uniqueId('confirm-status-');
     const confirmLabel = formatMessage({ id: 'ui-checkin.statusModal.confirm' });
     const heading = formatMessage({ id: 'ui-checkin.statusModal.hold.heading' });
-    const printHoldSlipLabel = formatMessage({ id: 'ui-checkin.statusModal.printHoldSlip' });
+    const printSlipLabel = formatMessage({ id: 'ui-checkin.statusModal.printSlip' });
+
+    const item = request.item || {};
 
     const data = {
       'Item title': request.item.title,
@@ -103,15 +106,20 @@ class ConfirmStatusModal extends React.Component {
         <p>
           <SafeHTMLMessage
             id="ui-checkin.statusModal.hold.message"
-            values={{ title: request.item.title, barcode: request.item.barcode }}
+            values={{
+              title: item.title,
+              barcode: item.barcode,
+              materialType: upperFirst(get(item, ['materialType', 'name'], ''))
+            }}
           />
         </p>
         <Row>
           <Col xs>
             <Checkbox
               name="printSlip"
-              label={printHoldSlipLabel}
+              label={printSlipLabel}
               onChange={() => this.setState(prevState => ({ printSlip: !prevState.printSlip }))}
+              checked={this.state.printSlip}
               value={this.state.printSlip}
             />
           </Col>
