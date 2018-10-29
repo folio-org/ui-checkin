@@ -292,6 +292,7 @@ class Scan extends React.Component {
     return this.props.mutator.requests.GET({ params: { query } }).then((requests) => {
       if (requests.length) {
         const nextRequest = minBy(requests, 'position');
+        nextRequest.item = loan.item;
         this.setState({ nextRequest });
       }
       return loan;
