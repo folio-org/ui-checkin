@@ -68,6 +68,7 @@ class ConfirmStatusModal extends React.Component {
       'Requester first name': request.requester.firstName,
       'Hold expiration':  formatDate(request.requestDate, { timeZone: 'UTC' }),
       'Item call number': request.itemId,
+      'Requester barcode': `<Barcode>${request.requester.barcode}</Barcode>`,
     };
 
     const tmpl = template(holdSlipTemplate || '');
