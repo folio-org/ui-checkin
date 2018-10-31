@@ -30,5 +30,11 @@
     "statusModal.confirm": "Confirm",
     "statusModal.heading": "Confirm \"in transit\" status",
     "statusModal.message": "<strong>{title}</strong> ({barcode}) will be <strong>in transit</strong>",
-    "statusModal.printHoldSlip": "Print Hold Slip"
+    "statusModal.printHoldSlip": "Print Hold Slip",
+    "statusModal.transit.heading": "Confirm \"in transit\" status",
+    "statusModal.transit.message": "<strong>{title}</strong> ({barcode}) will be <strong>in transit</strong>",
+    "statusModal.hold.heading": "Awaiting pickup for a request",
+    "statusModal.hold.message": "Place <strong>{title}</strong> (Barcode: {barcode}) on <strong>Hold Shelf</strong> for request.",
+    "scannedItems": "Scanned Items",
+    "statusModal.printSlip": "Print slip"
 }
