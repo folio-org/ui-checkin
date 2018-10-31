@@ -241,14 +241,11 @@ class Scan extends React.Component {
       .then(loan => this.fetchPatron(loan))
       .then(loan => this.fetchRequest(loan))
       .then(loan => this.addScannedItem(loan))
-      .then(() => {
-        this.clearField('CheckIn', 'item.barcode');
-        setTimeout(() => checkInInst.focusInput());
-      })
+      .then(() => this.clearField('CheckIn', 'item.barcode'))
       .catch((error) => {
-        setTimeout(() => checkInInst.focusInput());
         throw new SubmissionError(error);
-      });
+      })
+      .finally(() => checkInInst.focusInput());
   }
 
   fetchItemByBarcode(barcode) {
