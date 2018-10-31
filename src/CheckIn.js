@@ -45,7 +45,7 @@ class CheckIn extends React.Component {
   };
 
   componentDidMount() {
-    setTimeout(() => this.focusInput());
+    this.focusInput();
   }
 
   focusInput() {
@@ -62,7 +62,7 @@ class CheckIn extends React.Component {
     const { onSessionEnd } = this.props;
     this.setState({ showPickers: false });
     onSessionEnd();
-    setTimeout(() => this.focusInput());
+    this.focusInput();
   }
 
   showPickers = () => {
@@ -250,5 +250,4 @@ class CheckIn extends React.Component {
 
 export default reduxForm({
   form: 'CheckIn',
-  withRef: true
 })(injectIntl(CheckIn));
