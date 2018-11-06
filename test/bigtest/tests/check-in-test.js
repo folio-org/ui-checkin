@@ -101,8 +101,8 @@ describe('CheckIn', () => {
     });
 
     it('changes the date and time in the payload', () => {
-      expect(body.systemReturnDate).to.include('2018-04-25');
-      expect(body.systemReturnDate).to.include('16:25:00');
+      expect(body.returnDate).to.include('2018-04-25');
+      expect(body.returnDate).to.include('16:25:00');
     });
   });
 
