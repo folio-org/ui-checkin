@@ -192,12 +192,12 @@ class Scan extends React.Component {
   }
 
   showInfo(loan) {
-    this.systemReturnDate = loan.systemReturnDate;
+    this.returnDate = loan.returnDate;
     const content =
     (
       <div>
         <KeyValue label={<FormattedMessage id="ui-checkin.processedAs" />}>
-          <FormattedTime value={this.systemReturnDate} day="numeric" month="numeric" year="numeric" />
+          <FormattedTime value={this.returnDate} day="numeric" month="numeric" year="numeric" />
         </KeyValue>
         <KeyValue label={<FormattedMessage id="ui-checkin.actual" />}>
           <FormattedTime value={new Date()} day="numeric" month="numeric" year="numeric" />
@@ -313,8 +313,8 @@ class Scan extends React.Component {
   putReturn(loan, checkinDate, checkinTime) {
     //  Get the Date Time combo in UTC to be sent down to the server
     Object.assign(loan, {
-      systemReturnDate: this.buildDateTime(checkinDate, checkinTime),
-      returnDate: dateFormat(new Date(), "yyyy-mm-dd'T'HH:MM:ss'Z'"),
+      returnDate: this.buildDateTime(checkinDate, checkinTime),
+      systemReturnDate: dateFormat(new Date(), "yyyy-mm-dd'T'HH:MM:ss'Z'"),
       status: { name: 'Closed' },
       action: 'checkedin',
     });
