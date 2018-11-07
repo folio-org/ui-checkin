@@ -311,14 +311,18 @@ class Scan extends React.Component {
   }
 
   putReturn(loan, checkinDate, checkinTime) {
+    const { stripes, mutator } = this.props;
+    const checkinServicePointId = get(stripes, ['user', 'user', 'curServicePoint', 'id'], '');
+
     //  Get the Date Time combo in UTC to be sent down to the server
     Object.assign(loan, {
       returnDate: this.buildDateTime(checkinDate, checkinTime),
       systemReturnDate: dateFormat(new Date(), "yyyy-mm-dd'T'HH:MM:ss'Z'"),
       status: { name: 'Closed' },
       action: 'checkedin',
+      checkinServicePointId
     });
-    return this.props.mutator.loans.PUT(loan);
+    return mutator.loans.PUT(loan);
   }
 
   fetchPatron(loan) {
