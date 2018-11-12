@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
+import { hot } from 'react-hot-loader';
 import Scan from './Scan';
 
 class CheckInRouting extends React.Component {
@@ -46,4 +47,4 @@ class CheckInRouting extends React.Component {
   }
 }
 
-export default CheckInRouting;
+export default hot(module)(CheckInRouting);
