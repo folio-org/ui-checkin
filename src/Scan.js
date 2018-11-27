@@ -2,7 +2,6 @@ import get from 'lodash/get';
 import minBy from 'lodash/minBy';
 import React from 'react';
 import PropTypes from 'prop-types';
-import dateFormat from 'dateformat';
 import { FormattedMessage, FormattedTime, injectIntl, intlShape } from 'react-intl';
 import moment from 'moment-timezone';
 import {
@@ -22,27 +21,6 @@ class Scan extends React.Component {
   static manifest = Object.freeze({
     scannedItems: { initialValue: [] },
     query: { initialValue: {} },
-    items: {
-      type: 'okapi',
-      records: 'items',
-      path: 'inventory/items',
-      accumulate: 'true',
-      fetch: false,
-    },
-    patrons: {
-      type: 'okapi',
-      records: 'users',
-      path: 'users',
-      accumulate: 'true',
-      fetch: false,
-    },
-    loans: {
-      type: 'okapi',
-      records: 'loans',
-      accumulate: 'true',
-      path: 'circulation/loans',
-      fetch: false,
-    },
     requests: {
       type: 'okapi',
       records: 'requests',
@@ -56,6 +34,11 @@ class Scan extends React.Component {
       path: 'staff-slips-storage/staff-slips?query=(name=="Hold")',
       throwErrors: false,
     },
+    checkIn: {
+      type: 'okapi',
+      path: 'circulation/check-in-by-barcode',
+      fetch: false,
+    }
   });
 
   static propTypes = {
@@ -67,16 +50,7 @@ class Scan extends React.Component {
           id: PropTypes.string,
         }),
       ),
-      patrons: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      items: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
       requests: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      loans: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
       staffSlips: PropTypes.shape({
@@ -88,18 +62,8 @@ class Scan extends React.Component {
       query: PropTypes.shape({
         update: PropTypes.func,
       }),
-      patrons: PropTypes.shape({
-        GET: PropTypes.func,
-        reset: PropTypes.func,
-      }),
-      items: PropTypes.shape({
-        GET: PropTypes.func,
-        reset: PropTypes.func,
-      }),
-      loans: PropTypes.shape({
-        GET: PropTypes.func,
+      checkIn: PropTypes.shape({
         PUT: PropTypes.func,
-        reset: PropTypes.func,
       }),
       requests: PropTypes.shape({
         GET: PropTypes.func,
@@ -117,7 +81,8 @@ class Scan extends React.Component {
   constructor(props) {
     super(props);
     this.store = props.stripes.store;
-    this.onClickCheckin = this.onClickCheckin.bind(this);
+
+    this.checkIn = this.checkIn.bind(this);
     this.renderActions = this.renderActions.bind(this);
     this.showInfo = this.showInfo.bind(this);
     this.onSessionEnd = this.onSessionEnd.bind(this);
@@ -173,7 +138,7 @@ class Scan extends React.Component {
             </MenuItem>
             <MenuItem itemMeta={{ loan, action: 'showPatronDetails' }}>
               <div data-test-patron-details>
-                <Button buttonStyle="dropdownItem" href={`/users/view/${get(loan, ['patron', 'id'])}`}>
+                <Button buttonStyle="dropdownItem" href={`/users/view/${get(loan, ['userId'])}`}>
                   <FormattedMessage id="ui-checkin.patronDetails" />
                 </Button>
               </div>
@@ -226,20 +191,24 @@ class Scan extends React.Component {
     this.props.mutator.loans.reset();
   }
 
-  onClickCheckin(data, checkInInst) {
+  validate(item) {
     const { intl: { formatMessage } } = this.props;
-    const fillOutMsg = formatMessage({ id: 'ui-checkin.fillOut' });
-
-    if (!data.item || !data.item.barcode) {
-      throw new SubmissionError({ item: { barcode: fillOutMsg } });
+    const barcode = formatMessage({ id: 'ui-checkin.fillOut' });
+    if (!item || !item.barcode) {
+      throw new SubmissionError({ item: { barcode } });
     }
+  }
 
-    return this.fetchItemByBarcode(data.item.barcode)
-      .then(item => this.fetchLoanByItemId(item.id))
-      .then(loan => this.putReturn(loan, data.item.checkinDate, data.item.checkinTime))
-      .then(loan => this.fetchLoanById(loan.id))
-      .then(loan => this.fetchPatron(loan))
-      .then(loan => this.fetchRequest(loan))
+  checkIn(data, checkInInst) {
+    const { mutator: { checkIn }, stripes: { user } } = this.props;
+    const { item } = data;
+    this.validate(item);
+
+    const { barcode, checkinDate, checkinTime } = item;
+    const servicePointId = get(user, ['user', 'curServicePoint', 'id'], '');
+    const checkInDate = this.buildDateTime(checkinDate, checkinTime);
+    return checkIn.POST({ servicePointId, checkInDate, itemBarcode: barcode })
+      .then(({ loan }) => this.fetchRequest(loan))
       .then(loan => this.addScannedItem(loan))
       .then(() => this.clearField('CheckIn', 'item.barcode'))
       .catch((error) => {
@@ -248,55 +217,22 @@ class Scan extends React.Component {
       .finally(() => checkInInst.focusInput());
   }
 
-  fetchItemByBarcode(barcode) {
-    const { intl: { formatMessage } } = this.props;
-    const itemNoExistMsg = formatMessage({ id: 'ui-checkin.itemNoExist' });
-    const query = `(barcode=="${barcode}")`;
-    this.props.mutator.items.reset();
-    return this.props.mutator.items.GET({ params: { query } }).then((items) => {
-      if (!items.length) {
-        this.throwError({ item: { barcode: itemNoExistMsg, _error: 'Scan failed' } });
-      }
-      return items[0];
-    });
-  }
-
-  fetchLoanByItemId(itemId) {
-    const query = `(itemId==${itemId} AND status.name=="Open")`;
-    return this.fetchLoan(query);
-  }
-
-  fetchLoanById(loanId) {
-    const query = `(id==${loanId})`;
-    return this.fetchLoan(query);
-  }
-
-  fetchLoan(query) {
-    const { intl: { formatMessage } } = this.props;
-    const loanNoExistMsg = formatMessage({ id: 'ui-checkin.loanNoExist' });
-    this.props.mutator.loans.reset();
-    return this.props.mutator.loans.GET({ params: { query } }).then((loans) => {
-      if (!loans.length) {
-        this.throwError({ item: { barcode: loanNoExistMsg, _error: 'Scan failed' } });
-      }
-      return loans[0];
-    });
-  }
-
   fetchRequest(loan) {
     const query = `(itemId==${loan.itemId} and requestType=="Hold" and (status=="Open - Not yet filled" or status=="Open - Awaiting pickup"))`;
-    this.props.mutator.requests.reset();
-    return this.props.mutator.requests.GET({ params: { query } }).then((requests) => {
+    const { mutator } = this.props;
+    mutator.requests.reset();
+    return mutator.requests.GET({ params: { query } }).then((requests) => {
       if (requests.length) {
         const nextRequest = minBy(requests, 'position');
         nextRequest.item = loan.item;
         this.setState({ nextRequest });
       }
+
       return loan;
     });
   }
 
-  buildDateTime = (date, time) => {
+  buildDateTime(date, time) {
     if (date && time) {
       let timeString = time;
 
@@ -310,37 +246,10 @@ class Scan extends React.Component {
     }
   }
 
-  putReturn(loan, checkinDate, checkinTime) {
-    const { stripes, mutator } = this.props;
-    const checkinServicePointId = get(stripes, ['user', 'user', 'curServicePoint', 'id'], '');
-
-    //  Get the Date Time combo in UTC to be sent down to the server
-    Object.assign(loan, {
-      returnDate: this.buildDateTime(checkinDate, checkinTime),
-      systemReturnDate: dateFormat(new Date(), "yyyy-mm-dd'T'HH:MM:ss'Z'"),
-      status: { name: 'Closed' },
-      action: 'checkedin',
-      checkinServicePointId
-    });
-    return mutator.loans.PUT(loan);
-  }
-
-  fetchPatron(loan) {
-    const { intl: { formatMessage } } = this.props;
-    const userNoExistMsg = formatMessage({ id: 'ui-checkin.userNoExist' }, { userId: loan.userId });
-    const query = `(id=="${loan.userId}")`;
-    this.props.mutator.patrons.reset();
-    return this.props.mutator.patrons.GET({ params: { query } }).then((patrons) => {
-      if (!patrons.length) {
-        this.throwError({ patron: { identifier: userNoExistMsg, _error: 'Scan failed' } });
-      }
-      return Object.assign(loan, { patron: patrons[0] });
-    });
-  }
-
   addScannedItem(loan) {
-    const scannedItems = [loan].concat(this.props.resources.scannedItems);
-    return this.props.mutator.scannedItems.replace(scannedItems);
+    const { mutator, resources } = this.props;
+    const scannedItems = [loan].concat(resources.scannedItems);
+    return mutator.scannedItems.replace(scannedItems);
   }
 
   clearField(formName, fieldName) {
@@ -380,7 +289,7 @@ class Scan extends React.Component {
           />
         }
         <CheckIn
-          submithandler={this.onClickCheckin}
+          submithandler={this.checkIn}
           renderActions={this.renderActions}
           showInfo={this.showInfo}
           onSessionEnd={this.onSessionEnd}

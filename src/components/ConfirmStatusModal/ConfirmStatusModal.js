@@ -14,6 +14,7 @@ import {
   Row,
   Col
 } from '@folio/stripes/components';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import mfCss from '@folio/stripes-components/lib/ModalFooter/ModalFooter.css';
 
 import { template } from '../../util';
