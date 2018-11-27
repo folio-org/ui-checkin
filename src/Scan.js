@@ -114,7 +114,7 @@ class Scan extends React.Component {
 
   showPatronDetails(loan) {
     this.props.mutator.query.update({
-      _path: `/users/view/${get(loan, ['patron', 'id'])}`,
+      _path: `/users/view/${loan.userId}`,
     });
   }
 
@@ -139,7 +139,7 @@ class Scan extends React.Component {
             </MenuItem>
             <MenuItem itemMeta={{ loan, action: 'showPatronDetails' }}>
               <div data-test-patron-details>
-                <Button buttonStyle="dropdownItem" href={`/users/view/${get(loan, ['userId'])}`}>
+                <Button buttonStyle="dropdownItem" href={`/users/view/${loan.userId}`}>
                   <FormattedMessage id="ui-checkin.patronDetails" />
                 </Button>
               </div>
@@ -187,9 +187,6 @@ class Scan extends React.Component {
 
   clearResources() {
     this.props.mutator.scannedItems.replace([]);
-    this.props.mutator.patrons.reset();
-    this.props.mutator.items.reset();
-    this.props.mutator.loans.reset();
   }
 
   validate(item) {
@@ -248,7 +245,6 @@ class Scan extends React.Component {
 
     throw new SubmissionError({ item: itemError });
   }
-
 
   fetchRequest(loan) {
     const query = `(itemId==${loan.itemId} and requestType=="Hold" and (status=="Open - Not yet filled" or status=="Open - Awaiting pickup"))`;

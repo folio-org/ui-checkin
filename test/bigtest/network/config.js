@@ -55,6 +55,13 @@ export default function configure() {
     return JSON.parse(request.requestBody);
   });
 
+  this.post('/circulation/check-in-by-barcode', ({ loans, items }, request) => {
+    const params = JSON.parse(request.requestBody);
+    const item = items.findBy({ barcode: params.itemBarcode });
+    const loan = loans.findBy({ itemId: item.id });
+    return loan;
+  });
+
   this.get('/holdings-storage/holdings', {
     holdingsRecords: [],
     totalRecords: 0

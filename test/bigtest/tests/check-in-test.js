@@ -1,5 +1,6 @@
 import { beforeEach, describe, it } from '@bigtest/mocha';
 import { expect } from 'chai';
+import { Response } from '@bigtest/mirage';
 
 import setupApplication from '../helpers/setup-application';
 import CheckInInteractor from '../interactors/check-in';
@@ -21,12 +22,25 @@ describe('CheckIn', () => {
   });
 
   describe('entering an invalid barcode', () => {
-    beforeEach(() => {
-      return checkIn.barcode('0000000').clickEnter();
+    beforeEach(function () {
+      this.server.post('/circulation/check-in-by-barcode', (_, request) => {
+        const params = JSON.parse(request.requestBody);
+        return new Response(422, { 'Content-Type': 'application/json' }, {
+          errors: [{
+            message: `No item with barcode ${params.itemBarcode} exists`,
+            parameters: [{
+              key: 'itemBarcode',
+              value: params.itemBarcode
+            }]
+          }]
+        });
+      });
+
+      return checkIn.barcode('000000000').clickEnter();
     });
 
     it('shows an error', () => {
-      expect(checkIn.barcodeError).to.equal('Item with this barcode does not exist');
+      expect(checkIn.barcodeError).to.equal('No item with barcode 000000000 exists');
     });
   });
 
@@ -81,7 +95,7 @@ describe('CheckIn', () => {
   describe('changing check-in date and time', () => {
     let body;
     beforeEach(async function () {
-      this.server.put('/circulation/loans/:id', (_, request) => {
+      this.server.post('/circulation/check-in-by-barcode', (_, request) => {
         body = JSON.parse(request.requestBody);
         return body;
       });
@@ -101,8 +115,8 @@ describe('CheckIn', () => {
     });
 
     it('changes the date and time in the payload', () => {
-      expect(body.returnDate).to.include('2018-04-25');
-      expect(body.returnDate).to.include('16:25:00');
+      expect(body.checkInDate).to.include('2018-04-25');
+      expect(body.checkInDate).to.include('16:25:00');
     });
   });
 

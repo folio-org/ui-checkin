@@ -6,17 +6,8 @@ export default ApplicationSerializer.extend({
 
   serialize(...args) {
     const json = ApplicationSerializer.prototype.serialize.apply(this, args);
-
-    json.loans.forEach((loan, i) => {
-      if (loan.item) {
-        json.loans[i].itemId = json.loans[i].item.id;
-      }
-
-      if (loan.user) {
-        json.loans[i].userId = json.loans[i].user.id;
-      }
-    });
-
+    json.loan.userId = json.loan.user.id;
+    json.loan.itemId = json.loan.item.id;
     return json;
   }
 });
