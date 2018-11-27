@@ -211,21 +211,22 @@ class Scan extends React.Component {
       .then(loan => this.addScannedItem(loan))
       .then(() => this.clearField('CheckIn', 'item.barcode'))
       .catch((resp) => {
-        const contentType = resp.headers.get('Content-Type');
-        if (contentType && contentType.startsWith('application/json')) {
-          return resp.json().then(error => {
-            this.handleErrors(error);
-          });
+        const contentType = resp.headers.get('Content-Type') || '';
+        if (contentType.startsWith('application/json')) {
+          return resp.json().then(error => this.handleJsonError(error));
         } else {
-          return resp.text().then(error => {
-            alert(error); // eslint-disable-line no-alert
-          });
+          return resp.text().then(error => this.handleTextError(error));
         }
       })
       .finally(() => checkInInst.focusInput());
   }
 
-  handleErrors({
+  handleTextError(error) {
+    const item = { barcode: error };
+    throw new SubmissionError({ item });
+  }
+
+  handleJsonError({
     errors: [
       {
         parameters,
