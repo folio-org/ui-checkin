@@ -63,7 +63,7 @@ class Scan extends React.Component {
         update: PropTypes.func,
       }),
       checkIn: PropTypes.shape({
-        PUT: PropTypes.func,
+        POST: PropTypes.func,
       }),
       requests: PropTypes.shape({
         GET: PropTypes.func,
