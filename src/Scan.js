@@ -38,6 +38,7 @@ class Scan extends React.Component {
       type: 'okapi',
       path: 'circulation/check-in-by-barcode',
       fetch: false,
+      throwErrors: false,
     }
   });
 
@@ -207,15 +208,47 @@ class Scan extends React.Component {
     const { barcode, checkinDate, checkinTime } = item;
     const servicePointId = get(user, ['user', 'curServicePoint', 'id'], '');
     const checkInDate = this.buildDateTime(checkinDate, checkinTime);
+
     return checkIn.POST({ servicePointId, checkInDate, itemBarcode: barcode })
       .then(({ loan }) => this.fetchRequest(loan))
       .then(loan => this.addScannedItem(loan))
       .then(() => this.clearField('CheckIn', 'item.barcode'))
-      .catch((error) => {
-        throw new SubmissionError(error);
+      .catch((resp) => {
+        const contentType = resp.headers.get('Content-Type');
+        if (contentType && contentType.startsWith('application/json')) {
+          return resp.json().then(error => {
+            this.handleErrors(error);
+          });
+        } else {
+          return resp.text().then(error => {
+            alert(error); // eslint-disable-line no-alert
+          });
+        }
       })
       .finally(() => checkInInst.focusInput());
   }
+
+  handleErrors({
+    errors: [
+      {
+        parameters,
+        message,
+      } = {},
+    ] = [],
+  }) {
+    const itemError = (!parameters || !parameters.length)
+      ? {
+        barcode: <FormattedMessage id="ui-checkin.unknownError" />,
+        _error: 'unknownError',
+      }
+      : {
+        barcode: message,
+        _error: parameters[0].key,
+      };
+
+    throw new SubmissionError({ item: itemError });
+  }
+
 
   fetchRequest(loan) {
     const query = `(itemId==${loan.itemId} and requestType=="Hold" and (status=="Open - Not yet filled" or status=="Open - Awaiting pickup"))`;
