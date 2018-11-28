@@ -36,5 +36,6 @@
     "statusModal.hold.heading": "Awaiting pickup for a request",
     "statusModal.hold.message": "Place <strong>{title}</strong> (Barcode: {barcode}) on <strong>Hold Shelf</strong> for request.",
     "scannedItems": "Scanned Items",
-    "statusModal.printSlip": "Print slip"
+    "statusModal.printSlip": "Print slip",
+    "unknownError": "Unknown error occurred"
 }

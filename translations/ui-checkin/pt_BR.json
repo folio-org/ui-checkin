@@ -36,5 +36,6 @@
     "statusModal.hold.heading": "Aguardando a retirada de uma reserva",
     "statusModal.hold.message": "Coloque <strong>{title}</strong> (Código de barras: {barcode}) na <strong>Estante</strong> de reserva.",
     "scannedItems": "Itens escaneados",
-    "statusModal.printSlip": "Ficha de reserva"
+    "statusModal.printSlip": "Ficha de reserva",
+    "unknownError": "Ocorreu um erro desconhecido"
 }
