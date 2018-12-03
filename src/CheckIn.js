@@ -2,7 +2,12 @@ import get from 'lodash/get';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import {
+  FormattedMessage,
+  FormattedTime,
+  injectIntl,
+  intlShape
+} from 'react-intl';
 import moment from 'moment-timezone';
 import {
   Paneset,
@@ -16,7 +21,12 @@ import {
   Layout,
   Row,
   Col,
-  Icon
+  Icon,
+  UncontrolledDropdown,
+  InfoPopover,
+  MenuItem,
+  KeyValue,
+  DropdownMenu
 } from '@folio/stripes/components';
 
 import styles from './checkin.css';
@@ -28,16 +38,22 @@ class CheckIn extends React.Component {
     handleSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submithandler: PropTypes.func,
-    showInfo: PropTypes.func,
     onSessionEnd: PropTypes.func,
-    renderActions: PropTypes.func,
-    change: PropTypes.func
+    change: PropTypes.func,
+    mutator: PropTypes.shape({
+      query: PropTypes.shape({
+        update: PropTypes.func,
+      }),
+    }),
   };
 
   constructor() {
     super();
     this.barcodeEl = React.createRef();
     this.onSubmit = this.onSubmit.bind(this);
+    this.showInfo = this.showInfo.bind(this);
+    this.renderActions = this.renderActions.bind(this);
+    this.handleOptionsChange = this.handleOptionsChange.bind(this);
   }
 
   state = {
@@ -73,6 +89,99 @@ class CheckIn extends React.Component {
     this.setState({ showPickers: true });
   }
 
+  handleOptionsChange(itemMeta, e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const { loan, action } = itemMeta;
+
+    if (action && this[action]) {
+      this[action](loan);
+    }
+  }
+
+  showLoanDetails(loan) {
+    this.props.mutator.query.update({
+      _path: `/users/view/${loan.userId}?layer=loan&loan=${loan.id}`,
+    });
+  }
+
+  showPatronDetails(loan) {
+    this.props.mutator.query.update({
+      _path: `/users/view/${loan.userId}`,
+    });
+  }
+
+  showItemDetails(loan) {
+    const path = loan.itemId
+      ? `/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`
+      : `/inventory/view/${loan.item.instanceId}`;
+
+    this.props.mutator.query.update({ _path: path });
+  }
+
+  showInfo(loan) {
+    const content =
+    (
+      <div>
+        <KeyValue label={<FormattedMessage id="ui-checkin.processedAs" />}>
+          <FormattedTime value={loan.returnDate} day="numeric" month="numeric" year="numeric" />
+        </KeyValue>
+        <KeyValue label={<FormattedMessage id="ui-checkin.actual" />}>
+          <FormattedTime value={new Date()} day="numeric" month="numeric" year="numeric" />
+        </KeyValue>
+      </div>
+    );
+
+    return (
+      <InfoPopover content={content} />
+    );
+  }
+
+  renderActions(loan) {
+    return (
+      <div data-test-elipse-select>
+        <UncontrolledDropdown onSelectItem={this.handleOptionsChange}>
+          <Button data-role="toggle" buttonStyle="hover dropdownActive"><strong>•••</strong></Button>
+          <DropdownMenu data-role="menu" overrideStyle={{ padding: '6px 0' }}>
+            {loan.userId &&
+              <MenuItem itemMeta={{ loan, action: 'showLoanDetails' }}>
+                <div data-test-loan-details>
+                  <Button buttonStyle="dropdownItem" href={`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`}>
+                    <FormattedMessage id="ui-checkin.loanDetails" />
+                  </Button>
+                </div>
+              </MenuItem>
+            }
+
+            {loan.userId &&
+              <MenuItem itemMeta={{ loan, action: 'showPatronDetails' }}>
+                <div data-test-patron-details>
+                  <Button buttonStyle="dropdownItem" href={`/users/view/${loan.userId}`}>
+                    <FormattedMessage id="ui-checkin.patronDetails" />
+                  </Button>
+                </div>
+              </MenuItem>
+            }
+
+            <MenuItem itemMeta={{ loan, action: 'showItemDetails' }}>
+              <div data-test-item-details>
+                <Button
+                  buttonStyle="dropdownItem"
+                  href={loan.itemId
+                    ? `/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`
+                    : `/inventory/view/${loan.item.instanceId}`}
+                >
+                  <FormattedMessage id="ui-checkin.itemDetails" />
+                </Button>
+              </div>
+            </MenuItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+      </div>
+    );
+  }
+
   render() {
     const containerStyle = {
       display: 'flex',
@@ -88,18 +197,17 @@ class CheckIn extends React.Component {
       intl: { formatDate, formatMessage, formatTime },
       scannedItems,
       pristine,
-      showInfo,
-      renderActions,
     } = this.props;
 
     const { showPickers } = this.state;
 
     const itemListFormatter = {
-      'timeReturned': loan => (
+      'timeReturned': loan => ((loan.returnDate) ?
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <div>{formatTime(`${get(loan, ['returnDate'])}`)}</div>
-          <div key={loan.id}>{showInfo(loan)}</div>
-        </div>
+          <div key={loan.id}>{this.showInfo(loan)}</div>
+        </div> :
+        null
       ),
       'title': (loan) => {
         const title = `${get(loan, ['item', 'title'])}`;
@@ -113,7 +221,7 @@ class CheckIn extends React.Component {
         const callNumber = `${get(loan, ['item', 'callNumber'])}`;
         return callNumber !== 'undefined' ? callNumber : ' ';
       },
-      ' ': loan => renderActions(loan),
+      ' ': loan => this.renderActions(loan),
     };
 
     const columnMapping = {

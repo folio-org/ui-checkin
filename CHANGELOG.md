@@ -5,6 +5,7 @@
 * Print hold slip at check in. Fixes UICHKIN-16.
 * Extract hardcoded labels. Fixes UICHKIN-14.
 * Use the new check-in-by-barcode API. Fixes UICHKIN-59.
+* Handle check in for items that are In transit. Fixes UICHKIN-44.
 
 ## [1.3.0](https://github.com/folio-org/ui-checkin/tree/v1.3.0) (2018-10-04)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.2.0...v1.3.0)
