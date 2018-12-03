@@ -2,17 +2,8 @@ import get from 'lodash/get';
 import minBy from 'lodash/minBy';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, FormattedTime, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import moment from 'moment-timezone';
-import {
-  Button,
-  DropdownMenu,
-  KeyValue,
-  MenuItem,
-  UncontrolledDropdown,
-  InfoPopover
-} from '@folio/stripes/components';
-
 import { SubmissionError, change, reset } from 'redux-form';
 import CheckIn from './CheckIn';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
@@ -84,96 +75,12 @@ class Scan extends React.Component {
     this.store = props.stripes.store;
 
     this.checkIn = this.checkIn.bind(this);
-    this.renderActions = this.renderActions.bind(this);
-    this.showInfo = this.showInfo.bind(this);
     this.onSessionEnd = this.onSessionEnd.bind(this);
-    this.handleOptionsChange = this.handleOptionsChange.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
     this.onCancel = this.onCancel.bind(this);
 
     this.checkInRef = React.createRef();
     this.state = {};
-  }
-
-  handleOptionsChange(itemMeta, e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const { loan, action } = itemMeta;
-
-    if (action && this[action]) {
-      this[action](loan);
-    }
-  }
-
-  showLoanDetails(loan) {
-    this.props.mutator.query.update({
-      _path: `/users/view/${loan.userId}?layer=loan&loan=${loan.id}`,
-    });
-  }
-
-  showPatronDetails(loan) {
-    this.props.mutator.query.update({
-      _path: `/users/view/${loan.userId}`,
-    });
-  }
-
-  showItemDetails(loan) {
-    this.props.mutator.query.update({
-      _path: `/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`,
-    });
-  }
-
-  renderActions(loan) {
-    return (
-      <div data-test-elipse-select>
-        <UncontrolledDropdown onSelectItem={this.handleOptionsChange}>
-          <Button data-role="toggle" buttonStyle="hover dropdownActive"><strong>•••</strong></Button>
-          <DropdownMenu data-role="menu" overrideStyle={{ padding: '6px 0' }}>
-            <MenuItem itemMeta={{ loan, action: 'showLoanDetails' }}>
-              <div data-test-loan-details>
-                <Button buttonStyle="dropdownItem" href={`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`}>
-                  <FormattedMessage id="ui-checkin.loanDetails" />
-                </Button>
-              </div>
-            </MenuItem>
-            <MenuItem itemMeta={{ loan, action: 'showPatronDetails' }}>
-              <div data-test-patron-details>
-                <Button buttonStyle="dropdownItem" href={`/users/view/${loan.userId}`}>
-                  <FormattedMessage id="ui-checkin.patronDetails" />
-                </Button>
-              </div>
-            </MenuItem>
-            <MenuItem itemMeta={{ loan, action: 'showItemDetails' }}>
-              <div data-test-item-details>
-                <Button buttonStyle="dropdownItem" href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`}>
-                  <FormattedMessage id="ui-checkin.itemDetails" />
-                </Button>
-              </div>
-            </MenuItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
-      </div>
-    );
-  }
-
-  showInfo(loan) {
-    this.returnDate = loan.returnDate;
-    const content =
-    (
-      <div>
-        <KeyValue label={<FormattedMessage id="ui-checkin.processedAs" />}>
-          <FormattedTime value={this.returnDate} day="numeric" month="numeric" year="numeric" />
-        </KeyValue>
-        <KeyValue label={<FormattedMessage id="ui-checkin.actual" />}>
-          <FormattedTime value={new Date()} day="numeric" month="numeric" year="numeric" />
-        </KeyValue>
-      </div>
-    );
-
-    return (
-      <InfoPopover content={content} />
-    );
   }
 
   onSessionEnd() {
@@ -205,10 +112,15 @@ class Scan extends React.Component {
     const { barcode, checkinDate, checkinTime } = item;
     const servicePointId = get(user, ['user', 'curServicePoint', 'id'], '');
     const checkInDate = this.buildDateTime(checkinDate, checkinTime);
+    const requestData = {
+      servicePointId,
+      checkInDate,
+      itemBarcode: barcode,
+    };
 
-    return checkIn.POST({ servicePointId, checkInDate, itemBarcode: barcode })
-      .then(({ loan }) => this.fetchRequest(loan))
-      .then(loan => this.addScannedItem(loan))
+    return checkIn.POST(requestData)
+      .then((checkinResp) => this.fetchRequest(checkinResp))
+      .then(checkinResp => this.addScannedItem(checkinResp))
       .then(() => this.clearField('CheckIn', 'item.barcode'))
       .catch((resp) => {
         const contentType = resp.headers.get('Content-Type') || '';
@@ -247,7 +159,10 @@ class Scan extends React.Component {
     throw new SubmissionError({ item: itemError });
   }
 
-  fetchRequest(loan) {
+  fetchRequest(checkinResp) {
+    const { loan } = checkinResp;
+    if (!loan) return checkinResp;
+
     const query = `(itemId==${loan.itemId} and requestType=="Hold" and (status=="Open - Not yet filled" or status=="Open - Awaiting pickup"))`;
     const { mutator } = this.props;
     mutator.requests.reset();
@@ -258,7 +173,7 @@ class Scan extends React.Component {
         this.setState({ nextRequest });
       }
 
-      return loan;
+      return checkinResp;
     });
   }
 
@@ -276,9 +191,10 @@ class Scan extends React.Component {
     }
   }
 
-  addScannedItem(loan) {
+  addScannedItem({ loan, item }) {
     const { mutator, resources } = this.props;
-    const scannedItems = [loan].concat(resources.scannedItems);
+    const scannedItem = loan || { item };
+    const scannedItems = [scannedItem].concat(resources.scannedItems);
     return mutator.scannedItems.replace(scannedItems);
   }
 
@@ -320,8 +236,6 @@ class Scan extends React.Component {
         }
         <CheckIn
           submithandler={this.checkIn}
-          renderActions={this.renderActions}
-          showInfo={this.showInfo}
           onSessionEnd={this.onSessionEnd}
           scannedItems={scannedItems}
           ref={this.checkInRef}
