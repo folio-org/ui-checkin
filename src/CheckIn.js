@@ -2,7 +2,12 @@ import get from 'lodash/get';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
-import { FormattedMessage, FormattedTime, injectIntl, intlShape } from 'react-intl';
+import {
+  FormattedMessage,
+  FormattedTime,
+  injectIntl,
+  intlShape
+} from 'react-intl';
 import moment from 'moment-timezone';
 import {
   Paneset,
