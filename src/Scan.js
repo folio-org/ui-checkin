@@ -268,10 +268,10 @@ class Scan extends React.Component {
     const { intl: { formatDate } } = this.props;
     const { item = {} } = loan;
     const authors = (item.contributors || []).map(c => c.name).join(', ');
-
+    const destinationServicePoint = get(item, 'inTransitDestinationServicePoint.name', '');
     const slipData = {
       'From Service Point': get(item, 'location.name', ''),
-      'To Service Point': get(item, 'inTransitDestinationServicePoint.name', ''),
+      'To Service Point': destinationServicePoint,
       'Item title': item.title,
       'Item barcode': `<Barcode>${item.barcode}</Barcode>`,
       'Item author(s)': authors || '',
@@ -296,7 +296,7 @@ class Scan extends React.Component {
           title: item.title,
           barcode: item.barcode,
           materialType: upperFirst(get(item, ['materialType', 'name'], '')),
-          servicePoint: get(item, ['inTransitDestinationServicePoint', 'name'])
+          servicePoint: destinationServicePoint
         }}
       />
     );
