@@ -71,7 +71,7 @@ class ConfirmStatusModal extends React.Component {
         {printSlip ?
           <ReactToPrint
             onBeforePrint={onConfirm}
-            trigger={() => <Button label={label} buttonStyle="primary" buttonClass={mfCss.modalFooterButton}>{closeLabel}</Button>}
+            trigger={() => <Button buttonStyle="primary" buttonClass={mfCss.modalFooterButton}>{closeLabel}</Button>}
             content={() => this.printContentRef.current}
           /> :
           <Button
