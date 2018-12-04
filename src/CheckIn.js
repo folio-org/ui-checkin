@@ -216,7 +216,11 @@ class CheckIn extends React.Component {
       },
       'barcode': loan => `${get(loan, ['item', 'barcode'])}`,
       'location': loan => `${get(loan, ['item', 'location', 'name'])}`,
-      'status': loan => `${get(loan, ['item', 'status', 'name'])}`,
+      'status': loan => {
+        const status = `${get(loan, ['item', 'status', 'name'])}`;
+        const inTransitSp = get(loan, ['item', 'inTransitDestinationServicePoint', 'name']);
+        return (inTransitSp) ? `${status} - ${inTransitSp}` : status;
+      },
       'callNumber': (loan) => {
         const callNumber = `${get(loan, ['item', 'callNumber'])}`;
         return callNumber !== 'undefined' ? callNumber : ' ';
