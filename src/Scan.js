@@ -1,12 +1,15 @@
-import get from 'lodash/get';
-import minBy from 'lodash/minBy';
+import { get, minBy, upperFirst } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import moment from 'moment-timezone';
 import { SubmissionError, change, reset } from 'redux-form';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
+
 import CheckIn from './CheckIn';
+import { statuses } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
+// import { getHoldSlipData, getTransitionData } from './util';
 
 class Scan extends React.Component {
   static manifest = Object.freeze({
@@ -22,7 +25,7 @@ class Scan extends React.Component {
     staffSlips: {
       type: 'okapi',
       records: 'staffSlips',
-      path: 'staff-slips-storage/staff-slips?query=(name=="Hold")',
+      path: 'staff-slips-storage/staff-slips',
       throwErrors: false,
     },
     checkIn: {
@@ -77,7 +80,6 @@ class Scan extends React.Component {
     this.checkIn = this.checkIn.bind(this);
     this.onSessionEnd = this.onSessionEnd.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
-    this.onCancel = this.onCancel.bind(this);
 
     this.checkInRef = React.createRef();
     this.state = {};
@@ -195,6 +197,11 @@ class Scan extends React.Component {
     const { mutator, resources } = this.props;
     const scannedItem = loan || { item };
     const scannedItems = [scannedItem].concat(resources.scannedItems);
+
+    if (get(scannedItem, 'item.status.name') === statuses.IN_TRANSIT) {
+      this.setState({ transitItem: scannedItem });
+    }
+
     return mutator.scannedItems.replace(scannedItems);
   }
 
@@ -208,32 +215,114 @@ class Scan extends React.Component {
   }
 
   onConfirm() {
-    // TODO: handle transit
-    this.setState({ nextRequest: null });
+    this.setState({
+      nextRequest: null,
+      transitItem: null
+    });
   }
 
-  onCancel() {
-    this.setState({ nextRequest: null });
+  getSlipTmpl(type) {
+    const { resources } = this.props;
+    const staffSlips = (resources.staffSlips || {}).records || [];
+    const staffSlip = staffSlips.find(slip => slip.name.toLowerCase() === type);
+    return get(staffSlip, ['template'], '');
+  }
+
+  renderHoldModal(request) {
+    const { intl: { formatDate } } = this.props;
+    const { item = {}, requester } = request;
+    const slipData = {
+      'Item title': item.title,
+      'Item barcode': `<Barcode>${item.barcode}</Barcode>`,
+      'Transaction Id': request.id,
+      'Requester last name': requester.lastName,
+      'Requester first name': requester.firstName,
+      'Hold expiration':  formatDate(request.requestDate, { timeZone: 'UTC' }),
+      'Item call number': request.itemId,
+      'Requester barcode': `<Barcode>${requester.barcode}</Barcode>`,
+    };
+
+    const message = (
+      <SafeHTMLMessage
+        id="ui-checkin.statusModal.hold.message"
+        values={{
+          title: item.title,
+          barcode: item.barcode,
+          materialType: upperFirst(get(item, ['materialType', 'name'], ''))
+        }}
+      />
+    );
+
+    return (
+      <ConfirmStatusModal
+        open={!!request}
+        onConfirm={this.onConfirm}
+        slipTemplate={this.getSlipTmpl('hold')}
+        slipData={slipData}
+        label={<FormattedMessage id="ui-checkin.statusModal.hold.heading" />}
+        message={message}
+      />
+    );
+  }
+
+  renderTransitionModal(loan) {
+    const { intl: { formatDate } } = this.props;
+    const { item = {} } = loan;
+    const authors = (item.contributors || []).map(c => c.name).join(', ');
+
+    const slipData = {
+      'From Service Point': get(item, 'location.name', ''),
+      'To Service Point': get(item, 'inTransitDestinationServicePoint.name', ''),
+      'Item title': item.title,
+      'Item barcode': `<Barcode>${item.barcode}</Barcode>`,
+      'Item author(s)': authors || '',
+      'Item call number': item.callNumber,
+      'Staff slip name': 'Transit',
+      // 'Requester barcode': '<Barcode>TODO</Barcode>',
+      // 'Request/transaction number': 'TODO',
+    };
+
+    if (loan.dueDate) {
+      slipData['Needed for'] = formatDate(loan.dueDate, { timeZone: 'UTC' });
+    }
+
+    if (loan.loanDate) {
+      slipData.Date = formatDate(loan.loanDate, { timeZone: 'UTC' });
+    }
+
+    const message = (
+      <SafeHTMLMessage
+        id="ui-checkin.statusModal.transit.message"
+        values={{
+          title: item.title,
+          barcode: item.barcode,
+          materialType: upperFirst(get(item, ['materialType', 'name'], '')),
+          servicePoint: get(item, ['inTransitDestinationServicePoint', 'name'])
+        }}
+      />
+    );
+
+    return (
+      <ConfirmStatusModal
+        open={!!loan}
+        onConfirm={this.onConfirm}
+        slipTemplate={this.getSlipTmpl('transit')}
+        slipData={slipData}
+        label={<FormattedMessage id="ui-checkin.statusModal.transit.heading" />}
+        message={message}
+      />
+    );
   }
 
   render() {
     const { resources } = this.props;
-    const { nextRequest } = this.state;
     const scannedItems = resources.scannedItems || [];
-    const staffSlips = (resources.staffSlips || {}).records || [];
-    const holdSlip = staffSlips[0] || {};
+    const { nextRequest, transitItem } = this.state;
 
     return (
       <div data-test-check-in-scan>
-        {nextRequest &&
-          <ConfirmStatusModal
-            open={!!nextRequest}
-            request={nextRequest}
-            onConfirm={this.onConfirm}
-            holdSlipTemplate={holdSlip.template}
-            onCancel={this.onCancel}
-          />
-        }
+        {nextRequest && this.renderHoldModal(nextRequest)}
+        {transitItem && this.renderTransitionModal(transitItem)}
         <CheckIn
           submithandler={this.checkIn}
           onSessionEnd={this.onSessionEnd}

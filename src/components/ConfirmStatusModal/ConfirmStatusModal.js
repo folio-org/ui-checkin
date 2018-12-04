@@ -1,12 +1,10 @@
-import { get, upperFirst } from 'lodash';
-import React from 'react';
-import { intlShape, injectIntl } from 'react-intl';
-import PropTypes from 'prop-types';
 import uniqueId from 'lodash/uniqueId';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import PropTypes from 'prop-types';
 import ReactToPrint from 'react-to-print';
 import HtmlToReact, { Parser } from 'html-to-react';
 import Barcode from 'react-barcode';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
   Modal,
   Button,
@@ -22,11 +20,12 @@ import css from './ConfirmStatusModal.css';
 
 class ConfirmStatusModal extends React.Component {
   static propTypes = {
-    intl: intlShape.isRequired,
+    label: PropTypes.node.isRequired,
+    message: PropTypes.node.isRequired,
     onConfirm: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
-    request: PropTypes.object,
-    holdSlipTemplate: PropTypes.string,
+    slipTemplate: PropTypes.string,
+    slipData: PropTypes.object,
   };
 
   constructor(props) {
@@ -51,46 +50,38 @@ class ConfirmStatusModal extends React.Component {
   }
 
   render() {
-    const { intl: { formatMessage, formatDate }, request,
-      onConfirm, open, holdSlipTemplate } = this.props;
+    const {
+      onConfirm,
+      open,
+      slipTemplate = '',
+      slipData,
+      label,
+      message,
+    } = this.props;
     const { printSlip } = this.state;
+
     const testId = uniqueId('confirm-status-');
-    const confirmLabel = formatMessage({ id: 'ui-checkin.statusModal.confirm' });
-    const heading = formatMessage({ id: 'ui-checkin.statusModal.hold.heading' });
-    const printSlipLabel = formatMessage({ id: 'ui-checkin.statusModal.printSlip' });
-
-    const item = request.item || {};
-
-    const data = {
-      'Item title': request.item.title,
-      'Item barcode': `<Barcode>${request.item.barcode}</Barcode>`,
-      'Transaction Id': request.id,
-      'Requester last name': request.requester.lastName,
-      'Requester first name': request.requester.firstName,
-      'Hold expiration':  formatDate(request.requestDate, { timeZone: 'UTC' }),
-      'Item call number': request.itemId,
-      'Requester barcode': `<Barcode>${request.requester.barcode}</Barcode>`,
-    };
-
-    const tmpl = template(holdSlipTemplate || '');
-    const componentStr = tmpl(data);
+    const printSlipLabel = (<FormattedMessage id="ui-checkin.statusModal.printSlip" />);
+    const closeLabel = (<FormattedMessage id="ui-checkin.statusModal.close" />);
+    const tmpl = template(slipTemplate);
+    const componentStr = tmpl(slipData);
     const contentComponent = this.parser.parseWithInstructions(componentStr, () => true, this.rules);
     const footer = (
       <div className={mfCss.modalFooterButtons}>
         {printSlip ?
           <ReactToPrint
             onBeforePrint={onConfirm}
-            trigger={() => <Button buttonStyle="primary" buttonClass={mfCss.modalFooterButton}>{confirmLabel}</Button>}
+            trigger={() => <Button label={label} buttonStyle="primary" buttonClass={mfCss.modalFooterButton}>{closeLabel}</Button>}
             content={() => this.printContentRef.current}
           /> :
           <Button
-            label={confirmLabel}
+            label={label}
             onClick={onConfirm}
             id={`clickable-${testId}-confirm`}
             buttonStyle="primary"
             buttonClass={mfCss.modalFooterButton}
           >
-            {confirmLabel}
+            {closeLabel}
           </Button>
         }
       </div>
@@ -100,21 +91,12 @@ class ConfirmStatusModal extends React.Component {
       <Modal
         open={open}
         id={testId}
-        label={heading}
+        label={label}
         scope="module"
         size="small"
         footer={footer}
       >
-        <p>
-          <SafeHTMLMessage
-            id="ui-checkin.statusModal.hold.message"
-            values={{
-              title: item.title,
-              barcode: item.barcode,
-              materialType: upperFirst(get(item, ['materialType', 'name'], ''))
-            }}
-          />
-        </p>
+        <p>{message}</p>
         <Row>
           <Col xs>
             <Checkbox
@@ -137,4 +119,4 @@ class ConfirmStatusModal extends React.Component {
   }
 }
 
-export default injectIntl(ConfirmStatusModal);
+export default ConfirmStatusModal;
