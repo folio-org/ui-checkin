@@ -9,7 +9,6 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import CheckIn from './CheckIn';
 import { statuses } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
-// import { getHoldSlipData, getTransitionData } from './util';
 
 class Scan extends React.Component {
   static manifest = Object.freeze({
