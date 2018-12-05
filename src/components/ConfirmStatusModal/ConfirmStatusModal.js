@@ -104,7 +104,7 @@ class ConfirmStatusModal extends React.Component {
               label={printSlipLabel}
               onChange={() => this.setState(prevState => ({ printSlip: !prevState.printSlip }))}
               checked={this.state.printSlip}
-              value={this.state.printSlip}
+              value={this.state.printSlip + ''}
             />
           </Col>
         </Row>

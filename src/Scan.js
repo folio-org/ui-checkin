@@ -120,18 +120,30 @@ class Scan extends React.Component {
     };
 
     return checkIn.POST(requestData)
-      .then((checkinResp) => this.fetchRequest(checkinResp))
+      .then(checkinResp => this.processResponse(checkinResp))
       .then(checkinResp => this.addScannedItem(checkinResp))
       .then(() => this.clearField('CheckIn', 'item.barcode'))
-      .catch((resp) => {
-        const contentType = resp.headers.get('Content-Type') || '';
-        if (contentType.startsWith('application/json')) {
-          return resp.json().then(error => this.handleJsonError(error));
-        } else {
-          return resp.text().then(error => this.handleTextError(error));
-        }
-      })
+      .catch(resp => this.processError(resp))
       .finally(() => checkInInst.focusInput());
+  }
+
+  processResponse(checkinResp) {
+    const { loan, item } = checkinResp;
+    const transitItem = loan || { item };
+    if (get(transitItem, 'item.status.name') === statuses.IN_TRANSIT) {
+      this.setState({ transitItem });
+      return checkinResp;
+    }
+    return this.fetchRequest(checkinResp);
+  }
+
+  processError(resp) {
+    const contentType = resp.headers.get('Content-Type') || '';
+    if (contentType.startsWith('application/json')) {
+      return resp.json().then(error => this.handleJsonError(error));
+    } else {
+      return resp.text().then(error => this.handleTextError(error));
+    }
   }
 
   handleTextError(error) {
@@ -196,11 +208,6 @@ class Scan extends React.Component {
     const { mutator, resources } = this.props;
     const scannedItem = loan || { item };
     const scannedItems = [scannedItem].concat(resources.scannedItems);
-
-    if (get(scannedItem, 'item.status.name') === statuses.IN_TRANSIT) {
-      this.setState({ transitItem: scannedItem });
-    }
-
     return mutator.scannedItems.replace(scannedItems);
   }
 
