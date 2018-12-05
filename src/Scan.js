@@ -284,7 +284,6 @@ class Scan extends React.Component {
       'Item author(s)': authors || '',
       'Item call number': item.callNumber,
       'Staff slip name': 'Transit',
-      // 'Requester barcode': '<Barcode>TODO</Barcode>',
       // 'Request/transaction number': 'TODO',
     };
 
