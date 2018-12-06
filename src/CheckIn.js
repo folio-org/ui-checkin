@@ -261,7 +261,6 @@ class CheckIn extends React.Component {
                         placeholder={scanBarcodeMsg}
                         aria-label={itemIdLabel}
                         inputRef={this.barcodeEl}
-                        withRef
                         fullWidth
                         component={TextField}
                         data-test-check-in-barcode
