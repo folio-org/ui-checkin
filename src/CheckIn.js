@@ -66,7 +66,7 @@ class CheckIn extends React.Component {
 
   focusInput() {
     if (this.barcodeEl.current) {
-      this.barcodeEl.current.getRenderedComponent().focusInput();
+      this.barcodeEl.current.focus();
     }
   }
 
@@ -260,8 +260,7 @@ class CheckIn extends React.Component {
                         validationEnabled={false}
                         placeholder={scanBarcodeMsg}
                         aria-label={itemIdLabel}
-                        ref={this.barcodeEl}
-                        withRef
+                        inputRef={this.barcodeEl}
                         fullWidth
                         component={TextField}
                         data-test-check-in-barcode
