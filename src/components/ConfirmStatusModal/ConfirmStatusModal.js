@@ -62,7 +62,7 @@ class ConfirmStatusModal extends React.Component {
 
     const testId = uniqueId('confirm-status-');
     const printSlipLabel = (<FormattedMessage id="ui-checkin.statusModal.printSlip" />);
-    const closeLabel = (<FormattedMessage id="ui-checkin.statusModal.close" />);
+    const confirmLabel = (<FormattedMessage id="ui-checkin.statusModal.confirm" />);
     const tmpl = template(slipTemplate);
     const componentStr = tmpl(slipData);
     const contentComponent = this.parser.parseWithInstructions(componentStr, () => true, this.rules);
@@ -71,7 +71,7 @@ class ConfirmStatusModal extends React.Component {
         {printSlip ?
           <ReactToPrint
             onBeforePrint={onConfirm}
-            trigger={() => <Button buttonStyle="primary" buttonClass={mfCss.modalFooterButton}>{closeLabel}</Button>}
+            trigger={() => <Button buttonStyle="primary" buttonClass={mfCss.modalFooterButton}>{confirmLabel}</Button>}
             content={() => this.printContentRef.current}
           /> :
           <Button
@@ -81,7 +81,7 @@ class ConfirmStatusModal extends React.Component {
             buttonStyle="primary"
             buttonClass={mfCss.modalFooterButton}
           >
-            {closeLabel}
+            {confirmLabel}
           </Button>
         }
       </div>
