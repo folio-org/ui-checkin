@@ -113,10 +113,8 @@ class CheckIn extends React.Component {
   }
 
   showItemDetails(loan) {
-    const path = loan.itemId
-      ? `/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`
-      : `/inventory/view/${loan.item.instanceId}`;
-
+    const { item: { instanceId, holdingsRecordId, id } } = loan;
+    const path = `/inventory/view/${instanceId}/${holdingsRecordId}/${id}`;
     this.props.mutator.query.update({ _path: path });
   }
 
@@ -168,9 +166,7 @@ class CheckIn extends React.Component {
               <div data-test-item-details>
                 <Button
                   buttonStyle="dropdownItem"
-                  href={loan.itemId
-                    ? `/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`
-                    : `/inventory/view/${loan.item.instanceId}`}
+                  href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.item.id}`}
                 >
                   <FormattedMessage id="ui-checkin.itemDetails" />
                 </Button>
