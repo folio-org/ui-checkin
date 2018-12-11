@@ -1,5 +1,5 @@
 {
-    "scanBarcode": "Scaneie ou digite o código de barras para devolver o item",
+    "scanBarcode": "Escaneie ou digite o código de barras para devolver o item",
     "itemId": "ID do item",
     "enter": "Entrar",
     "processAs": "Processar como:",
@@ -37,5 +37,6 @@
     "statusModal.hold.message": "Coloque <strong>{title}</strong> (Código de barras: {barcode}) na <strong>Estante</strong> de reserva.",
     "scannedItems": "Itens escaneados",
     "statusModal.printSlip": "Ficha de reserva",
-    "unknownError": "Ocorreu um erro desconhecido"
+    "unknownError": "Ocorreu um erro desconhecido",
+    "statusModal.close": "Fechar"
 }

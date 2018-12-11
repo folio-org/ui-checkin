@@ -37,5 +37,6 @@
     "statusModal.hold.message": "Place <strong>{title}</strong> (Barcode: {barcode}) on <strong>Hold Shelf</strong> for request.",
     "scannedItems": "Scanned Items",
     "statusModal.printSlip": "Print slip",
-    "unknownError": "Unknown error occurred"
+    "unknownError": "Unknown error occurred",
+    "statusModal.close": "Close"
 }
