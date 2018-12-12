@@ -37,5 +37,6 @@
     "statusModal.hold.message": "ضع <strong>{title}</strong> (باركود:{barcode} ) على  <strong>حجز الرف</strong> للطلب.",
     "scannedItems": "المواد الممسوحة ضوئيًا",
     "statusModal.printSlip": "طباعة الكعب",
-    "unknownError": "Unknown error occurred"
+    "unknownError": "Unknown error occurred",
+    "statusModal.close": "Close"
 }
