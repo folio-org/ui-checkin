@@ -2,7 +2,7 @@
     "scanBarcode": "Escaneie ou digite o código de barras para devolver o item",
     "itemId": "ID do item",
     "enter": "Entrar",
-    "processAs": "Processar como:",
+    "processAs": "Processar em:",
     "processedAs": "Processado como:",
     "actual": "Atual:",
     "checkinDate": "Data de devolução",
