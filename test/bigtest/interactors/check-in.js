@@ -44,7 +44,7 @@ export default interactor(class CheckInInteractor {
   barcode = fillable('#input-item-barcode');
   clickEnter = clickable('#clickable-add-item');
   checkedInBookTitle = text('#list-items-checked-in div[role="gridcell"]:nth-child(2)');
-  barcodeError = text('[data-test-check-in-scan] [class^="feedbackError"]');
+  barcodeError = text('[data-test-error-message]');
   endSession = clickable('#clickable-end-session');
   hasCheckedInItems = isPresent('#list-items-checked-in');
   clickChangeDate = clickable('[data-test-checkin-modify-date]');

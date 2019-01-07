@@ -32,7 +32,7 @@ class ErrorModal extends React.Component {
         label={<FormattedMessage id="ui-checkin.itemNotFound" />}
         dismissible
       >
-        <p>
+        <p data-test-error-message>
           {message}
         </p>
         <Col xs={12}>
