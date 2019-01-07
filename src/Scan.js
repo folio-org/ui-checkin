@@ -9,6 +9,7 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import CheckIn from './CheckIn';
 import { statuses } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
+import ErrorModal from './components/ErrorModal';
 
 class Scan extends React.Component {
   static manifest = Object.freeze({
@@ -79,6 +80,7 @@ class Scan extends React.Component {
     this.checkIn = this.checkIn.bind(this);
     this.onSessionEnd = this.onSessionEnd.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
+    this.onClose = this.onClose.bind(this);
 
     this.checkInRef = React.createRef();
     this.state = {};
@@ -103,6 +105,10 @@ class Scan extends React.Component {
     if (!item || !item.barcode) {
       throw new SubmissionError({ item: { barcode } });
     }
+  }
+
+  onClose() {
+    this.setState({ itemError: false }, () => this.clearField('CheckIn', 'item.barcode'));
   }
 
   checkIn(data, checkInInst) {
@@ -155,7 +161,6 @@ class Scan extends React.Component {
     errors: [
       {
         parameters,
-        message,
       } = {},
     ] = [],
   }) {
@@ -165,11 +170,11 @@ class Scan extends React.Component {
         _error: 'unknownError',
       }
       : {
-        barcode: message,
+        barcode: parameters[0].value,
         _error: parameters[0].key,
       };
 
-    throw new SubmissionError({ item: itemError });
+    this.setState({ itemError });
   }
 
   fetchRequest(checkinResp) {
@@ -318,15 +323,35 @@ class Scan extends React.Component {
     );
   }
 
+  renderErrorModal(error) {
+    const message = (
+      <SafeHTMLMessage
+        id="ui-checkin.errorModal.noItemFound"
+        values={{
+          barcode: error.barcode,
+        }}
+      />
+    );
+
+    return (
+      <ErrorModal
+        open
+        onClose={this.onClose}
+        message={message}
+      />
+    );
+  }
+
   render() {
     const { resources } = this.props;
     const scannedItems = resources.scannedItems || [];
-    const { nextRequest, transitItem } = this.state;
+    const { nextRequest, transitItem, itemError } = this.state;
 
     return (
       <div data-test-check-in-scan>
         {nextRequest && this.renderHoldModal(nextRequest)}
         {transitItem && this.renderTransitionModal(transitItem)}
+        {itemError && this.renderErrorModal(itemError)}
         <CheckIn
           submithandler={this.checkIn}
           onSessionEnd={this.onSessionEnd}
