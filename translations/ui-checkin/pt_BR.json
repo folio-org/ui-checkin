@@ -38,5 +38,8 @@
     "scannedItems": "Itens escaneados",
     "statusModal.printSlip": "Ficha de reserva",
     "unknownError": "Ocorreu um erro desconhecido",
-    "statusModal.close": "Fechar"
+    "statusModal.close": "Fechar",
+    "close": "Fechar",
+    "errorModal.noItemFound": "O código de barras <strong>{barcode}</strong> não foi encontrado.",
+    "itemNotFound": "Item não encontrado"
 }
