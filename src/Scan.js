@@ -5,11 +5,15 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import moment from 'moment-timezone';
 import { SubmissionError, change, reset } from 'redux-form';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-
+import {
+  Modal,
+  ModalFooter,
+  Button,
+} from '@folio/stripes/components';
 import CheckIn from './CheckIn';
 import { statuses } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
-import ErrorModal from './components/ErrorModal';
+
 
 class Scan extends React.Component {
   static manifest = Object.freeze({
@@ -333,12 +337,28 @@ class Scan extends React.Component {
       />
     );
 
+    const footer = (
+      <ModalFooter>
+        <Button onClick={this.onClose}>
+          <FormattedMessage id="ui-checkin.close" />
+        </Button>
+      </ModalFooter>
+    );
+
     return (
-      <ErrorModal
+      <Modal
         open
+        size="small"
+        label={
+          <FormattedMessage
+            id="ui-checkin.itemNotFound"
+          />}
+        footer={footer}
+        dismissible
         onClose={this.onClose}
-        message={message}
-      />
+      >
+        {message}
+      </Modal>
     );
   }
 
