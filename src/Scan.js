@@ -5,10 +5,15 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import moment from 'moment-timezone';
 import { SubmissionError, change, reset } from 'redux-form';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-
+import {
+  Modal,
+  ModalFooter,
+  Button,
+} from '@folio/stripes/components';
 import CheckIn from './CheckIn';
 import { statuses } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
+
 
 class Scan extends React.Component {
   static manifest = Object.freeze({
@@ -79,6 +84,7 @@ class Scan extends React.Component {
     this.checkIn = this.checkIn.bind(this);
     this.onSessionEnd = this.onSessionEnd.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
+    this.onClose = this.onClose.bind(this);
 
     this.checkInRef = React.createRef();
     this.state = {};
@@ -103,6 +109,10 @@ class Scan extends React.Component {
     if (!item || !item.barcode) {
       throw new SubmissionError({ item: { barcode } });
     }
+  }
+
+  onClose() {
+    this.setState({ itemError: false }, () => this.clearField('CheckIn', 'item.barcode'));
   }
 
   checkIn(data, checkInInst) {
@@ -155,7 +165,6 @@ class Scan extends React.Component {
     errors: [
       {
         parameters,
-        message,
       } = {},
     ] = [],
   }) {
@@ -165,11 +174,11 @@ class Scan extends React.Component {
         _error: 'unknownError',
       }
       : {
-        barcode: message,
+        barcode: parameters[0].value,
         _error: parameters[0].key,
       };
 
-    throw new SubmissionError({ item: itemError });
+    this.setState({ itemError });
   }
 
   fetchRequest(checkinResp) {
@@ -318,15 +327,51 @@ class Scan extends React.Component {
     );
   }
 
+  renderErrorModal(error) {
+    const message = (
+      <SafeHTMLMessage
+        id="ui-checkin.errorModal.noItemFound"
+        values={{
+          barcode: error.barcode,
+        }}
+      />
+    );
+
+    const footer = (
+      <ModalFooter>
+        <Button onClick={this.onClose}>
+          <FormattedMessage id="ui-checkin.close" />
+        </Button>
+      </ModalFooter>
+    );
+
+    return (
+      <Modal
+        open
+        size="small"
+        label={
+          <FormattedMessage
+            id="ui-checkin.itemNotFound"
+          />}
+        footer={footer}
+        dismissible
+        onClose={this.onClose}
+      >
+        {message}
+      </Modal>
+    );
+  }
+
   render() {
     const { resources } = this.props;
     const scannedItems = resources.scannedItems || [];
-    const { nextRequest, transitItem } = this.state;
+    const { nextRequest, transitItem, itemError } = this.state;
 
     return (
       <div data-test-check-in-scan>
         {nextRequest && this.renderHoldModal(nextRequest)}
         {transitItem && this.renderTransitionModal(transitItem)}
+        {itemError && this.renderErrorModal(itemError)}
         <CheckIn
           submithandler={this.checkIn}
           onSessionEnd={this.onSessionEnd}

@@ -40,7 +40,7 @@ describe('CheckIn', () => {
     });
 
     it('shows an error', () => {
-      expect(checkIn.barcodeError).to.equal('No item with barcode 000000000 exists');
+      expect(checkIn.barcodeError).to.equal('The barcode 000000000 could not be found.');
     });
   });
 
