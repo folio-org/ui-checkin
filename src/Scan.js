@@ -97,7 +97,7 @@ class Scan extends React.Component {
     this.onSessionEnd = this.onSessionEnd.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
     this.onClose = this.onClose.bind(this);
-    this.onClickCheckin = this.onClickCheckin.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.closeMultipieceModal = this.closeMultipieceModal.bind(this);
     this.checkInRef = React.createRef();
     this.checkInData = null;
