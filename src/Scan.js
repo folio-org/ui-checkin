@@ -1,4 +1,4 @@
-import { get, minBy, upperFirst } from 'lodash';
+import { get, minBy, upperFirst, isEmpty } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
@@ -10,6 +10,7 @@ import {
   ModalFooter,
   Button,
 } from '@folio/stripes/components';
+import MultipieceModal from './components/MultipieceModal';
 import CheckIn from './CheckIn';
 import { statuses } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
@@ -19,6 +20,13 @@ class Scan extends React.Component {
   static manifest = Object.freeze({
     scannedItems: { initialValue: [] },
     query: { initialValue: {} },
+    items: {
+      type: 'okapi',
+      path: 'inventory/items',
+      resourceShouldRefresh: true,
+      accumulate: 'true',
+      fetch: false,
+    },
     requests: {
       type: 'okapi',
       records: 'requests',
@@ -61,6 +69,10 @@ class Scan extends React.Component {
       query: PropTypes.shape({
         update: PropTypes.func,
       }),
+      items: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
       checkIn: PropTypes.shape({
         POST: PropTypes.func,
       }),
@@ -85,12 +97,21 @@ class Scan extends React.Component {
     this.onSessionEnd = this.onSessionEnd.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
     this.onClose = this.onClose.bind(this);
-
+    this.onClickCheckin = this.onClickCheckin.bind(this);
+    this.closeMultipieceModal = this.closeMultipieceModal.bind(this);
     this.checkInRef = React.createRef();
+    this.checkInData = null;
+    this.checkinInst = null;
     this.state = {};
   }
 
   onSessionEnd() {
+    this.clearResources();
+    this.clearForm('CheckIn');
+  }
+
+  closeMultipieceModal() {
+    this.setState({ showMultipieceModal: false });
     this.clearResources();
     this.clearForm('CheckIn');
   }
@@ -115,11 +136,34 @@ class Scan extends React.Component {
     this.setState({ itemError: false }, () => this.clearField('CheckIn', 'item.barcode'));
   }
 
+  onSubmit(data, checkInInst) {
+    this.checkinData = data;
+    this.checkinInst = checkInInst;
+    const { item } = data;
+    this.validate(item);
+    const { barcode } = item;
+    const { mutator } = this.props;
+    const query = `barcode==${barcode}`;
+    mutator.items.reset();
+    mutator.items.GET({ params: { query } }).then((itemObject) => {
+      if (isEmpty(itemObject.items)) {
+        this.checkIn(data, checkInInst);
+      } else {
+        const { items } = itemObject;
+        const checkedinItem = items[0];
+        const { numberOfPieces, numberOfMissingPieces, descriptionOfPieces, missingPieces } = checkedinItem;
+        if ((!numberOfPieces || numberOfPieces <= 1) && !descriptionOfPieces && !numberOfMissingPieces && !missingPieces) {
+          this.checkIn(data, checkInInst);
+        } else {
+          this.setState({ showMultipieceModal: true, checkedinItem });
+        }
+      }
+    });
+  }
+
   checkIn(data, checkInInst) {
     const { mutator: { checkIn }, stripes: { user } } = this.props;
     const { item } = data;
-    this.validate(item);
-
     const { barcode, checkinDate, checkinTime } = item;
     const servicePointId = get(user, ['user', 'curServicePoint', 'id'], '');
     const checkInDate = this.buildDateTime(checkinDate, checkinTime);
@@ -134,7 +178,7 @@ class Scan extends React.Component {
       .then(checkinResp => this.addScannedItem(checkinResp))
       .then(() => this.clearField('CheckIn', 'item.barcode'))
       .catch(resp => this.processError(resp))
-      .finally(() => checkInInst.focusInput());
+      .finally(() => this.setState({ showMultipieceModal: false }, () => checkInInst.focusInput()));
   }
 
   processResponse(checkinResp) {
@@ -362,20 +406,36 @@ class Scan extends React.Component {
     );
   }
 
+  renderMultipieceModal() {
+    const { checkedinItem, showMultipieceModal } = this.state;
+    const data = this.checkinData;
+    const checkInInst = this.checkinInst;
+    return (
+      <MultipieceModal
+        open={showMultipieceModal}
+        item={checkedinItem}
+        onConfirm={() => this.checkIn(data, checkInInst)}
+        onClose={this.closeMultipieceModal}
+      />
+    );
+  }
+
   render() {
     const { resources } = this.props;
     const scannedItems = resources.scannedItems || [];
-    const { nextRequest, transitItem, itemError } = this.state;
-
+    const items = resources.items || {};
+    const { nextRequest, transitItem, itemError, showMultipieceModal } = this.state;
     return (
       <div data-test-check-in-scan>
         {nextRequest && this.renderHoldModal(nextRequest)}
         {transitItem && this.renderTransitionModal(transitItem)}
         {itemError && this.renderErrorModal(itemError)}
+        {showMultipieceModal && items && !isEmpty(items.records) && this.renderMultipieceModal()}
         <CheckIn
-          submithandler={this.checkIn}
+          submithandler={this.onSubmit}
           onSessionEnd={this.onSessionEnd}
           scannedItems={scannedItems}
+          items={items}
           ref={this.checkInRef}
           initialValues={
             { item:

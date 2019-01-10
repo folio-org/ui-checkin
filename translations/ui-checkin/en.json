@@ -38,5 +38,16 @@
   "statusModal.hold.heading": "Awaiting pickup for a request",
   "statusModal.hold.message": "Place <strong>{title} ({materialType})</strong> (Barcode: {barcode}) on <strong>Hold Shelf</strong> for request.",
   "statusModal.printSlip": "Print slip",
-  "unknownError": "Unknown error occurred"
+  "unknownError": "Unknown error occurred",
+  "multipieceModal.confirm": "Confirm",
+  "multipieceModal.back": "Back",
+  "multipieceModal.label": "Confirm multipiece check in",
+  "multipieceModal.checkIn": "Check in",
+  "multipieceModal.cancel": "Cancel",
+  "multipieceModal.item.numberOfPieces": "Number of pieces",
+  "multipieceModal.message": "<strong>{title}</strong> <strong>({name})</strong> (Barcode: {barcode}) will be checked in.",
+  "multipieceModal.item.numberOfPieces": "Number of pieces",
+  "multipieceModal.item.descriptionOfPieces": "Description of pieces",
+  "multipieceModal.item.numberOfMissingPieces": "Number of missing pieces",
+  "multipieceModal.item.descriptionOfmissingPieces": "Description of missing pieces"
 }
