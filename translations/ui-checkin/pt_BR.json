@@ -41,5 +41,15 @@
     "statusModal.close": "Fechar",
     "close": "Fechar",
     "errorModal.noItemFound": "O código de barras <strong>{barcode}</strong> não foi encontrado.",
-    "itemNotFound": "Item não encontrado"
+    "itemNotFound": "Item não encontrado",
+    "multipieceModal.confirm": "Confirmar",
+    "multipieceModal.back": "Voltar",
+    "multipieceModal.label": "Confirmar a devolução de item com multiplas partes",
+    "multipieceModal.checkIn": "Devolução",
+    "multipieceModal.cancel": "Cancelar",
+    "multipieceModal.item.numberOfPieces": "Número de partes",
+    "multipieceModal.message": "<strong>{title}</strong> <strong>({name})</strong> (Código de barras: {barcode} ) será verificado.",
+    "multipieceModal.item.descriptionOfPieces": "Descrição das partes",
+    "multipieceModal.item.numberOfMissingPieces": "Número de partes que faltam",
+    "multipieceModal.item.descriptionOfmissingPieces": "Descrição das partes faltantes"
 }

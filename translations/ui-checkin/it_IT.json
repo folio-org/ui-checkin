@@ -41,5 +41,15 @@
     "statusModal.close": "Chiudi",
     "close": "Close",
     "errorModal.noItemFound": "The barcode <strong>{barcode}</strong> could not be found.",
-    "itemNotFound": "Item not found"
+    "itemNotFound": "Item not found",
+    "multipieceModal.confirm": "Confirm",
+    "multipieceModal.back": "Back",
+    "multipieceModal.label": "Confirm multipiece check in",
+    "multipieceModal.checkIn": "Check in",
+    "multipieceModal.cancel": "Cancel",
+    "multipieceModal.item.numberOfPieces": "Number of pieces",
+    "multipieceModal.message": "<strong>{title}</strong> <strong>({name})</strong> (Barcode: {barcode}) will be checked in.",
+    "multipieceModal.item.descriptionOfPieces": "Description of pieces",
+    "multipieceModal.item.numberOfMissingPieces": "Number of missing pieces",
+    "multipieceModal.item.descriptionOfmissingPieces": "Description of missing pieces"
 }
