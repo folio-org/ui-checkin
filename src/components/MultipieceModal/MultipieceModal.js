@@ -26,7 +26,6 @@ const MultipieceModal = (props) => {
       </Button>
     </ModalFooter>
   );
-
   return (
     <Modal
       id="multipiece-modal"
@@ -58,18 +57,18 @@ const MultipieceModal = (props) => {
           />
         </Col>
         {
-          (item.numberOfMissingPieces || item.descriptionOfmissingPieces) &&
+          (item.numberOfMissingPieces || item.missingPieces) &&
           <Fragment>
             <Col xs={6}>
               <KeyValue
                 label={<FormattedMessage id="ui-checkin.multipieceModal.item.numberOfMissingPieces" />}
-                value={get(item, 'numberOfMissingPieces', '-')}
+                value={get(item, 'numberOfMissingPieces') || '-'}
               />
             </Col>
             <Col xs={6}>
               <KeyValue
                 label={<FormattedMessage id="ui-checkin.multipieceModal.item.descriptionOfmissingPieces" />}
-                value={get(item, 'descriptionOfmissingPieces', '-')}
+                value={get(item, 'missingPieces') || '-'}
               />
             </Col>
           </Fragment>
