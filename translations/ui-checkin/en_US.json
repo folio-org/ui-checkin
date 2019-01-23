@@ -18,6 +18,7 @@
     "status": "Status",
     "loanDetails": "Loan details",
     "itemDetails": "Item details",
+    "newFeeFine": "New Fee/Fine",
     "patronDetails": "Patron details",
     "loanNoExist": "Loan does not exist",
     "itemNoExist": "Item with this barcode does not exist",

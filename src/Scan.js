@@ -20,6 +20,17 @@ class Scan extends React.Component {
   static manifest = Object.freeze({
     scannedItems: { initialValue: [] },
     query: { initialValue: {} },
+    patronGroups: {
+      type: 'okapi',
+      path: 'groups',
+      records: 'usergroups',
+    },
+    users: {
+      type: 'okapi',
+      path: 'users',
+      records: 'users',
+      accumulate: 'true',
+    },
     items: {
       type: 'okapi',
       path: 'inventory/items',
