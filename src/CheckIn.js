@@ -40,6 +40,7 @@ class CheckIn extends React.Component {
     submithandler: PropTypes.func,
     onSessionEnd: PropTypes.func,
     change: PropTypes.func,
+    resources: PropTypes.object,
     mutator: PropTypes.shape({
       query: PropTypes.shape({
         update: PropTypes.func,
@@ -118,6 +119,18 @@ class CheckIn extends React.Component {
     this.props.mutator.query.update({ _path: path });
   }
 
+  async newFeeFine(loan) {
+    const { resources, mutator } = this.props;
+
+    const query = `id=${loan.userId}`;
+    const patronGroups = get(resources, ['patronGroups', 'records'], []);
+    const users = await mutator.users.GET({ params: { query } });
+    const patron = get(users, [0, 'patronGroup'], '');
+    const pg = (patronGroups.find(p => p.id === patron) || {}).group;
+    const path = `/users/view/${loan.userId}?filters=pg.${pg}&layer=charge&loan=${loan.id}`;
+    this.props.mutator.query.update({ _path: path });
+  }
+
   showInfo(loan) {
     const content =
     (
@@ -172,6 +185,16 @@ class CheckIn extends React.Component {
                 </Button>
               </div>
             </MenuItem>
+            {loan.userId &&
+            <MenuItem itemMeta={{ loan, action: 'newFeeFine' }}>
+              <Button
+                buttonStyle="dropdownItem"
+                href={`/users/view/${loan.userId}`}
+              >
+                <FormattedMessage id="ui-checkin.newFeeFine" />
+              </Button>
+            </MenuItem>
+            }
           </DropdownMenu>
         </UncontrolledDropdown>
       </div>
