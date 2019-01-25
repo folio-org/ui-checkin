@@ -1,6 +1,7 @@
 # Change history for ui-checkin
 
-## 1.5.0 IN PROGRESS
+## [1.5.0](https://github.com/folio-org/ui-checkin/tree/v1.5.0) (2019-01-25)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.4.0...v1.5.0)
 
 * Display modal for multipiece items. Part of UICHKIN-46.
 * Add New fee/fine option on ellipsis menu . Ref UICHKIN-56.
