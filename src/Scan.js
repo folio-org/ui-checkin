@@ -14,7 +14,7 @@ import MultipieceModal from './components/MultipieceModal';
 import CheckIn from './CheckIn';
 import { statuses } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
-
+import { convertRequestToHold, convertLoanToTransition } from './util';
 
 class Scan extends React.Component {
   static manifest = Object.freeze({
@@ -185,6 +185,7 @@ class Scan extends React.Component {
 
     return checkIn.POST(requestData)
       .then(checkinResp => this.processResponse(checkinResp))
+      .then(checkinResp => this.fetchRequest(checkinResp))
       .then(checkinResp => this.addScannedItem(checkinResp))
       .then(() => this.clearField('CheckIn', 'item.barcode'))
       .catch(resp => this.processError(resp))
@@ -195,10 +196,29 @@ class Scan extends React.Component {
     const { loan, item } = checkinResp;
     const transitItem = loan || { item };
     if (get(transitItem, 'item.status.name') === statuses.IN_TRANSIT) {
+      checkinResp.transitItem = transitItem;
       this.setState({ transitItem });
-      return checkinResp;
     }
-    return this.fetchRequest(checkinResp);
+
+    return checkinResp;
+  }
+
+  fetchRequest(checkinResp) {
+    const { loan } = checkinResp;
+    if (!loan) return checkinResp;
+
+    const query = `(itemId==${loan.itemId} and requestType=="Hold" and (status=="Open - Not yet filled" or status=="Open - Awaiting pickup"))`;
+    const { mutator } = this.props;
+    mutator.requests.reset();
+    return mutator.requests.GET({ params: { query } }).then((requests) => {
+      if (requests.length) {
+        const nextRequest = minBy(requests, 'position');
+        nextRequest.item = loan.item;
+        checkinResp.nextRequest = nextRequest;
+        this.setState({ nextRequest });
+      }
+      return checkinResp;
+    });
   }
 
   processError(resp) {
@@ -235,24 +255,6 @@ class Scan extends React.Component {
     this.setState({ itemError });
   }
 
-  fetchRequest(checkinResp) {
-    const { loan } = checkinResp;
-    if (!loan) return checkinResp;
-
-    const query = `(itemId==${loan.itemId} and requestType=="Hold" and (status=="Open - Not yet filled" or status=="Open - Awaiting pickup"))`;
-    const { mutator } = this.props;
-    mutator.requests.reset();
-    return mutator.requests.GET({ params: { query } }).then((requests) => {
-      if (requests.length) {
-        const nextRequest = minBy(requests, 'position');
-        nextRequest.item = loan.item;
-        this.setState({ nextRequest });
-      }
-
-      return checkinResp;
-    });
-  }
-
   buildDateTime(date, time) {
     if (date && time) {
       let timeString = time;
@@ -267,9 +269,11 @@ class Scan extends React.Component {
     }
   }
 
-  addScannedItem({ loan, item }) {
+  addScannedItem({ loan, item, nextRequest, transitItem }) {
     const { mutator, resources } = this.props;
     const scannedItem = loan || { item };
+    scannedItem.nextRequest = nextRequest;
+    scannedItem.transitItem = transitItem;
     const scannedItems = [scannedItem].concat(resources.scannedItems);
     return mutator.scannedItems.replace(scannedItems);
   }
@@ -298,18 +302,9 @@ class Scan extends React.Component {
   }
 
   renderHoldModal(request) {
-    const { intl: { formatDate } } = this.props;
-    const { item = {}, requester } = request;
-    const slipData = {
-      'Item title': item.title,
-      'Item barcode': `<Barcode>${item.barcode}</Barcode>`,
-      'Transaction Id': request.id,
-      'Requester last name': requester.lastName,
-      'Requester first name': requester.firstName,
-      'Hold expiration':  formatDate(request.requestDate, { timeZone: 'UTC' }),
-      'Item call number': request.itemId,
-      'Requester barcode': `<Barcode>${requester.barcode}</Barcode>`,
-    };
+    const { intl } = this.props;
+    const { item = {} } = request;
+    const slipData = convertRequestToHold(request, intl);
 
     const message = (
       <SafeHTMLMessage
@@ -335,28 +330,10 @@ class Scan extends React.Component {
   }
 
   renderTransitionModal(loan) {
-    const { intl: { formatDate } } = this.props;
+    const { intl } = this.props;
     const { item = {} } = loan;
-    const authors = (item.contributors || []).map(c => c.name).join(', ');
+    const slipData = convertLoanToTransition(loan, intl);
     const destinationServicePoint = get(item, 'inTransitDestinationServicePoint.name', '');
-    const slipData = {
-      'From Service Point': get(item, 'location.name', ''),
-      'To Service Point': destinationServicePoint,
-      'Item title': item.title,
-      'Item barcode': `<Barcode>${item.barcode}</Barcode>`,
-      'Item author(s)': authors || '',
-      'Item call number': item.callNumber,
-      'Staff slip name': 'Transit',
-    };
-
-    if (loan.dueDate) {
-      slipData['Needed for'] = formatDate(loan.dueDate, { timeZone: 'UTC' });
-    }
-
-    if (loan.loanDate) {
-      slipData.Date = formatDate(loan.loanDate, { timeZone: 'UTC' });
-    }
-
     const message = (
       <SafeHTMLMessage
         id="ui-checkin.statusModal.transit.message"

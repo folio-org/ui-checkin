@@ -184,4 +184,29 @@ describe('CheckIn', () => {
       expect(pathname + search).to.include('/inventory/view/lychee/apple/6');
     });
   });
+
+  describe('showing transition modal', () => {
+    beforeEach(async function () {
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472500,
+        title: 'Best Book Ever',
+        materialType: {
+          name: 'book'
+        },
+        status: {
+          name: 'In transit',
+        },
+        instanceId : 'lychee',
+        holdingsRecordId : 'apple'
+      });
+
+      await checkIn.barcode('9676761472500').clickEnter();
+      // await checkIn.selectElipse();
+      // await checkIn.selectItemDetails();
+    });
+
+    it('shows transition modal', () => {
+      expect(checkIn.confirmStatusModalPresent).to.be.true;
+    });
+  });
 });

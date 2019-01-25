@@ -41,6 +41,7 @@ export default interactor(class CheckInInteractor {
   selectItemDetails = clickable('[data-test-item-details]');
   fillOutError = text('[data-test-check-in-scan] [class^="feedbackError"]');
   barcodePresent = isPresent('[data-test-check-in-barcode]');
+  confirmStatusModalPresent = isPresent('[data-test-cofirm-status-modal]');
   barcode = fillable('#input-item-barcode');
   clickEnter = clickable('#clickable-add-item');
   checkedInBookTitle = text('#list-items-checked-in div[role="gridcell"]:nth-child(2)');
