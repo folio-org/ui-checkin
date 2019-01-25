@@ -30,7 +30,10 @@ import {
 } from '@folio/stripes/components';
 
 import PrintButton from './components/PrintButton';
-import { convertRequestToHold, convertLoanToTransition } from './util';
+import {
+  convertRequestToHold,
+  convertLoanToTransition,
+} from './util';
 import styles from './checkin.css';
 
 class CheckIn extends React.Component {

@@ -14,7 +14,10 @@ import MultipieceModal from './components/MultipieceModal';
 import CheckIn from './CheckIn';
 import { statuses } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
-import { convertRequestToHold, convertLoanToTransition } from './util';
+import {
+  convertRequestToHold,
+  convertLoanToTransition,
+} from './util';
 
 class Scan extends React.Component {
   static manifest = Object.freeze({
