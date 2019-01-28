@@ -4,14 +4,13 @@ export default Factory.extend({
   requestType: () => 'Hold',
   requestDate: () => faker.date.recent().toISOString(),
   requesterId: () => faker.random.uuid(),
-  // itemId: () => faker.random.uuid(),
   status: () => 'Open - Not yet filled',
   position: () => 1,
   requester: () => ({
     lastName: faker.name.lastName(),
     firstName: faker.name.firstName(),
     middleName : faker.name.firstName(),
-    barcode : faker.random.uuid(),
+    barcode : Math.floor(Math.random() * 9000000000000) + 1000000000000,
   }),
   withItem: trait({
     afterCreate(request, server) {
