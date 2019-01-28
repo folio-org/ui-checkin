@@ -175,7 +175,7 @@ class CheckIn extends React.Component {
                   data-test-print-hold-slip
                   buttonStyle="dropdownItem"
                   template={this.getTemplate('hold')}
-                  data={convertRequestToHold(loan.nextRequest, intl)}
+                  dataSource={convertRequestToHold(loan.nextRequest, intl)}
                 >
                   <FormattedMessage id="ui-checkin.action.printHoldSlip" />
                 </PrintButton>
@@ -184,10 +184,10 @@ class CheckIn extends React.Component {
             {loan.transitItem &&
               <MenuItem>
                 <PrintButton
-                  data-test-print-hold-slip
+                  data-test-print-transit-slip
                   buttonStyle="dropdownItem"
                   template={this.getTemplate('transit')}
-                  data={convertLoanToTransition(loan.transitItem, intl)}
+                  dataSource={convertLoanToTransition(loan.transitItem, intl)}
                 >
                   <FormattedMessage id="ui-checkin.action.printTransitSlip" />
                 </PrintButton>

@@ -23,13 +23,19 @@ export default function configure() {
     totalRecords: 0
   });
 
+  this.get('/service-points', {
+    servicepoints: [],
+    totalRecords: 0
+  });
+
+
   this.get('/staff-slips-storage/staff-slips', {
     'staffSlips': [
       {
         'id': '3a082c5c-dc03-4b05-b77a-1a8f61424fdf',
         'name': 'Hold',
         'active': true,
-        'template': '<p></p>',
+        'template': '<p>{{Item barcode}}</p>',
         'metadata': {
           'createdDate': '2019-01-15T18:22:35.596+0000',
           'createdByUserId': '1d2a5d7d-e472-55a3-8da2-285ef27f7125',
@@ -41,7 +47,7 @@ export default function configure() {
         'id': '2bf4f1cb-90af-4757-a84f-15f41722e111',
         'name': 'Transit',
         'active': true,
-        'template': '<p></p>',
+        'template': '<p>{{Item barcode}}</p>',
         'metadata': {
           'createdDate': '2019-01-15T18:22:35.598+0000',
           'createdByUserId': '1d2a5d7d-e472-55a3-8da2-285ef27f7125',
@@ -99,14 +105,37 @@ export default function configure() {
     totalRecords: 0
   });
 
-  this.get('/circulation/requests', {
-    requests: [],
-    totalRecords: 0
+  this.get('/circulation/requests', ({ requests }) => {
+    return this.serializerOrRegistry.serialize(requests.all());
   });
 
   this.get('/service-points-users', {
     servicePointsUsers: [],
     totalRecords: 0
+  });
+
+  this.get('/users', {
+    users: [],
+    totalRecords: 0,
+  });
+
+  this.get('/proxiesfor', {
+    proxiesFor: [],
+    totalRecords: 0,
+  });
+
+  this.get('/perms/users/:id/permissions', {
+    permissionNames: [],
+  });
+
+  this.get('/perms/permissions', {
+    permissions: [],
+    totalRecords: 0,
+  });
+
+  this.get('/addresstypes', {
+    'addressTypes': [],
+    'totalRecords': 0,
   });
 
   this.get('/staff-slips-storage/staff-slips', {});
@@ -115,7 +144,5 @@ export default function configure() {
     totalRecords: 0
   });
 
-  this.get('/addresstypes', {});
   this.get('/users/:id', {});
-  this.get('/perms/users/:id/permissions', {});
 }

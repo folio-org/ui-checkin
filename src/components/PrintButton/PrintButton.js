@@ -11,7 +11,7 @@ import css from './PrintButton.css';
 
 class PrintButton extends React.Component {
   static propTypes = {
-    data: PropTypes.object,
+    dataSource: PropTypes.object,
     template: PropTypes.string,
     onBeforePrint: PropTypes.func,
   };
@@ -23,7 +23,7 @@ class PrintButton extends React.Component {
 
   render() {
     const {
-      data,
+      dataSource,
       template,
       onBeforePrint,
       children,
@@ -38,7 +38,7 @@ class PrintButton extends React.Component {
         />
         <div className={css.hiddenContent}>
           <div className="ql-editor" ref={this.printContentRef}>
-            <ComponentToPrint template={template} data={data} />
+            <ComponentToPrint template={template} data={dataSource} />
           </div>
         </div>
       </React.Fragment>

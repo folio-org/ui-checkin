@@ -72,7 +72,7 @@ class ConfirmStatusModal extends React.Component {
 
     return (
       <Modal
-        data-test-cofirm-status-modal
+        data-test-confirm-status-modal
         open={open}
         id={testId}
         label={label}
@@ -85,6 +85,7 @@ class ConfirmStatusModal extends React.Component {
           <Col xs>
             <Checkbox
               name="printSlip"
+              data-test-print-slip-checkbox
               label={<FormattedMessage id="ui-checkin.statusModal.printSlip" />}
               onChange={() => this.setState(prevState => ({ printSlip: !prevState.printSlip }))}
               checked={this.state.printSlip}

@@ -8,7 +8,7 @@ import { buildTemplate } from '../../util';
 class ComponentToPrint extends React.Component {
   static propTypes = {
     template: PropTypes.string.isRequired,
-    data: PropTypes.object.isRequired,
+    dataSource: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -34,9 +34,9 @@ class ComponentToPrint extends React.Component {
 
   render() {
     const {
-      data,
+      dataSource,
     } = this.props;
-    const componentStr = this.template(data);
+    const componentStr = this.template(dataSource);
     const Component = this.parser.parseWithInstructions(componentStr, () => true, this.rules) || null;
 
     return (
