@@ -1,4 +1,5 @@
 
+import { omit } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactToPrint from 'react-to-print';
@@ -29,16 +30,18 @@ class PrintButton extends React.Component {
       children,
     } = this.props;
 
+    const btnProps = omit(this.props, ['dataSource', 'template', 'onBeforePrint']);
+
     return (
       <React.Fragment>
         <ReactToPrint
           onBeforePrint={onBeforePrint}
-          trigger={() => <Button {...this.props}>{children}</Button>}
+          trigger={() => <Button {...btnProps}>{children}</Button>}
           content={() => this.printContentRef.current}
         />
         <div className={css.hiddenContent}>
           <div className="ql-editor" ref={this.printContentRef}>
-            <ComponentToPrint template={template} data={dataSource} />
+            <ComponentToPrint template={template} dataSource={dataSource} />
           </div>
         </div>
       </React.Fragment>
