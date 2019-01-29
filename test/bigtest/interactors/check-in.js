@@ -32,15 +32,23 @@ import {
   fillInput = fillable('input');
 }
 
-export default interactor(class CheckInInteractor {
-  processDate = new DatepickerInteractor('[data-test-process-date]')
-  processTime = new TimepickerInteractor('[data-test-process-time]')
-  selectElipse = clickable('[data-test-elipse-select]');
+@interactor class ConfirmStatusModal {
+  clickPrintHoldCheckbox = clickable('[data-test-print-slip-checkbox]');
+  clickConfirmButton = clickable('[data-test-confirm-button]');
+}
+
+@interactor class CheckInInteractor {
+  processDate = new DatepickerInteractor('[data-test-process-date]');
+  processTime = new TimepickerInteractor('[data-test-process-time]');
+  confirmModal = new ConfirmStatusModal('[data-test-confirm-status-modal]');
+
+  selectElipse = clickable('[data-test-elipse-select] button');
   selectLoanDetails = clickable('[data-test-loan-details]');
   selectPatronDetails = clickable('[data-test-patron-details]');
   selectItemDetails = clickable('[data-test-item-details]');
   fillOutError = text('[data-test-check-in-scan] [class^="feedbackError"]');
   barcodePresent = isPresent('[data-test-check-in-barcode]');
+  confirmStatusModalPresent = isPresent('[data-test-confirm-status-modal]');
   barcode = fillable('#input-item-barcode');
   clickEnter = clickable('#clickable-add-item');
   checkedInBookTitle = text('#list-items-checked-in div[role="gridcell"]:nth-child(2)');
@@ -49,4 +57,8 @@ export default interactor(class CheckInInteractor {
   hasCheckedInItems = isPresent('#list-items-checked-in');
   clickChangeDate = clickable('[data-test-checkin-modify-date]');
   clickChangeTime = clickable('[data-test-checkin-modify-time]');
-});
+  printHoldSlipItemPresent = isPresent('[data-test-print-hold-slip]');
+  printTransitSlipItemPresent = isPresent('[data-test-print-transit-slip]');
+}
+
+export default CheckInInteractor;

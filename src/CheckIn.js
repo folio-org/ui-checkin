@@ -29,6 +29,11 @@ import {
   DropdownMenu
 } from '@folio/stripes/components';
 
+import PrintButton from './components/PrintButton';
+import {
+  convertRequestToHold,
+  convertLoanToTransition,
+} from './util';
 import styles from './checkin.css';
 
 class CheckIn extends React.Component {
@@ -131,6 +136,13 @@ class CheckIn extends React.Component {
     this.props.mutator.query.update({ _path: path });
   }
 
+  getTemplate(type) {
+    const { resources } = this.props;
+    const staffSlips = (resources.staffSlips || {}).records || [];
+    const staffSlip = staffSlips.find(slip => slip.name.toLowerCase() === type);
+    return get(staffSlip, ['template'], '');
+  }
+
   showInfo(loan) {
     const content =
     (
@@ -150,11 +162,38 @@ class CheckIn extends React.Component {
   }
 
   renderActions(loan) {
+    const { intl } = this.props;
+
     return (
       <div data-test-elipse-select>
         <UncontrolledDropdown onSelectItem={this.handleOptionsChange}>
           <Button data-role="toggle" buttonStyle="hover dropdownActive"><strong>•••</strong></Button>
-          <DropdownMenu data-role="menu" overrideStyle={{ padding: '6px 0' }}>
+          <DropdownMenu data-role="menu">
+            {loan.nextRequest &&
+              <MenuItem>
+                <PrintButton
+                  data-test-print-hold-slip
+                  buttonStyle="dropdownItem"
+                  template={this.getTemplate('hold')}
+                  dataSource={convertRequestToHold(loan.nextRequest, intl)}
+                >
+                  <FormattedMessage id="ui-checkin.action.printHoldSlip" />
+                </PrintButton>
+              </MenuItem>
+            }
+            {loan.transitItem &&
+              <MenuItem>
+                <PrintButton
+                  data-test-print-transit-slip
+                  buttonStyle="dropdownItem"
+                  template={this.getTemplate('transit')}
+                  dataSource={convertLoanToTransition(loan.transitItem, intl)}
+                >
+                  <FormattedMessage id="ui-checkin.action.printTransitSlip" />
+                </PrintButton>
+              </MenuItem>
+            }
+
             {loan.userId &&
               <MenuItem itemMeta={{ loan, action: 'showLoanDetails' }}>
                 <div data-test-loan-details>
@@ -219,7 +258,6 @@ class CheckIn extends React.Component {
     } = this.props;
 
     const { showPickers } = this.state;
-
     const itemListFormatter = {
       'timeReturned': loan => ((loan.returnDate) ?
         <div style={{ display: 'flex', alignItems: 'center' }}>

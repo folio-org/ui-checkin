@@ -92,34 +92,6 @@ describe('CheckIn', () => {
     });
   });
 
-  describe('changing check-in date and time', () => {
-    let body;
-    beforeEach(async function () {
-      this.server.post('/circulation/check-in-by-barcode', (_, request) => {
-        body = JSON.parse(request.requestBody);
-        return body;
-      });
-
-      this.server.create('item', 'withLoan', {
-        barcode: 9676761472500,
-        title: 'Best Book Ever',
-        materialType: {
-          name: 'book'
-        }
-      });
-
-      await checkIn.clickChangeTime();
-      await checkIn.processDate.fillAndBlur('04/25/2018');
-      await checkIn.processTime.fillInput('4:25 PM');
-      await checkIn.barcode('9676761472500').clickEnter();
-    });
-
-    it('changes the date and time in the payload', () => {
-      expect(body.checkInDate).to.include('2018-04-25');
-      expect(body.checkInDate).to.include('16:25:00');
-    });
-  });
-
   describe('navigating to loan details', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
@@ -182,6 +154,108 @@ describe('CheckIn', () => {
     it('directs to item details page', function () {
       const { search, pathname } = this.location;
       expect(pathname + search).to.include('/inventory/view/lychee/apple/6');
+    });
+  });
+
+  describe('changing check-in date and time', () => {
+    let body;
+    beforeEach(async function () {
+      this.server.post('/circulation/check-in-by-barcode', (_, request) => {
+        body = JSON.parse(request.requestBody);
+        body.item = {};
+        return body;
+      });
+
+      this.server.create('item', 'withLoan', {
+        barcode: '9676761472500',
+        title: 'Best Book Ever',
+        materialType: {
+          name: 'book'
+        }
+      });
+
+      await checkIn.clickChangeTime();
+      await checkIn.processDate.fillAndBlur('04/25/2018');
+      await checkIn.processTime.fillInput('4:25 PM');
+      await checkIn.barcode('9676761472500').clickEnter();
+    });
+
+    it('changes the date and time in the payload', () => {
+      expect(body.checkInDate).to.include('2018-04-25');
+      expect(body.checkInDate).to.include('16:25:00');
+    });
+  });
+
+  describe('showing confirm status modal', () => {
+    beforeEach(async function () {
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472500,
+        title: 'Best Book Ever',
+        materialType: {
+          name: 'book'
+        },
+        status: {
+          name: 'In transit',
+        },
+        instanceId : 'lychee',
+        holdingsRecordId : 'apple'
+      });
+
+      await checkIn.barcode('9676761472500').clickEnter();
+    });
+
+    it('shows confirm status modal', () => {
+      expect(checkIn.confirmStatusModalPresent).to.be.true;
+    });
+  });
+
+  describe('showing print transit slip option', () => {
+    beforeEach(async function () {
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472500,
+        title: 'Best Book Ever',
+        materialType: {
+          name: 'book'
+        },
+        status: {
+          name: 'In transit',
+        },
+        instanceId : 'lychee',
+        holdingsRecordId : 'apple'
+      });
+
+      await checkIn.barcode('9676761472500').clickEnter();
+      await checkIn.confirmModal.clickPrintHoldCheckbox();
+      await checkIn.confirmModal.clickConfirmButton();
+      await checkIn.selectElipse();
+    });
+
+    it('shows transit slip option on the action menu', () => {
+      expect(checkIn.printTransitSlipItemPresent).to.be.true;
+    });
+  });
+
+  describe('showing print hold slip option', () => {
+    beforeEach(async function () {
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472500,
+        title: 'Best Book Ever',
+        materialType: {
+          name: 'book'
+        },
+        instanceId : 'lychee',
+        holdingsRecordId : 'apple'
+      });
+      this.server.create('request', 'withItem');
+
+      await checkIn.barcode('9676761472500').clickEnter();
+      await checkIn.confirmModal.clickPrintHoldCheckbox();
+      await checkIn.confirmModal.clickConfirmButton();
+      await checkIn.selectElipse();
+    });
+
+    it('shows hold slip option on the action menu', () => {
+      expect(checkIn.printHoldSlipItemPresent).to.be.true;
     });
   });
 });

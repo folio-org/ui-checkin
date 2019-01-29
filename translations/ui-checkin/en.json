@@ -21,6 +21,7 @@
   "status": "Status",
   "loanDetails": "Loan details",
   "itemDetails": "Item details",
+  "newFeeFine": "New Fee/Fine",
   "itemNotFound": "Item not found",
   "patronDetails": "Patron details",
   "loanNoExist": "Loan does not exist",
@@ -46,8 +47,9 @@
   "multipieceModal.cancel": "Cancel",
   "multipieceModal.item.numberOfPieces": "Number of pieces",
   "multipieceModal.message": "<strong>{title}</strong> <strong>({name})</strong> (Barcode: {barcode}) will be checked in.",
-  "multipieceModal.item.numberOfPieces": "Number of pieces",
   "multipieceModal.item.descriptionOfPieces": "Description of pieces",
   "multipieceModal.item.numberOfMissingPieces": "Number of missing pieces",
-  "multipieceModal.item.descriptionOfmissingPieces": "Description of missing pieces"
+  "multipieceModal.item.descriptionOfmissingPieces": "Description of missing pieces",
+  "action.printHoldSlip": "Print hold slip",
+  "action.printTransitSlip": "Print transit slip"
 }

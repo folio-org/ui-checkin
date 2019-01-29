@@ -1,10 +1,7 @@
 import uniqueId from 'lodash/uniqueId';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import ReactToPrint from 'react-to-print';
-import HtmlToReact, { Parser } from 'html-to-react';
-import Barcode from 'react-barcode';
+import { FormattedMessage } from 'react-intl';
 import {
   Modal,
   Button,
@@ -12,11 +9,11 @@ import {
   Row,
   Col
 } from '@folio/stripes/components';
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 import mfCss from '@folio/stripes-components/lib/ModalFooter/ModalFooter.css';
 
-import { template } from '../../util';
-import css from './ConfirmStatusModal.css';
+import PrintButton from '../PrintButton';
 
 class ConfirmStatusModal extends React.Component {
   static propTypes = {
@@ -32,21 +29,6 @@ class ConfirmStatusModal extends React.Component {
     super(props);
     this.printContentRef = React.createRef();
     this.state = { printSlip: true };
-
-    const processNodeDefinitions = new HtmlToReact.ProcessNodeDefinitions(React);
-    this.rules = [
-      {
-        replaceChildren: true,
-        shouldProcessNode: node => node.name === 'barcode',
-        processNode: (node, children) => (<Barcode value={children[0] ? children[0].trim() : ' '} />),
-      },
-      {
-        shouldProcessNode: () => true,
-        processNode: processNodeDefinitions.processDefaultNode,
-      }
-    ];
-
-    this.parser = new Parser();
   }
 
   render() {
@@ -59,29 +41,30 @@ class ConfirmStatusModal extends React.Component {
       message,
     } = this.props;
     const { printSlip } = this.state;
-
     const testId = uniqueId('confirm-status-');
-    const printSlipLabel = (<FormattedMessage id="ui-checkin.statusModal.printSlip" />);
-    const confirmLabel = (<FormattedMessage id="ui-checkin.statusModal.confirm" />);
-    const tmpl = template(slipTemplate);
-    const componentStr = tmpl(slipData);
-    const contentComponent = this.parser.parseWithInstructions(componentStr, () => true, this.rules);
     const footer = (
       <div className={mfCss.modalFooterButtons}>
         {printSlip ?
-          <ReactToPrint
+          <PrintButton
+            data-test-confirm-button
+            buttonStyle="primary"
+            id={`clickable-${testId}-confirm`}
+            buttonClass={mfCss.modalFooterButton}
             onBeforePrint={onConfirm}
-            trigger={() => <Button buttonStyle="primary" buttonClass={mfCss.modalFooterButton}>{confirmLabel}</Button>}
-            content={() => this.printContentRef.current}
-          /> :
+            data={slipData}
+            template={slipTemplate}
+          >
+            <FormattedMessage id="ui-checkin.statusModal.confirm" />
+          </PrintButton> :
           <Button
             label={label}
-            onClick={onConfirm}
             id={`clickable-${testId}-confirm`}
+            onClick={onConfirm}
+            data-test-confirm-button
             buttonStyle="primary"
             buttonClass={mfCss.modalFooterButton}
           >
-            {confirmLabel}
+            <FormattedMessage id="ui-checkin.statusModal.confirm" />
           </Button>
         }
       </div>
@@ -89,6 +72,7 @@ class ConfirmStatusModal extends React.Component {
 
     return (
       <Modal
+        data-test-confirm-status-modal
         open={open}
         id={testId}
         label={label}
@@ -101,19 +85,14 @@ class ConfirmStatusModal extends React.Component {
           <Col xs>
             <Checkbox
               name="printSlip"
-              label={printSlipLabel}
+              data-test-print-slip-checkbox
+              label={<FormattedMessage id="ui-checkin.statusModal.printSlip" />}
               onChange={() => this.setState(prevState => ({ printSlip: !prevState.printSlip }))}
               checked={this.state.printSlip}
               value={this.state.printSlip + ''}
             />
           </Col>
         </Row>
-
-        <div className={css.hiddenContent}>
-          <div className="ql-editor" ref={this.printContentRef}>
-            {contentComponent}
-          </div>
-        </div>
       </Modal>
     );
   }
