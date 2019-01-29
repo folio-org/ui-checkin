@@ -37,10 +37,15 @@ import {
   clickConfirmButton = clickable('[data-test-confirm-button]');
 }
 
+@interactor class MultiPieceModalInteractor {
+  present = isPresent('[data-test-checkin-button]');
+}
+
 @interactor class CheckInInteractor {
   processDate = new DatepickerInteractor('[data-test-process-date]');
   processTime = new TimepickerInteractor('[data-test-process-time]');
   confirmModal = new ConfirmStatusModal('[data-test-confirm-status-modal]');
+  multiPieceModal = new MultiPieceModalInteractor('[data-test-multi-piece-modal]');
 
   selectElipse = clickable('[data-test-elipse-select] button');
   selectLoanDetails = clickable('[data-test-loan-details]');

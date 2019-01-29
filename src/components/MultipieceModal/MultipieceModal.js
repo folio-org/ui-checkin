@@ -18,10 +18,16 @@ const MultipieceModal = (props) => {
 
   const footer = (
     <ModalFooter>
-      <Button buttonStyle="primary" onClick={() => onConfirm()}>
+      <Button
+        buttonStyle="primary"
+        data-test-checkin-button
+        onClick={() => onConfirm()}
+      >
         <FormattedMessage id="ui-checkin.multipieceModal.checkIn" />
       </Button>
-      <Button onClick={onClose}>
+      <Button
+        onClick={onClose}
+      >
         <FormattedMessage id="ui-checkin.multipieceModal.cancel" />
       </Button>
     </ModalFooter>
@@ -29,6 +35,7 @@ const MultipieceModal = (props) => {
   return (
     <Modal
       id="multipiece-modal"
+      data-test-multi-piece-modal
       size="small"
       footer={footer}
       dismissible
