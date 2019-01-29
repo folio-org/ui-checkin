@@ -279,4 +279,26 @@ describe('CheckIn', () => {
       expect(checkIn.multiPieceModal.present).to.be.true;
     });
   });
+
+  describe('closes multipiece item modal', () => {
+    beforeEach(async function () {
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472501,
+        title: 'Best Book Ever',
+        materialType: {
+          name: 'book'
+        },
+        numberOfPieces: 2,
+        instanceId : 'lychee',
+        holdingsRecordId : 'apple'
+      });
+
+      await checkIn.barcode('9676761472501').clickEnter();
+      await checkIn.multiPieceModal.clickCheckinBtn();
+    });
+
+    it('hides multipiece item modal', () => {
+      expect(checkIn.multiPieceModal.present).to.be.false;
+    });
+  });
 });

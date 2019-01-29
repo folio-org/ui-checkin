@@ -39,6 +39,7 @@ import {
 
 @interactor class MultiPieceModalInteractor {
   present = isPresent('[data-test-checkin-button]');
+  clickCheckinBtn = clickable('[data-test-checkin-button]');
 }
 
 @interactor class CheckInInteractor {
