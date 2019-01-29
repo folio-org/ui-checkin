@@ -206,24 +206,6 @@ class Scan extends React.Component {
     return checkinResp;
   }
 
-  fetchRequest(checkinResp) {
-    const { loan } = checkinResp;
-    if (!loan) return checkinResp;
-
-    const query = `(itemId==${loan.itemId} and requestType=="Hold" and (status=="Open - Not yet filled" or status=="Open - Awaiting pickup"))`;
-    const { mutator } = this.props;
-    mutator.requests.reset();
-    return mutator.requests.GET({ params: { query } }).then((requests) => {
-      if (requests.length) {
-        const nextRequest = minBy(requests, 'position');
-        nextRequest.item = loan.item;
-        checkinResp.nextRequest = nextRequest;
-        this.setState({ nextRequest });
-      }
-      return checkinResp;
-    });
-  }
-
   processError(resp) {
     const contentType = resp.headers.get('Content-Type') || '';
     if (contentType.startsWith('application/json')) {
@@ -256,6 +238,24 @@ class Scan extends React.Component {
       };
 
     this.setState({ itemError });
+  }
+
+  fetchRequest(checkinResp) {
+    const { loan } = checkinResp;
+    if (!loan) return checkinResp;
+
+    const query = `(itemId==${loan.itemId} and requestType=="Hold" and (status=="Open - Not yet filled" or status=="Open - Awaiting pickup"))`;
+    const { mutator } = this.props;
+    mutator.requests.reset();
+    return mutator.requests.GET({ params: { query } }).then((requests) => {
+      if (requests.length) {
+        const nextRequest = minBy(requests, 'position');
+        nextRequest.item = loan.item;
+        checkinResp.nextRequest = nextRequest;
+        this.setState({ nextRequest });
+      }
+      return checkinResp;
+    });
   }
 
   buildDateTime(date, time) {
