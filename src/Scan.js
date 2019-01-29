@@ -272,7 +272,8 @@ class Scan extends React.Component {
     }
   }
 
-  addScannedItem({ loan, item, nextRequest, transitItem }) {
+  addScannedItem(checkinResp) {
+    const { loan, item, nextRequest, transitItem } = checkinResp;
     const { mutator, resources } = this.props;
     const scannedItem = loan || { item };
     scannedItem.nextRequest = nextRequest;
