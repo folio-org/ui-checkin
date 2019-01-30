@@ -51,5 +51,8 @@
     "multipieceModal.message": "<strong> {title} </strong> <strong> （ {name} ） </strong> （条形码： {barcode} ）将归还。",
     "multipieceModal.item.descriptionOfPieces": "件的描述",
     "multipieceModal.item.numberOfMissingPieces": "丢失件数量",
-    "multipieceModal.item.descriptionOfmissingPieces": "丢失件的描述"
+    "multipieceModal.item.descriptionOfmissingPieces": "丢失件的描述",
+    "newFeeFine": "新费用/罚款",
+    "action.printHoldSlip": "打印预约单",
+    "action.printTransitSlip": "打印运输单"
 }
