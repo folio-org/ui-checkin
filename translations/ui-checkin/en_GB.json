@@ -51,5 +51,8 @@
     "multipieceModal.message": "<strong>{title}</strong> <strong>({name})</strong> (Barcode: {barcode}) will be checked in.",
     "multipieceModal.item.descriptionOfPieces": "Description of pieces",
     "multipieceModal.item.numberOfMissingPieces": "Number of missing pieces",
-    "multipieceModal.item.descriptionOfmissingPieces": "Description of missing pieces"
+    "multipieceModal.item.descriptionOfmissingPieces": "Description of missing pieces",
+    "newFeeFine": "New Fee/Fine",
+    "action.printHoldSlip": "Print hold slip",
+    "action.printTransitSlip": "Print transit slip"
 }
