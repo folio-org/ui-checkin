@@ -3,6 +3,7 @@
 ## 1.6.0 (IN PROGRESS)
 
 * Print/reprint transit (routing) and hold slips at check-in. Part of UICHKIN-66.
+* Add styles for quill editor. Part of UICHKIN-75.
 
 ## [1.5.0](https://github.com/folio-org/ui-checkin/tree/v1.5.0) (2019-01-25)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.4.0...v1.5.0)

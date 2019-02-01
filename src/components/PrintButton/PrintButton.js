@@ -8,6 +8,8 @@ import {
 } from '@folio/stripes/components';
 
 import ComponentToPrint from '../ComponentToPrint';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import '!style-loader!css-loader!./quillEditor.css';
 import css from './PrintButton.css';
 
 class PrintButton extends React.Component {
