@@ -39,7 +39,7 @@
     "statusModal.printSlip": "طباعة الكعب",
     "unknownError": "Unknown error occurred",
     "statusModal.close": "Close",
-    "close": "Close",
+    "close": "غلق",
     "errorModal.noItemFound": "The barcode <strong>{barcode}</strong> could not be found.",
     "itemNotFound": "Item not found",
     "multipieceModal.confirm": "Confirm",
@@ -52,7 +52,7 @@
     "multipieceModal.item.descriptionOfPieces": "Description of pieces",
     "multipieceModal.item.numberOfMissingPieces": "Number of missing pieces",
     "multipieceModal.item.descriptionOfmissingPieces": "Description of missing pieces",
-    "newFeeFine": "New Fee/Fine",
+    "newFeeFine": "رسم/غرامة جديدة",
     "action.printHoldSlip": "Print hold slip",
     "action.printTransitSlip": "Print transit slip"
 }
