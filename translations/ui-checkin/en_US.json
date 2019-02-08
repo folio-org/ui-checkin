@@ -35,7 +35,7 @@
     "statusModal.transit.message": "Route <strong>{title} ({materialType})</strong> (Barcode: {barcode}) to <strong>{servicePoint}</strong>.",
     "statusModal.hold.heading": "Awaiting pickup for a request",
     "statusModal.hold.message": "Place <strong>{title} ({materialType})</strong> (Barcode: {barcode}) on <strong>Hold Shelf</strong> for request.",
-    "scannedItems": "Scanned Items",
+    "scannedItems": "Scanned items",
     "statusModal.printSlip": "Print slip",
     "unknownError": "Unknown error occurred",
     "statusModal.close": "Close",
@@ -52,7 +52,7 @@
     "multipieceModal.item.descriptionOfPieces": "Description of pieces",
     "multipieceModal.item.numberOfMissingPieces": "Number of missing pieces",
     "multipieceModal.item.descriptionOfmissingPieces": "Description of missing pieces",
-    "newFeeFine": "New Fee/Fine",
+    "newFeeFine": "New fee/fine",
     "action.printHoldSlip": "Print hold slip",
     "action.printTransitSlip": "Print transit slip"
 }
