@@ -1,4 +1,4 @@
-import { get, minBy, upperFirst, isEmpty } from 'lodash';
+import { get, minBy, upperFirst, isEmpty, keyBy } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
@@ -50,15 +50,20 @@ class Scan extends React.Component {
     staffSlips: {
       type: 'okapi',
       records: 'staffSlips',
-      path: 'staff-slips-storage/staff-slips',
+      path: 'staff-slips-storage/staff-slips?limit=100',
       throwErrors: false,
+    },
+    servicePoints: {
+      type: 'okapi',
+      records: 'servicepoints',
+      path: 'service-points?limit=100',
     },
     checkIn: {
       type: 'okapi',
       path: 'circulation/check-in-by-barcode',
       fetch: false,
       throwErrors: false,
-    }
+    },
   });
 
   static propTypes = {
@@ -74,6 +79,9 @@ class Scan extends React.Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
       staffSlips: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      servicePoints: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
     }),
@@ -305,6 +313,23 @@ class Scan extends React.Component {
     return get(staffSlip, ['template'], '');
   }
 
+  isPrintable(type) {
+    const { stripes: { user }, resources } = this.props;
+    const staffSlips = (resources.staffSlips || {}).records || [];
+    const servicePoints = (resources.servicePoints || {}).records || [];
+    const servicePointId = get(user, ['user', 'curServicePoint', 'id'], '');
+    const spMap = keyBy(servicePoints, 'id');
+    const slipMap = keyBy(staffSlips, slip => slip.name.toLowerCase());
+    const servicePoint = spMap[servicePointId];
+    const staffSlip = slipMap[type];
+
+    if (!servicePoint || !staffSlip) return false;
+
+    const spSlip = servicePoint.staffSlips.find(slip => slip.id === staffSlip.id);
+
+    return (!spSlip || spSlip.printByDefault);
+  }
+
   renderHoldModal(request) {
     const { intl } = this.props;
     const { item = {} } = request;
@@ -326,6 +351,7 @@ class Scan extends React.Component {
         open={!!request}
         onConfirm={this.onConfirm}
         slipTemplate={this.getSlipTmpl('hold')}
+        isPrintable={this.isPrintable('hold')}
         slipData={slipData}
         label={<FormattedMessage id="ui-checkin.statusModal.hold.heading" />}
         message={message}
@@ -356,6 +382,7 @@ class Scan extends React.Component {
         onConfirm={this.onConfirm}
         slipTemplate={this.getSlipTmpl('transit')}
         slipData={slipData}
+        isPrintable={this.isPrintable('transit')}
         label={<FormattedMessage id="ui-checkin.statusModal.transit.heading" />}
         message={message}
       />
@@ -416,6 +443,7 @@ class Scan extends React.Component {
     const scannedItems = resources.scannedItems || [];
     const items = resources.items || {};
     const { nextRequest, transitItem, itemError, showMultipieceModal } = this.state;
+
     return (
       <div data-test-check-in-scan>
         {nextRequest && this.renderHoldModal(nextRequest)}
