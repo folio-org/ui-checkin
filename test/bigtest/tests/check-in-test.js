@@ -225,7 +225,6 @@ describe('CheckIn', () => {
       });
 
       await checkIn.barcode('9676761472500').clickEnter();
-      await checkIn.confirmModal.clickPrintHoldCheckbox();
       await checkIn.confirmModal.clickConfirmButton();
       await checkIn.selectElipse();
     });
@@ -249,7 +248,6 @@ describe('CheckIn', () => {
       this.server.create('request', 'withItem');
 
       await checkIn.barcode('9676761472500').clickEnter();
-      await checkIn.confirmModal.clickPrintHoldCheckbox();
       await checkIn.confirmModal.clickConfirmButton();
       await checkIn.selectElipse();
     });
