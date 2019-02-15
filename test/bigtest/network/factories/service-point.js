@@ -1,7 +1,7 @@
 import { Factory, faker } from '@bigtest/mirage';
 
 export default Factory.extend({
-  id: faker.random.uuid,
+  // id: faker.random.uuid,
   name: faker.company.catchPhrase(),
   code: faker.company.catchPhrase(),
   discoveryDisplayName: faker.company.catchPhrase(),
@@ -12,9 +12,9 @@ export default Factory.extend({
   },
   afterCreate(servicePoint, server) {
     const models = server.schema.staffSlips.all().models;
-    const staffSlips = models.map(({ attrs: { id } }, index) => ({
+    const staffSlips = models.map(({ attrs: { id } }) => ({
       id,
-      printByDefault: (index === 0),
+      printByDefault: true,
     }));
     servicePoint.update({ staffSlips });
   }

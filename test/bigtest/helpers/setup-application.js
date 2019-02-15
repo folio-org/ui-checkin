@@ -2,10 +2,13 @@ import setupStripesCore from '@folio/stripes-core/test/bigtest/helpers/setup-app
 import mirageOptions from '../network';
 
 export default function setupApplication({
-  scenarios
+  scenarios = ['default'],
 } = {}) {
   setupStripesCore({
     mirageOptions,
-    scenarios
+    scenarios,
+    currentUser: {
+      curServicePoint: { id: 1 },
+    }
   });
 }

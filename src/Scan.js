@@ -206,6 +206,7 @@ class Scan extends React.Component {
   processResponse(checkinResp) {
     const { loan, item } = checkinResp;
     const transitItem = loan || { item };
+
     if (get(transitItem, 'item.status.name') === statuses.IN_TRANSIT) {
       checkinResp.transitItem = transitItem;
       this.setState({ transitItem });
@@ -334,7 +335,6 @@ class Scan extends React.Component {
     const { intl } = this.props;
     const { item = {} } = request;
     const slipData = convertRequestToHold(request, intl);
-
     const message = (
       <SafeHTMLMessage
         id="ui-checkin.statusModal.hold.message"

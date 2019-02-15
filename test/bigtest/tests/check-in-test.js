@@ -209,6 +209,44 @@ describe('CheckIn', () => {
     });
   });
 
+  describe('showing confirm status modal with print checkbox checked by default', () => {
+    beforeEach(async function () {
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472500,
+        status: {
+          name: 'In transit',
+        }
+      });
+      this.server.create('servicePoint', { id: 1 });
+
+      await checkIn.barcode('9676761472500').clickEnter();
+    });
+
+    it('shows print checkbox checked by default', () => {
+      expect(checkIn.confirmStatusModalPresent).to.be.true;
+      expect(checkIn.confirmModal.isPrintTransitChecked).to.be.true;
+    });
+  });
+
+  describe('showing confirm status modal with print checkbox unchecked by default', () => {
+    beforeEach(async function () {
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472500,
+        status: {
+          name: 'In transit',
+        }
+      });
+      this.server.create('servicePoint', { id: 2 });
+
+      await checkIn.barcode('9676761472500').clickEnter();
+    });
+
+    it('shows print checkbox checked by default', () => {
+      expect(checkIn.confirmStatusModalPresent).to.be.true;
+      expect(checkIn.confirmModal.isPrintTransitChecked).to.be.false;
+    });
+  });
+
   describe('showing print transit slip option', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
