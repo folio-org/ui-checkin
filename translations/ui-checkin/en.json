@@ -34,7 +34,7 @@
   "statusModal.back": "Back",
   "statusModal.confirm": "Confirm",
   "statusModal.close": "Close",
-  "statusModal.transit.heading": "In transit to home location",
+  "statusModal.transit.heading": "In transit",
   "statusModal.transit.message": "Route <strong>{title} ({materialType})</strong> (Barcode: {barcode}) to <strong>{servicePoint}</strong>.",
   "statusModal.hold.heading": "Awaiting pickup for a request",
   "statusModal.hold.message": "Place <strong>{title} ({materialType})</strong> (Barcode: {barcode}) on <strong>Hold Shelf</strong> for request.",
