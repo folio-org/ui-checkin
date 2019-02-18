@@ -23,12 +23,15 @@ class ConfirmStatusModal extends React.Component {
     open: PropTypes.bool.isRequired,
     slipTemplate: PropTypes.string,
     slipData: PropTypes.object,
+    isPrintable: PropTypes.bool,
   };
 
   constructor(props) {
     super(props);
     this.printContentRef = React.createRef();
-    this.state = { printSlip: true };
+    const { isPrintable } = props;
+
+    this.state = { isPrintable };
   }
 
   render() {
@@ -40,11 +43,11 @@ class ConfirmStatusModal extends React.Component {
       label,
       message,
     } = this.props;
-    const { printSlip } = this.state;
+    const { isPrintable } = this.state;
     const testId = uniqueId('confirm-status-');
     const footer = (
       <div className={mfCss.modalFooterButtons}>
-        {printSlip ?
+        {isPrintable ?
           <PrintButton
             data-test-confirm-button
             buttonStyle="primary"
@@ -87,9 +90,9 @@ class ConfirmStatusModal extends React.Component {
               name="printSlip"
               data-test-print-slip-checkbox
               label={<FormattedMessage id="ui-checkin.statusModal.printSlip" />}
-              onChange={() => this.setState(prevState => ({ printSlip: !prevState.printSlip }))}
-              checked={this.state.printSlip}
-              value={this.state.printSlip + ''}
+              onChange={() => this.setState(prevState => ({ isPrintable: !prevState.isPrintable }))}
+              checked={isPrintable}
+              value={isPrintable + ''}
             />
           </Col>
         </Row>

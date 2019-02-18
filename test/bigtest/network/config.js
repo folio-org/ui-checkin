@@ -17,46 +17,12 @@ export default function configure() {
     }
   });
 
-  // item-storage
-  this.get('/service-points', {
-    servicepoints: [],
-    totalRecords: 0
+  this.get('/service-points', function (schema) {
+    return schema.servicePoints.all();
   });
 
-  this.get('/service-points', {
-    servicepoints: [],
-    totalRecords: 0
-  });
-
-
-  this.get('/staff-slips-storage/staff-slips', {
-    'staffSlips': [
-      {
-        'id': '3a082c5c-dc03-4b05-b77a-1a8f61424fdf',
-        'name': 'Hold',
-        'active': true,
-        'template': '<p>{{Item barcode}}</p>',
-        'metadata': {
-          'createdDate': '2019-01-15T18:22:35.596+0000',
-          'createdByUserId': '1d2a5d7d-e472-55a3-8da2-285ef27f7125',
-          'updatedDate': '2019-01-15T18:22:35.596+0000',
-          'updatedByUserId': '1d2a5d7d-e472-55a3-8da2-285ef27f7125'
-        }
-      },
-      {
-        'id': '2bf4f1cb-90af-4757-a84f-15f41722e111',
-        'name': 'Transit',
-        'active': true,
-        'template': '<p>{{Item barcode}}</p>',
-        'metadata': {
-          'createdDate': '2019-01-15T18:22:35.598+0000',
-          'createdByUserId': '1d2a5d7d-e472-55a3-8da2-285ef27f7125',
-          'updatedDate': '2019-01-15T18:22:35.598+0000',
-          'updatedByUserId': '1d2a5d7d-e472-55a3-8da2-285ef27f7125'
-        }
-      }
-    ],
-    'totalRecords': 2
+  this.get('/staff-slips-storage/staff-slips', (schema) => {
+    return schema.staffSlips.all();
   });
 
   this.get('/inventory/items', ({ items }, request) => {
@@ -138,7 +104,6 @@ export default function configure() {
     'totalRecords': 0,
   });
 
-  this.get('/staff-slips-storage/staff-slips', {});
   this.get('/groups', {
     usergroups: [],
     totalRecords: 0
