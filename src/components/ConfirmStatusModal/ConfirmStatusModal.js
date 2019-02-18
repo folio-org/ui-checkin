@@ -67,7 +67,7 @@ class ConfirmStatusModal extends React.Component {
             buttonStyle="primary"
             buttonClass={mfCss.modalFooterButton}
           >
-            <FormattedMessage id="ui-checkin.statusModal.confirm" />
+            <FormattedMessage id="ui-checkin.statusModal.close" />
           </Button>
         }
       </div>
@@ -76,6 +76,8 @@ class ConfirmStatusModal extends React.Component {
     return (
       <Modal
         data-test-confirm-status-modal
+        dismissible
+        onClose={onConfirm}
         open={open}
         id={testId}
         label={label}
