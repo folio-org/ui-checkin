@@ -205,13 +205,14 @@ class Scan extends React.Component {
 
   processResponse(checkinResp) {
     const { loan, item } = checkinResp;
-    const transitItem = loan || { item };
-
-    if (get(transitItem, 'item.status.name') === statuses.IN_TRANSIT) {
-      checkinResp.transitItem = transitItem;
-      this.setState({ transitItem });
+    const checkinRespItem = loan || { item };
+    if (get(checkinRespItem, 'item.status.name') === statuses.IN_TRANSIT) {
+      checkinResp.transitItem = checkinRespItem;
+      this.setState({ transitItem: checkinRespItem });
+    } else if (get(checkinRespItem, 'item.status.name') === statuses.AWAITING_PICKUP) {
+      checkinResp.holdItem = checkinRespItem;
+      this.setState({ holdItem: checkinRespItem });
     }
-
     return checkinResp;
   }
 
@@ -250,16 +251,14 @@ class Scan extends React.Component {
   }
 
   fetchRequest(checkinResp) {
-    const { loan } = checkinResp;
-    if (!loan) return checkinResp;
-
-    const query = `(itemId==${loan.itemId} and requestType=="Hold" and (status=="Open - Not yet filled" or status=="Open - Awaiting pickup"))`;
+    const { item } = checkinResp;
+    const query = `(itemId==${item.id} and requestType=="Hold" and status=="Open - Awaiting pickup")`;
     const { mutator } = this.props;
     mutator.requests.reset();
     return mutator.requests.GET({ params: { query } }).then((requests) => {
       if (requests.length) {
         const nextRequest = minBy(requests, 'position');
-        nextRequest.item = loan.item;
+        nextRequest.item = item;
         checkinResp.nextRequest = nextRequest;
         this.setState({ nextRequest });
       }
@@ -282,11 +281,12 @@ class Scan extends React.Component {
   }
 
   addScannedItem(checkinResp) {
-    const { loan, item, nextRequest, transitItem } = checkinResp;
+    const { loan, item, nextRequest, transitItem, holdItem } = checkinResp;
     const { mutator, resources } = this.props;
     const scannedItem = loan || { item };
     scannedItem.nextRequest = nextRequest;
     scannedItem.transitItem = transitItem;
+    scannedItem.holdItem = holdItem;
     const scannedItems = [scannedItem].concat(resources.scannedItems);
     return mutator.scannedItems.replace(scannedItems);
   }
@@ -303,7 +303,8 @@ class Scan extends React.Component {
   onConfirm() {
     this.setState({
       nextRequest: null,
-      transitItem: null
+      transitItem: null,
+      holdItem: null
     });
   }
 
@@ -442,11 +443,10 @@ class Scan extends React.Component {
     const { resources } = this.props;
     const scannedItems = resources.scannedItems || [];
     const items = resources.items || {};
-    const { nextRequest, transitItem, itemError, showMultipieceModal } = this.state;
-
+    const { nextRequest, transitItem, itemError, showMultipieceModal, holdItem } = this.state;
     return (
       <div data-test-check-in-scan>
-        {nextRequest && this.renderHoldModal(nextRequest)}
+        {nextRequest && holdItem && this.renderHoldModal(nextRequest)}
         {transitItem && this.renderTransitionModal(transitItem)}
         {itemError && this.renderErrorModal(itemError)}
         {showMultipieceModal && items && !isEmpty(items.records) && this.renderMultipieceModal()}
