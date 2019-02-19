@@ -31,7 +31,7 @@
     "statusModal.heading": "Confirm \"in transit\" status",
     "statusModal.message": "<strong>{title}</strong> ({barcode}) will be <strong>in transit</strong>",
     "statusModal.printHoldSlip": "Print Hold Slip",
-    "statusModal.transit.heading": "In transit to home location",
+    "statusModal.transit.heading": "In transit",
     "statusModal.transit.message": "Route <strong>{title} ({materialType})</strong> (Barcode: {barcode}) to <strong>{servicePoint}</strong>.",
     "statusModal.hold.heading": "Awaiting pickup for a request",
     "statusModal.hold.message": "Place <strong>{title} ({materialType})</strong> (Barcode: {barcode}) on <strong>Hold Shelf</strong> for request.",
