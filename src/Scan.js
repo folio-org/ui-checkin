@@ -213,7 +213,6 @@ class Scan extends React.Component {
       checkinResp.holdItem = checkinRespItem;
       this.setState({ holdItem: checkinRespItem });
     }
-
     return checkinResp;
   }
 

@@ -163,7 +163,6 @@ class CheckIn extends React.Component {
 
   renderActions(loan) {
     const { intl } = this.props;
-
     return (
       <div data-test-elipse-select>
         <UncontrolledDropdown onSelectItem={this.handleOptionsChange}>
