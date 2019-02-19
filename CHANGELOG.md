@@ -5,6 +5,7 @@
 * Print/reprint transit (routing) and hold slips at check-in. Part of UICHKIN-66.
 * Add styles for quill editor. Part of UICHKIN-75.
 * Update circulation OKAPI interface to v6.0. Part of UICIRC-164.
+* Update circulation OKAPI interface to v7.0. Part of UICHKIN-83.
 
 ## [1.5.0](https://github.com/folio-org/ui-checkin/tree/v1.5.0) (2019-01-25)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.4.0...v1.5.0)
