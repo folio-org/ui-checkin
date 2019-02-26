@@ -57,7 +57,7 @@ class ConfirmStatusModal extends React.Component {
             dataSource={slipData}
             template={slipTemplate}
           >
-            <FormattedMessage id="ui-checkin.statusModal.confirm" />
+            <FormattedMessage id="ui-checkin.statusModal.close" />
           </PrintButton> :
           <Button
             label={label}
