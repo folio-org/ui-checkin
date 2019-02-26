@@ -342,7 +342,8 @@ class Scan extends React.Component {
         values={{
           title: item.title,
           barcode: item.barcode,
-          materialType: upperFirst(get(item, ['materialType', 'name'], ''))
+          materialType: upperFirst(get(item, ['materialType', 'name'], '')),
+          pickupServicePoint: get(request, ['pickupServicePoint', 'name'], '')
         }}
       />
     );
