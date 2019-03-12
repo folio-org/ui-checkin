@@ -54,5 +54,8 @@
     "multipieceModal.item.descriptionOfmissingPieces": "Descrição das partes em falta",
     "newFeeFine": "Nova taxa/multa",
     "action.printHoldSlip": "Imprimir ficha de reserva",
-    "action.printTransitSlip": "Imprimir ficha de circulação"
+    "action.printTransitSlip": "Imprimir ficha de circulação",
+    "missingModal.heading": "Check in missing item?",
+    "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Missing</strong> {discoverySuppressMessage}",
+    "missingModal.discoverySuppress": "and is suppressed from discovery"
 }
