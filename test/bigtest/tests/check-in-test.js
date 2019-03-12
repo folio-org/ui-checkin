@@ -337,4 +337,53 @@ describe('CheckIn', () => {
       expect(checkIn.multiPieceModal.present).to.be.false;
     });
   });
+
+  describe('showing missing item modal', () => {
+    beforeEach(async function () {
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472501,
+        title: 'Best Book Ever',
+        status: {
+          name: 'Missing'
+        },
+        materialType: {
+          name: 'book'
+        },
+        numberOfPieces: 2,
+        instanceId : 'lychee',
+        holdingsRecordId : 'apple'
+      });
+
+      await checkIn.barcode('9676761472501').clickEnter();
+    });
+
+    it('shows missing item modal', () => {
+      expect(checkIn.missingItemModal.present).to.be.true;
+    });
+  });
+
+  describe('closes missing item modal', () => {
+    beforeEach(async function () {
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472501,
+        title: 'Best Book Ever',
+        status: {
+          name: 'Missing'
+        },
+        materialType: {
+          name: 'book'
+        },
+        numberOfPieces: 2,
+        instanceId : 'lychee',
+        holdingsRecordId : 'apple'
+      });
+
+      await checkIn.barcode('9676761472501').clickEnter();
+      await checkIn.missingItemModal.clickConfirm();
+    });
+
+    it('hides missing item modal', () => {
+      expect(checkIn.missingItemModal.present).to.be.false;
+    });
+  });
 });

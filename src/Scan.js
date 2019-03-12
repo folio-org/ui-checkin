@@ -9,6 +9,7 @@ import {
   Modal,
   ModalFooter,
   Button,
+  ConfirmationModal
 } from '@folio/stripes/components';
 import MultipieceModal from './components/MultipieceModal';
 import CheckIn from './CheckIn';
@@ -92,6 +93,7 @@ class Scan extends React.Component {
       }),
       items: PropTypes.shape({
         GET: PropTypes.func,
+        PUT: PropTypes.func,
         reset: PropTypes.func,
       }),
       checkIn: PropTypes.shape({
@@ -117,6 +119,8 @@ class Scan extends React.Component {
     this.checkIn = this.checkIn.bind(this);
     this.onSessionEnd = this.onSessionEnd.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
+    this.hideMissingDialog = this.hideMissingDialog.bind(this);
+    this.confirmMissing = this.confirmMissing.bind(this);
     this.onClose = this.onClose.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.closeMultipieceModal = this.closeMultipieceModal.bind(this);
@@ -172,11 +176,19 @@ class Scan extends React.Component {
       } else {
         const { items } = itemObject;
         const checkedinItem = items[0];
-        const { numberOfPieces, numberOfMissingPieces, descriptionOfPieces, missingPieces } = checkedinItem;
+        const { numberOfPieces,
+          numberOfMissingPieces,
+          descriptionOfPieces,
+          missingPieces,
+          status: { name } } = checkedinItem;
+
+        let showMissingModal = false;
+        if (name === 'Missing') showMissingModal = true;
         if ((!numberOfPieces || numberOfPieces <= 1) && !descriptionOfPieces && !numberOfMissingPieces && !missingPieces) {
-          this.checkIn(data, checkInInst);
+          if (showMissingModal) this.setState({ showMissingModal, checkedinItem });
+          else this.checkIn(data, checkInInst);
         } else {
-          this.setState({ showMultipieceModal: true, checkedinItem });
+          this.setState({ showMultipieceModal: true, showMissingModal, checkedinItem });
         }
       }
     });
@@ -440,13 +452,57 @@ class Scan extends React.Component {
     );
   }
 
+  hideMissingDialog() {
+    this.setState({ showMissingModal: false });
+  }
+
+  confirmMissing() {
+    const data = this.checkinData;
+    const checkInInst = this.checkinInst;
+    this.setState({ showMissingModal: false }, () => this.checkIn(data, checkInInst));
+  }
+
+  renderMissingModal() {
+    const { checkedinItem, showMissingModal } = this.state;
+    const { intl: { formatMessage } } = this.props;
+    const { title, barcode, discoverySuppress } = checkedinItem;
+    const discoverySuppressMessage = discoverySuppress ? formatMessage({ id:'ui-checkin.missingModal.discoverySuppress' }) : '';
+
+    const message = (
+      <SafeHTMLMessage
+        id="ui-checkin.missingModal.message"
+        values={{
+          title,
+          barcode,
+          discoverySuppressMessage,
+          materialType: upperFirst(get(checkedinItem, ['materialType', 'name'], '')),
+        }}
+      />
+    );
+
+    return (
+      <ConfirmationModal
+        data-test-missing-item-modal
+        open={showMissingModal}
+        heading={<FormattedMessage id="ui-checkin.missingModal.heading" />}
+        onConfirm={this.confirmMissing}
+        onCancel={this.hideMissingDialog}
+        cancelLabel={<FormattedMessage id="ui-checkin.multipieceModal.cancel" />}
+        confirmLabel={<FormattedMessage id="ui-checkin.multipieceModal.confirm" />}
+        message={message}
+      />
+    );
+  }
+
+
   render() {
     const { resources } = this.props;
     const scannedItems = resources.scannedItems || [];
     const items = resources.items || {};
-    const { nextRequest, transitItem, itemError, showMultipieceModal, holdItem } = this.state;
+    const { nextRequest, transitItem, itemError, showMultipieceModal, holdItem, showMissingModal } = this.state;
     return (
       <div data-test-check-in-scan>
+        {showMissingModal && this.renderMissingModal()}
         {nextRequest && holdItem && this.renderHoldModal(nextRequest)}
         {transitItem && this.renderTransitionModal(transitItem)}
         {itemError && this.renderErrorModal(itemError)}
