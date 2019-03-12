@@ -54,5 +54,8 @@
     "multipieceModal.item.descriptionOfmissingPieces": "Description of missing pieces",
     "newFeeFine": "New fee/fine",
     "action.printHoldSlip": "Print hold slip",
-    "action.printTransitSlip": "Print transit slip"
+    "action.printTransitSlip": "Print transit slip",
+    "missingModal.heading": "Check in missing item?",
+    "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Missing</strong> {discoverySuppressMessage}",
+    "missingModal.discoverySuppress": "and is suppressed from discovery"
 }

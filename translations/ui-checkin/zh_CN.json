@@ -54,5 +54,8 @@
     "multipieceModal.item.descriptionOfmissingPieces": "丢失件的描述",
     "newFeeFine": "新费用/罚款",
     "action.printHoldSlip": "打印预约单",
-    "action.printTransitSlip": "打印运输单"
+    "action.printTransitSlip": "打印运输单",
+    "missingModal.heading": "Check in missing item?",
+    "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Missing</strong> {discoverySuppressMessage}",
+    "missingModal.discoverySuppress": "and is suppressed from discovery"
 }
