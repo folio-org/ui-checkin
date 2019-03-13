@@ -55,7 +55,7 @@
     "newFeeFine": "Nova taxa/multa",
     "action.printHoldSlip": "Imprimir ficha de reserva",
     "action.printTransitSlip": "Imprimir a ficha de trânsito",
-    "missingModal.heading": "Check in missing item?",
-    "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Missing</strong> {discoverySuppressMessage}",
-    "missingModal.discoverySuppress": "and is suppressed from discovery"
+    "missingModal.heading": "Devolver item desaparecido?",
+    "missingModal.message": "<strong> {title} ({materialType})</strong> (Código de barras: {barcode} ) tem o status do item <strong>Desaparecido</strong> {discoverySuppressMessage}",
+    "missingModal.discoverySuppress": "e está ocultado no sistema de descoberta"
 }

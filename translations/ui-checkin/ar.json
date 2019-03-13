@@ -55,7 +55,7 @@
     "newFeeFine": "رسم/غرامة جديدة",
     "action.printHoldSlip": "طباعة كعب الحجز",
     "action.printTransitSlip": "طباعة كعب النقل",
-    "missingModal.heading": "Check in missing item?",
-    "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Missing</strong> {discoverySuppressMessage}",
-    "missingModal.discoverySuppress": "and is suppressed from discovery"
+    "missingModal.heading": "رد المادة المفقودة؟",
+    "missingModal.message": "<strong>{title}({materialType})</strong> (الباركود: {barcode}) له حالة المادة <strong> مفقودة</strong>{discoverySuppressMessage}",
+    "missingModal.discoverySuppress": "وممنوع من الاكتشاف"
 }
