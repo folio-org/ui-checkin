@@ -388,7 +388,7 @@ describe('CheckIn', () => {
     });
 
     it('shows checkinNote modal', () => {
-      expect(checkIn.CheckinNoteModal.present).to.be.true;
+      expect(checkIn.checkinNoteModal.present).to.be.true;
     });
   });
 
@@ -413,11 +413,11 @@ describe('CheckIn', () => {
       });
 
       await checkIn.barcode('9676761472501').clickEnter();
-      await checkIn.CheckinNoteModal.clickConfirm();
+      await checkIn.checkinNoteModal.clickConfirm();
     });
 
     it('hides checkinNote modal', () => {
-      expect(checkIn.CheckinNoteModal.present).to.be.false;
+      expect(checkIn.checkinNoteModal.present).to.be.false;
     });
   });
 });

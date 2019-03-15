@@ -1,4 +1,4 @@
-import uniqueId from 'lodash/uniqueId';
+import { uniqueId } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -38,7 +38,7 @@ const CheckinNoteModal = (props) => {
   const footer = (
     <ModalFooter>
       <Button
-        data-test-CheckinNoteModal-confirm-button
+        data-test-checkinNoteModal-confirm-button
         buttonStyle="primary"
         id={`clickable-${testId}-confirm`}
         onClick={props.onConfirm}
@@ -46,7 +46,7 @@ const CheckinNoteModal = (props) => {
         {confirmLabel}
       </Button>
       <Button
-        data-test-CheckinNoteModal-cancel-button
+        data-test-checkinNoteModal-cancel-button
         buttonStyle="default"
         id={`clickable-${testId}-cancel`}
         onClick={props.onCancel}
