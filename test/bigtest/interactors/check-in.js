@@ -50,13 +50,18 @@ import {
   clickConfirm = clickable('[data-test-confirmation-modal-confirm-button]');
 }
 
+@interactor class CheckinNoteModalInteractor {
+  present = isPresent('[data-test-checkinNoteModal-confirm-button]');
+  clickConfirm = clickable('[data-test-checkinNoteModal-confirm-button]');
+}
+
 @interactor class CheckInInteractor {
   processDate = new DatepickerInteractor('[data-test-process-date]');
   processTime = new TimepickerInteractor('[data-test-process-time]');
   confirmModal = new ConfirmStatusModal('[data-test-confirm-status-modal]');
   multiPieceModal = new MultiPieceModalInteractor('[data-test-multi-piece-modal]');
   missingItemModal = new MissingItemModalInteractor();
-
+  checkinNoteModal = new CheckinNoteModalInteractor();
   selectElipse = clickable('[data-test-elipse-select] button');
   selectLoanDetails = clickable('[data-test-loan-details]');
   selectPatronDetails = clickable('[data-test-patron-details]');
