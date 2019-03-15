@@ -272,29 +272,6 @@ describe('CheckIn', () => {
     });
   });
 
-  // describe('showing print hold slip option', () => {
-  //   beforeEach(async function () {
-  //     this.server.create('item', 'withLoan', {
-  //       barcode: 9676761472500,
-  //       title: 'Best Book Ever',
-  //       materialType: {
-  //         name: 'book'
-  //       },
-  //       instanceId : 'lychee',
-  //       holdingsRecordId : 'apple'
-  //     });
-  //     this.server.create('request', 'withItem');
-  //
-  //     await checkIn.barcode('9676761472500').clickEnter();
-  //     await checkIn.confirmModal.clickConfirmButton();
-  //     await checkIn.selectElipse();
-  //   });
-  //
-  //   it('shows hold slip option on the action menu', () => {
-  //     expect(checkIn.printHoldSlipItemPresent).to.be.true;
-  //   });
-  // });
-
   describe('showing multipiece item modal', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
@@ -384,6 +361,63 @@ describe('CheckIn', () => {
 
     it('hides missing item modal', () => {
       expect(checkIn.missingItemModal.present).to.be.false;
+    });
+  });
+
+  describe('showing checkinNote modal', () => {
+    beforeEach(async function () {
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472501,
+        title: 'Best Book Ever',
+        circulationNotes: [
+          {
+            note: 'test note',
+            noteType: 'Check in',
+            staffOnly: false,
+          }
+        ],
+        materialType: {
+          name: 'book'
+        },
+        numberOfPieces: 2,
+        instanceId : 'lychee',
+        holdingsRecordId : 'apple'
+      });
+
+      await checkIn.barcode('9676761472501').clickEnter();
+    });
+
+    it('shows checkinNote modal', () => {
+      expect(checkIn.CheckinNoteModal.present).to.be.true;
+    });
+  });
+
+  describe('closes checkinNote modal', () => {
+    beforeEach(async function () {
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472501,
+        title: 'Best Book Ever',
+        circulationNotes: [
+          {
+            note: 'test note',
+            noteType: 'Check in',
+            staffOnly: false,
+          }
+        ],
+        materialType: {
+          name: 'book'
+        },
+        numberOfPieces: 2,
+        instanceId : 'lychee',
+        holdingsRecordId : 'apple'
+      });
+
+      await checkIn.barcode('9676761472501').clickEnter();
+      await checkIn.CheckinNoteModal.clickConfirm();
+    });
+
+    it('hides checkinNote modal', () => {
+      expect(checkIn.CheckinNoteModal.present).to.be.false;
     });
   });
 });
