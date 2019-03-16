@@ -1,11 +1,16 @@
 # Change history for ui-checkin
 
-## 1.6.0 (IN PROGRESS)
+##  [1.6.0](https://github.com/folio-org/ui-checkin/tree/v1.6.0) (2019-03-16)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.5.0...v1.6.0)
 
+* Supports `circulation` interface 7.0. UICHKIN-83.
+* Supports `loan-policy-storage` interface 2.0. CIRCSTORE-96
 * Print/reprint transit (routing) and hold slips at check-in. Part of UICHKIN-66.
+* Adds warning on check-in of missing items. UICHKIN-58
+* Adds check-in modal for items in transit. UICHKIN-49.
+* Adds check-in modal for items awaiting pickut. UICHKIN-50.
+* Inherits Check-in Modal Print Slip Print Defaults. UICHKIN-53.
 * Add styles for quill editor. Part of UICHKIN-75.
-* Update circulation OKAPI interface to v6.0. Part of UICIRC-164.
-* Update circulation OKAPI interface to v7.0. Part of UICHKIN-83.
 
 ## [1.5.0](https://github.com/folio-org/ui-checkin/tree/v1.5.0) (2019-01-25)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.4.0...v1.5.0)
