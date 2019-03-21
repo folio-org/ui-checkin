@@ -57,5 +57,8 @@
     "action.printTransitSlip": "打印运输单",
     "missingModal.heading": "Check in missing item?",
     "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Missing</strong> {discoverySuppressMessage}",
-    "missingModal.discoverySuppress": "and is suppressed from discovery"
+    "missingModal.discoverySuppress": "and is suppressed from discovery",
+    "note": "Note",
+    "checkinNoteModal.heading": "Confirm check in",
+    "checkinNoteModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}} and will be <strong>checked in</strong> "
 }
