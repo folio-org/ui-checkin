@@ -18,8 +18,6 @@ const propTypes = {
   columnWidths: PropTypes.object,
   formatter: PropTypes.object,
   heading: PropTypes.node.isRequired,
-  hideCancel: PropTypes.bool,
-  hideConfirm: PropTypes.bool,
   id: PropTypes.string,
   message: PropTypes.oneOfType([
     PropTypes.node,
@@ -27,46 +25,34 @@ const propTypes = {
   ]),
   notes: PropTypes.arrayOf(PropTypes.object),
   onCancel: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func,
+  onConfirm: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   visibleColumns: PropTypes.arrayOf(PropTypes.string),
-};
-
-const defaultProps = {
-  hideConfirm: false,
-  hideCancel: false,
 };
 
 const CheckinNoteModal = (props) => {
   const cancelLabel = props.cancelLabel || <FormattedMessage id="ui-checkin.statusModal.cancel" />;
   const confirmLabel = props.confirmLabel || <FormattedMessage id="ui-checkin.statusModal.confirm" />;
   const testId = props.id || uniqueId('confirmation-');
-  const { notes, formatter, columnMapping, visibleColumns, columnWidths, hideConfirm, hideCancel } = props;
+  const { notes, formatter, columnMapping, visibleColumns, columnWidths } = props;
   const footer = (
     <ModalFooter>
-      {
-        !hideConfirm &&
-        <Button
-          data-test-checkinNoteModal-confirm-button
-          buttonStyle="primary"
-          id={`clickable-${testId}-confirm`}
-          onClick={props.onConfirm}
-        >
-          {confirmLabel}
-        </Button>
-      }
-      {
-        !hideCancel &&
-        <Button
-          data-test-checkinNoteModal-cancel-button
-          buttonStyle="default"
-          id={`clickable-${testId}-cancel`}
-          onClick={props.onCancel}
-        >
-          {cancelLabel}
-        </Button>
-      }
-
+      <Button
+        data-test-checkinNoteModal-confirm-button
+        buttonStyle="primary"
+        id={`clickable-${testId}-confirm`}
+        onClick={props.onConfirm}
+      >
+        {confirmLabel}
+      </Button>
+      <Button
+        data-test-checkinNoteModal-cancel-button
+        buttonStyle="default"
+        id={`clickable-${testId}-cancel`}
+        onClick={props.onCancel}
+      >
+        {cancelLabel}
+      </Button>
     </ModalFooter>
   );
 
@@ -96,6 +82,5 @@ const CheckinNoteModal = (props) => {
 };
 
 CheckinNoteModal.propTypes = propTypes;
-CheckinNoteModal.defaultProps = defaultProps;
 
 export default CheckinNoteModal;

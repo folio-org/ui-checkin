@@ -272,40 +272,6 @@ describe('CheckIn', () => {
     });
   });
 
-  describe('showing checkin Notes option', () => {
-    beforeEach(async function () {
-      this.server.create('item', 'withLoan', {
-        barcode: 9676761472500,
-        title: 'Best Book Ever',
-        materialType: {
-          name: 'book'
-        },
-        circulationNotes: [
-          {
-            note: 'test note',
-            noteType: 'Check in',
-            staffOnly: false,
-          }
-        ],
-        status: {
-          name: 'In transit',
-        },
-        instanceId : 'lychee',
-        holdingsRecordId : 'apple'
-      });
-
-      await checkIn.barcode('9676761472500').clickEnter();
-      await checkIn.checkinNoteModal.clickConfirm();
-      await checkIn.confirmModal.clickConfirmButton();
-      await checkIn.selectElipse();
-    });
-
-    it('shows checkin Notes option on the action menu', () => {
-      expect(checkIn.checkinNotesPresent).to.be.true;
-    });
-  });
-
-
   describe('showing multipiece item modal', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
