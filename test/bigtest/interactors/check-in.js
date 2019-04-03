@@ -79,6 +79,7 @@ import {
   clickChangeTime = clickable('[data-test-checkin-modify-time]');
   printHoldSlipItemPresent = isPresent('[data-test-print-hold-slip]');
   printTransitSlipItemPresent = isPresent('[data-test-print-transit-slip]');
+  checkinNotesPresent = isPresent('[data-test-checkin-notes]');
 }
 
 export default CheckInInteractor;
