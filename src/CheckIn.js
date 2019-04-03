@@ -169,6 +169,7 @@ class CheckIn extends React.Component {
   renderActions(loan) {
     const { intl } = this.props;
     const isCheckInNote = element => element.noteType === 'Check in';
+    const checkinNotePresent = get(loan.item, ['circulationNotes'], []).some(isCheckInNote);
     return (
       <div data-test-elipse-select>
         <UncontrolledDropdown onSelectItem={this.handleOptionsChange}>
@@ -239,7 +240,7 @@ class CheckIn extends React.Component {
               </Button>
             </MenuItem>
             }
-            {get(loan.item, ['circulationNotes'], []).some(isCheckInNote) &&
+            {checkinNotePresent &&
               <MenuItem itemMeta={{ loan, action: 'showCheckinNotes' }}>
                 <div data-test-checkin-notes>
                   <Button
