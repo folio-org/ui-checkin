@@ -40,6 +40,7 @@ class CheckIn extends React.Component {
   static propTypes = {
     intl: intlShape,
     scannedItems: PropTypes.arrayOf(PropTypes.object),
+    showCheckinNotes: PropTypes.func,
     handleSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submithandler: PropTypes.func,
@@ -112,6 +113,10 @@ class CheckIn extends React.Component {
     });
   }
 
+  showCheckinNotes(loan) {
+    this.props.showCheckinNotes(loan);
+  }
+
   showPatronDetails(loan) {
     this.props.mutator.query.update({
       _path: `/users/view/${loan.userId}`,
@@ -163,6 +168,8 @@ class CheckIn extends React.Component {
 
   renderActions(loan) {
     const { intl } = this.props;
+    const isCheckInNote = element => element.noteType === 'Check in';
+    const checkinNotePresent = get(loan.item, ['circulationNotes'], []).some(isCheckInNote);
     return (
       <div data-test-elipse-select>
         <UncontrolledDropdown onSelectItem={this.handleOptionsChange}>
@@ -232,6 +239,17 @@ class CheckIn extends React.Component {
                 <FormattedMessage id="ui-checkin.newFeeFine" />
               </Button>
             </MenuItem>
+            }
+            {checkinNotePresent &&
+              <MenuItem itemMeta={{ loan, action: 'showCheckinNotes' }}>
+                <div data-test-checkin-notes>
+                  <Button
+                    buttonStyle="dropdownItem"
+                  >
+                    <FormattedMessage id="ui-checkin.checkinNotes" />
+                  </Button>
+                </div>
+              </MenuItem>
             }
           </DropdownMenu>
         </UncontrolledDropdown>
