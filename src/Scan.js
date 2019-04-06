@@ -211,7 +211,7 @@ class Scan extends React.Component {
     const requestData = {
       servicePointId,
       checkInDate,
-      itemBarcode: barcode,
+      itemBarcode: barcode.trim(),
     };
 
     return checkIn.POST(requestData)
