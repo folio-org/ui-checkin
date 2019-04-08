@@ -1,5 +1,9 @@
 # Change history for ui-checkin
 
+## 1.7.0 (IN PROGRESS)
+
+* Trim whitespace padding from item barcodes to avoid server errors. Fixes UICHKIN-93.
+
 ##  [1.6.0](https://github.com/folio-org/ui-checkin/tree/v1.6.0) (2019-03-16)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.5.0...v1.6.0)
 
