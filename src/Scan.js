@@ -194,7 +194,12 @@ class Scan extends React.Component {
       missingPieces,
     } = checkedinItem;
 
-    return (numberOfPieces > 1 || descriptionOfPieces || numberOfMissingPieces || missingPieces);
+    return (
+      numberOfPieces > 1 ||
+      descriptionOfPieces ||
+      numberOfMissingPieces ||
+      missingPieces
+    );
   }
 
   processModals = (whitelist = {}) => {
