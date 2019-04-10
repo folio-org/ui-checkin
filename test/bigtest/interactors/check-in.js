@@ -51,8 +51,8 @@ import {
 }
 
 @interactor class CheckinNoteModalInteractor {
-  present = isPresent('[data-test-checkinNoteModal-confirm-button]');
-  clickConfirm = clickable('[data-test-checkinNoteModal-confirm-button]');
+  present = isPresent('[data-test-checkin-note-modal-confirm-button]');
+  clickConfirm = clickable('[data-test-checkin-note-modal-confirm-button]');
 }
 
 @interactor class CheckInInteractor {

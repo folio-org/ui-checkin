@@ -360,7 +360,7 @@ describe('CheckIn', () => {
         materialType: {
           name: 'book'
         },
-        numberOfPieces: 2,
+        numberOfPieces: 1,
         instanceId : 'lychee',
         holdingsRecordId : 'apple'
       });
@@ -384,7 +384,7 @@ describe('CheckIn', () => {
         materialType: {
           name: 'book'
         },
-        numberOfPieces: 2,
+        numberOfPieces: 1,
         instanceId : 'lychee',
         holdingsRecordId : 'apple'
       });
@@ -413,7 +413,7 @@ describe('CheckIn', () => {
         materialType: {
           name: 'book'
         },
-        numberOfPieces: 2,
+        numberOfPieces: 1,
         instanceId : 'lychee',
         holdingsRecordId : 'apple'
       });
@@ -441,7 +441,7 @@ describe('CheckIn', () => {
         materialType: {
           name: 'book'
         },
-        numberOfPieces: 2,
+        numberOfPieces: 1,
         instanceId : 'lychee',
         holdingsRecordId : 'apple'
       });
