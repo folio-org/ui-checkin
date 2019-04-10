@@ -128,7 +128,6 @@ class Scan extends React.Component {
     this.renderCheckinNoteModal = this.renderCheckinNoteModal.bind(this);
     this.showCheckinNotes = this.showCheckinNotes.bind(this);
     this.onClose = this.onClose.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
     this.closeMultipieceModal = this.closeMultipieceModal.bind(this);
     this.checkInRef = React.createRef();
     this.checkInData = null;
@@ -167,39 +166,62 @@ class Scan extends React.Component {
     this.setState({ itemError: false }, () => this.clearField('CheckIn', 'item.barcode'));
   }
 
-  onSubmit(data, checkInInst) {
+  onSubmit = async (data, checkInInst) => {
     this.checkInData = data;
     this.checkInInst = checkInInst;
-    const { item } = data;
-    this.validate(item);
-    const { barcode } = item;
-    const { mutator } = this.props;
-    const query = `barcode==${barcode}`;
-    this.setState({ checkedinItem: null });
-    mutator.items.reset();
-    mutator.items.GET({ params: { query } }).then((itemObject) => {
-      if (isEmpty(itemObject.items)) {
-        this.checkIn();
-      } else {
-        const { items } = itemObject;
-        const checkedinItem = items[0];
-        const { numberOfPieces, numberOfMissingPieces, descriptionOfPieces, missingPieces, status: { name } } = checkedinItem;
-        const isCheckInNote = element => element.noteType === 'Check in';
-        const showCheckinNoteModal = get(checkedinItem, ['circulationNotes'], []).some(isCheckInNote);
-        let showMissingModal = false;
+    this.validate(data.item);
+    const { item: { barcode } } = data;
+    const checkedinItem = await this.fetchItem(barcode);
 
-        if (name === 'Missing') showMissingModal = true;
-        if ((!numberOfPieces || numberOfPieces <= 1) && !descriptionOfPieces && !numberOfMissingPieces && !missingPieces) {
-          if (showMissingModal || showCheckinNoteModal) {
-            this.setState({ showMissingModal, checkedinItem, showCheckinNoteModal });
-          } else {
-            this.checkIn();
-          }
-        } else {
-          this.setState({ showMultipieceModal: true, showMissingModal, checkedinItem, showCheckinNoteModal });
-        }
-      }
-    });
+    if (!checkedinItem) {
+      this.checkIn();
+    } else {
+      this.processModals(checkedinItem);
+    }
+  }
+
+  processModals(checkedinItem) {
+    const showMissingModal = this.shouldMissingModalShow(checkedinItem);
+    const showCheckinNoteModal = this.shouldCheckinNoteModalShow(checkedinItem);
+    const showMultipieceModal = this.shouldMultipieceModalShow(checkedinItem);
+
+    if (showMultipieceModal) {
+      this.setState({
+        showMultipieceModal,
+        showMissingModal,
+        showCheckinNoteModal,
+        checkedinItem,
+      });
+    } else if (showMissingModal || showCheckinNoteModal) {
+      this.setState({
+        showMissingModal,
+        checkedinItem,
+        showCheckinNoteModal
+      });
+    } else {
+      this.checkIn();
+    }
+  }
+
+  shouldCheckinNoteModalShow(checkedinItem) {
+    return get(checkedinItem, ['circulationNotes'], [])
+      .some(note => note.noteType === 'Check in');
+  }
+
+  shouldMissingModalShow(checkedinItem) {
+    const { status: { name } } = checkedinItem;
+    return (name === 'Missing');
+  }
+
+  shouldMultipieceModalShow(checkedinItem) {
+    const {
+      numberOfPieces,
+      numberOfMissingPieces,
+      descriptionOfPieces,
+      missingPieces,
+    } = checkedinItem;
+
+    return (numberOfPieces > 1 || descriptionOfPieces || numberOfMissingPieces || missingPieces);
   }
 
   checkIn() {
@@ -285,6 +307,15 @@ class Scan extends React.Component {
       }
       return checkinResp;
     });
+  }
+
+  async fetchItem(barcode) {
+    const { mutator } = this.props;
+    const query = `barcode==${barcode}`;
+    this.setState({ checkedinItem: null });
+    mutator.items.reset();
+    const itemsResp = await mutator.items.GET({ params: { query } });
+    return get(itemsResp, 'items[0]');
   }
 
   buildDateTime(date, time) {
