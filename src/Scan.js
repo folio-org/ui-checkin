@@ -176,8 +176,8 @@ class Scan extends React.Component {
 
   shouldCheckinNoteModalBeShown() {
     const { checkedinItem } = this.state;
-    return get(checkedinItem, ['circulationNotes'], [])
-      .some(note => note.noteType === 'Check in');
+    return get(checkedinItem, 'circulationNotes', [])
+      .some(note => note.noteType === statuses.CHECK_IN);
   }
 
   shouldMissingModalBeShown() {
@@ -373,14 +373,14 @@ class Scan extends React.Component {
     const staffSlips = (resources.staffSlips || {}).records || [];
     const staffSlip = staffSlips.find(slip => slip.name.toLowerCase() === type);
 
-    return get(staffSlip, ['template'], '');
+    return get(staffSlip, 'template', '');
   }
 
   isPrintable(type) {
     const { stripes: { user }, resources } = this.props;
     const staffSlips = (resources.staffSlips || {}).records || [];
     const servicePoints = (resources.servicePoints || {}).records || [];
-    const servicePointId = get(user, ['user', 'curServicePoint', 'id'], '');
+    const servicePointId = get(user, 'user.curServicePoint.id', '');
     const spMap = keyBy(servicePoints, 'id');
     const slipMap = keyBy(staffSlips, slip => slip.name.toLowerCase());
     const servicePoint = spMap[servicePointId];
@@ -403,8 +403,8 @@ class Scan extends React.Component {
         values={{
           title: item.title,
           barcode: item.barcode,
-          materialType: upperFirst(get(item, ['materialType', 'name'], '')),
-          pickupServicePoint: get(request, ['pickupServicePoint', 'name'], '')
+          materialType: upperFirst(get(item, 'materialType.name', '')),
+          pickupServicePoint: get(request, 'pickupServicePoint.name', '')
         }}
       />
     );
@@ -433,7 +433,7 @@ class Scan extends React.Component {
         values={{
           title: item.title,
           barcode: item.barcode,
-          materialType: upperFirst(get(item, ['materialType', 'name'], '')),
+          materialType: upperFirst(get(item, 'materialType.name', '')),
           servicePoint: destinationServicePoint
         }}
       />
@@ -512,7 +512,7 @@ class Scan extends React.Component {
           title,
           barcode,
           discoverySuppressMessage,
-          materialType: upperFirst(get(checkedinItem, ['materialType', 'name'], '')),
+          materialType: upperFirst(get(checkedinItem, 'materialType.name', '')),
         }}
       />
     );
@@ -603,7 +603,7 @@ class Scan extends React.Component {
         values={{
           title,
           barcode,
-          materialType: upperFirst(get(checkedinItem, ['materialType', 'name'], '')),
+          materialType: upperFirst(get(checkedinItem, 'materialType.name', '')),
           count: notes.length
         }}
       />
