@@ -1,4 +1,5 @@
 import { get } from 'lodash';
+import moment from 'moment-timezone';
 
 export function buildTemplate(str) {
   return o => {
@@ -53,6 +54,20 @@ export function convertLoanToTransition(loan, intl) {
   }
 
   return slipData;
+}
+
+export function buildDateTime(date, time) {
+  if (date && time) {
+    let timeString = time;
+
+    if (time.indexOf('T') > -1) {
+      timeString = time.split('T')[1];
+    }
+
+    return `${date.substring(0, 10)}T${timeString}`;
+  } else {
+    return moment().tz('UTC').format();
+  }
 }
 
 export default {};

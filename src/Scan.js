@@ -2,7 +2,7 @@ import { get, minBy, upperFirst, isEmpty, keyBy } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import moment from 'moment-timezone';
+
 import { SubmissionError, change, reset } from 'redux-form';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
@@ -20,6 +20,7 @@ import CheckinNoteModal from './components/CheckinNoteModal';
 import {
   convertRequestToHold,
   convertLoanToTransition,
+  buildDateTime,
 } from './util';
 
 class Scan extends React.Component {
@@ -166,43 +167,6 @@ class Scan extends React.Component {
     this.setState({ itemError: false }, () => this.clearField('CheckIn', 'item.barcode'));
   }
 
-  onSubmit = async (data, checkInInst) => {
-    this.checkInData = data;
-    this.checkInInst = checkInInst;
-    this.validate(data.item);
-    const { item: { barcode } } = data;
-    const checkedinItem = await this.fetchItem(barcode);
-
-    if (!checkedinItem) {
-      this.checkIn();
-    } else {
-      this.processModals(checkedinItem);
-    }
-  }
-
-  processModals(checkedinItem) {
-    const showMissingModal = this.shouldMissingModalShow(checkedinItem);
-    const showCheckinNoteModal = this.shouldCheckinNoteModalShow(checkedinItem);
-    const showMultipieceModal = this.shouldMultipieceModalShow(checkedinItem);
-
-    if (showMultipieceModal) {
-      this.setState({
-        showMultipieceModal,
-        showMissingModal,
-        showCheckinNoteModal,
-        checkedinItem,
-      });
-    } else if (showMissingModal || showCheckinNoteModal) {
-      this.setState({
-        showMissingModal,
-        checkedinItem,
-        showCheckinNoteModal
-      });
-    } else {
-      this.checkIn();
-    }
-  }
-
   shouldCheckinNoteModalShow(checkedinItem) {
     return get(checkedinItem, ['circulationNotes'], [])
       .some(note => note.noteType === 'Check in');
@@ -224,13 +188,53 @@ class Scan extends React.Component {
     return (numberOfPieces > 1 || descriptionOfPieces || numberOfMissingPieces || missingPieces);
   }
 
+  processPreCheckInModals(checkedinItem) {
+    const showMissingModal = this.shouldMissingModalShow(checkedinItem);
+    const showCheckinNoteModal = this.shouldCheckinNoteModalShow(checkedinItem);
+    const showMultipieceModal = this.shouldMultipieceModalShow(checkedinItem);
+
+    if (showMultipieceModal || showMissingModal || showCheckinNoteModal) {
+      this.setState({
+        showMultipieceModal,
+        showMissingModal,
+        showCheckinNoteModal,
+        checkedinItem,
+      });
+    } else {
+      this.checkIn();
+    }
+  }
+
+  tryCheckIn = async (data, checkInInst) => {
+    this.checkInData = data;
+    this.checkInInst = checkInInst;
+    this.validate(data.item);
+    const { item: { barcode } } = data;
+    const checkedinItem = await this.fetchItem(barcode);
+
+    if (!checkedinItem) {
+      this.checkIn();
+    } else {
+      this.processPreCheckInModals(checkedinItem);
+    }
+  }
+
   checkIn() {
     const data = this.checkInData;
-    const { mutator: { checkIn }, stripes: { user } } = this.props;
-    const { item } = data;
-    const { barcode, checkinDate, checkinTime } = item;
-    const servicePointId = get(user, ['user', 'curServicePoint', 'id'], '');
-    const checkInDate = this.buildDateTime(checkinDate, checkinTime);
+    const {
+      item: {
+        barcode,
+        checkinDate,
+        checkinTime,
+      },
+    } = data;
+    const {
+      mutator: { checkIn },
+      stripes: { user },
+    } = this.props;
+
+    const servicePointId = get(user, 'user.curServicePoint.id', '');
+    const checkInDate = buildDateTime(checkinDate, checkinTime);
     const requestData = {
       servicePointId,
       checkInDate,
@@ -243,7 +247,7 @@ class Scan extends React.Component {
       .then(checkinResp => this.addScannedItem(checkinResp))
       .then(() => this.clearField('CheckIn', 'item.barcode'))
       .catch(resp => this.processError(resp))
-      .finally(() => this.setState({ showMultipieceModal: false }, () => this.checkInInst.focusInput()));
+      .finally(() => this.processCheckInDone());
   }
 
   processResponse(checkinResp) {
@@ -266,6 +270,14 @@ class Scan extends React.Component {
     } else {
       return resp.text().then(error => this.handleTextError(error));
     }
+  }
+
+  processCheckInDone() {
+    this.setState({
+      showMultipieceModal: null,
+      showMissingModal: null,
+      showCheckinNoteModal: null,
+    }, () => this.checkInInst.focusInput());
   }
 
   handleTextError(error) {
@@ -315,21 +327,8 @@ class Scan extends React.Component {
     this.setState({ checkedinItem: null });
     mutator.items.reset();
     const itemsResp = await mutator.items.GET({ params: { query } });
+
     return get(itemsResp, 'items[0]');
-  }
-
-  buildDateTime(date, time) {
-    if (date && time) {
-      let timeString = time;
-
-      if (time.indexOf('T') > -1) {
-        timeString = time.split('T')[1];
-      }
-
-      return `${date.substring(0, 10)}T${timeString}`;
-    } else {
-      return moment().tz('UTC').format();
-    }
   }
 
   addScannedItem(checkinResp) {
@@ -509,7 +508,10 @@ class Scan extends React.Component {
   }
 
   hideCheckinNoteModal() {
-    this.setState({ showCheckinNoteModal: false, showCheckinNote: false });
+    this.setState({
+      showCheckinNoteModal: false,
+      checkinNotesMode: false,
+    });
   }
 
   renderMissingModal() {
@@ -546,14 +548,21 @@ class Scan extends React.Component {
 
   showCheckinNotes(loan) {
     const { item } = loan;
-    this.setState({ showCheckinNote: true, item });
+    this.setState({
+      checkinNotesMode: true,
+      showCheckinNoteModal: true,
+      checkedinItem: item,
+    });
   }
 
   renderCheckinNoteModal() {
-    const { checkedinItem, showCheckinNoteModal, item, showCheckinNote } = this.state;
-    const notesItem = item || checkedinItem;
-    const { title, barcode } = notesItem;
-    const checkinNotesArray = get(notesItem, ['circulationNotes'], [])
+    const {
+      checkedinItem,
+      showCheckinNoteModal,
+      checkinNotesMode,
+    } = this.state;
+    const { title, barcode } = checkedinItem;
+    const checkinNotesArray = get(checkedinItem, 'circulationNotes', [])
       .filter(noteObject => noteObject.noteType === 'Check in');
 
     const notes = checkinNotesArray.map(checkinNoteObject => {
@@ -565,11 +574,13 @@ class Scan extends React.Component {
     const columnMapping = { note: <FormattedMessage id="ui-checkin.note" /> };
     const visibleColumns = ['note'];
     const columnWidths = { note : '100%' };
-    const id = showCheckinNote ? 'ui-checkin.checkinNotes.message' : 'ui-checkin.checkinNoteModal.message';
-    const heading = showCheckinNote ?
+    const id = checkinNotesMode ?
+      'ui-checkin.checkinNotes.message' :
+      'ui-checkin.checkinNoteModal.message';
+    const heading = checkinNotesMode ?
       <FormattedMessage id="ui-checkin.checkinNotes.heading" /> :
       <FormattedMessage id="ui-checkin.checkinNoteModal.heading" />;
-    const cancelLabel = showCheckinNote ?
+    const cancelLabel = checkinNotesMode ?
       <FormattedMessage id="ui-checkin.close" /> :
       <FormattedMessage id="ui-checkin.multipieceModal.cancel" />;
 
@@ -579,7 +590,7 @@ class Scan extends React.Component {
         values={{
           title,
           barcode,
-          materialType: upperFirst(get(notesItem, ['materialType', 'name'], '')),
+          materialType: upperFirst(get(checkedinItem, ['materialType', 'name'], '')),
           count: notes.length
         }}
       />
@@ -588,11 +599,11 @@ class Scan extends React.Component {
     return (
       <CheckinNoteModal
         data-test-checkinNote-modal
-        open={showCheckinNote || showCheckinNoteModal}
+        open={showCheckinNoteModal}
         heading={heading}
         onConfirm={this.confirmCheckinNoteModal}
         onCancel={this.hideCheckinNoteModal}
-        hideConfirm={showCheckinNote}
+        hideConfirm={checkinNotesMode}
         cancelLabel={cancelLabel}
         confirmLabel={<FormattedMessage id="ui-checkin.multipieceModal.confirm" />}
         notes={notes}
@@ -609,17 +620,29 @@ class Scan extends React.Component {
     const { resources } = this.props;
     const scannedItems = resources.scannedItems || [];
     const items = resources.items || {};
-    const { nextRequest, transitItem, itemError, showMultipieceModal, holdItem, showMissingModal, showCheckinNoteModal, showCheckinNote } = this.state;
+    const {
+      nextRequest,
+      transitItem,
+      itemError,
+      showMultipieceModal,
+      holdItem,
+      showMissingModal,
+      showCheckinNoteModal,
+    } = this.state;
+
     return (
       <div data-test-check-in-scan>
+        { /* pre checkin modals */}
         {showMissingModal && this.renderMissingModal()}
-        {(showCheckinNote || showCheckinNoteModal) && this.renderCheckinNoteModal()}
+        {showCheckinNoteModal && this.renderCheckinNoteModal()}
+        {showMultipieceModal && this.renderMultipieceModal()}
+        { /* post checkin modals */}
         {nextRequest && holdItem && this.renderHoldModal(nextRequest)}
         {transitItem && this.renderTransitionModal(transitItem)}
         {itemError && this.renderErrorModal(itemError)}
-        {showMultipieceModal && items && !isEmpty(items.records) && this.renderMultipieceModal()}
+
         <CheckIn
-          submithandler={this.onSubmit}
+          submithandler={this.tryCheckIn}
           onSessionEnd={this.onSessionEnd}
           scannedItems={scannedItems}
           showCheckinNotes={this.showCheckinNotes}
