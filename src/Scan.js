@@ -168,8 +168,8 @@ class Scan extends React.Component {
   }
 
   onSubmit(data, checkInInst) {
-    this.checkinData = data;
-    this.checkinInst = checkInInst;
+    this.checkInData = data;
+    this.checkInInst = checkInInst;
     const { item } = data;
     this.validate(item);
     const { barcode } = item;
@@ -179,7 +179,7 @@ class Scan extends React.Component {
     mutator.items.reset();
     mutator.items.GET({ params: { query } }).then((itemObject) => {
       if (isEmpty(itemObject.items)) {
-        this.checkIn(data, checkInInst);
+        this.checkIn();
       } else {
         const { items } = itemObject;
         const checkedinItem = items[0];
@@ -193,7 +193,7 @@ class Scan extends React.Component {
           if (showMissingModal || showCheckinNoteModal) {
             this.setState({ showMissingModal, checkedinItem, showCheckinNoteModal });
           } else {
-            this.checkIn(data, checkInInst);
+            this.checkIn();
           }
         } else {
           this.setState({ showMultipieceModal: true, showMissingModal, checkedinItem, showCheckinNoteModal });
@@ -202,7 +202,8 @@ class Scan extends React.Component {
     });
   }
 
-  checkIn(data, checkInInst) {
+  checkIn() {
+    const data = this.checkInData;
     const { mutator: { checkIn }, stripes: { user } } = this.props;
     const { item } = data;
     const { barcode, checkinDate, checkinTime } = item;
@@ -220,7 +221,7 @@ class Scan extends React.Component {
       .then(checkinResp => this.addScannedItem(checkinResp))
       .then(() => this.clearField('CheckIn', 'item.barcode'))
       .catch(resp => this.processError(resp))
-      .finally(() => this.setState({ showMultipieceModal: false }, () => checkInInst.focusInput()));
+      .finally(() => this.setState({ showMultipieceModal: false }, () => this.checkInInst.focusInput()));
   }
 
   processResponse(checkinResp) {
@@ -305,11 +306,13 @@ class Scan extends React.Component {
     const { mutator, resources } = this.props;
     const { checkedinItem } = this.state;
     const scannedItem = loan || { item };
+
     scannedItem.nextRequest = nextRequest;
     scannedItem.transitItem = transitItem;
     scannedItem.holdItem = holdItem;
     scannedItem.item.circulationNotes = (checkedinItem || {}).circulationNotes || [];
     const scannedItems = [scannedItem].concat(resources.scannedItems);
+
     return mutator.scannedItems.replace(scannedItems);
   }
 
@@ -334,6 +337,7 @@ class Scan extends React.Component {
     const { resources } = this.props;
     const staffSlips = (resources.staffSlips || {}).records || [];
     const staffSlip = staffSlips.find(slip => slip.name.toLowerCase() === type);
+
     return get(staffSlip, ['template'], '');
   }
 
@@ -450,13 +454,12 @@ class Scan extends React.Component {
 
   renderMultipieceModal() {
     const { checkedinItem, showMultipieceModal } = this.state;
-    const data = this.checkinData;
-    const checkInInst = this.checkinInst;
+
     return (
       <MultipieceModal
         open={showMultipieceModal}
         item={checkedinItem}
-        onConfirm={() => this.checkIn(data, checkInInst)}
+        onConfirm={() => this.checkIn()}
         onClose={this.closeMultipieceModal}
       />
     );
@@ -467,15 +470,11 @@ class Scan extends React.Component {
   }
 
   confirmMissing() {
-    const data = this.checkinData;
-    const checkInInst = this.checkinInst;
-    this.setState({ showMissingModal: false }, () => this.checkIn(data, checkInInst));
+    this.setState({ showMissingModal: false }, () => this.checkIn());
   }
 
   confirmCheckinNoteModal() {
-    const data = this.checkinData;
-    const checkInInst = this.checkinInst;
-    this.setState({ showCheckinNoteModal: false }, () => this.checkIn(data, checkInInst));
+    this.setState({ showCheckinNoteModal: false }, () => this.checkIn());
   }
 
   hideCheckinNoteModal() {
