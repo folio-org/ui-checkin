@@ -360,7 +360,7 @@ describe('CheckIn', () => {
         materialType: {
           name: 'book'
         },
-        numberOfPieces: 2,
+        numberOfPieces: 1,
         instanceId : 'lychee',
         holdingsRecordId : 'apple'
       });
@@ -384,7 +384,7 @@ describe('CheckIn', () => {
         materialType: {
           name: 'book'
         },
-        numberOfPieces: 2,
+        numberOfPieces: 1,
         instanceId : 'lychee',
         holdingsRecordId : 'apple'
       });
@@ -413,7 +413,7 @@ describe('CheckIn', () => {
         materialType: {
           name: 'book'
         },
-        numberOfPieces: 2,
+        numberOfPieces: 1,
         instanceId : 'lychee',
         holdingsRecordId : 'apple'
       });
@@ -441,7 +441,7 @@ describe('CheckIn', () => {
         materialType: {
           name: 'book'
         },
-        numberOfPieces: 2,
+        numberOfPieces: 1,
         instanceId : 'lychee',
         holdingsRecordId : 'apple'
       });
@@ -451,6 +451,42 @@ describe('CheckIn', () => {
     });
 
     it('hides checkinNote modal', () => {
+      expect(checkIn.checkinNoteModal.present).to.be.false;
+    });
+  });
+
+  describe('shows and hides all pre checkin modals one after another', () => {
+    beforeEach(async function () {
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472501,
+        title: 'Best Book Ever',
+        circulationNotes: [
+          {
+            note: 'test note',
+            noteType: 'Check in',
+            staffOnly: false,
+          }
+        ],
+        materialType: {
+          name: 'book'
+        },
+        status: {
+          name: 'Missing'
+        },
+        numberOfPieces: 2,
+        instanceId : 'lychee',
+        holdingsRecordId : 'apple'
+      });
+
+      await checkIn.barcode('9676761472501').clickEnter();
+      await checkIn.multiPieceModal.clickCheckinBtn();
+      await checkIn.missingItemModal.clickConfirm();
+      await checkIn.checkinNoteModal.clickConfirm();
+    });
+
+    it('hides all pre checkin modals', () => {
+      expect(checkIn.multiPieceModal.present).to.be.false;
+      expect(checkIn.missingItemModal.present).to.be.false;
       expect(checkIn.checkinNoteModal.present).to.be.false;
     });
   });

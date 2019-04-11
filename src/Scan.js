@@ -1,25 +1,25 @@
-import { get, minBy, upperFirst, isEmpty, keyBy } from 'lodash';
+import { get, minBy, upperFirst, keyBy } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import moment from 'moment-timezone';
+
 import { SubmissionError, change, reset } from 'redux-form';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
   Modal,
   ModalFooter,
   Button,
-  ConfirmationModal
 } from '@folio/stripes/components';
-import MultipieceModal from './components/MultipieceModal';
+
 import CheckIn from './CheckIn';
 import { statuses } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
-import CheckinNoteModal from './components/CheckinNoteModal';
+import ModalManager from './ModalManager';
 
 import {
   convertRequestToHold,
   convertLoanToTransition,
+  buildDateTime,
 } from './util';
 
 class Scan extends React.Component {
@@ -116,33 +116,15 @@ class Scan extends React.Component {
 
   constructor(props) {
     super(props);
-    this.store = props.stripes.store;
 
-    this.checkIn = this.checkIn.bind(this);
-    this.onSessionEnd = this.onSessionEnd.bind(this);
-    this.onConfirm = this.onConfirm.bind(this);
-    this.hideMissingDialog = this.hideMissingDialog.bind(this);
-    this.confirmMissing = this.confirmMissing.bind(this);
-    this.confirmCheckinNoteModal = this.confirmCheckinNoteModal.bind(this);
-    this.hideCheckinNoteModal = this.hideCheckinNoteModal.bind(this);
-    this.renderCheckinNoteModal = this.renderCheckinNoteModal.bind(this);
-    this.showCheckinNotes = this.showCheckinNotes.bind(this);
-    this.onClose = this.onClose.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.closeMultipieceModal = this.closeMultipieceModal.bind(this);
+    this.store = props.stripes.store;
     this.checkInRef = React.createRef();
     this.checkInData = null;
     this.checkinInst = null;
     this.state = {};
   }
 
-  onSessionEnd() {
-    this.clearResources();
-    this.clearForm('CheckIn');
-  }
-
-  closeMultipieceModal() {
-    this.setState({ showMultipieceModal: false });
+  onSessionEnd = () => {
     this.clearResources();
     this.clearForm('CheckIn');
   }
@@ -163,51 +145,40 @@ class Scan extends React.Component {
     }
   }
 
-  onClose() {
+  onCloseErrorModal = () => {
     this.setState({ itemError: false }, () => this.clearField('CheckIn', 'item.barcode'));
   }
 
-  onSubmit(data, checkInInst) {
-    this.checkinData = data;
-    this.checkinInst = checkInInst;
-    const { item } = data;
-    this.validate(item);
-    const { barcode } = item;
-    const { mutator } = this.props;
-    const query = `barcode==${barcode}`;
-    this.setState({ checkedinItem: null });
-    mutator.items.reset();
-    mutator.items.GET({ params: { query } }).then((itemObject) => {
-      if (isEmpty(itemObject.items)) {
-        this.checkIn(data, checkInInst);
-      } else {
-        const { items } = itemObject;
-        const checkedinItem = items[0];
-        const { numberOfPieces, numberOfMissingPieces, descriptionOfPieces, missingPieces, status: { name } } = checkedinItem;
-        const isCheckInNote = element => element.noteType === 'Check in';
-        const showCheckinNoteModal = get(checkedinItem, ['circulationNotes'], []).some(isCheckInNote);
-        let showMissingModal = false;
+  tryCheckIn = async (data, checkInInst) => {
+    this.checkInData = data;
+    this.checkInInst = checkInInst;
+    this.validate(data.item);
+    const { item: { barcode } } = data;
+    const checkedinItem = await this.fetchItem(barcode);
 
-        if (name === 'Missing') showMissingModal = true;
-        if ((!numberOfPieces || numberOfPieces <= 1) && !descriptionOfPieces && !numberOfMissingPieces && !missingPieces) {
-          if (showMissingModal || showCheckinNoteModal) {
-            this.setState({ showMissingModal, checkedinItem, showCheckinNoteModal });
-          } else {
-            this.checkIn(data, checkInInst);
-          }
-        } else {
-          this.setState({ showMultipieceModal: true, showMissingModal, checkedinItem, showCheckinNoteModal });
-        }
-      }
-    });
+    if (!checkedinItem) {
+      this.checkIn();
+    } else {
+      this.setState({ checkedinItem });
+    }
   }
 
-  checkIn(data, checkInInst) {
-    const { mutator: { checkIn }, stripes: { user } } = this.props;
-    const { item } = data;
-    const { barcode, checkinDate, checkinTime } = item;
-    const servicePointId = get(user, ['user', 'curServicePoint', 'id'], '');
-    const checkInDate = this.buildDateTime(checkinDate, checkinTime);
+  checkIn = () => {
+    const data = this.checkInData;
+    const {
+      item: {
+        barcode,
+        checkinDate,
+        checkinTime,
+      },
+    } = data;
+    const {
+      mutator: { checkIn },
+      stripes: { user },
+    } = this.props;
+
+    const servicePointId = get(user, 'user.curServicePoint.id', '');
+    const checkInDate = buildDateTime(checkinDate, checkinTime);
     const requestData = {
       servicePointId,
       checkInDate,
@@ -220,7 +191,7 @@ class Scan extends React.Component {
       .then(checkinResp => this.addScannedItem(checkinResp))
       .then(() => this.clearField('CheckIn', 'item.barcode'))
       .catch(resp => this.processError(resp))
-      .finally(() => this.setState({ showMultipieceModal: false }, () => checkInInst.focusInput()));
+      .finally(() => this.processCheckInDone());
   }
 
   processResponse(checkinResp) {
@@ -243,6 +214,12 @@ class Scan extends React.Component {
     } else {
       return resp.text().then(error => this.handleTextError(error));
     }
+  }
+
+  processCheckInDone() {
+    this.setState({
+      checkedinItem: null,
+    }, () => this.checkInInst.focusInput());
   }
 
   handleTextError(error) {
@@ -286,18 +263,14 @@ class Scan extends React.Component {
     });
   }
 
-  buildDateTime(date, time) {
-    if (date && time) {
-      let timeString = time;
+  async fetchItem(barcode) {
+    const { mutator } = this.props;
+    const query = `barcode==${barcode}`;
+    this.setState({ checkedinItem: null });
+    mutator.items.reset();
+    const itemsResp = await mutator.items.GET({ params: { query } });
 
-      if (time.indexOf('T') > -1) {
-        timeString = time.split('T')[1];
-      }
-
-      return `${date.substring(0, 10)}T${timeString}`;
-    } else {
-      return moment().tz('UTC').format();
-    }
+    return get(itemsResp, 'items[0]');
   }
 
   addScannedItem(checkinResp) {
@@ -305,11 +278,13 @@ class Scan extends React.Component {
     const { mutator, resources } = this.props;
     const { checkedinItem } = this.state;
     const scannedItem = loan || { item };
+
     scannedItem.nextRequest = nextRequest;
     scannedItem.transitItem = transitItem;
     scannedItem.holdItem = holdItem;
     scannedItem.item.circulationNotes = (checkedinItem || {}).circulationNotes || [];
     const scannedItems = [scannedItem].concat(resources.scannedItems);
+
     return mutator.scannedItems.replace(scannedItems);
   }
 
@@ -322,7 +297,7 @@ class Scan extends React.Component {
     throw this.error;
   }
 
-  onConfirm() {
+  onConfirmStatusModal = () => {
     this.setState({
       nextRequest: null,
       transitItem: null,
@@ -334,14 +309,15 @@ class Scan extends React.Component {
     const { resources } = this.props;
     const staffSlips = (resources.staffSlips || {}).records || [];
     const staffSlip = staffSlips.find(slip => slip.name.toLowerCase() === type);
-    return get(staffSlip, ['template'], '');
+
+    return get(staffSlip, 'template', '');
   }
 
   isPrintable(type) {
     const { stripes: { user }, resources } = this.props;
     const staffSlips = (resources.staffSlips || {}).records || [];
     const servicePoints = (resources.servicePoints || {}).records || [];
-    const servicePointId = get(user, ['user', 'curServicePoint', 'id'], '');
+    const servicePointId = get(user, 'user.curServicePoint.id', '');
     const spMap = keyBy(servicePoints, 'id');
     const slipMap = keyBy(staffSlips, slip => slip.name.toLowerCase());
     const servicePoint = spMap[servicePointId];
@@ -364,8 +340,8 @@ class Scan extends React.Component {
         values={{
           title: item.title,
           barcode: item.barcode,
-          materialType: upperFirst(get(item, ['materialType', 'name'], '')),
-          pickupServicePoint: get(request, ['pickupServicePoint', 'name'], '')
+          materialType: upperFirst(get(item, 'materialType.name', '')),
+          pickupServicePoint: get(request, 'pickupServicePoint.name', '')
         }}
       />
     );
@@ -373,7 +349,7 @@ class Scan extends React.Component {
     return (
       <ConfirmStatusModal
         open={!!request}
-        onConfirm={this.onConfirm}
+        onConfirm={this.onConfirmStatusModal}
         slipTemplate={this.getSlipTmpl('hold')}
         isPrintable={this.isPrintable('hold')}
         slipData={slipData}
@@ -394,7 +370,7 @@ class Scan extends React.Component {
         values={{
           title: item.title,
           barcode: item.barcode,
-          materialType: upperFirst(get(item, ['materialType', 'name'], '')),
+          materialType: upperFirst(get(item, 'materialType.name', '')),
           servicePoint: destinationServicePoint
         }}
       />
@@ -403,7 +379,7 @@ class Scan extends React.Component {
     return (
       <ConfirmStatusModal
         open={!!loan}
-        onConfirm={this.onConfirm}
+        onConfirm={this.onConfirmStatusModal}
         slipTemplate={this.getSlipTmpl('transit')}
         slipData={slipData}
         isPrintable={this.isPrintable('transit')}
@@ -425,7 +401,7 @@ class Scan extends React.Component {
 
     const footer = (
       <ModalFooter>
-        <Button onClick={this.onClose}>
+        <Button onClick={this.onCloseErrorModal}>
           <FormattedMessage id="ui-checkin.close" />
         </Button>
       </ModalFooter>
@@ -441,155 +417,56 @@ class Scan extends React.Component {
           />}
         footer={footer}
         dismissible
-        onClose={this.onClose}
+        onClose={this.onCloseErrorModal}
       >
         {message}
       </Modal>
     );
   }
 
-  renderMultipieceModal() {
-    const { checkedinItem, showMultipieceModal } = this.state;
-    const data = this.checkinData;
-    const checkInInst = this.checkinInst;
-    return (
-      <MultipieceModal
-        open={showMultipieceModal}
-        item={checkedinItem}
-        onConfirm={() => this.checkIn(data, checkInInst)}
-        onClose={this.closeMultipieceModal}
-      />
-    );
+  onCancel = () => {
+    this.clearResources();
+    this.clearForm('CheckIn');
   }
 
-  hideMissingDialog() {
-    this.setState({ showMissingModal: false });
-  }
-
-  confirmMissing() {
-    const data = this.checkinData;
-    const checkInInst = this.checkinInst;
-    this.setState({ showMissingModal: false }, () => this.checkIn(data, checkInInst));
-  }
-
-  confirmCheckinNoteModal() {
-    const data = this.checkinData;
-    const checkInInst = this.checkinInst;
-    this.setState({ showCheckinNoteModal: false }, () => this.checkIn(data, checkInInst));
-  }
-
-  hideCheckinNoteModal() {
-    this.setState({ showCheckinNoteModal: false, showCheckinNote: false });
-  }
-
-  renderMissingModal() {
-    const { checkedinItem, showMissingModal } = this.state;
-    const { intl: { formatMessage } } = this.props;
-    const { title, barcode, discoverySuppress } = checkedinItem;
-    const discoverySuppressMessage = discoverySuppress ? formatMessage({ id:'ui-checkin.missingModal.discoverySuppress' }) : '';
-
-    const message = (
-      <SafeHTMLMessage
-        id="ui-checkin.missingModal.message"
-        values={{
-          title,
-          barcode,
-          discoverySuppressMessage,
-          materialType: upperFirst(get(checkedinItem, ['materialType', 'name'], '')),
-        }}
-      />
-    );
-
-    return (
-      <ConfirmationModal
-        data-test-missing-item-modal
-        open={showMissingModal}
-        heading={<FormattedMessage id="ui-checkin.missingModal.heading" />}
-        onConfirm={this.confirmMissing}
-        onCancel={this.hideMissingDialog}
-        cancelLabel={<FormattedMessage id="ui-checkin.multipieceModal.cancel" />}
-        confirmLabel={<FormattedMessage id="ui-checkin.multipieceModal.confirm" />}
-        message={message}
-      />
-    );
-  }
-
-  showCheckinNotes(loan) {
+  showCheckinNotes = (loan) => {
     const { item } = loan;
-    this.setState({ showCheckinNote: true, item });
-  }
-
-  renderCheckinNoteModal() {
-    const { checkedinItem, showCheckinNoteModal, item, showCheckinNote } = this.state;
-    const notesItem = item || checkedinItem;
-    const { title, barcode } = notesItem;
-    const checkinNotesArray = get(notesItem, ['circulationNotes'], [])
-      .filter(noteObject => noteObject.noteType === 'Check in');
-
-    const notes = checkinNotesArray.map(checkinNoteObject => {
-      const { note } = checkinNoteObject;
-      return { note };
+    this.setState({
+      checkinNotesMode: true,
+      checkedinItem: item,
     });
-
-    const formatter = { note: checkinItem => `${checkinItem.note}` };
-    const columnMapping = { note: <FormattedMessage id="ui-checkin.note" /> };
-    const visibleColumns = ['note'];
-    const columnWidths = { note : '100%' };
-    const id = showCheckinNote ? 'ui-checkin.checkinNotes.message' : 'ui-checkin.checkinNoteModal.message';
-    const heading = showCheckinNote ?
-      <FormattedMessage id="ui-checkin.checkinNotes.heading" /> :
-      <FormattedMessage id="ui-checkin.checkinNoteModal.heading" />;
-    const cancelLabel = showCheckinNote ?
-      <FormattedMessage id="ui-checkin.close" /> :
-      <FormattedMessage id="ui-checkin.multipieceModal.cancel" />;
-
-    const message = (
-      <SafeHTMLMessage
-        id={id}
-        values={{
-          title,
-          barcode,
-          materialType: upperFirst(get(notesItem, ['materialType', 'name'], '')),
-          count: notes.length
-        }}
-      />
-    );
-
-    return (
-      <CheckinNoteModal
-        data-test-checkinNote-modal
-        open={showCheckinNote || showCheckinNoteModal}
-        heading={heading}
-        onConfirm={this.confirmCheckinNoteModal}
-        onCancel={this.hideCheckinNoteModal}
-        hideConfirm={showCheckinNote}
-        cancelLabel={cancelLabel}
-        confirmLabel={<FormattedMessage id="ui-checkin.multipieceModal.confirm" />}
-        notes={notes}
-        formatter={formatter}
-        message={message}
-        columnMapping={columnMapping}
-        visibleColumns={visibleColumns}
-        columnWidths={columnWidths}
-      />
-    );
   }
 
   render() {
     const { resources } = this.props;
     const scannedItems = resources.scannedItems || [];
     const items = resources.items || {};
-    const { nextRequest, transitItem, itemError, showMultipieceModal, holdItem, showMissingModal, showCheckinNoteModal, showCheckinNote } = this.state;
+    const {
+      nextRequest,
+      transitItem,
+      itemError,
+      holdItem,
+      checkedinItem,
+      checkinNotesMode,
+    } = this.state;
+
     return (
       <div data-test-check-in-scan>
-        {showMissingModal && this.renderMissingModal()}
-        {(showCheckinNote || showCheckinNoteModal) && this.renderCheckinNoteModal()}
+        { /* manages pre checkin modals */}
+        {checkedinItem &&
+          <ModalManager
+            checkedinItem={checkedinItem}
+            checkinNotesMode={checkinNotesMode}
+            onDone={this.checkIn}
+            onCancel={this.onCancel}
+          />
+        }
         {nextRequest && holdItem && this.renderHoldModal(nextRequest)}
         {transitItem && this.renderTransitionModal(transitItem)}
         {itemError && this.renderErrorModal(itemError)}
-        {showMultipieceModal && items && !isEmpty(items.records) && this.renderMultipieceModal()}
+
         <CheckIn
-          submithandler={this.onSubmit}
+          submithandler={this.tryCheckIn}
           onSessionEnd={this.onSessionEnd}
           scannedItems={scannedItems}
           showCheckinNotes={this.showCheckinNotes}
