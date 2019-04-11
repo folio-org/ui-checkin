@@ -219,9 +219,6 @@ class Scan extends React.Component {
   processCheckInDone() {
     this.setState({
       checkedinItem: null,
-      // showMultipieceModal: null,
-      // showMissingModal: null,
-      // showCheckinNoteModal: null,
     }, () => this.checkInInst.focusInput());
   }
 
