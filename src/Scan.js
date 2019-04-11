@@ -9,13 +9,12 @@ import {
   Modal,
   ModalFooter,
   Button,
-  ConfirmationModal
 } from '@folio/stripes/components';
-import MultipieceModal from './components/MultipieceModal';
+
 import CheckIn from './CheckIn';
 import { statuses } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
-import CheckinNoteModal from './components/CheckinNoteModal';
+import ModalManager from './ModalManager';
 
 import {
   convertRequestToHold,
@@ -130,12 +129,6 @@ class Scan extends React.Component {
     this.clearForm('CheckIn');
   }
 
-  closeMultipieceModal = () => {
-    this.setState({ showMultipieceModal: false });
-    this.clearResources();
-    this.clearForm('CheckIn');
-  }
-
   clearForm(formName) {
     this.store.dispatch(reset(formName));
   }
@@ -166,65 +159,11 @@ class Scan extends React.Component {
     if (!checkedinItem) {
       this.checkIn();
     } else {
-      this.setState({ checkedinItem }, () => this.processModals({
-        missingModal: true,
-        checkinNoteModal: true,
-        multipieceModal: true,
-      }));
+      this.setState({ checkedinItem });
     }
   }
 
-  shouldCheckinNoteModalBeShown() {
-    const { checkedinItem } = this.state;
-    return get(checkedinItem, 'circulationNotes', [])
-      .some(note => note.noteType === statuses.CHECK_IN);
-  }
-
-  shouldMissingModalBeShown() {
-    const { checkedinItem } = this.state;
-    return get(checkedinItem, 'status.name') === statuses.MISSING;
-  }
-
-  shouldMultipieceModalBeShown() {
-    const { checkedinItem } = this.state;
-    const {
-      numberOfPieces,
-      numberOfMissingPieces,
-      descriptionOfPieces,
-      missingPieces,
-    } = checkedinItem;
-
-    return (
-      numberOfPieces > 1 ||
-      descriptionOfPieces ||
-      numberOfMissingPieces ||
-      missingPieces
-    );
-  }
-
-  processModals = (whitelist = {}) => {
-    const {
-      missingModal,
-      checkinNoteModal,
-      multipieceModal,
-    } = whitelist;
-
-    if (multipieceModal && this.shouldMultipieceModalBeShown()) {
-      return this.setState({ showMultipieceModal: true });
-    }
-
-    if (missingModal && this.shouldMissingModalBeShown()) {
-      return this.setState({ showMissingModal: true });
-    }
-
-    if (checkinNoteModal && this.shouldCheckinNoteModalBeShown()) {
-      return this.setState({ showCheckinNoteModal: true });
-    }
-
-    return this.checkIn();
-  }
-
-  checkIn() {
+  checkIn = () => {
     const data = this.checkInData;
     const {
       item: {
@@ -279,9 +218,10 @@ class Scan extends React.Component {
 
   processCheckInDone() {
     this.setState({
-      showMultipieceModal: null,
-      showMissingModal: null,
-      showCheckinNoteModal: null,
+      checkedinItem: null,
+      // showMultipieceModal: null,
+      // showMissingModal: null,
+      // showCheckinNoteModal: null,
     }, () => this.checkInInst.focusInput());
   }
 
@@ -487,146 +427,17 @@ class Scan extends React.Component {
     );
   }
 
-  renderMultipieceModal() {
-    const { checkedinItem, showMultipieceModal } = this.state;
-
-    return (
-      <MultipieceModal
-        open={showMultipieceModal}
-        item={checkedinItem}
-        onConfirm={() => this.confirmMultipieceModal()}
-        onClose={this.closeMultipieceModal}
-      />
-    );
-  }
-
-  renderMissingModal() {
-    const { checkedinItem, showMissingModal } = this.state;
-    const { intl: { formatMessage } } = this.props;
-    const { title, barcode, discoverySuppress } = checkedinItem;
-    const discoverySuppressMessage = discoverySuppress ? formatMessage({ id:'ui-checkin.missingModal.discoverySuppress' }) : '';
-    const message = (
-      <SafeHTMLMessage
-        id="ui-checkin.missingModal.message"
-        values={{
-          title,
-          barcode,
-          discoverySuppressMessage,
-          materialType: upperFirst(get(checkedinItem, 'materialType.name', '')),
-        }}
-      />
-    );
-
-    return (
-      <ConfirmationModal
-        data-test-missing-item-modal
-        open={showMissingModal}
-        heading={<FormattedMessage id="ui-checkin.missingModal.heading" />}
-        onConfirm={this.confirmMissingModal}
-        onCancel={this.hideMissingDialog}
-        cancelLabel={<FormattedMessage id="ui-checkin.multipieceModal.cancel" />}
-        confirmLabel={<FormattedMessage id="ui-checkin.multipieceModal.confirm" />}
-        message={message}
-      />
-    );
+  onCancel = () => {
+    this.clearResources();
+    this.clearForm('CheckIn');
   }
 
   showCheckinNotes = (loan) => {
     const { item } = loan;
-
     this.setState({
       checkinNotesMode: true,
-      showCheckinNoteModal: true,
       checkedinItem: item,
     });
-  }
-
-  confirmMultipieceModal() {
-    this.setState({ showMultipieceModal: false }, () => {
-      this.processModals({ checkinNoteModal: true, missingModal: true });
-    });
-  }
-
-  confirmMissingModal = () => {
-    this.setState({ showMissingModal: false }, () => {
-      this.processModals({ checkinNoteModal: true });
-    });
-  }
-
-  confirmCheckinNoteModal = () => {
-    this.setState({ showCheckinNoteModal: false }, () => this.checkIn());
-  }
-
-  hideMissingDialog = () => {
-    this.setState({ showMissingModal: false });
-  }
-
-  hideCheckinNoteModal = () => {
-    this.setState({
-      showCheckinNoteModal: false,
-      checkinNotesMode: false,
-    });
-  }
-
-  renderCheckinNoteModal() {
-    const {
-      checkedinItem,
-      showCheckinNoteModal,
-      checkinNotesMode,
-    } = this.state;
-    const { title, barcode } = checkedinItem;
-    const checkinNotesArray = get(checkedinItem, 'circulationNotes', [])
-      .filter(noteObject => noteObject.noteType === 'Check in');
-
-    const notes = checkinNotesArray.map(checkinNoteObject => {
-      const { note } = checkinNoteObject;
-      return { note };
-    });
-
-    const formatter = { note: checkinItem => `${checkinItem.note}` };
-    const columnMapping = { note: <FormattedMessage id="ui-checkin.note" /> };
-    const visibleColumns = ['note'];
-    const columnWidths = { note : '100%' };
-    const id = checkinNotesMode ?
-      'ui-checkin.checkinNotes.message' :
-      'ui-checkin.checkinNoteModal.message';
-    const heading = checkinNotesMode ?
-      <FormattedMessage id="ui-checkin.checkinNotes.heading" /> :
-      <FormattedMessage id="ui-checkin.checkinNoteModal.heading" />;
-    const cancelLabel = checkinNotesMode ?
-      <FormattedMessage id="ui-checkin.close" /> :
-      <FormattedMessage id="ui-checkin.multipieceModal.cancel" />;
-
-    const message = (
-      <SafeHTMLMessage
-        id={id}
-        values={{
-          title,
-          barcode,
-          materialType: upperFirst(get(checkedinItem, 'materialType.name', '')),
-          count: notes.length
-        }}
-      />
-    );
-
-    return (
-      <CheckinNoteModal
-        data-test-checkinNote-modal
-        open={showCheckinNoteModal}
-        heading={heading}
-        onConfirm={this.confirmCheckinNoteModal}
-        onCancel={this.hideCheckinNoteModal}
-        hideConfirm={checkinNotesMode}
-        cancelLabel={cancelLabel}
-        confirmLabel={<FormattedMessage id="ui-checkin.multipieceModal.confirm" />}
-        notes={notes}
-        formatter={formatter}
-        message={message}
-        columnMapping={columnMapping}
-        visibleColumns={visibleColumns}
-        columnWidths={columnWidths}
-      />
-    );
   }
 
   render() {
@@ -637,19 +448,22 @@ class Scan extends React.Component {
       nextRequest,
       transitItem,
       itemError,
-      showMultipieceModal,
       holdItem,
-      showMissingModal,
-      showCheckinNoteModal,
+      checkedinItem,
+      checkinNotesMode,
     } = this.state;
 
     return (
       <div data-test-check-in-scan>
-        { /* pre checkin modals */}
-        {showMissingModal && this.renderMissingModal()}
-        {showCheckinNoteModal && this.renderCheckinNoteModal()}
-        {showMultipieceModal && this.renderMultipieceModal()}
-        { /* post checkin modals */}
+        { /* manages pre checkin modals */}
+        {checkedinItem &&
+          <ModalManager
+            checkedinItem={checkedinItem}
+            checkinNotesMode={checkinNotesMode}
+            onDone={this.checkIn}
+            onCancel={this.onCancel}
+          />
+        }
         {nextRequest && holdItem && this.renderHoldModal(nextRequest)}
         {transitItem && this.renderTransitionModal(transitItem)}
         {itemError && this.renderErrorModal(itemError)}
