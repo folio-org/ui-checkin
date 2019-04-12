@@ -329,6 +329,10 @@ describe('CheckIn', () => {
 
   describe('closes multipiece item modal', () => {
     beforeEach(async function () {
+      const firstItem = this.server.create('item', 'withLoan', {
+        barcode: 'test',
+        title: 'Best Book Ever',
+      });
       this.server.create('item', 'withLoan', {
         barcode: 9676761472501,
         title: 'Best Book Ever',
@@ -340,12 +344,18 @@ describe('CheckIn', () => {
         holdingsRecordId : 'apple'
       });
 
+      await checkIn.barcode(firstItem.barcode).clickEnter();
+      await checkIn.whenItemsAreLoaded(1);
       await checkIn.barcode('9676761472501').clickEnter();
       await checkIn.multiPieceModal.clickCheckinBtn();
     });
 
     it('hides multipiece item modal', () => {
       expect(checkIn.multiPieceModal.present).to.be.false;
+    });
+
+    it('left one item in the list', () => {
+      expect(checkIn.checkedInItemsList.rowCount).to.equal(1);
     });
   });
 
