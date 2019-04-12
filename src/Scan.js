@@ -303,7 +303,7 @@ class Scan extends React.Component {
       transitItem: null,
       holdItem: null
     });
-  }
+  };
 
   getSlipTmpl(type) {
     const { resources } = this.props;
@@ -425,9 +425,8 @@ class Scan extends React.Component {
   }
 
   onCancel = () => {
-    this.clearResources();
     this.clearForm('CheckIn');
-  }
+  };
 
   showCheckinNotes = (loan) => {
     const { item } = loan;
@@ -435,7 +434,7 @@ class Scan extends React.Component {
       checkinNotesMode: true,
       checkedinItem: item,
     });
-  }
+  };
 
   render() {
     const { resources } = this.props;

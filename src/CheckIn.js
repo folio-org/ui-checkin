@@ -411,19 +411,21 @@ class CheckIn extends React.Component {
                     </Layout>
                   </Col>
                 </Row>
-                <MultiColumnList
-                  id="list-items-checked-in"
-                  fullWidth
-                  visibleColumns={['timeReturned', 'title', 'barcode', 'callNumber', 'location', 'status', ' ']}
-                  columnMapping={columnMapping}
-                  columnWidths={{ 'timeReturned': 120, ' ': 80, 'title': 300, 'barcode': 200, 'callNumber': 200, 'location': 200, 'status': 120 }}
-                  columnOverflow={{ ' ': true }}
-                  rowMetadata={['id']}
-                  interactive={false}
-                  contentData={scannedItems}
-                  formatter={itemListFormatter}
-                  isEmptyMessage={noItemsLabel}
-                />
+                <div data-test-checked-in-items>
+                  <MultiColumnList
+                    id="list-items-checked-in"
+                    fullWidth
+                    visibleColumns={['timeReturned', 'title', 'barcode', 'callNumber', 'location', 'status', ' ']}
+                    columnMapping={columnMapping}
+                    columnWidths={{ 'timeReturned': 120, ' ': 80, 'title': 300, 'barcode': 200, 'callNumber': 200, 'location': 200, 'status': 120 }}
+                    columnOverflow={{ ' ': true }}
+                    rowMetadata={['id']}
+                    interactive={false}
+                    contentData={scannedItems}
+                    formatter={itemListFormatter}
+                    isEmptyMessage={noItemsLabel}
+                  />
+                </div>
               </div>
             </Pane>
           </Paneset>

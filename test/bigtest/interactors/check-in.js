@@ -6,8 +6,12 @@ import {
   isPresent,
   text,
   triggerable,
-  property
+  property,
+  scoped,
 } from '@bigtest/interactor';
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 
 @interactor class DatepickerInteractor {
   clickInput = clickable('input');
@@ -63,6 +67,7 @@ import {
   missingItemModal = new MissingItemModalInteractor();
   checkinNoteModal = new CheckinNoteModalInteractor();
   selectElipse = clickable('[data-test-elipse-select] button');
+  checkedInItemsList = scoped('[data-test-checked-in-items] div', MultiColumnListInteractor);
   selectLoanDetails = clickable('[data-test-loan-details]');
   selectPatronDetails = clickable('[data-test-patron-details]');
   selectItemDetails = clickable('[data-test-item-details]');
@@ -80,6 +85,10 @@ import {
   printHoldSlipItemPresent = isPresent('[data-test-print-hold-slip]');
   printTransitSlipItemPresent = isPresent('[data-test-print-transit-slip]');
   checkinNotesPresent = isPresent('[data-test-checkin-notes]');
+
+  whenItemsAreLoaded(amount) {
+    return this.when(() => this.checkedInItemsList.rowCount === amount);
+  }
 }
 
 export default CheckInInteractor;
