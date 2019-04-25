@@ -61,7 +61,7 @@
     "note": "Note",
     "checkinNoteModal.heading": "Confirm check in",
     "checkinNoteModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}} and will be <strong>checked in</strong> ",
-    "checkinNotes": "Check in Notes",
-    "checkinNotes.heading": "Check in notes",
-    "checkinNotes.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}}"
+    "checkinNotes": "Notas de devolución",
+    "checkinNotes.heading": "Notas de devolución",
+    "checkinNotes.message": "<strong> {title} ({materialType} ) </strong> (Código de barras: {barcode} ) tiene <strong> {count} </strong> {count, plural, one {note} other {notes}}"
 }
