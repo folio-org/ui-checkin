@@ -60,7 +60,7 @@
     "missingModal.discoverySuppress": "e está ocultado no sistema de descoberta",
     "note": "Nota",
     "checkinNoteModal.heading": "Confirmar devolução",
-    "checkinNoteModal.message": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) tem <strong>{count}</strong> {count, plural, one {nota} other {notas}} e será <strong>devolvido</strong>",
+    "checkinNoteModal.message": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) tem <strong>{count}</strong> {count, plural, one {nota} other {notas}} e será <strong>devolvido</strong> ",
     "checkinNotes": "Notas de recebimento",
     "checkinNotes.heading": "Notas de recebimento",
     "checkinNotes.message": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) tem <strong>{count}</strong> {count, plural, one {nota} other {notas}}"
