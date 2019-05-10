@@ -1,10 +1,15 @@
 # Change history for ui-checkin
 
-## 1.7.0 (IN PROGRESS)
+## [1.7.0](https://github.com/folio-org/ui-checkin/tree/v1.7.0) (2019-05-10)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.6.0...v1.7.0)
 
 * Trim whitespace padding from item barcodes to avoid server errors. Fixes UICHKIN-93.
+* Fix hold expiration date and remove call number from staff slip. UICIRC-175.
+* Link to check in notes in action menu. UICHKIN-78.
+* Provide multiple messages at check in. UICHKIN-79.
+* Bug fix: Cancel multipiece check-in clears check-in history. UICHKIN-88.
 
-##  [1.6.0](https://github.com/folio-org/ui-checkin/tree/v1.6.0) (2019-03-16)
+## [1.6.0](https://github.com/folio-org/ui-checkin/tree/v1.6.0) (2019-03-16)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.5.0...v1.6.0)
 
 * Supports `circulation` interface 7.0. UICHKIN-83.
