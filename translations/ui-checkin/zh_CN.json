@@ -58,10 +58,10 @@
     "missingModal.heading": "Check in missing item?",
     "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Missing</strong> {discoverySuppressMessage}",
     "missingModal.discoverySuppress": "and is suppressed from discovery",
-    "note": "Note",
-    "checkinNoteModal.heading": "Confirm check in",
+    "note": "注释",
+    "checkinNoteModal.heading": "确认归还",
     "checkinNoteModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}} and will be <strong>checked in</strong> ",
     "checkinNotes": "Check in Notes",
-    "checkinNotes.heading": "Check in notes",
+    "checkinNotes.heading": "归还说明",
     "checkinNotes.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}}"
 }
