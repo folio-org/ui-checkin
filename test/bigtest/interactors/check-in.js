@@ -8,6 +8,7 @@ import {
   triggerable,
   property,
   scoped,
+  collection,
 } from '@bigtest/interactor';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -53,8 +54,16 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   present = isPresent('[data-test-confirmation-modal-confirm-button]');
   clickConfirm = clickable('[data-test-confirmation-modal-confirm-button]');
 }
+@interactor class CheckinNoteInteractor {
+  name = text('[data-test-check-in-note-name]');
+  date = text('[data-test-check-in-note-date]');
+  source = text('[data-test-check-in-note-source]');
+}
 
 @interactor class CheckinNoteModalInteractor {
+  defaultScope = '[data-test-check-in-note-modal]';
+
+  checkinNotes = collection('[data-test-check-in-note-modal] [class^="mclRow--"]', CheckinNoteInteractor);
   present = isPresent('[data-test-checkin-note-modal-confirm-button]');
   clickConfirm = clickable('[data-test-checkin-note-modal-confirm-button]');
 }
@@ -85,6 +94,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   printHoldSlipItemPresent = isPresent('[data-test-print-hold-slip]');
   printTransitSlipItemPresent = isPresent('[data-test-print-transit-slip]');
   checkinNotesPresent = isPresent('[data-test-checkin-notes]');
+  checkinNotesButton= scoped('[data-test-checkin-notes] button');
 
   whenItemsAreLoaded(amount) {
     return this.when(() => this.checkedInItemsList.rowCount === amount);

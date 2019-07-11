@@ -1,6 +1,13 @@
-import { beforeEach, describe, it } from '@bigtest/mocha';
+import {
+  beforeEach,
+  describe,
+  it,
+} from '@bigtest/mocha';
 import { expect } from 'chai';
-import { Response } from '@bigtest/mirage';
+import {
+  Response,
+  faker,
+} from '@bigtest/mirage';
 
 import setupApplication from '../helpers/setup-application';
 import CheckInInteractor from '../interactors/check-in';
@@ -273,18 +280,38 @@ describe('CheckIn', () => {
   });
 
   describe('showing checkin Notes option', () => {
+    let item;
+
     beforeEach(async function () {
-      this.server.create('item', 'withLoan', {
-        barcode: 9676761472500,
+      item = this.server.create('item', 'withLoan', {
         title: 'Best Book Ever',
         materialType: {
           name: 'book'
         },
         circulationNotes: [
           {
-            note: 'test note',
+            note: 'test note 2',
             noteType: 'Check in',
             staffOnly: false,
+            source: {
+              personal: {
+                lastName: faker.name.lastName(),
+                firstName: faker.name.firstName(),
+              },
+            },
+            date: faker.date.past()
+          },
+          {
+            note: 'test note 1',
+            noteType: 'Check in',
+            staffOnly: false,
+            source: {
+              personal: {
+                lastName: faker.name.lastName(),
+                firstName: faker.name.firstName(),
+              },
+            },
+            date: faker.date.future()
           }
         ],
         status: {
@@ -294,7 +321,7 @@ describe('CheckIn', () => {
         holdingsRecordId : 'apple'
       });
 
-      await checkIn.barcode('9676761472500').clickEnter();
+      await checkIn.barcode(item.barcode).clickEnter();
       await checkIn.checkinNoteModal.clickConfirm();
       await checkIn.confirmModal.clickConfirmButton();
       await checkIn.selectElipse();
@@ -302,6 +329,21 @@ describe('CheckIn', () => {
 
     it('shows checkin Notes option on the action menu', () => {
       expect(checkIn.checkinNotesPresent).to.be.true;
+    });
+
+    describe('showing checkinNote modal', () => {
+      beforeEach(async function () {
+        await checkIn.checkinNotesButton.click();
+      });
+
+      it('shows checkinNote modal', () => {
+        expect(checkIn.checkinNoteModal.isPresent).to.be.true;
+      });
+
+      it('should have proper item order', () => {
+        expect(checkIn.checkinNoteModal.checkinNotes(0).name).to.equal(item.circulationNotes[1].note);
+        expect(checkIn.checkinNoteModal.checkinNotes(1).name).to.equal(item.circulationNotes[0].note);
+      });
     });
   });
 

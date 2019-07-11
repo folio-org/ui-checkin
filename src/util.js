@@ -70,4 +70,15 @@ export function buildDateTime(date, time) {
   }
 }
 
+export function getFullName(user = {}) {
+  const {
+    personal: {
+      firstName,
+      lastName,
+    } = {},
+  } = user;
+
+  return [firstName, lastName].filter(e => e).join(', ');
+}
+
 export default {};
