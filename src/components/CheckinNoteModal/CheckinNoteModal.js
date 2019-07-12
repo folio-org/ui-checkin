@@ -41,7 +41,15 @@ const CheckinNoteModal = (props) => {
   const cancelLabel = props.cancelLabel || <FormattedMessage id="ui-checkin.statusModal.cancel" />;
   const confirmLabel = props.confirmLabel || <FormattedMessage id="ui-checkin.statusModal.confirm" />;
   const testId = props.id || uniqueId('confirmation-');
-  const { notes, formatter, columnMapping, visibleColumns, columnWidths, hideConfirm, hideCancel } = props;
+  const {
+    notes,
+    formatter,
+    columnMapping,
+    visibleColumns,
+    columnWidths,
+    hideConfirm,
+    hideCancel,
+  } = props;
   const footer = (
     <ModalFooter>
       {
@@ -72,6 +80,7 @@ const CheckinNoteModal = (props) => {
 
   return (
     <Modal
+      data-test-check-in-note-modal
       open={props.open}
       id={testId}
       dismissible
@@ -89,6 +98,7 @@ const CheckinNoteModal = (props) => {
           formatter={formatter}
           columnMapping={columnMapping}
           columnWidths={columnWidths}
+          interactive={false}
         />
       </div>
     </Modal>

@@ -32,6 +32,8 @@
   "today": "today",
   "now": "now",
   "note": "Note",
+  "date": "Date",
+  "source": "Source",
   "checkinNotes": "Check in Notes",
   "checkinNoteModal.heading": "Confirm check in",
   "checkinNotes.heading": "Check in notes",

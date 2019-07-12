@@ -1,13 +1,24 @@
-import { get, upperFirst } from 'lodash';
+import {
+  get,
+  orderBy,
+  upperFirst,
+} from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
+import {
+  FormattedMessage,
+  intlShape,
+  injectIntl,
+  FormattedDate,
+  FormattedTime,
+} from 'react-intl';
 import { ConfirmationModal } from '@folio/stripes/components';
 
 import CheckinNoteModal from './components/CheckinNoteModal';
 import MultipieceModal from './components/MultipieceModal';
 import { statuses } from './consts';
+import { getFullName } from './util';
 
 class ModalManager extends React.Component {
   static propTypes = {
@@ -123,12 +134,19 @@ class ModalManager extends React.Component {
   }
 
   renderMissingModal() {
-    const { checkedinItem, showMissingModal } = this.state;
     const { intl: { formatMessage } } = this.props;
-    const { title, barcode, discoverySuppress } = checkedinItem;
-    const discoverySuppressMessage = discoverySuppress ?
-      formatMessage({ id:'ui-checkin.missingModal.discoverySuppress' }) :
-      '';
+    const {
+      checkedinItem,
+      showMissingModal,
+    } = this.state;
+    const {
+      title,
+      barcode,
+      discoverySuppress,
+    } = checkedinItem;
+    const discoverySuppressMessage = discoverySuppress
+      ? formatMessage({ id:'ui-checkin.missingModal.discoverySuppress' })
+      : '';
     const message = (
       <SafeHTMLMessage
         id="ui-checkin.missingModal.message"
@@ -161,19 +179,35 @@ class ModalManager extends React.Component {
       showCheckinNoteModal,
       checkinNotesMode,
     } = this.state;
-    const { title, barcode } = checkedinItem;
+    const {
+      title,
+      barcode,
+    } = checkedinItem;
     const checkinNotesArray = get(checkedinItem, 'circulationNotes', [])
       .filter(noteObject => noteObject.noteType === 'Check in');
-
-    const notes = checkinNotesArray.map(checkinNoteObject => {
-      const { note } = checkinNoteObject;
-      return { note };
-    });
-
-    const formatter = { note: checkinItem => `${checkinItem.note}` };
-    const columnMapping = { note: <FormattedMessage id="ui-checkin.note" /> };
-    const visibleColumns = ['note'];
-    const columnWidths = { note : '100%' };
+    const notesSorted = orderBy(checkinNotesArray, 'date', 'desc');
+    const formatter = {
+      note: checkinItem => <div data-test-check-in-note-name>{checkinItem.note}</div>,
+      date: checkinItem => (
+        <div data-test-check-in-note-date>
+          <FormattedDate value={checkinItem.date} />
+          <br />
+          <FormattedTime value={checkinItem.date} />
+        </div>
+      ),
+      source: checkinItem => <div data-test-check-in-note-source>{getFullName(checkinItem.source)}</div>,
+    };
+    const columnMapping = {
+      note: <FormattedMessage id="ui-checkin.note" />,
+      date: <FormattedMessage id="ui-checkin.date" />,
+      source: <FormattedMessage id="ui-checkin.source" />,
+    };
+    const visibleColumns = ['note', 'date', 'source'];
+    const columnWidths = {
+      note : '50%',
+      date : '25%',
+      source : '25%',
+    };
     const id = checkinNotesMode ?
       'ui-checkin.checkinNotes.message' :
       'ui-checkin.checkinNoteModal.message';
@@ -191,7 +225,7 @@ class ModalManager extends React.Component {
           title,
           barcode,
           materialType: upperFirst(get(checkedinItem, 'materialType.name', '')),
-          count: notes.length
+          count: notesSorted.length
         }}
       />
     );
@@ -206,7 +240,7 @@ class ModalManager extends React.Component {
         hideConfirm={checkinNotesMode}
         cancelLabel={cancelLabel}
         confirmLabel={<FormattedMessage id="ui-checkin.multipieceModal.confirm" />}
-        notes={notes}
+        notes={notesSorted}
         formatter={formatter}
         message={message}
         columnMapping={columnMapping}
