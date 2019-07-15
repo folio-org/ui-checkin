@@ -63,5 +63,7 @@
     "checkinNoteModal.message": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) tem <strong>{count}</strong> {count, plural, one {nota} other {notas}} e será <strong>devolvido</strong> ",
     "checkinNotes": "Notas de recebimento",
     "checkinNotes.heading": "Notas de recebimento",
-    "checkinNotes.message": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) tem <strong>{count}</strong> {count, plural, one {nota} other {notas}}"
+    "checkinNotes.message": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) tem <strong>{count}</strong> {count, plural, one {nota} other {notas}}",
+    "date": "Data",
+    "source": "Fonte"
 }
