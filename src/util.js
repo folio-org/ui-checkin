@@ -18,7 +18,7 @@ export function convertToSlipData(source, intl, timeZone, slipName = 'Hold') {
   } = source;
 
   const slipData = {
-    'staffSlip.name': slipName,
+    'staffSlip.Name': slipName,
     'requester.firstName': requester.firstName,
     'requester.lastName': requester.lastName,
     'requester.middleName': requester.middleName,
@@ -42,8 +42,6 @@ export function convertToSlipData(source, intl, timeZone, slipName = 'Hold') {
     'item.effectiveLocationCampus': item.effectiveLocationCampus,
     'item.effectiveLocationLibrary': item.effectiveLocationLibrary,
     'item.effectiveLocationSpecific': item.effectiveLocationSpecific,
-    'item.lastScannedServicePoint': item.lastScannedServicePoint,
-    'item.lastScannedDate': intl.formatDate(item.lastScannedDate, { timeZone }),
     'item.fromServicePoint': item.fromServicePoint,
     'item.toServicePoint': item.toServicePoint,
     'request.servicePointPickup': request.servicePointPickup,
