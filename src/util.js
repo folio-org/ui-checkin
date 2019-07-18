@@ -1,57 +1,53 @@
-import { get } from 'lodash';
 import moment from 'moment-timezone';
 
 export function buildTemplate(str) {
   return o => {
     return str.replace(/{{([^{}]*)}}/g, (a, b) => {
       const r = o[b];
-      return typeof r === 'string' || typeof r === 'number' ? r : a;
+      return typeof r === 'string' || typeof r === 'number' ? r : '';
     });
   };
 }
 
-export function convertRequestToHold(request, intl) {
-  const { item = {}, requester } = request;
+export function convertToSlipData(source = {}, intl, timeZone, locale, slipName = 'Hold') {
+  const {
+    item = {},
+    request = {},
+    requester = {},
+  } = source;
+
   const slipData = {
-    'Item title': item.title,
-    'Item barcode': `<Barcode>${item.barcode}</Barcode>`,
-    'Transaction Id': request.id,
-    'Requester last name': requester.lastName,
-    'Requester first name': requester.firstName,
-    'Hold expiration': intl.formatDate(request.holdShelfExpirationDate, {
-      timeZone: 'UTC'
-    }),
-    'Requester barcode': `<Barcode>${requester.barcode}</Barcode>`
+    'staffSlip.Name': slipName,
+    'requester.firstName': requester.firstName,
+    'requester.lastName': requester.lastName,
+    'requester.middleName': requester.middleName,
+    'requester.barcode': `<Barcode>${requester.barcode}</Barcode>`,
+    'item.title': item.title,
+    'item.primaryContributor': item.primaryContributor,
+    'item.allContributors': item.allContributors,
+    'item.barcode': `<Barcode>${item.barcode}</Barcode>`,
+    'item.callNumber': item.callNumber,
+    'item.callNumberPrefix': item.callNumberPrefix,
+    'item.callNumberSuffix': item.callNumberSuffix,
+    'item.enumeration': item.enumeration,
+    'item.volume': item.volume,
+    'item.chronology': item.chronology,
+    'item.yearCaption': item.yearCaption,
+    'item.materialType': item.materialType,
+    'item.loanType': item.loanType,
+    'item.numberOfPieces': item.numberOfPieces,
+    'item.descriptionOfPieces': item.descriptionOfPieces,
+    'item.effectiveLocationInstitution': item.effectiveLocationInstitution,
+    'item.effectiveLocationCampus': item.effectiveLocationCampus,
+    'item.effectiveLocationLibrary': item.effectiveLocationLibrary,
+    'item.effectiveLocationSpecific': item.effectiveLocationSpecific,
+    'item.fromServicePoint': item.fromServicePoint,
+    'item.toServicePoint': item.toServicePoint,
+    'request.servicePointPickup': request.servicePointPickup,
+    'request.requestExpirationDate': intl.formatDate(request.requestExpirationDate, { timeZone, locale }),
+    'request.holdShelfExpirationDate': intl.formatDate(request.holdShelfExpirationDate, { timeZone, locale }),
+    'request.requestID': request.requestID,
   };
-
-  return slipData;
-}
-
-export function convertLoanToTransition(loan, intl) {
-  const { item = {} } = loan;
-  const authors = (item.contributors || []).map(c => c.name).join(', ');
-  const destinationServicePoint = get(
-    item,
-    'inTransitDestinationServicePoint.name',
-    ''
-  );
-  const slipData = {
-    'From Service Point': get(item, 'location.name', ''),
-    'To Service Point': destinationServicePoint,
-    'Item title': item.title,
-    'Item barcode': `<Barcode>${item.barcode}</Barcode>`,
-    'Item author(s)': authors || '',
-    'Item call number': item.callNumber,
-    'Staff slip name': 'Transit'
-  };
-
-  if (loan.dueDate) {
-    slipData['Needed for'] = intl.formatDate(loan.dueDate, { timeZone: 'UTC' });
-  }
-
-  if (loan.loanDate) {
-    slipData.Date = intl.formatDate(loan.loanDate, { timeZone: 'UTC' });
-  }
 
   return slipData;
 }
