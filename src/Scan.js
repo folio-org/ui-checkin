@@ -336,11 +336,12 @@ class Scan extends React.Component {
       intl,
       stripes: {
         timezone,
+        locale,
       },
     } = this.props;
 
     const { item = {} } = request;
-    const slipData = convertToSlipData(staffSlipContext, intl, timezone);
+    const slipData = convertToSlipData(staffSlipContext, intl, timezone, locale);
     const message = (
       <SafeHTMLMessage
         id="ui-checkin.statusModal.hold.message"
@@ -371,11 +372,12 @@ class Scan extends React.Component {
       intl,
       stripes: {
         timezone,
+        locale,
       },
     } = this.props;
 
     const { item = {} } = loan;
-    const slipData = convertToSlipData(staffSlipContext, intl, timezone, 'Transit');
+    const slipData = convertToSlipData(staffSlipContext, intl, timezone, locale, 'Transit');
 
     const destinationServicePoint = get(item, 'inTransitDestinationServicePoint.name', '');
     const message = (

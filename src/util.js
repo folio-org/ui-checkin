@@ -1,4 +1,3 @@
-import { get } from 'lodash';
 import moment from 'moment-timezone';
 
 export function buildTemplate(str) {
@@ -10,7 +9,7 @@ export function buildTemplate(str) {
   };
 }
 
-export function convertToSlipData(source, intl, timeZone, slipName = 'Hold') {
+export function convertToSlipData(source = {}, intl, timeZone, locale, slipName = 'Hold') {
   const {
     item = {},
     request = {},
@@ -45,8 +44,8 @@ export function convertToSlipData(source, intl, timeZone, slipName = 'Hold') {
     'item.fromServicePoint': item.fromServicePoint,
     'item.toServicePoint': item.toServicePoint,
     'request.servicePointPickup': request.servicePointPickup,
-    'request.requestExpirationDate': intl.formatDate(request.requestExpirationDate, { timeZone }),
-    'request.holdShelfExpirationDate': intl.formatDate(request.holdShelfExpirationDate, { timeZone }),
+    'request.requestExpirationDate': intl.formatDate(request.requestExpirationDate, { timeZone, locale }),
+    'request.holdShelfExpirationDate': intl.formatDate(request.holdShelfExpirationDate, { timeZone, locale }),
     'request.requestID': request.requestID,
   };
 

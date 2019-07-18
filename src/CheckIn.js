@@ -169,6 +169,7 @@ class CheckIn extends React.Component {
       intl,
       stripes: {
         timezone,
+        locale,
       },
     } = this.props;
 
@@ -186,7 +187,7 @@ class CheckIn extends React.Component {
                   data-test-print-hold-slip
                   buttonStyle="dropdownItem"
                   template={this.getTemplate('hold')}
-                  dataSource={convertToSlipData(loan.staffSlipContext, intl, timezone)}
+                  dataSource={convertToSlipData(loan.staffSlipContext, intl, timezone, locale)}
                 >
                   <FormattedMessage id="ui-checkin.action.printHoldSlip" />
                 </PrintButton>
@@ -198,7 +199,7 @@ class CheckIn extends React.Component {
                   data-test-print-transit-slip
                   buttonStyle="dropdownItem"
                   template={this.getTemplate('transit')}
-                  dataSource={convertToSlipData(loan.staffSlipContext, intl, timezone, 'Transit')}
+                  dataSource={convertToSlipData(loan.staffSlipContext, intl, timezone, locale, 'Transit')}
                 >
                   <FormattedMessage id="ui-checkin.action.printTransitSlip" />
                 </PrintButton>
