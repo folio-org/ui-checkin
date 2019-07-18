@@ -64,6 +64,6 @@
     "checkinNotes": "Check in Notes",
     "checkinNotes.heading": "归还说明",
     "checkinNotes.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}}",
-    "date": "Date",
-    "source": "Source"
+    "date": "日期",
+    "source": "来源"
 }
