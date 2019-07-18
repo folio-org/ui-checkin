@@ -30,15 +30,13 @@ import {
 } from '@folio/stripes/components';
 
 import PrintButton from './components/PrintButton';
-import {
-  convertRequestToHold,
-  convertLoanToTransition,
-} from './util';
+import { convertToSlipData } from './util';
 import styles from './checkin.css';
 
 class CheckIn extends React.Component {
   static propTypes = {
-    intl: intlShape,
+    stripes: PropTypes.object.isRequired,
+    intl: intlShape.isRequired,
     scannedItems: PropTypes.arrayOf(PropTypes.object),
     showCheckinNotes: PropTypes.func,
     handleSubmit: PropTypes.func.isRequired,
@@ -167,9 +165,16 @@ class CheckIn extends React.Component {
   }
 
   renderActions(loan) {
-    const { intl } = this.props;
+    const {
+      intl,
+      stripes: {
+        timezone,
+      },
+    } = this.props;
+
     const isCheckInNote = element => element.noteType === 'Check in';
     const checkinNotePresent = get(loan.item, ['circulationNotes'], []).some(isCheckInNote);
+
     return (
       <div data-test-elipse-select>
         <UncontrolledDropdown onSelectItem={this.handleOptionsChange}>
@@ -181,7 +186,7 @@ class CheckIn extends React.Component {
                   data-test-print-hold-slip
                   buttonStyle="dropdownItem"
                   template={this.getTemplate('hold')}
-                  dataSource={convertRequestToHold(loan.nextRequest, intl)}
+                  dataSource={convertToSlipData(loan.staffSlipContext, intl, timezone)}
                 >
                   <FormattedMessage id="ui-checkin.action.printHoldSlip" />
                 </PrintButton>
@@ -193,7 +198,7 @@ class CheckIn extends React.Component {
                   data-test-print-transit-slip
                   buttonStyle="dropdownItem"
                   template={this.getTemplate('transit')}
-                  dataSource={convertLoanToTransition(loan.transitItem, intl)}
+                  dataSource={convertToSlipData(loan.staffSlipContext, intl, timezone, 'Transit')}
                 >
                   <FormattedMessage id="ui-checkin.action.printTransitSlip" />
                 </PrintButton>

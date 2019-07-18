@@ -17,9 +17,8 @@ import ConfirmStatusModal from './components/ConfirmStatusModal';
 import ModalManager from './ModalManager';
 
 import {
-  convertRequestToHold,
-  convertLoanToTransition,
   buildDateTime,
+  convertToSlipData,
 } from './util';
 
 class Scan extends React.Component {
@@ -195,8 +194,9 @@ class Scan extends React.Component {
   }
 
   processResponse(checkinResp) {
-    const { loan, item } = checkinResp;
+    const { loan, item, staffSlipContext } = checkinResp;
     const checkinRespItem = loan || { item };
+    this.setState({ staffSlipContext });
     if (get(checkinRespItem, 'item.status.name') === statuses.IN_TRANSIT) {
       checkinResp.transitItem = checkinRespItem;
       this.setState({ transitItem: checkinRespItem });
@@ -274,7 +274,7 @@ class Scan extends React.Component {
   }
 
   addScannedItem(checkinResp) {
-    const { loan, item, nextRequest, transitItem, holdItem } = checkinResp;
+    const { loan, item, nextRequest, transitItem, holdItem, staffSlipContext } = checkinResp;
     const { mutator, resources } = this.props;
     const { checkedinItem } = this.state;
     const scannedItem = loan || { item };
@@ -283,6 +283,7 @@ class Scan extends React.Component {
     scannedItem.transitItem = transitItem;
     scannedItem.holdItem = holdItem;
     scannedItem.item.circulationNotes = (checkedinItem || {}).circulationNotes || [];
+    scannedItem.staffSlipContext = staffSlipContext;
     const scannedItems = [scannedItem].concat(resources.scannedItems);
 
     return mutator.scannedItems.replace(scannedItems);
@@ -331,9 +332,15 @@ class Scan extends React.Component {
   }
 
   renderHoldModal(request) {
-    const { intl } = this.props;
+    const {
+      intl,
+      stripes: {
+        timezone,
+      },
+    } = this.props;
+
     const { item = {} } = request;
-    const slipData = convertRequestToHold(request, intl);
+    const slipData = convertToSlipData(request, intl, timezone);
     const message = (
       <SafeHTMLMessage
         id="ui-checkin.statusModal.hold.message"
@@ -360,9 +367,16 @@ class Scan extends React.Component {
   }
 
   renderTransitionModal(loan) {
-    const { intl } = this.props;
+    const {
+      intl,
+      stripes: {
+        timezone,
+      },
+    } = this.props;
+
     const { item = {} } = loan;
-    const slipData = convertLoanToTransition(loan, intl);
+    const slipData = convertToSlipData(loan, intl, timezone, 'Transit');
+
     const destinationServicePoint = get(item, 'inTransitDestinationServicePoint.name', '');
     const message = (
       <SafeHTMLMessage
@@ -447,6 +461,7 @@ class Scan extends React.Component {
       holdItem,
       checkedinItem,
       checkinNotesMode,
+      staffSlipContext,
     } = this.state;
 
     return (
@@ -461,7 +476,7 @@ class Scan extends React.Component {
           />
         }
         {nextRequest && holdItem && this.renderHoldModal(nextRequest)}
-        {transitItem && this.renderTransitionModal(transitItem)}
+        {transitItem && this.renderTransitionModal(staffSlipContext, transitItem)}
         {itemError && this.renderErrorModal(itemError)}
 
         <CheckIn
