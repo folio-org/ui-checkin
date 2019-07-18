@@ -63,5 +63,7 @@
     "checkinNoteModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}} and will be <strong>checked in</strong>",
     "checkinNotes": "Check in notes",
     "checkinNotes.heading": "Check in notes",
-    "checkinNotes.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}}"
+    "checkinNotes.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}}",
+    "date": "Date",
+    "source": "Source"
 }

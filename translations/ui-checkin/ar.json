@@ -63,5 +63,7 @@
     "checkinNoteModal.message": "<strong>{title} ({materialType})</strong> (الباركود: {barcode}) لديه <strong>{count}</strong> count, plural, {note} واحدة {notes} أخرى} سيتم <strong>ردها</strong>",
     "checkinNotes": "ملاحظات الرد",
     "checkinNotes.heading": "ملاحظات الرد",
-    "checkinNotes.message": "<strong>{title} ({materialType})</strong> (الباركود: {barcode}) لديه <strong>{count}</strong>  {count, plural, one {ملاحظة} other {ملاحظة}} "
+    "checkinNotes.message": "<strong>{title} ({materialType})</strong> (الباركود: {barcode}) لديه <strong>{count}</strong>  {count, plural, one {ملاحظة} other {ملاحظة}} ",
+    "date": "التاريخ",
+    "source": "المصدر"
 }
