@@ -44,8 +44,12 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
     'item.fromServicePoint': item.fromServicePoint,
     'item.toServicePoint': item.toServicePoint,
     'request.servicePointPickup': request.servicePointPickup,
-    'request.requestExpirationDate': intl.formatDate(request.requestExpirationDate, { timeZone, locale }),
-    'request.holdShelfExpirationDate': intl.formatDate(request.holdShelfExpirationDate, { timeZone, locale }),
+    'request.requestExpirationDate': request.requestExpirationDate
+      ? intl.formatDate(request.requestExpirationDate, { timeZone, locale })
+      : request.requestExpirationDate,
+    'request.holdShelfExpirationDate': request.holdShelfExpirationDate
+      ? intl.formatDate(request.holdShelfExpirationDate, { timeZone, locale })
+      : request.holdShelfExpirationDate,
     'request.requestID': request.requestID,
   };
 
