@@ -1,5 +1,12 @@
 # Change history for ui-checkin
 
+## [1.8.0](https://github.com/folio-org/ui-checkin/tree/v1.8.0) (2019-07-24)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.7.0...v1.8.0)
+
+* Refines list of tokens available for staff slip templates (UICIRC-189)
+* Adds link to check-in notes displaying date, source (UICHKIN-87)
+
+
 ## [1.7.0](https://github.com/folio-org/ui-checkin/tree/v1.7.0) (2019-05-10)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.6.0...v1.7.0)
 
