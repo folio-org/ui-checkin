@@ -32,6 +32,7 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
     'item.enumeration': item.enumeration,
     'item.volume': item.volume,
     'item.chronology': item.chronology,
+    'item.copy': item.copy,
     'item.yearCaption': item.yearCaption,
     'item.materialType': item.materialType,
     'item.loanType': item.loanType,
