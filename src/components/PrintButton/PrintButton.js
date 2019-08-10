@@ -39,6 +39,7 @@ class PrintButton extends React.Component {
       <React.Fragment>
         <ReactToPrint
           onBeforePrint={onBeforePrint}
+          removeAfterPrint
           trigger={() => <Button {...btnProps}>{children}</Button>}
           content={() => this.printContentRef.current}
         />

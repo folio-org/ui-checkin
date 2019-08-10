@@ -1,5 +1,9 @@
 # Change history for ui-checkin
 
+## 1.9.0 (IN PROGRESS)
+
+* Update `react-to-print` to accept React via `peerDependencies`. UIIN-678.
+
 ## [1.8.0](https://github.com/folio-org/ui-checkin/tree/v1.8.0) (2019-07-24)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.7.0...v1.8.0)
 
