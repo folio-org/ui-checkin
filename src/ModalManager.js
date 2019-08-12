@@ -20,6 +20,8 @@ import MultipieceModal from './components/MultipieceModal';
 import { statuses } from './consts';
 import { getFullName } from './util';
 
+import css from './ModalManager.css';
+
 class ModalManager extends React.Component {
   static propTypes = {
     intl: intlShape,
@@ -186,26 +188,36 @@ class ModalManager extends React.Component {
     const checkinNotesArray = get(checkedinItem, 'circulationNotes', [])
       .filter(noteObject => noteObject.noteType === 'Check in');
     const notesSorted = orderBy(checkinNotesArray, 'date', 'desc');
+
     const formatter = {
-      note: checkinItem => <div data-test-check-in-note-name>{checkinItem.note}</div>,
       date: checkinItem => (
-        <div data-test-check-in-note-date>
+        <div
+          data-test-check-in-note-date
+          className={css.alignTop}
+        >
           <FormattedDate value={checkinItem.date} />
           <br />
           <FormattedTime value={checkinItem.date} />
         </div>
       ),
-      source: checkinItem => <div data-test-check-in-note-source>{getFullName(checkinItem.source)}</div>,
+      note: checkinItem => <div data-test-check-in-note-name>{checkinItem.note}</div>,
+      source: checkinItem => (
+        <div
+          data-test-check-in-note-source
+          className={css.alignTop}
+        >
+          {getFullName(checkinItem.source)}
+        </div>),
     };
     const columnMapping = {
-      note: <FormattedMessage id="ui-checkin.note" />,
       date: <FormattedMessage id="ui-checkin.date" />,
+      note: <FormattedMessage id="ui-checkin.note" />,
       source: <FormattedMessage id="ui-checkin.source" />,
     };
-    const visibleColumns = ['note', 'date', 'source'];
+    const visibleColumns = ['date', 'note', 'source'];
     const columnWidths = {
-      note : '50%',
       date : '25%',
+      note : '50%',
       source : '25%',
     };
     const id = checkinNotesMode ?
