@@ -58,12 +58,12 @@
     "missingModal.heading": "Manca una copia in restituzione?",
     "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) ha come status di copia <strong>Mancante</strong> {discoverySuppressMessage}",
     "missingModal.discoverySuppress": "ed è soppresso dal discovery",
-    "note": "Note",
-    "checkinNoteModal.heading": "Confirm check in",
-    "checkinNoteModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}} and will be <strong>checked in</strong> ",
-    "checkinNotes": "Check in Notes",
-    "checkinNotes.heading": "Check in notes",
-    "checkinNotes.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}}",
-    "date": "Date",
-    "source": "Source"
+    "note": "Nota",
+    "checkinNoteModal.heading": "Conferma la restituzione",
+    "checkinNoteModal.message": "<strong> {title} ( {materialType} ) </strong> (codice a barre: {barcode} ) ha <strong> {count} </strong> {count, plural, one { note } other { notes }} e sarà <strong> verificato </strong>",
+    "checkinNotes": "Note per la restituzione",
+    "checkinNotes.heading": "Note per la restituzione",
+    "checkinNotes.message": "<strong> {title} ( {materialType} ) </strong> (codice a barre: {barcode} ) ha <strong> {count} </strong> {count, plural, one { note } other { notes }}",
+    "date": "Data",
+    "source": "Fonte"
 }
