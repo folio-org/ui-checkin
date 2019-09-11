@@ -1,8 +1,12 @@
 # Change history for ui-checkin
 
-## 1.9.0 (IN PROGRESS)
+## [1.9.0](https://github.com/folio-org/ui-checkin/tree/v1.9.0) (2019-09-11)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.8.0...v1.9.0)
 
+* Update translation strings.
+* Change fields order in ModalManager, fixed styles. UICHKIN-106.
 * Update `react-to-print` to accept React via `peerDependencies`. UIIN-678.
+* Add copy, loanType and numberOfPieces tokens to staff slips. UICIRC-300.
 
 ## [1.8.0](https://github.com/folio-org/ui-checkin/tree/v1.8.0) (2019-07-24)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.7.0...v1.8.0)
