@@ -38,12 +38,13 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
     'item.loanType': item.loanType,
     'item.numberOfPieces': item.numberOfPieces,
     'item.descriptionOfPieces': item.descriptionOfPieces,
+    'item.lastCheckedInDateTime': item.lastCheckedInDateTime,
+    'item.fromServicePoint': item.fromServicePoint,
+    'item.toServicePoint': item.toServicePoint,
     'item.effectiveLocationInstitution': item.effectiveLocationInstitution,
     'item.effectiveLocationCampus': item.effectiveLocationCampus,
     'item.effectiveLocationLibrary': item.effectiveLocationLibrary,
     'item.effectiveLocationSpecific': item.effectiveLocationSpecific,
-    'item.fromServicePoint': item.fromServicePoint,
-    'item.toServicePoint': item.toServicePoint,
     'request.servicePointPickup': request.servicePointPickup,
     'request.requestExpirationDate': request.requestExpirationDate
       ? intl.formatDate(request.requestExpirationDate, { timeZone, locale })
