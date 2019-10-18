@@ -1,4 +1,5 @@
 import moment from 'moment-timezone';
+import { get } from 'lodash';
 
 export function buildTemplate(str) {
   return o => {
@@ -73,12 +74,8 @@ export function buildDateTime(date, time) {
 }
 
 export function getFullName(user = {}) {
-  const {
-    personal: {
-      firstName,
-      lastName,
-    } = {},
-  } = user;
+  const firstName = get(user, 'personal.firstName', '');
+  const lastName = get(user, 'personal.lastName', '');
 
   return [firstName, lastName].filter(e => e).join(', ');
 }
