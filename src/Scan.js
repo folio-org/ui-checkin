@@ -14,6 +14,7 @@ import {
 import CheckIn from './CheckIn';
 import { statuses } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
+import RouteForDeliveryModal from './components/RouteForDeliveryModal';
 import ModalManager from './ModalManager';
 
 import {
@@ -186,7 +187,7 @@ class Scan extends React.Component {
 
     return checkIn.POST(requestData)
       .then(checkinResp => this.processResponse(checkinResp))
-      .then(checkinResp => this.fetchRequest(checkinResp))
+      .then(checkinResp => this.fetchRequests(checkinResp))
       .then(checkinResp => this.addScannedItem(checkinResp))
       .then(() => this.clearField('CheckIn', 'item.barcode'))
       .catch(resp => this.processError(resp))
@@ -203,6 +204,9 @@ class Scan extends React.Component {
     } else if (get(checkinRespItem, 'item.status.name') === statuses.AWAITING_PICKUP) {
       checkinResp.holdItem = checkinRespItem;
       this.setState({ holdItem: checkinRespItem });
+    } else if (get(checkinRespItem, 'item.status.name') === statuses.AWAITING_DELIVERY) {
+      checkinResp.deliveryItem = checkinRespItem;
+      this.setState({ deliveryItem: checkinRespItem });
     }
     return checkinResp;
   }
@@ -247,9 +251,9 @@ class Scan extends React.Component {
     this.setState({ itemError });
   }
 
-  fetchRequest(checkinResp) {
+  fetchRequests(checkinResp) {
     const { item } = checkinResp;
-    const query = `(itemId==${item.id} and status=="Open - Awaiting pickup")`;
+    const query = `(itemId==${item.id})`;
     const { mutator } = this.props;
     mutator.requests.reset();
     return mutator.requests.GET({ params: { query } }).then((requests) => {
@@ -302,7 +306,8 @@ class Scan extends React.Component {
     this.setState({
       nextRequest: null,
       transitItem: null,
-      holdItem: null
+      holdItem: null,
+      deliveryItem: null,
     });
   };
 
@@ -365,6 +370,56 @@ class Scan extends React.Component {
         message={message}
       />
     );
+  }
+
+  renderDeliveryModal(deliveryItem, staffSlipContext) {
+    const {
+      intl,
+      stripes: {
+        timezone,
+        locale,
+      },
+    } = this.props;
+
+    const slipData = convertToSlipData(staffSlipContext, intl, timezone, locale);
+    const message = (
+      <SafeHTMLMessage
+        id="ui-checkin.statusModal.delivery.message"
+        values={{
+          itemTitle: deliveryItem.title,
+          itemBarcode: deliveryItem.barcode,
+          itemType: deliveryItem.materialType.name,
+        }}
+      />
+    );
+
+    return (
+      <RouteForDeliveryModal
+        open
+        onConfirm={this.onConfirmStatusModal}
+        slipTemplate={this.getSlipTmpl('hold')}
+        isPrintable={this.isPrintable('hold')}
+        slipData={slipData}
+        label={<FormattedMessage id="ui-checkin.statusModal.delivery.heading" />}
+        message={message}
+        onCheckout={this.onDeliveryItemCheckin}
+      />
+    );
+  }
+
+  onDeliveryItemCheckin = () => {
+    const {
+      deliveryItem,
+      nextRequest,
+    } = this.state;
+
+    this.props.history.push({
+      pathname: '/checkout',
+      state: {
+        itemBarcode: deliveryItem.barcode,
+        patronBarcode: nextRequest.requester.barcode,
+      }
+    });
   }
 
   renderTransitionModal(loan, staffSlipContext) {
@@ -464,6 +519,7 @@ class Scan extends React.Component {
       checkedinItem,
       checkinNotesMode,
       staffSlipContext,
+      deliveryItem,
     } = this.state;
 
     return (
@@ -478,7 +534,8 @@ class Scan extends React.Component {
           />
         }
         {nextRequest && holdItem && this.renderHoldModal(nextRequest, staffSlipContext)}
-        {transitItem && this.renderTransitionModal(transitItem, staffSlipContext)}
+        {nextRequest && deliveryItem && this.renderDeliveryModal(deliveryItem)}
+        {transitItem && !deliveryItem && this.renderTransitionModal(transitItem, staffSlipContext)}
         {itemError && this.renderErrorModal(itemError)}
 
         <CheckIn
@@ -489,11 +546,13 @@ class Scan extends React.Component {
           items={items}
           ref={this.checkInRef}
           initialValues={
-            { item:
+            {
+              item:
               {
                 checkinDate: '',
                 checkinTime: '',
-              } }
+              }
+            }
           }
           {...this.props}
         />
