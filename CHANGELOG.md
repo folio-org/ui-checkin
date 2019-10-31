@@ -7,6 +7,7 @@
 * Change fields order in ModalManager, fixed styles. UICHKIN-106.
 * Update `react-to-print` to accept React via `peerDependencies`. UIIN-678.
 * Add copy, loanType and numberOfPieces tokens to staff slips. UICIRC-300.
+* Show time of scan when checking any item in. UICHKIN-63.
 
 ## [1.8.0](https://github.com/folio-org/ui-checkin/tree/v1.8.0) (2019-07-24)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.7.0...v1.8.0)

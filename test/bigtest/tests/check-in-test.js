@@ -79,6 +79,27 @@ describe('CheckIn', () => {
     });
   });
 
+  describe('changing check-in date and time without loan', () => {
+    beforeEach(async function () {
+      this.server.post('/circulation/check-in-by-barcode', (_, request) => {
+        const body = JSON.parse(request.requestBody);
+
+        body.item = {};
+
+        return body;
+      });
+
+      await checkIn.clickChangeTime();
+      await checkIn.processDate.fillAndBlur('04/25/2018');
+      await checkIn.processTime.fillInput('11:12 PM');
+      await checkIn.barcode('9676761472500').clickEnter();
+    });
+
+    it('should display returned time', () => {
+      expect(checkIn.checkedInTimeReturned).to.equal('11:12 PM');
+    });
+  });
+
   describe('submitting the check-in without a barcode', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
