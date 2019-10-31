@@ -397,8 +397,8 @@ class Scan extends React.Component {
       <RouteForDeliveryModal
         open
         onConfirm={this.onConfirmStatusModal}
-        slipTemplate={this.getSlipTmpl('hold')}
-        isPrintable={this.isPrintable('hold')}
+        slipTemplate={this.getSlipTmpl('request delivery')}
+        isPrintable={this.isPrintable('request delivery')}
         slipData={slipData}
         label={<FormattedMessage id="ui-checkin.statusModal.delivery.heading" />}
         message={message}
