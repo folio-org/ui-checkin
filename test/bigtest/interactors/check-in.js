@@ -68,6 +68,16 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   clickConfirm = clickable('[data-test-checkin-note-modal-confirm-button]');
 }
 
+@interactor class DeliveryModalInteractor {
+  defaultScope = '[data-test-delivery-modal]';
+
+  message = text('[data-test-content]');
+  printCheckboxIsChecked = property('[data-test-print-slip-checkbox]', 'checked');
+
+  clickClose = clickable('[data-test-close]');
+  clickCloseAndCheckout = clickable('[data-test-close-and-checkout]');
+}
+
 @interactor class CheckInInteractor {
   processDate = new DatepickerInteractor('[data-test-process-date]');
   processTime = new TimepickerInteractor('[data-test-process-time]');
@@ -95,6 +105,8 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   printTransitSlipItemPresent = isPresent('[data-test-print-transit-slip]');
   checkinNotesPresent = isPresent('[data-test-checkin-notes]');
   checkinNotesButton= scoped('[data-test-checkin-notes] button');
+  deliveryModal = new DeliveryModalInteractor();
+  deliveryModalIsDisplayed = isPresent('[data-test-delivery-modal]');
 
   whenItemsAreLoaded(amount) {
     return this.when(() => this.checkedInItemsList.rowCount === amount);

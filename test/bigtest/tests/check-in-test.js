@@ -149,8 +149,8 @@ describe('CheckIn', () => {
         materialType: {
           name: 'book'
         },
-        instanceId : 'lychee',
-        holdingsRecordId : 'apple'
+        instanceId: 'lychee',
+        holdingsRecordId: 'apple'
       });
 
       await checkIn.barcode('9676761472500').clickEnter();
@@ -204,8 +204,8 @@ describe('CheckIn', () => {
         status: {
           name: 'In transit',
         },
-        instanceId : 'lychee',
-        holdingsRecordId : 'apple'
+        instanceId: 'lychee',
+        holdingsRecordId: 'apple'
       });
 
       await checkIn.barcode('9676761472500').clickEnter();
@@ -268,8 +268,8 @@ describe('CheckIn', () => {
         location: {
           name: 'Main Library'
         },
-        instanceId : 'lychee',
-        holdingsRecordId : 'apple'
+        instanceId: 'lychee',
+        holdingsRecordId: 'apple'
       });
 
       this.server.create('request', { status: 'Open - Awaiting pickup', id: item.id });
@@ -296,8 +296,8 @@ describe('CheckIn', () => {
         status: {
           name: 'In transit',
         },
-        instanceId : 'lychee',
-        holdingsRecordId : 'apple'
+        instanceId: 'lychee',
+        holdingsRecordId: 'apple'
       });
 
       await checkIn.barcode('9676761472500').clickEnter();
@@ -348,8 +348,8 @@ describe('CheckIn', () => {
         status: {
           name: 'In transit',
         },
-        instanceId : 'lychee',
-        holdingsRecordId : 'apple'
+        instanceId: 'lychee',
+        holdingsRecordId: 'apple'
       });
 
       await checkIn.barcode(item.barcode).clickEnter();
@@ -388,8 +388,8 @@ describe('CheckIn', () => {
           name: 'book'
         },
         numberOfPieces: 2,
-        instanceId : 'lychee',
-        holdingsRecordId : 'apple'
+        instanceId: 'lychee',
+        holdingsRecordId: 'apple'
       });
 
       await checkIn.barcode('9676761472501').clickEnter();
@@ -413,8 +413,8 @@ describe('CheckIn', () => {
           name: 'book'
         },
         numberOfPieces: 2,
-        instanceId : 'lychee',
-        holdingsRecordId : 'apple'
+        instanceId: 'lychee',
+        holdingsRecordId: 'apple'
       });
 
       await checkIn.barcode(firstItem.barcode).clickEnter();
@@ -444,8 +444,8 @@ describe('CheckIn', () => {
           name: 'book'
         },
         numberOfPieces: 1,
-        instanceId : 'lychee',
-        holdingsRecordId : 'apple'
+        instanceId: 'lychee',
+        holdingsRecordId: 'apple'
       });
 
       await checkIn.barcode('9676761472501').clickEnter();
@@ -468,8 +468,8 @@ describe('CheckIn', () => {
           name: 'book'
         },
         numberOfPieces: 1,
-        instanceId : 'lychee',
-        holdingsRecordId : 'apple'
+        instanceId: 'lychee',
+        holdingsRecordId: 'apple'
       });
 
       await checkIn.barcode('9676761472501').clickEnter();
@@ -497,8 +497,8 @@ describe('CheckIn', () => {
           name: 'book'
         },
         numberOfPieces: 1,
-        instanceId : 'lychee',
-        holdingsRecordId : 'apple'
+        instanceId: 'lychee',
+        holdingsRecordId: 'apple'
       });
 
       await checkIn.barcode('9676761472501').clickEnter();
@@ -525,8 +525,8 @@ describe('CheckIn', () => {
           name: 'book'
         },
         numberOfPieces: 1,
-        instanceId : 'lychee',
-        holdingsRecordId : 'apple'
+        instanceId: 'lychee',
+        holdingsRecordId: 'apple'
       });
 
       await checkIn.barcode('9676761472501').clickEnter();
@@ -557,8 +557,8 @@ describe('CheckIn', () => {
           name: 'Missing'
         },
         numberOfPieces: 2,
-        instanceId : 'lychee',
-        holdingsRecordId : 'apple'
+        instanceId: 'lychee',
+        holdingsRecordId: 'apple'
       });
 
       await checkIn.barcode('9676761472501').clickEnter();
@@ -571,6 +571,69 @@ describe('CheckIn', () => {
       expect(checkIn.multiPieceModal.present).to.be.false;
       expect(checkIn.missingItemModal.present).to.be.false;
       expect(checkIn.checkinNoteModal.present).to.be.false;
+    });
+  });
+
+  describe('when a delivery item is being checked in', () => {
+    beforeEach(async function () {
+      const item = this.server.create('item', 'withLoan', {
+        barcode: '9676761472500',
+        status: {
+          name: 'Awaiting delivery',
+        },
+        materialType: {
+          name: 'Book',
+        },
+        title: 'Great book',
+      });
+
+      this.server.create('request', { status: 'Open - Awaiting delivery', id: item.id });
+
+      await checkIn.barcode('9676761472500').clickEnter();
+    });
+
+    it('should display delivery modal', () => {
+      expect(checkIn.deliveryModalIsDisplayed).to.be.true;
+    });
+
+    it('should display correct message', () => {
+      const expectedMessage = 'Route Great book (Book) (Barcode: 9676761472500) for delivery request. Item has been automatically checked out to requester.';
+
+      expect(checkIn.deliveryModal.message).to.equal(expectedMessage);
+    });
+
+    it('should display print checkbox unchecked by default', () => {
+      expect(checkIn.deliveryModal.printCheckboxIsChecked).to.be.false;
+    });
+
+    it('displays the checked-in item', () => {
+      expect(checkIn.checkedInBookTitle).to.equal('Great book (Book)');
+    });
+
+    describe('and close button was clicked', () => {
+      beforeEach(async () => {
+        await checkIn.deliveryModal.clickClose();
+      });
+
+      it('should close the modal', () => {
+        expect(checkIn.deliveryModalIsDisplayed).to.be.false;
+      });
+    });
+
+    describe('and close and checkout button was clicked', () => {
+      beforeEach(async () => {
+        await checkIn.deliveryModal.clickCloseAndCheckout();
+      });
+
+      it('should close the modal', () => {
+        expect(checkIn.deliveryModalIsDisplayed).to.be.false;
+      });
+
+      it('should redirect to checkout app', function () {
+        const { search, pathname } = this.location;
+
+        expect(search + pathname).to.equal('/checkout');
+      });
     });
   });
 });

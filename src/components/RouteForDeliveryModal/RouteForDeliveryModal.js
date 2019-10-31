@@ -51,11 +51,11 @@ class RouteForDeliveryModal extends React.Component {
       <div className={mfCss.modalFooterButtons}>
         <Button
           label={label}
-          id={`clickable-${testId}-confirm`}
           onClick={onCheckout}
           data-test-confirm-button
           buttonStyle="primary"
           buttonClass={mfCss.modalFooterButton}
+          data-test-close-and-checkout
         >
           <FormattedMessage id="ui-checkin.statusModal.delivery.closeAndCheckout" />
         </Button>
@@ -73,11 +73,11 @@ class RouteForDeliveryModal extends React.Component {
           </PrintButton> :
           <Button
             label={label}
-            id={`clickable-${testId}-confirm`}
             onClick={onConfirm}
             data-test-confirm-button
             buttonStyle="primary"
             buttonClass={mfCss.modalFooterButton}
+            data-test-close
           >
             <FormattedMessage id="ui-checkin.statusModal.close" />
           </Button>
@@ -87,7 +87,7 @@ class RouteForDeliveryModal extends React.Component {
 
     return (
       <Modal
-        data-test-confirm-status-modal
+        data-test-delivery-modal
         dismissible
         onClose={onConfirm}
         open={open}
@@ -97,7 +97,9 @@ class RouteForDeliveryModal extends React.Component {
         size="small"
         footer={footer}
       >
-        <p>{message}</p>
+        <p data-test-content>
+          {message}
+        </p>
         <Row>
           <Col xs>
             <Checkbox

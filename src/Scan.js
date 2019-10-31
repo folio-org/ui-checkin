@@ -386,9 +386,9 @@ class Scan extends React.Component {
       <SafeHTMLMessage
         id="ui-checkin.statusModal.delivery.message"
         values={{
-          itemTitle: deliveryItem.title,
-          itemBarcode: deliveryItem.barcode,
-          itemType: deliveryItem.materialType.name,
+          itemTitle: deliveryItem.item.title,
+          itemBarcode: deliveryItem.item.barcode,
+          itemType: deliveryItem.item.materialType.name,
         }}
       />
     );
@@ -416,7 +416,7 @@ class Scan extends React.Component {
     this.props.history.push({
       pathname: '/checkout',
       state: {
-        itemBarcode: deliveryItem.barcode,
+        itemBarcode: deliveryItem.item.barcode,
         patronBarcode: nextRequest.requester.barcode,
       }
     });
@@ -534,8 +534,8 @@ class Scan extends React.Component {
           />
         }
         {nextRequest && holdItem && this.renderHoldModal(nextRequest, staffSlipContext)}
-        {nextRequest && deliveryItem && this.renderDeliveryModal(deliveryItem)}
-        {transitItem && !deliveryItem && this.renderTransitionModal(transitItem, staffSlipContext)}
+        {nextRequest && deliveryItem && this.renderDeliveryModal(deliveryItem, staffSlipContext)}
+        {transitItem && this.renderTransitionModal(transitItem, staffSlipContext)}
         {itemError && this.renderErrorModal(itemError)}
 
         <CheckIn
