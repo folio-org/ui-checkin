@@ -1,5 +1,5 @@
 import uniqueId from 'lodash/uniqueId';
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
