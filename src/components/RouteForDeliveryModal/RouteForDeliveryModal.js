@@ -43,72 +43,59 @@ class RouteForDeliveryModal extends React.Component {
     );
   }
 
-  renderCloseAndCheckoutButton() {
+  renderPrintButton(content, onBeforePrint, testId) {
     const {
       slipTemplate = '',
       slipData,
     } = this.props;
 
+    return (
+      <PrintButton
+        buttonStyle="primary"
+        buttonClass={mfCss.modalFooterButton}
+        onBeforePrint={onBeforePrint}
+        dataSource={slipData}
+        template={slipTemplate}
+        data-test={testId}
+      >
+        {content}
+      </PrintButton>
+    );
+  }
+
+  renderButton(content, onClick, testId) {
+    return (
+      <Button
+        buttonStyle="primary"
+        buttonClass={mfCss.modalFooterButton}
+        onClick={onClick}
+        data-test={testId}
+      >
+        {content}
+      </Button>
+    );
+  }
+
+  renderCloseAndCheckoutButton() {
+    const { onCloseAndCheckout } = this.props;
     const { isPrintable } = this.state;
+    const buttonContent = <FormattedMessage id="ui-checkin.statusModal.delivery.closeAndCheckout" />;
+    const testId = 'closeAndCheckout';
 
     return isPrintable
-      ? (
-        <PrintButton
-          buttonStyle="primary"
-          buttonClass={mfCss.modalFooterButton}
-          onBeforePrint={this.props.onCloseAndCheckout}
-          dataSource={slipData}
-          template={slipTemplate}
-          data-test-close-and-print
-        >
-          <FormattedMessage id="ui-checkin.statusModal.delivery.closeAndCheckout" />
-        </PrintButton>
-      )
-      : (
-        <Button
-          buttonStyle="primary"
-          buttonClass={mfCss.modalFooterButton}
-          onClick={this.props.onCloseAndCheckout}
-          data-test-close-and-checkout
-        >
-          <FormattedMessage id="ui-checkin.statusModal.delivery.closeAndCheckout" />
-        </Button>
-      );
+      ? this.renderPrintButton(buttonContent, onCloseAndCheckout, testId)
+      : this.renderButton(buttonContent, onCloseAndCheckout, testId);
   }
 
   renderCloseButton() {
-    const {
-      onClose,
-      slipTemplate = '',
-      slipData,
-    } = this.props;
-
+    const { onClose } = this.props;
     const { isPrintable } = this.state;
+    const buttonContent = <FormattedMessage id="ui-checkin.statusModal.close" />;
+    const testId = 'close';
 
     return isPrintable
-      ? (
-        <PrintButton
-          buttonStyle="primary"
-          buttonClass={mfCss.modalFooterButton}
-          onBeforePrint={onClose}
-          dataSource={slipData}
-          template={slipTemplate}
-          data-test-close-and-print
-        >
-          <FormattedMessage id="ui-checkin.statusModal.close" />
-        </PrintButton>
-      )
-      : (
-        <Button
-          buttonStyle="primary"
-          data-test-confirm-button
-          buttonClass={mfCss.modalFooterButton}
-          onClick={onClose}
-          data-test-close
-        >
-          <FormattedMessage id="ui-checkin.statusModal.close" />
-        </Button>
-      );
+      ? this.renderPrintButton(buttonContent, onClose, testId)
+      : this.renderButton(buttonContent, onClose, testId);
   }
 
   render() {

@@ -74,8 +74,8 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   message = text('[data-test-modal-content]');
   printCheckboxIsChecked = property('[data-test-print-slip-checkbox]', 'checked');
 
-  clickClose = clickable('[data-test-close]');
-  clickCloseAndCheckout = clickable('[data-test-close-and-checkout]');
+  clickClose = clickable('[data-test="close"]');
+  clickCloseAndCheckout = clickable('[data-test="closeAndCheckout"]');
 }
 
 @interactor class CheckInInteractor {
