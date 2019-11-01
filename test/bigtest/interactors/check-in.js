@@ -71,7 +71,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
 @interactor class DeliveryModalInteractor {
   defaultScope = '[data-test-delivery-modal]';
 
-  message = text('[data-test-content]');
+  message = text('[data-test-modal-content]');
   printCheckboxIsChecked = property('[data-test-print-slip-checkbox]', 'checked');
 
   clickClose = clickable('[data-test-close]');

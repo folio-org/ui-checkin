@@ -302,7 +302,7 @@ class Scan extends React.Component {
     throw this.error;
   }
 
-  onConfirmStatusModal = () => {
+  onModalClose = () => {
     this.setState({
       nextRequest: null,
       transitItem: null,
@@ -362,7 +362,7 @@ class Scan extends React.Component {
     return (
       <ConfirmStatusModal
         open={!!request}
-        onConfirm={this.onConfirmStatusModal}
+        onConfirm={this.onModalClose}
         slipTemplate={this.getSlipTmpl('hold')}
         isPrintable={this.isPrintable('hold')}
         slipData={slipData}
@@ -396,18 +396,18 @@ class Scan extends React.Component {
     return (
       <RouteForDeliveryModal
         open
-        onConfirm={this.onConfirmStatusModal}
         slipTemplate={this.getSlipTmpl('request delivery')}
-        isPrintable={this.isPrintable('request delivery')}
+        isPrintableByDefault={this.isPrintable('request delivery')}
         slipData={slipData}
         label={<FormattedMessage id="ui-checkin.statusModal.delivery.heading" />}
-        message={message}
-        onCheckout={this.onDeliveryItemCheckin}
+        modalContent={message}
+        onClose={this.onModalClose}
+        onCloseAndCheckout={this.redirectToCheckout}
       />
     );
   }
 
-  onDeliveryItemCheckin = () => {
+  redirectToCheckout = () => {
     const {
       deliveryItem,
       nextRequest,
@@ -450,7 +450,7 @@ class Scan extends React.Component {
     return (
       <ConfirmStatusModal
         open={!!loan}
-        onConfirm={this.onConfirmStatusModal}
+        onConfirm={this.onModalClose}
         slipTemplate={this.getSlipTmpl('transit')}
         slipData={slipData}
         isPrintable={this.isPrintable('transit')}
