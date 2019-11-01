@@ -13,7 +13,6 @@ import {
 import mfCss from '@folio/stripes-components/lib/ModalFooter/ModalFooter.css';
 
 import PrintButton from '../PrintButton';
-import { AST_DWLoop } from 'terser';
 
 class RouteForDeliveryModal extends React.Component {
   static propTypes = {

@@ -114,14 +114,16 @@ class Scan extends React.Component {
     }),
   };
 
-  constructor(props) {
-    super(props);
-
-    this.store = props.stripes.store;
-    this.checkInRef = React.createRef();
-    this.checkInData = null;
-    this.checkinInst = null;
-    this.state = {};
+  state = {};
+  store = this.props.stripes.store;
+  checkInRef = React.createRef();
+  checkInData = null;
+  checkinInst = null;
+  checkinInitialValues = {
+    item: {
+      checkinDate: '',
+      checkinTime: '',
+    }
   }
 
   onSessionEnd = () => {
@@ -545,15 +547,7 @@ class Scan extends React.Component {
           showCheckinNotes={this.showCheckinNotes}
           items={items}
           ref={this.checkInRef}
-          initialValues={
-            {
-              item:
-              {
-                checkinDate: '',
-                checkinTime: '',
-              }
-            }
-          }
+          initialValues={this.checkinInitialValues}
           {...this.props}
         />
       </div>
