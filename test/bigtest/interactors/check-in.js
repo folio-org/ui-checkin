@@ -86,6 +86,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   barcode = fillable('#input-item-barcode');
   clickEnter = clickable('#clickable-add-item');
   checkedInBookTitle = text('#list-items-checked-in div[role="gridcell"]:nth-child(2)');
+  checkedInTimeReturned = text('[data-test-check-in-return-time]');
   barcodeError = text('#OverlayContainer [class^="modalContent"]>span');
   endSession = clickable('#clickable-end-session');
   hasCheckedInItems = isPresent('#list-items-checked-in');

@@ -284,7 +284,7 @@ class CheckIn extends React.Component {
     const itemListFormatter = {
       'timeReturned': loan => ((loan.returnDate) ?
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <div>{formatTime(`${get(loan, ['returnDate'])}`)}</div>
+          <div data-test-check-in-return-time>{formatTime(`${get(loan, ['returnDate'])}`)}</div>
           <div key={loan.id}>{this.showInfo(loan)}</div>
         </div> :
         null

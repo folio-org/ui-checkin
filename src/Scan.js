@@ -279,6 +279,17 @@ class Scan extends React.Component {
     const { checkedinItem } = this.state;
     const scannedItem = loan || { item };
 
+    if (!loan) {
+      const {
+        item: {
+          checkinDate,
+          checkinTime,
+        },
+      } = this.checkInData;
+
+      scannedItem.returnDate = buildDateTime(checkinDate, checkinTime);
+    }
+
     scannedItem.nextRequest = nextRequest;
     scannedItem.transitItem = transitItem;
     scannedItem.holdItem = holdItem;
