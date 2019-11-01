@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -30,72 +30,86 @@ class RouteForDeliveryModal extends React.Component {
     isPrintable: this.props.isPrintableByDefault
   };
 
+  closeButtonContent = <FormattedMessage id="ui-checkin.statusModal.close" />;
+  closeAndCheckoutButtonContent = <FormattedMessage id="ui-checkin.statusModal.delivery.closeAndCheckout" />;
+
   onPrintCheckboxChange = () => {
     this.setState(prevState => ({ isPrintable: !prevState.isPrintable }));
   }
 
   renderFooter() {
+    const { isPrintable } = this.state;
+
     return (
       <div className={mfCss.modalFooterButtons}>
-        {this.renderCloseAndCheckoutButton()}
-        {this.renderCloseButton()}
+        {isPrintable
+          ? this.renderPrintButtonsGroup()
+          : this.renderButtonsGroup()
+        }
       </div>
     );
   }
 
-  renderPrintButton(content, onBeforePrint, testId) {
+  renderPrintButtonsGroup() {
     const {
       slipTemplate = '',
       slipData,
+      onClose,
+      onCloseAndCheckout,
     } = this.props;
 
     return (
-      <PrintButton
-        buttonStyle="primary"
-        buttonClass={mfCss.modalFooterButton}
-        onBeforePrint={onBeforePrint}
-        dataSource={slipData}
-        template={slipTemplate}
-        data-test={testId}
-      >
-        {content}
-      </PrintButton>
+      <Fragment>
+        <PrintButton
+          buttonStyle="primary"
+          buttonClass={mfCss.modalFooterButton}
+          onBeforePrint={onCloseAndCheckout}
+          dataSource={slipData}
+          template={slipTemplate}
+          data-test="closeAndCheckout"
+        >
+          {this.closeAndCheckoutButtonContent}
+        </PrintButton>
+        <PrintButton
+          buttonStyle="primary"
+          buttonClass={mfCss.modalFooterButton}
+          onBeforePrint={onClose}
+          dataSource={slipData}
+          template={slipTemplate}
+          data-test="close"
+        >
+          {this.closeButtonContent}
+        </PrintButton>
+      </Fragment>
     );
   }
 
-  renderButton(content, onClick, testId) {
+  renderButtonsGroup() {
+    const {
+      onClose,
+      onCloseAndCheckout,
+    } = this.props;
+
     return (
-      <Button
-        buttonStyle="primary"
-        buttonClass={mfCss.modalFooterButton}
-        onClick={onClick}
-        data-test={testId}
-      >
-        {content}
-      </Button>
+      <Fragment>
+        <Button
+          buttonStyle="primary"
+          buttonClass={mfCss.modalFooterButton}
+          onClick={onCloseAndCheckout}
+          data-test="closeAndCheckout"
+        >
+          {this.closeAndCheckoutButtonContent}
+        </Button>
+        <Button
+          buttonStyle="primary"
+          buttonClass={mfCss.modalFooterButton}
+          onClick={onClose}
+          data-test="close"
+        >
+          {this.closeButtonContent}
+        </Button>
+      </Fragment>
     );
-  }
-
-  renderCloseAndCheckoutButton() {
-    const { onCloseAndCheckout } = this.props;
-    const { isPrintable } = this.state;
-    const buttonContent = <FormattedMessage id="ui-checkin.statusModal.delivery.closeAndCheckout" />;
-    const testId = 'closeAndCheckout';
-
-    return isPrintable
-      ? this.renderPrintButton(buttonContent, onCloseAndCheckout, testId)
-      : this.renderButton(buttonContent, onCloseAndCheckout, testId);
-  }
-
-  renderCloseButton() {
-    const { onClose } = this.props;
-    const { isPrintable } = this.state;
-    const buttonContent = <FormattedMessage id="ui-checkin.statusModal.close" />;
-    const testId = 'close';
-
-    return isPrintable
-      ? this.renderPrintButton(buttonContent, onClose, testId)
-      : this.renderButton(buttonContent, onClose, testId);
   }
 
   render() {
