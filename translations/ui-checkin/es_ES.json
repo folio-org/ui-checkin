@@ -62,5 +62,8 @@
     "checkinNotes.heading": "Notas de devolución",
     "checkinNotes.message": "<strong> {title} ({materialType} ) </strong> (Código de barras: {barcode} ) tiene <strong> {count} </strong> {count, plural, one {note} other {notes}}",
     "date": "Date",
-    "source": "Source"
+    "source": "Source",
+    "statusModal.delivery.heading": "Route for delivery request",
+    "statusModal.delivery.closeAndCheckout": "Close and check out",
+    "statusModal.delivery.message": "Route <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}) for delivery request. <strong>Item has been automatically checked out to requester</strong>."
 }

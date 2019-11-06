@@ -62,5 +62,8 @@
     "checkinNotes.heading": "ملاحظات الرد",
     "checkinNotes.message": "<strong>{title} ({materialType})</strong> (الباركود: {barcode}) لديه <strong>{count}</strong>  {count, plural, one {ملاحظة} other {ملاحظة}}",
     "date": "التاريخ",
-    "source": "المصدر"
+    "source": "المصدر",
+    "statusModal.delivery.heading": "Route for delivery request",
+    "statusModal.delivery.closeAndCheckout": "Close and check out",
+    "statusModal.delivery.message": "Route <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}) for delivery request. <strong>Item has been automatically checked out to requester</strong>."
 }

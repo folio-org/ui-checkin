@@ -62,5 +62,8 @@
     "checkinNotes.heading": "归还附注",
     "checkinNotes.message": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ） 有<strong> {count} </strong> {count, plural, one { note } other { notes }}",
     "date": "日期",
-    "source": "来源"
+    "source": "来源",
+    "statusModal.delivery.heading": "Route for delivery request",
+    "statusModal.delivery.closeAndCheckout": "Close and check out",
+    "statusModal.delivery.message": "Route <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}) for delivery request. <strong>Item has been automatically checked out to requester</strong>."
 }
