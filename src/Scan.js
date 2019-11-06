@@ -14,6 +14,7 @@ import {
 import CheckIn from './CheckIn';
 import { statuses } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
+import RouteForDeliveryModal from './components/RouteForDeliveryModal';
 import ModalManager from './ModalManager';
 
 import {
@@ -113,14 +114,16 @@ class Scan extends React.Component {
     }),
   };
 
-  constructor(props) {
-    super(props);
-
-    this.store = props.stripes.store;
-    this.checkInRef = React.createRef();
-    this.checkInData = null;
-    this.checkinInst = null;
-    this.state = {};
+  state = {};
+  store = this.props.stripes.store;
+  checkInRef = React.createRef();
+  checkInData = null;
+  checkinInst = null;
+  checkinInitialValues = {
+    item: {
+      checkinDate: '',
+      checkinTime: '',
+    }
   }
 
   onSessionEnd = () => {
@@ -186,7 +189,7 @@ class Scan extends React.Component {
 
     return checkIn.POST(requestData)
       .then(checkinResp => this.processResponse(checkinResp))
-      .then(checkinResp => this.fetchRequest(checkinResp))
+      .then(checkinResp => this.fetchRequests(checkinResp))
       .then(checkinResp => this.addScannedItem(checkinResp))
       .then(() => this.clearField('CheckIn', 'item.barcode'))
       .catch(resp => this.processError(resp))
@@ -203,6 +206,9 @@ class Scan extends React.Component {
     } else if (get(checkinRespItem, 'item.status.name') === statuses.AWAITING_PICKUP) {
       checkinResp.holdItem = checkinRespItem;
       this.setState({ holdItem: checkinRespItem });
+    } else if (get(checkinRespItem, 'item.status.name') === statuses.AWAITING_DELIVERY) {
+      checkinResp.deliveryItem = checkinRespItem;
+      this.setState({ deliveryItem: checkinRespItem });
     }
     return checkinResp;
   }
@@ -247,9 +253,9 @@ class Scan extends React.Component {
     this.setState({ itemError });
   }
 
-  fetchRequest(checkinResp) {
+  fetchRequests(checkinResp) {
     const { item } = checkinResp;
-    const query = `(itemId==${item.id} and status=="Open - Awaiting pickup")`;
+    const query = `(itemId==${item.id})`;
     const { mutator } = this.props;
     mutator.requests.reset();
     return mutator.requests.GET({ params: { query } }).then((requests) => {
@@ -309,11 +315,12 @@ class Scan extends React.Component {
     throw this.error;
   }
 
-  onConfirmStatusModal = () => {
+  onModalClose = () => {
     this.setState({
       nextRequest: null,
       transitItem: null,
-      holdItem: null
+      holdItem: null,
+      deliveryItem: null,
     });
   };
 
@@ -368,7 +375,7 @@ class Scan extends React.Component {
     return (
       <ConfirmStatusModal
         open={!!request}
-        onConfirm={this.onConfirmStatusModal}
+        onConfirm={this.onModalClose}
         slipTemplate={this.getSlipTmpl('hold')}
         isPrintable={this.isPrintable('hold')}
         slipData={slipData}
@@ -376,6 +383,56 @@ class Scan extends React.Component {
         message={message}
       />
     );
+  }
+
+  renderDeliveryModal(deliveryItem, staffSlipContext) {
+    const {
+      intl,
+      stripes: {
+        timezone,
+        locale,
+      },
+    } = this.props;
+
+    const slipData = convertToSlipData(staffSlipContext, intl, timezone, locale);
+    const message = (
+      <SafeHTMLMessage
+        id="ui-checkin.statusModal.delivery.message"
+        values={{
+          itemTitle: deliveryItem.item.title,
+          itemBarcode: deliveryItem.item.barcode,
+          itemType: deliveryItem.item.materialType.name,
+        }}
+      />
+    );
+
+    return (
+      <RouteForDeliveryModal
+        open
+        slipTemplate={this.getSlipTmpl('request delivery')}
+        isPrintableByDefault={this.isPrintable('request delivery')}
+        slipData={slipData}
+        label={<FormattedMessage id="ui-checkin.statusModal.delivery.heading" />}
+        modalContent={message}
+        onClose={this.onModalClose}
+        onCloseAndCheckout={this.redirectToCheckout}
+      />
+    );
+  }
+
+  redirectToCheckout = () => {
+    const {
+      deliveryItem,
+      nextRequest,
+    } = this.state;
+
+    this.props.history.push({
+      pathname: '/checkout',
+      state: {
+        itemBarcode: deliveryItem.item.barcode,
+        patronBarcode: nextRequest.requester.barcode,
+      }
+    });
   }
 
   renderTransitionModal(loan, staffSlipContext) {
@@ -406,7 +463,7 @@ class Scan extends React.Component {
     return (
       <ConfirmStatusModal
         open={!!loan}
-        onConfirm={this.onConfirmStatusModal}
+        onConfirm={this.onModalClose}
         slipTemplate={this.getSlipTmpl('transit')}
         slipData={slipData}
         isPrintable={this.isPrintable('transit')}
@@ -475,6 +532,7 @@ class Scan extends React.Component {
       checkedinItem,
       checkinNotesMode,
       staffSlipContext,
+      deliveryItem,
     } = this.state;
 
     return (
@@ -489,6 +547,7 @@ class Scan extends React.Component {
           />
         }
         {nextRequest && holdItem && this.renderHoldModal(nextRequest, staffSlipContext)}
+        {nextRequest && deliveryItem && this.renderDeliveryModal(deliveryItem, staffSlipContext)}
         {transitItem && this.renderTransitionModal(transitItem, staffSlipContext)}
         {itemError && this.renderErrorModal(itemError)}
 
@@ -499,13 +558,7 @@ class Scan extends React.Component {
           showCheckinNotes={this.showCheckinNotes}
           items={items}
           ref={this.checkInRef}
-          initialValues={
-            { item:
-              {
-                checkinDate: '',
-                checkinTime: '',
-              } }
-          }
+          initialValues={this.checkinInitialValues}
           {...this.props}
         />
       </div>
