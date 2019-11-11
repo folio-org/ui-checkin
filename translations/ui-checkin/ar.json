@@ -63,7 +63,7 @@
     "checkinNotes.message": "<strong>{title} ({materialType})</strong> (الباركود: {barcode}) لديه <strong>{count}</strong>  {count, plural, one {ملاحظة} other {ملاحظة}}",
     "date": "التاريخ",
     "source": "المصدر",
-    "statusModal.delivery.heading": "Route for delivery request",
-    "statusModal.delivery.closeAndCheckout": "Close and check out",
-    "statusModal.delivery.message": "Route <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}) for delivery request. <strong>Item has been automatically checked out to requester</strong>."
+    "statusModal.delivery.heading": "طريق طلب التوصيل",
+    "statusModal.delivery.closeAndCheckout": "إغلاق وإعارة",
+    "statusModal.delivery.message": "طريق <strong>{itemTitle} ({itemType})</strong> (باركود: {itemBarcode}) لطلب التوصيل. <strong>تمت إعارة المادة تلقائيًا إلى مقدم الطلب</strong>"
 }
