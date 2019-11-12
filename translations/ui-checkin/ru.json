@@ -64,6 +64,6 @@
     "date": "Дата",
     "source": "Источник",
     "statusModal.delivery.heading": "Route for delivery request",
-    "statusModal.delivery.closeAndCheckout": "Close and check out",
+    "statusModal.delivery.closeAndCheckout": "Закрыть и проверить",
     "statusModal.delivery.message": "Route <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}) for delivery request. <strong>Item has been automatically checked out to requester</strong>."
 }
