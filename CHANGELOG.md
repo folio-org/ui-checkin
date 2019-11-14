@@ -1,5 +1,8 @@
 # Change history for ui-checkin
 
+## [1.10.0] (IN PROGRESS)
+* Provide correct backend permissions in 'Check in: All permissions" permission. Fixes UICHKIN-110.
+
 ## [1.9.0](https://github.com/folio-org/ui-checkin/tree/v1.9.0) (2019-09-11)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.8.0...v1.9.0)
 
