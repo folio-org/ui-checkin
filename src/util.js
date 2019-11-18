@@ -22,6 +22,11 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
     'requester.firstName': requester.firstName,
     'requester.lastName': requester.lastName,
     'requester.middleName': requester.middleName,
+    'requester.addressLine1': requester.addressLine1,
+    'requester.addressLine2': requester.addressLine2,
+    'requester.city': requester.city,
+    'requester.stateProvRegion': requester.region,
+    'requester.zipPostalCode': requester.postalCode,
     'requester.barcode': `<Barcode>${requester.barcode}</Barcode>`,
     'item.title': item.title,
     'item.primaryContributor': item.primaryContributor,
@@ -47,6 +52,7 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
     'item.effectiveLocationLibrary': item.effectiveLocationLibrary,
     'item.effectiveLocationSpecific': item.effectiveLocationSpecific,
     'request.servicePointPickup': request.servicePointPickup,
+    'request.deliveryAddressType': request.deliveryAddressType,
     'request.requestExpirationDate': request.requestExpirationDate
       ? intl.formatDate(request.requestExpirationDate, { timeZone, locale })
       : request.requestExpirationDate,
