@@ -72,6 +72,7 @@ class Scan extends React.Component {
   static propTypes = {
     intl: intlShape,
     stripes: PropTypes.object,
+    focused: PropTypes.bool,
     resources: PropTypes.shape({
       scannedItems: PropTypes.arrayOf(
         PropTypes.shape({
@@ -114,7 +115,10 @@ class Scan extends React.Component {
     }),
   };
 
-  state = {};
+  state = {
+    focused: true,
+  };
+
   store = this.props.stripes.store;
   checkInRef = React.createRef();
   checkInData = null;
@@ -124,6 +128,18 @@ class Scan extends React.Component {
       checkinDate: '',
       checkinTime: '',
     }
+  }
+
+  onFocus = () => {
+    this.setState({ focused: true });
+  }
+
+  onBlur = () => {
+    this.setState({ focused: false });
+  }
+
+  componentDidMount() {
+    this.setState({ focused: true });
   }
 
   onSessionEnd = () => {
@@ -148,7 +164,10 @@ class Scan extends React.Component {
   }
 
   onCloseErrorModal = () => {
-    this.setState({ itemError: false }, () => this.clearField('CheckIn', 'item.barcode'));
+    this.setState({
+      itemError: false,
+      focused: true,
+    }, () => this.clearField('CheckIn', 'item.barcode'));
   }
 
   tryCheckIn = async (data, checkInInst) => {
@@ -321,7 +340,9 @@ class Scan extends React.Component {
       transitItem: null,
       holdItem: null,
       deliveryItem: null,
+      focused: true,
     });
+    this.processCheckInDone();
   };
 
   getSlipTmpl(type) {
@@ -552,6 +573,9 @@ class Scan extends React.Component {
         {itemError && this.renderErrorModal(itemError)}
 
         <CheckIn
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          focused={this.state.focused}
           submithandler={this.tryCheckIn}
           onSessionEnd={this.onSessionEnd}
           scannedItems={scannedItems}
