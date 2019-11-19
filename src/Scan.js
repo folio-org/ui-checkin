@@ -72,7 +72,7 @@ class Scan extends React.Component {
   static propTypes = {
     intl: intlShape,
     stripes: PropTypes.object,
-    focused: PropTypes.bool,
+    getInputRef: PropTypes.func,
     resources: PropTypes.shape({
       scannedItems: PropTypes.arrayOf(
         PropTypes.shape({
@@ -115,9 +115,10 @@ class Scan extends React.Component {
     }),
   };
 
-  state = {
-    focused: true,
-  };
+  state = {};
+
+  componentDidMount() {
+  }
 
   store = this.props.stripes.store;
   checkInRef = React.createRef();
@@ -130,13 +131,15 @@ class Scan extends React.Component {
     }
   }
 
-  onFocus = () => {
-    this.setState({ focused: true });
-  }
+  focusCheckIn = () => {
+    if (this.checkInRef) {
+      this.checkInRef.current.focus();
+    }
+  };
 
-  onBlur = () => {
-    this.setState({ focused: false });
-  }
+  getInputRef = element => {
+    this.checkInRef = element;
+  };
 
   onSessionEnd = () => {
     this.clearResources();
@@ -162,7 +165,6 @@ class Scan extends React.Component {
   onCloseErrorModal = () => {
     this.setState({ itemError: false }, () => {
       this.clearField('CheckIn', 'item.barcode');
-      this.checkInInst.focusInput();
     });
   }
 
@@ -240,7 +242,7 @@ class Scan extends React.Component {
   processCheckInDone() {
     this.setState({
       checkedinItem: null,
-    }, () => this.checkInInst.focusInput());
+    });
   }
 
   handleTextError(error) {
@@ -336,7 +338,6 @@ class Scan extends React.Component {
       transitItem: null,
       holdItem: null,
       deliveryItem: null,
-      focused: true,
     });
     this.processCheckInDone();
   };
@@ -550,7 +551,6 @@ class Scan extends React.Component {
       checkinNotesMode,
       staffSlipContext,
       deliveryItem,
-      focused,
     } = this.state;
 
     return (
@@ -570,15 +570,12 @@ class Scan extends React.Component {
         {itemError && this.renderErrorModal(itemError)}
 
         <CheckIn
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          focused={focused}
           submithandler={this.tryCheckIn}
           onSessionEnd={this.onSessionEnd}
           scannedItems={scannedItems}
           showCheckinNotes={this.showCheckinNotes}
           items={items}
-          ref={this.checkInRef}
+          inputRef={this.getInputRef}
           initialValues={this.checkinInitialValues}
           {...this.props}
         />
