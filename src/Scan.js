@@ -138,10 +138,6 @@ class Scan extends React.Component {
     this.setState({ focused: false });
   }
 
-  componentDidMount() {
-    this.setState({ focused: true });
-  }
-
   onSessionEnd = () => {
     this.clearResources();
     this.clearForm('CheckIn');
@@ -164,10 +160,10 @@ class Scan extends React.Component {
   }
 
   onCloseErrorModal = () => {
-    this.setState({
-      itemError: false,
-      focused: true,
-    }, () => this.clearField('CheckIn', 'item.barcode'));
+    this.setState({ itemError: false }, () => {
+      this.clearField('CheckIn', 'item.barcode');
+      this.checkInInst.focusInput();
+    });
   }
 
   tryCheckIn = async (data, checkInInst) => {
@@ -554,6 +550,7 @@ class Scan extends React.Component {
       checkinNotesMode,
       staffSlipContext,
       deliveryItem,
+      focused,
     } = this.state;
 
     return (
@@ -575,7 +572,7 @@ class Scan extends React.Component {
         <CheckIn
           onFocus={this.onFocus}
           onBlur={this.onBlur}
-          focused={this.state.focused}
+          focused={focused}
           submithandler={this.tryCheckIn}
           onSessionEnd={this.onSessionEnd}
           scannedItems={scannedItems}

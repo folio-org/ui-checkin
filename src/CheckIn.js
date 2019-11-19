@@ -39,7 +39,6 @@ class CheckIn extends React.Component {
     intl: intlShape.isRequired,
     scannedItems: PropTypes.arrayOf(PropTypes.object),
     showCheckinNotes: PropTypes.func,
-    focused: PropTypes.bool,
     handleSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submithandler: PropTypes.func,
@@ -71,14 +70,8 @@ class CheckIn extends React.Component {
     this.focusInput();
   }
 
-  // componentDidUpdate() {
-  //   console.log(this.props);
-  //   this.focusInput();
-  //   //this.clearInput();
-  // }
-
   focusInput() {
-    if (this.props.focused) {
+    if (this.barcodeEl.current) {
       this.barcodeEl.current.focus();
     }
   }
@@ -352,7 +345,6 @@ class CheckIn extends React.Component {
                         value={this.state.barcodeElValue}
                         fullWidth
                         component={TextField}
-                        focused
                         data-test-check-in-barcode
                       />
                     </Layout>
