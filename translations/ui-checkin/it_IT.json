@@ -54,7 +54,7 @@
     "action.printTransitSlip": "Stampa la ricevuta di transito",
     "missingModal.heading": "Manca un item in restituzione?",
     "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) ha come stato di copia <strong>Mancante</strong> {discoverySuppressMessage}",
-    "missingModal.discoverySuppress": "ed è soppresso dal discovery",
+    "missingModal.discoverySuppress": "ed è non mostrato nel Discovery",
     "note": "Nota",
     "checkinNoteModal.heading": "Conferma restituzione",
     "checkinNoteModal.message": "<strong> {title} ( {materialType} ) </strong> (codice a barre: {barcode} ) ha <strong> {count} </strong> {count, plural, one { nota } other { note }} e sarà <strong>restituito</strong>",
