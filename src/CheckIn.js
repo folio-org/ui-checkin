@@ -43,6 +43,7 @@ class CheckIn extends React.Component {
     pristine: PropTypes.bool,
     submithandler: PropTypes.func,
     getBarcodeRef: PropTypes.func,
+    handleOnAfterPrint: PropTypes.func,
     onSessionEnd: PropTypes.func,
     change: PropTypes.func,
     resources: PropTypes.object,
@@ -174,6 +175,7 @@ class CheckIn extends React.Component {
         timezone,
         locale,
       },
+      handleOnAfterPrint,
     } = this.props;
 
     const isCheckInNote = element => element.noteType === 'Check in';

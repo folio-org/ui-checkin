@@ -132,6 +132,10 @@ class Scan extends React.Component {
 
   setFocusInput = () => this.barcodeRef.current.focus();
 
+  handleOnAfterPrint = () => {
+    this.setFocusInput();
+  }
+
   onSessionEnd = () => {
     this.clearResources();
     this.clearForm('CheckIn');
@@ -386,6 +390,7 @@ class Scan extends React.Component {
       <ConfirmStatusModal
         open={!!request}
         onConfirm={this.onModalClose}
+        onCancel={this.handleOnAfterPrint}
         slipTemplate={this.getSlipTmpl('hold')}
         isPrintable={this.isPrintable('hold')}
         slipData={slipData}
@@ -474,6 +479,7 @@ class Scan extends React.Component {
       <ConfirmStatusModal
         open={!!loan}
         onConfirm={this.onModalClose}
+        onCancel={this.handleOnAfterPrint}
         slipTemplate={this.getSlipTmpl('transit')}
         slipData={slipData}
         isPrintable={this.isPrintable('transit')}
