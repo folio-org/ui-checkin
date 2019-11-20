@@ -617,12 +617,6 @@ describe('CheckIn', () => {
       expect(checkIn.deliveryModalIsDisplayed).to.be.true;
     });
 
-    it('should display correct message', () => {
-      const expectedMessage = 'Route Great book (Book) (Barcode: 9676761472500) for delivery request. Item has been automatically checked out to requester.';
-
-      expect(checkIn.deliveryModal.message).to.equal(expectedMessage);
-    });
-
     it('should display print checkbox unchecked by default', () => {
       expect(checkIn.deliveryModal.printCheckboxIsChecked).to.be.false;
     });
