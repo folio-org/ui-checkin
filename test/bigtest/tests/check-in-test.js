@@ -618,7 +618,7 @@ describe('CheckIn', () => {
     });
 
     it('should display correct message', () => {
-      const expectedMessage = 'Route Great book (Book) (Barcode: 9676761472500) for delivery request. Item has been automatically checked out to requester.';
+      const expectedMessage = 'There is a delivery request for Great book (Book) (Barcode: 9676761472500). Please check the item out and route for delivery.';
 
       expect(checkIn.deliveryModal.message).to.equal(expectedMessage);
     });
