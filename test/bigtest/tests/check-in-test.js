@@ -617,6 +617,12 @@ describe('CheckIn', () => {
       expect(checkIn.deliveryModalIsDisplayed).to.be.true;
     });
 
+    it('should display correct message', () => {
+      const expectedMessage = 'There is a delivery request for Great book (Book) (Barcode: 9676761472500). Please check the item out and route for delivery.';
+
+      expect(checkIn.deliveryModal.message).to.equal(expectedMessage);
+    });
+
     it('should display print checkbox unchecked by default', () => {
       expect(checkIn.deliveryModal.printCheckboxIsChecked).to.be.false;
     });
