@@ -116,7 +116,7 @@ class Scan extends React.Component {
 
   state = {};
   store = this.props.stripes.store;
-  checkInRef = React.createRef();
+  barcodeRef = null;
   checkInData = null;
   checkinInst = null;
   checkinInitialValues = {
@@ -125,6 +125,12 @@ class Scan extends React.Component {
       checkinTime: '',
     }
   }
+
+  setBarcodeRef = el => {
+    this.barcodeRef = el;
+  }
+
+  setFocusInput = () => this.barcodeRef.current.focus();
 
   onSessionEnd = () => {
     this.clearResources();
@@ -148,7 +154,11 @@ class Scan extends React.Component {
   }
 
   onCloseErrorModal = () => {
-    this.setState({ itemError: false }, () => this.clearField('CheckIn', 'item.barcode'));
+    this.setState({ itemError: false },
+      () => {
+        this.clearField('CheckIn', 'item.barcode');
+        this.setFocusInput();
+      });
   }
 
   tryCheckIn = async (data, checkInInst) => {
@@ -321,7 +331,7 @@ class Scan extends React.Component {
       transitItem: null,
       holdItem: null,
       deliveryItem: null,
-    });
+    }, () => this.setFocusInput());
   };
 
   getSlipTmpl(type) {
@@ -557,7 +567,7 @@ class Scan extends React.Component {
           scannedItems={scannedItems}
           showCheckinNotes={this.showCheckinNotes}
           items={items}
-          ref={this.checkInRef}
+          getBarcodeRef={this.setBarcodeRef}
           initialValues={this.checkinInitialValues}
           {...this.props}
         />

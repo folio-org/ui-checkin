@@ -42,6 +42,7 @@ class CheckIn extends React.Component {
     handleSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submithandler: PropTypes.func,
+    getBarcodeRef: PropTypes.func,
     onSessionEnd: PropTypes.func,
     change: PropTypes.func,
     resources: PropTypes.object,
@@ -52,13 +53,15 @@ class CheckIn extends React.Component {
     }),
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.barcodeEl = React.createRef();
     this.onSubmit = this.onSubmit.bind(this);
     this.showInfo = this.showInfo.bind(this);
     this.renderActions = this.renderActions.bind(this);
     this.handleOptionsChange = this.handleOptionsChange.bind(this);
+
+    props.getBarcodeRef(this.barcodeEl);
   }
 
   state = {
