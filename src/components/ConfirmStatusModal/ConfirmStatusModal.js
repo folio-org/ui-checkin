@@ -21,7 +21,7 @@ class ConfirmStatusModal extends React.Component {
     message: PropTypes.node.isRequired,
     onConfirm: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
-    onCancel: PropTypes.func,
+    onCancel: PropTypes.func.isRequired,
     slipTemplate: PropTypes.string,
     slipData: PropTypes.object,
     isPrintable: PropTypes.bool,

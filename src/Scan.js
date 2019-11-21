@@ -130,7 +130,11 @@ class Scan extends React.Component {
     this.barcodeRef = el;
   }
 
-  setFocusInput = () => this.barcodeRef.current.focus();
+  setFocusInput = () => {
+    if (this.barcodeRef) {
+      this.barcodeRef.current.focus();
+    }
+  }
 
   handleOnAfterPrint = () => {
     this.setFocusInput();
@@ -335,7 +339,7 @@ class Scan extends React.Component {
       transitItem: null,
       holdItem: null,
       deliveryItem: null,
-    }, () => this.setFocusInput());
+    }, this.setFocusInput);
   };
 
   getSlipTmpl(type) {

@@ -21,6 +21,10 @@ class PrintButton extends React.Component {
     children: PropTypes.node,
   };
 
+  static defaultProps = {
+    onAfterPrint: () => null,
+  };
+
   constructor(props) {
     super(props);
     this.printContentRef = React.createRef();
