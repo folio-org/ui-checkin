@@ -273,12 +273,12 @@ class Scan extends React.Component {
 
   fetchRequests(checkinResp) {
     const { item } = checkinResp;
-    const query = `(itemId==${item.id})`;
+    const query = `(itemId==${item.id} and (status=="Open - Awaiting pickup" or status=="Open - Awaiting delivery"))`;
     const { mutator } = this.props;
     mutator.requests.reset();
     return mutator.requests.GET({ params: { query } }).then((requests) => {
       if (requests.length) {
-        const nextRequest = minBy(requests, 'position');
+        const nextRequest = requests[0];
         nextRequest.item = item;
         checkinResp.nextRequest = nextRequest;
         this.setState({ nextRequest });
