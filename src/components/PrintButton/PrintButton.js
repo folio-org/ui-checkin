@@ -17,12 +17,8 @@ class PrintButton extends React.Component {
     dataSource: PropTypes.object,
     template: PropTypes.string,
     onBeforePrint: PropTypes.func,
-    onAfterPrint: PropTypes.func,
+    onAfterPrint: PropTypes.func.isRequired,
     children: PropTypes.node,
-  };
-
-  static defaultProps = {
-    onAfterPrint: () => null,
   };
 
   constructor(props) {
