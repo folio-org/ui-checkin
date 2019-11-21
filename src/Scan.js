@@ -1,4 +1,4 @@
-import { get, minBy, upperFirst, keyBy } from 'lodash';
+import { get, upperFirst, keyBy } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
@@ -505,7 +505,10 @@ class Scan extends React.Component {
 
     const footer = (
       <ModalFooter>
-        <Button onClick={this.onCloseErrorModal}>
+        <Button
+          onClick={this.onCloseErrorModal}
+          data-test-close-error-modal-button
+        >
           <FormattedMessage id="ui-checkin.close" />
         </Button>
       </ModalFooter>

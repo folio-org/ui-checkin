@@ -9,6 +9,7 @@ import {
   property,
   scoped,
   collection,
+  value,
 } from '@bigtest/interactor';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -92,6 +93,9 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   selectItemDetails = clickable('[data-test-item-details]');
   fillOutError = text('[data-test-check-in-scan] [class^="feedbackError"]');
   barcodePresent = isPresent('[data-test-check-in-barcode]');
+  barcodeInput = isPresent('[data-test-check-in-barcode]');
+  barcodeInputValue = value('[data-test-check-in-barcode]')
+  barcodeInputIsFocused = isPresent('[data-test-check-in-barcode]:focus');
   confirmStatusModalPresent = isPresent('[data-test-confirm-status-modal]');
   barcode = fillable('#input-item-barcode');
   clickEnter = clickable('#clickable-add-item');
@@ -108,6 +112,9 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   checkinNotesButton= scoped('[data-test-checkin-notes] button');
   deliveryModal = new DeliveryModalInteractor();
   deliveryModalIsDisplayed = isPresent('[data-test-delivery-modal]');
+  errorModal = isPresent('#OverlayContainer');
+  clickCancelErrorModalBtn = clickable('[data-test-close-error-modal-button]');
+  isPresentConfirmModal = isPresent('[data-test-confirm-status-modal]');
 
   whenItemsAreLoaded(amount) {
     return this.when(() => this.checkedInItemsList.rowCount === amount);

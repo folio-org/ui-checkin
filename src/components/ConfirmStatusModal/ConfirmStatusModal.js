@@ -64,10 +64,10 @@ class ConfirmStatusModal extends React.Component {
             <FormattedMessage id="ui-checkin.statusModal.close" />
           </PrintButton> :
           <Button
+            data-test-confirm-button
             label={label}
             id={`clickable-${testId}-confirm`}
             onClick={onConfirm}
-            data-test-confirm-button
             buttonStyle="primary"
             buttonClass={mfCss.modalFooterButton}
           >
