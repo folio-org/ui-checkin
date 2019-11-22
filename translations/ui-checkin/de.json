@@ -65,5 +65,5 @@
     "source": "Source",
     "statusModal.delivery.heading": "Route for delivery request",
     "statusModal.delivery.closeAndCheckout": "Close and check out",
-    "statusModal.delivery.message": "Route <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}) for delivery request. <strong>Item has been automatically checked out to requester</strong>."
+    "statusModal.delivery.message": "There is a delivery request for {itemTitle} ({itemType}) (Barcode: {itemBarcode}). Please check the item out and route for delivery."
 }
