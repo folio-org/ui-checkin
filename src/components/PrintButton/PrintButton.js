@@ -40,11 +40,11 @@ class PrintButton extends React.Component {
     return (
       <React.Fragment>
         <ReactToPrint
-          onBeforePrint={onBeforePrint}
-          onAfterPrint={onAfterPrint}
           removeAfterPrint
           trigger={() => <Button {...btnProps}>{children}</Button>}
           content={() => this.printContentRef.current}
+          onBeforePrint={onBeforePrint}
+          onAfterPrint={onAfterPrint}
         />
         <div className={css.hiddenContent}>
           <div className="ql-editor" ref={this.printContentRef}>

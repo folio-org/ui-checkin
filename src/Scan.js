@@ -482,13 +482,13 @@ class Scan extends React.Component {
     return (
       <ConfirmStatusModal
         open={!!loan}
-        onConfirm={this.onModalClose}
-        onCancel={this.handleOnAfterPrint}
         slipTemplate={this.getSlipTmpl('transit')}
         slipData={slipData}
         isPrintable={this.isPrintable('transit')}
         label={<FormattedMessage id="ui-checkin.statusModal.transit.heading" />}
         message={message}
+        onConfirm={this.onModalClose}
+        onCancel={this.handleOnAfterPrint}
       />
     );
   }
@@ -506,8 +506,8 @@ class Scan extends React.Component {
     const footer = (
       <ModalFooter>
         <Button
-          onClick={this.onCloseErrorModal}
           data-test-close-error-modal-button
+          onClick={this.onCloseErrorModal}
         >
           <FormattedMessage id="ui-checkin.close" />
         </Button>

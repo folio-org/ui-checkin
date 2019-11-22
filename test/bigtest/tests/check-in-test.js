@@ -56,7 +56,7 @@ describe('CheckIn', () => {
         await checkIn.clickCancelErrorModalBtn();
       });
 
-      it('should barcode input stay in focus and clear', () => {
+      it('should focus and clear barcode input should', () => {
         expect(checkIn.barcodeInputValue).to.equal('');
         expect(checkIn.barcodeInputIsFocused).to.be.true;
       });
@@ -320,7 +320,7 @@ describe('CheckIn', () => {
       expect(checkIn.isPresentConfirmModal).to.be.false;
     });
 
-    it('should barcode input stay in focus and clear', () => {
+    it('should focus and clear barcode input should', () => {
       expect(checkIn.barcodeInputValue).to.equal('');
       expect(checkIn.barcodeInputIsFocused).to.be.true;
     });
