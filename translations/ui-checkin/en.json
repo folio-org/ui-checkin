@@ -50,7 +50,7 @@
   "statusModal.hold.heading": "Awaiting pickup for a request",
   "statusModal.delivery.heading": "Route for delivery request",
   "statusModal.delivery.closeAndCheckout": "Close and check out",
-  "statusModal.delivery.message": "There is a delivery request for {itemTitle} ({itemType}) (Barcode: {itemBarcode}). Please check the item out and route for delivery.",
+  "statusModal.delivery.message": "There is a delivery request for <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}). <strong>Please check the item out and route for delivery.</strong>",
   "statusModal.hold.message": "Place <strong>{title} ({materialType})</strong> (Barcode: {barcode}) on Hold Shelf at <strong>{pickupServicePoint}</strong> for request.",
   "statusModal.printSlip": "Print slip",
   "unknownError": "Unknown error occurred",
