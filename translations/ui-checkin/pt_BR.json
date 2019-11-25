@@ -65,5 +65,5 @@
     "source": "Fonte",
     "statusModal.delivery.heading": "Rota para solicitação de entrega",
     "statusModal.delivery.closeAndCheckout": "Fechar e emprestar",
-    "statusModal.delivery.message": "Há uma solicitação de entrega para {itemTitle} ( {itemType} ) (código de barras: {itemBarcode} ). Por favor, verifique o item e encaminhar para entrega."
+    "statusModal.delivery.message": "Há uma solicitação de entrega para <strong>{itemTitle} ({itemType})</strong> (Código de barras: {itemBarcode}). <strong>Verifique o item e envie-o para entrega.</strong>"
 }
