@@ -66,6 +66,10 @@ class CheckIn extends React.Component {
   };
 
   componentDidMount() {
+    this.focusInput();
+  }
+
+  focusInput() {
     this.props.barcodeRef.current.focus();
   }
 

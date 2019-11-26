@@ -237,7 +237,7 @@ class Scan extends React.Component {
   processCheckInDone() {
     this.setState({
       checkedinItem: null,
-    }, () => this.setFocusInput());
+    }, this.setFocusInput);
   }
 
   handleTextError(error) {
