@@ -42,7 +42,7 @@ class CheckIn extends React.Component {
     handleSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submithandler: PropTypes.func,
-    getBarcodeRef: PropTypes.func.isRequired,
+    barcodeRef: PropTypes.object.isRequired,
     onSessionEnd: PropTypes.func,
     change: PropTypes.func,
     resources: PropTypes.object,
@@ -55,13 +55,10 @@ class CheckIn extends React.Component {
 
   constructor(props) {
     super(props);
-    this.barcodeEl = React.createRef();
     this.onSubmit = this.onSubmit.bind(this);
     this.showInfo = this.showInfo.bind(this);
     this.renderActions = this.renderActions.bind(this);
     this.handleOptionsChange = this.handleOptionsChange.bind(this);
-
-    this.props.getBarcodeRef(this.barcodeEl);
   }
 
   state = {
@@ -69,13 +66,7 @@ class CheckIn extends React.Component {
   };
 
   componentDidMount() {
-    this.focusInput();
-  }
-
-  focusInput() {
-    if (this.barcodeEl.current) {
-      this.barcodeEl.current.focus();
-    }
+    this.props.barcodeRef.current.focus();
   }
 
   onSubmit(data) {
@@ -281,6 +272,7 @@ class CheckIn extends React.Component {
       intl: { formatDate, formatMessage, formatTime },
       scannedItems,
       pristine,
+      barcodeRef,
     } = this.props;
 
     const { showPickers } = this.state;
@@ -343,7 +335,7 @@ class CheckIn extends React.Component {
                         validationEnabled={false}
                         placeholder={scanBarcodeMsg}
                         aria-label={itemIdLabel}
-                        inputRef={this.barcodeEl}
+                        inputRef={barcodeRef}
                         fullWidth
                         component={TextField}
                         data-test-check-in-barcode

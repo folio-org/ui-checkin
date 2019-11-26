@@ -116,7 +116,7 @@ class Scan extends React.Component {
 
   state = {};
   store = this.props.stripes.store;
-  barcodeRef = null;
+  barcode = React.createRef();
   checkInData = null;
   checkinInst = null;
   checkinInitialValues = {
@@ -126,14 +126,8 @@ class Scan extends React.Component {
     }
   }
 
-  setBarcodeRef = el => {
-    this.barcodeRef = el;
-  }
-
   setFocusInput = () => {
-    if (this.barcodeRef) {
-      this.barcodeRef.current.focus();
-    }
+    this.barcode.current.focus();
   }
 
   handleOnAfterPrint = () => {
@@ -243,7 +237,7 @@ class Scan extends React.Component {
   processCheckInDone() {
     this.setState({
       checkedinItem: null,
-    }, () => this.checkInInst.focusInput());
+    }, () => this.setFocusInput());
   }
 
   handleTextError(error) {
@@ -580,7 +574,7 @@ class Scan extends React.Component {
           scannedItems={scannedItems}
           showCheckinNotes={this.showCheckinNotes}
           items={items}
-          getBarcodeRef={this.setBarcodeRef}
+          barcodeRef={this.barcode}
           initialValues={this.checkinInitialValues}
           {...this.props}
         />
