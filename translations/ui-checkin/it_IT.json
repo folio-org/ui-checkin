@@ -65,5 +65,5 @@
     "source": "Fonte",
     "statusModal.delivery.heading": "Route for delivery request",
     "statusModal.delivery.closeAndCheckout": "Chiudi e presta",
-    "statusModal.delivery.message": "Instrada <strong> {itemTitle} ( {itemType} ) </strong> (codice a barre: {itemBarcode} ) per la richiesta di consegna. <strong> L'itemo è stato automaticamente prestato al richiedente </strong> ."
+    "statusModal.delivery.message": "Esiste una richiesta di consegna per {itemTitle} ( {itemType} ) (codice a barre: {itemBarcode} ). Si prega di prestare l'item e di instradarlo per la consegna."
 }
