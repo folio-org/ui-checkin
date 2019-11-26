@@ -42,7 +42,9 @@ class CheckIn extends React.Component {
     handleSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submithandler: PropTypes.func,
-    barcodeRef: PropTypes.object.isRequired,
+    barcodeRef: PropTypes.shape({
+      current: PropTypes.instanceOf(Element)
+    }),
     onSessionEnd: PropTypes.func,
     change: PropTypes.func,
     resources: PropTypes.object,
