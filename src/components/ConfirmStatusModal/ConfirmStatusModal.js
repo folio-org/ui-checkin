@@ -21,6 +21,7 @@ class ConfirmStatusModal extends React.Component {
     message: PropTypes.node.isRequired,
     onConfirm: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
+    onCancel: PropTypes.func.isRequired,
     slipTemplate: PropTypes.string,
     slipData: PropTypes.object,
     isPrintable: PropTypes.bool,
@@ -42,7 +43,9 @@ class ConfirmStatusModal extends React.Component {
       slipData,
       label,
       message,
+      onCancel,
     } = this.props;
+
     const { isPrintable } = this.state;
     const testId = uniqueId('confirm-status-');
     const footer = (
@@ -53,17 +56,18 @@ class ConfirmStatusModal extends React.Component {
             buttonStyle="primary"
             id={`clickable-${testId}-confirm`}
             buttonClass={mfCss.modalFooterButton}
-            onBeforePrint={onConfirm}
             dataSource={slipData}
             template={slipTemplate}
+            onBeforePrint={onConfirm}
+            onAfterPrint={onCancel}
           >
             <FormattedMessage id="ui-checkin.statusModal.close" />
           </PrintButton> :
           <Button
+            data-test-confirm-button
             label={label}
             id={`clickable-${testId}-confirm`}
             onClick={onConfirm}
-            data-test-confirm-button
             buttonStyle="primary"
             buttonClass={mfCss.modalFooterButton}
           >

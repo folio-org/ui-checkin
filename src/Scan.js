@@ -1,4 +1,4 @@
-import { get, minBy, upperFirst, keyBy } from 'lodash';
+import { get, upperFirst, keyBy } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
@@ -116,7 +116,7 @@ class Scan extends React.Component {
 
   state = {};
   store = this.props.stripes.store;
-  checkInRef = React.createRef();
+  barcode = React.createRef();
   checkInData = null;
   checkinInst = null;
   checkinInitialValues = {
@@ -124,6 +124,14 @@ class Scan extends React.Component {
       checkinDate: '',
       checkinTime: '',
     }
+  }
+
+  setFocusInput = () => {
+    this.barcode.current.focus();
+  }
+
+  handleOnAfterPrint = () => {
+    this.setFocusInput();
   }
 
   onSessionEnd = () => {
@@ -148,7 +156,11 @@ class Scan extends React.Component {
   }
 
   onCloseErrorModal = () => {
-    this.setState({ itemError: false }, () => this.clearField('CheckIn', 'item.barcode'));
+    this.setState({ itemError: false },
+      () => {
+        this.clearField('CheckIn', 'item.barcode');
+        this.setFocusInput();
+      });
   }
 
   tryCheckIn = async (data, checkInInst) => {
@@ -225,7 +237,7 @@ class Scan extends React.Component {
   processCheckInDone() {
     this.setState({
       checkedinItem: null,
-    }, () => this.checkInInst.focusInput());
+    }, this.setFocusInput);
   }
 
   handleTextError(error) {
@@ -321,7 +333,7 @@ class Scan extends React.Component {
       transitItem: null,
       holdItem: null,
       deliveryItem: null,
-    });
+    }, this.setFocusInput);
   };
 
   getSlipTmpl(type) {
@@ -376,6 +388,7 @@ class Scan extends React.Component {
       <ConfirmStatusModal
         open={!!request}
         onConfirm={this.onModalClose}
+        onCancel={this.handleOnAfterPrint}
         slipTemplate={this.getSlipTmpl('hold')}
         isPrintable={this.isPrintable('hold')}
         slipData={slipData}
@@ -463,12 +476,13 @@ class Scan extends React.Component {
     return (
       <ConfirmStatusModal
         open={!!loan}
-        onConfirm={this.onModalClose}
         slipTemplate={this.getSlipTmpl('transit')}
         slipData={slipData}
         isPrintable={this.isPrintable('transit')}
         label={<FormattedMessage id="ui-checkin.statusModal.transit.heading" />}
         message={message}
+        onConfirm={this.onModalClose}
+        onCancel={this.handleOnAfterPrint}
       />
     );
   }
@@ -485,7 +499,10 @@ class Scan extends React.Component {
 
     const footer = (
       <ModalFooter>
-        <Button onClick={this.onCloseErrorModal}>
+        <Button
+          data-test-close-error-modal-button
+          onClick={this.onCloseErrorModal}
+        >
           <FormattedMessage id="ui-checkin.close" />
         </Button>
       </ModalFooter>
@@ -557,7 +574,7 @@ class Scan extends React.Component {
           scannedItems={scannedItems}
           showCheckinNotes={this.showCheckinNotes}
           items={items}
-          ref={this.checkInRef}
+          barcodeRef={this.barcode}
           initialValues={this.checkinInitialValues}
           {...this.props}
         />
