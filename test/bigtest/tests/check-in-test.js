@@ -47,7 +47,19 @@ describe('CheckIn', () => {
     });
 
     it('shows an error', () => {
+      expect(checkIn.errorModal).to.be.true;
       expect(checkIn.barcodeError).to.equal('The barcode 000000000 could not be found.');
+    });
+
+    describe('click cancel button on error modal', () => {
+      beforeEach(async function () {
+        await checkIn.clickCancelErrorModalBtn();
+      });
+
+      it('should focus and clear barcode input should', () => {
+        expect(checkIn.barcodeInputValue).to.equal('');
+        expect(checkIn.barcodeInputIsFocused).to.be.true;
+      });
     });
   });
 
@@ -303,8 +315,16 @@ describe('CheckIn', () => {
     it('shows hold slip option on the action menu', () => {
       expect(checkIn.printHoldSlipItemPresent).to.be.true;
     });
-  });
 
+    it('should close confirm status modal', () => {
+      expect(checkIn.isPresentConfirmModal).to.be.false;
+    });
+
+    it('should focus and clear barcode input should', () => {
+      expect(checkIn.barcodeInputValue).to.equal('');
+      expect(checkIn.barcodeInputIsFocused).to.be.true;
+    });
+  });
 
   describe('showing print transit slip option', () => {
     beforeEach(async function () {

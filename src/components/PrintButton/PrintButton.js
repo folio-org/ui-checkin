@@ -17,6 +17,7 @@ class PrintButton extends React.Component {
     dataSource: PropTypes.object,
     template: PropTypes.string,
     onBeforePrint: PropTypes.func,
+    onAfterPrint: PropTypes.func,
     children: PropTypes.node,
   };
 
@@ -30,18 +31,20 @@ class PrintButton extends React.Component {
       dataSource,
       template,
       onBeforePrint,
+      onAfterPrint,
       children,
     } = this.props;
 
-    const btnProps = omit(this.props, ['dataSource', 'template', 'onBeforePrint']);
+    const btnProps = omit(this.props, ['dataSource', 'template', 'onBeforePrint', 'onAfterPrint']);
 
     return (
       <React.Fragment>
         <ReactToPrint
-          onBeforePrint={onBeforePrint}
           removeAfterPrint
           trigger={() => <Button {...btnProps}>{children}</Button>}
           content={() => this.printContentRef.current}
+          onBeforePrint={onBeforePrint}
+          onAfterPrint={onAfterPrint}
         />
         <div className={css.hiddenContent}>
           <div className="ql-editor" ref={this.printContentRef}>
