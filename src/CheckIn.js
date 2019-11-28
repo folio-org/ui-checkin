@@ -79,10 +79,10 @@ class CheckIn extends React.Component {
     return this.props.submithandler(data, this);
   }
 
-  handleSessionEnd = () => {
+  handleSessionEnd = async () => {
     const { onSessionEnd } = this.props;
     this.setState({ showPickers: false });
-    onSessionEnd();
+    await onSessionEnd();
     this.focusInput();
   }
 
