@@ -114,7 +114,7 @@ class Scan extends React.Component {
     }),
   };
 
-  state = {};
+  state = { loading: false };
   store = this.props.stripes.store;
   barcode = React.createRef();
   checkInData = null;
@@ -199,6 +199,8 @@ class Scan extends React.Component {
       itemBarcode: barcode.trim(),
     };
 
+    this.setState({ loading: true });
+
     return checkIn.POST(requestData)
       .then(checkinResp => this.processResponse(checkinResp))
       .then(checkinResp => this.fetchRequests(checkinResp))
@@ -237,6 +239,7 @@ class Scan extends React.Component {
   processCheckInDone() {
     this.setState({
       checkedinItem: null,
+      loading: false,
     }, this.setFocusInput);
   }
 
@@ -550,6 +553,7 @@ class Scan extends React.Component {
       checkinNotesMode,
       staffSlipContext,
       deliveryItem,
+      loading,
     } = this.state;
 
     return (
@@ -569,6 +573,7 @@ class Scan extends React.Component {
         {itemError && this.renderErrorModal(itemError)}
 
         <CheckIn
+          loading={loading}
           submithandler={this.tryCheckIn}
           onSessionEnd={this.onSessionEnd}
           scannedItems={scannedItems}
