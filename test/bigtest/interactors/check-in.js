@@ -86,15 +86,15 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   multiPieceModal = new MultiPieceModalInteractor('[data-test-multi-piece-modal]');
   missingItemModal = new MissingItemModalInteractor();
   checkinNoteModal = new CheckinNoteModalInteractor();
-  selectElipse = clickable('[data-test-elipse-select] button');
+  selectEllipse = clickable('[data-test-elipse-select] button');
   checkedInItemsList = scoped('[data-test-checked-in-items] div', MultiColumnListInteractor);
+  checkedInItemsListEmptyMessage = text('[data-test-checked-in-items] [class*=mclEmptyMessage---]');
   selectLoanDetails = clickable('[data-test-loan-details]');
   selectPatronDetails = clickable('[data-test-patron-details]');
   selectItemDetails = clickable('[data-test-item-details]');
   fillOutError = text('[data-test-check-in-scan] [class^="feedbackError"]');
   barcodePresent = isPresent('[data-test-check-in-barcode]');
-  barcodeInput = isPresent('[data-test-check-in-barcode]');
-  barcodeInputValue = value('[data-test-check-in-barcode]')
+  barcodeInputValue = value('[data-test-check-in-barcode]');
   barcodeInputIsFocused = isPresent('[data-test-check-in-barcode]:focus');
   confirmStatusModalPresent = isPresent('[data-test-confirm-status-modal]');
   barcode = fillable('#input-item-barcode');

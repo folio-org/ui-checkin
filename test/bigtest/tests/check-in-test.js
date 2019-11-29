@@ -80,6 +80,10 @@ describe('CheckIn', () => {
       expect(checkIn.checkedInBookTitle).to.equal('Best Book Ever (book)');
     });
 
+    it('should hide item list empty message during checkin', () => {
+      expect(checkIn.checkedInItemsListEmptyMessage).to.equal('');
+    });
+
     describe('ending the session', () => {
       beforeEach(() => {
         return checkIn.endSession();
@@ -88,6 +92,18 @@ describe('CheckIn', () => {
       it('clears the list', () => {
         expect(checkIn.hasCheckedInItems).to.be.false;
       });
+    });
+  });
+
+  describe('checking in a single item unsuccessfully', () => {
+    beforeEach(function () {
+      this.server.post('/circulation/check-in-by-barcode', {}, 500);
+
+      return checkIn.barcode('9676761472500').clickEnter();
+    });
+
+    it('should hide item list empty message during check in', () => {
+      expect(checkIn.checkedInItemsListEmptyMessage).to.equal('');
     });
   });
 
@@ -143,7 +159,7 @@ describe('CheckIn', () => {
       });
 
       await checkIn.barcode('9676761472500').clickEnter();
-      await checkIn.selectElipse();
+      await checkIn.selectEllipse();
       await checkIn.selectLoanDetails();
     });
 
@@ -164,7 +180,7 @@ describe('CheckIn', () => {
       });
 
       await checkIn.barcode('9676761472500').clickEnter();
-      await checkIn.selectElipse();
+      await checkIn.selectEllipse();
       await checkIn.selectPatronDetails();
     });
 
@@ -187,7 +203,7 @@ describe('CheckIn', () => {
       });
 
       await checkIn.barcode('9676761472500').clickEnter();
-      await checkIn.selectElipse();
+      await checkIn.selectEllipse();
       await checkIn.selectItemDetails();
     });
 
@@ -309,7 +325,7 @@ describe('CheckIn', () => {
 
       await checkIn.barcode('9676761472500').clickEnter();
       await checkIn.confirmModal.clickConfirmButton();
-      await checkIn.selectElipse();
+      await checkIn.selectEllipse();
     });
 
     it('shows hold slip option on the action menu', () => {
@@ -343,7 +359,7 @@ describe('CheckIn', () => {
 
       await checkIn.barcode('9676761472500').clickEnter();
       await checkIn.confirmModal.clickConfirmButton();
-      await checkIn.selectElipse();
+      await checkIn.selectEllipse();
     });
 
     it('shows transit slip option on the action menu', () => {
@@ -396,7 +412,7 @@ describe('CheckIn', () => {
       await checkIn.barcode(item.barcode).clickEnter();
       await checkIn.checkinNoteModal.clickConfirm();
       await checkIn.confirmModal.clickConfirmButton();
-      await checkIn.selectElipse();
+      await checkIn.selectEllipse();
     });
 
     it('shows checkin Notes option on the action menu', () => {
@@ -418,7 +434,6 @@ describe('CheckIn', () => {
       });
     });
   });
-
 
   describe('showing multipiece item modal', () => {
     beforeEach(async function () {

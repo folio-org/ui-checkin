@@ -178,6 +178,8 @@ class Scan extends React.Component {
   }
 
   checkIn = () => {
+    if (this.state.loading) return undefined;
+
     const data = this.checkInData;
     const {
       item: {
@@ -574,13 +576,13 @@ class Scan extends React.Component {
 
         <CheckIn
           loading={loading}
-          submithandler={this.tryCheckIn}
-          onSessionEnd={this.onSessionEnd}
           scannedItems={scannedItems}
-          showCheckinNotes={this.showCheckinNotes}
           items={items}
           barcodeRef={this.barcode}
           initialValues={this.checkinInitialValues}
+          showCheckinNotes={this.showCheckinNotes}
+          submithandler={this.tryCheckIn}
+          onSessionEnd={this.onSessionEnd}
           {...this.props}
         />
       </div>
