@@ -52,8 +52,8 @@
     "newFeeFine": "新费用/罚款",
     "action.printHoldSlip": "打印预约单",
     "action.printTransitSlip": "打印传送单",
-    "missingModal.heading": "归还丢失单件？",
-    "missingModal.message": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）的单件状态为<strong>丢失</strong> {discoverySuppressMessage}",
+    "missingModal.heading": "归还丢失中单件？",
+    "missingModal.message": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）的单件状态为<strong>丢失中</strong> {discoverySuppressMessage}",
     "missingModal.discoverySuppress": "并在发现中隐藏",
     "note": "注释",
     "checkinNoteModal.heading": "确认归还",
@@ -63,7 +63,7 @@
     "checkinNotes.message": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ） 有<strong> {count} </strong> {count, plural, one { note } other { notes }}",
     "date": "日期",
     "source": "来源",
-    "statusModal.delivery.heading": "Route for delivery request",
-    "statusModal.delivery.closeAndCheckout": "Close and check out",
-    "statusModal.delivery.message": "There is a delivery request for <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}). <strong>Please check the item out and route for delivery.</strong>"
+    "statusModal.delivery.heading": "交付请求的路线",
+    "statusModal.delivery.closeAndCheckout": "关闭并借出",
+    "statusModal.delivery.message": "<strong> {itemTitle} （ {itemType} ） </strong> （条码： {itemBarcode} ）有交付请求。 <strong>请检出该单件并交付。 </strong>"
 }
