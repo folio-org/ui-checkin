@@ -52,7 +52,8 @@ class CheckIn extends React.Component {
       query: PropTypes.shape({
         update: PropTypes.func,
       }),
-    }),
+    }).isRequired,
+    loading: PropTypes.bool.isRequired,
   };
 
   constructor(props) {
@@ -279,6 +280,7 @@ class CheckIn extends React.Component {
       scannedItems,
       pristine,
       barcodeRef,
+      loading,
     } = this.props;
 
     const { showPickers } = this.state;
@@ -324,8 +326,9 @@ class CheckIn extends React.Component {
     const checkinDateLabel = formatMessage({ id: 'ui-checkin.checkinDate' });
     const checkinTimeLabel = formatMessage({ id: 'ui-checkin.checkinTime' });
     const timeReturnedLabel = formatMessage({ id: 'ui-checkin.timeReturnedLabel' });
-    const noItemsLabel = formatMessage({ id: 'ui-checkin.noItems' });
     const scannedItemsLabel = formatMessage({ id: 'ui-checkin.scannedItems' });
+    const emptyMessage = !loading ? <FormattedMessage id="ui-checkin.noItems" /> : null;
+
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <div style={containerStyle}>
@@ -418,6 +421,12 @@ class CheckIn extends React.Component {
                     </Layout>
                   </Col>
                 </Row>
+                {loading &&
+                  <Icon
+                    icon="spinner-ellipsis"
+                    width="10px"
+                  />
+                }
                 <div data-test-checked-in-items>
                   <MultiColumnList
                     id="list-items-checked-in"
@@ -430,7 +439,7 @@ class CheckIn extends React.Component {
                     interactive={false}
                     contentData={scannedItems}
                     formatter={itemListFormatter}
-                    isEmptyMessage={noItemsLabel}
+                    isEmptyMessage={emptyMessage}
                   />
                 </div>
               </div>
