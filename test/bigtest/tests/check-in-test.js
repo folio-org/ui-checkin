@@ -676,6 +676,16 @@ describe('CheckIn', () => {
       });
     });
 
+    describe('ending the session', () => {
+      beforeEach(() => {
+        return checkIn.endSession();
+      });
+
+      it('clears the list', () => {
+        expect(checkIn.hasCheckedInItems).to.be.false;
+      });
+    });
+
     describe('and close and checkout button was clicked', () => {
       beforeEach(async () => {
         await checkIn.deliveryModal.clickCloseAndCheckout();
