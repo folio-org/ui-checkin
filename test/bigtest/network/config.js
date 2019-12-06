@@ -111,5 +111,5 @@ export default function configure() {
 
   this.get('/users/:id', {});
 
-  this.post('/circulation/end-patron-session', {});
+  this.post('/circulation/end-patron-action-session', {});
 }
