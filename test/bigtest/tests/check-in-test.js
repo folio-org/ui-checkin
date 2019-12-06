@@ -64,16 +64,18 @@ describe('CheckIn', () => {
   });
 
   describe('entering a barcode', () => {
-    beforeEach(function () {
+    beforeEach(async function () {
       this.server.create('item', 'withLoan', {
         barcode: 9676761472500,
         title: 'Best Book Ever',
+        userId: 'test',
         materialType: {
           name: 'book'
         }
       });
 
-      return checkIn.barcode('9676761472500').clickEnter();
+      await checkIn.barcode('9676761472500').clickEnter();
+      await checkIn.whenItemsAreLoaded(1);
     });
 
     it('displays the checked-in item', () => {
@@ -84,9 +86,9 @@ describe('CheckIn', () => {
       expect(checkIn.checkedInItemsListEmptyMessage).to.equal('');
     });
 
-    describe('ending the session', () => {
-      beforeEach(() => {
-        return checkIn.endSession();
+    describe.only('ending the session', () => {
+      beforeEach(async () => {
+        await checkIn.endSession();
       });
 
       it('clears the list', () => {

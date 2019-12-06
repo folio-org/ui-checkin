@@ -67,6 +67,11 @@ class Scan extends React.Component {
       fetch: false,
       throwErrors: false,
     },
+    endSession: {
+      type: 'okapi',
+      path: 'circulation/end-patron-action-session',
+      fetch: false,
+    },
   });
 
   static propTypes = {
@@ -111,6 +116,9 @@ class Scan extends React.Component {
       staffSlips: PropTypes.shape({
         GET: PropTypes.func,
       }),
+      endSession: PropTypes.shape({
+        POST: PropTypes.func,
+      }),
     }),
   };
 
@@ -124,20 +132,36 @@ class Scan extends React.Component {
       checkinDate: '',
       checkinTime: '',
     }
-  }
+  };
 
   setFocusInput = () => {
     this.barcode.current.focus();
-  }
+  };
 
   handleOnAfterPrint = () => {
     this.setFocusInput();
-  }
+  };
 
-  onSessionEnd = () => {
+  onSessionEnd = async () => {
+    const {
+      resources: { scannedItems },
+      mutator: { endSession: { POST: endSession } },
+    } = this.props;
+    // if item is available and it was checked in it doesn't have information about user.
+    const checkedInLoans = scannedItems.filter(({ userId }) => userId);
+
     this.clearResources();
     this.clearForm('CheckIn');
-  }
+
+    if (checkedInLoans.length) {
+      const endSessions = checkedInLoans.map(({ userId: patronId }) => ({
+        actionType: 'Check-in',
+        patronId,
+      }));
+
+      await endSession({ endSessions });
+    }
+  };
 
   clearForm(formName) {
     this.store.dispatch(reset(formName));
