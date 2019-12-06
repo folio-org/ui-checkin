@@ -1,8 +1,13 @@
 # Change history for ui-checkin
 
-## [1.10.0] (IN PROGRESS)
+## [1.10.0](https://github.com/folio-org/ui-checkin/tree/v1.10.0) (2019-12-4)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.9.0...v1.10.0)
+
 * Provide correct backend permissions in 'Check in: All permissions" permission. Fixes UICHKIN-110.
 * Implement loader while checkin is processing. Refs UICHKIN-129.
+* Show time of scan when checking any item in. UICHKIN-63.
+* Update the circulation API to support changes in the rule editor. UICHKIN-117.
+* Add "lastCheckedInDateTime" and remove "lastScannedServicePoint" tokens for staff slips. UICIRC-291
 
 ## [1.9.0](https://github.com/folio-org/ui-checkin/tree/v1.9.0) (2019-09-11)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.8.0...v1.9.0)
