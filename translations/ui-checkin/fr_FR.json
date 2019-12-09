@@ -65,5 +65,5 @@
     "source": "Source",
     "statusModal.delivery.heading": "Itinéraire pour la demande de livraison",
     "statusModal.delivery.closeAndCheckout": "Fermer et prêter",
-    "statusModal.delivery.message": "Il y a une demande de livraison pour {itemTitle} ( {itemType} ) (Code à barres: {itemBarcode} ). Merci de vérifier l'article et l'itinéraire pour la livraison."
+    "statusModal.delivery.message": "Une demande de livraison a été émise pour {itemTitle} pour <strong> {itemTitle} ( {itemType} ) </strong> (Code à barres: {itemBarcode} ). <strong> Veuillez vérifier l'article et l'itinéraire pour la livraison. </strong>"
 }
