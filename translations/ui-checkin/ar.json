@@ -54,7 +54,7 @@
     "action.printTransitSlip": "طباعة كعب النقل",
     "missingModal.heading": "رد المادة المفقودة؟",
     "missingModal.message": "<strong>{title}({materialType})</strong> (الباركود: {barcode}) له حالة المادة <strong> مفقودة</strong>{discoverySuppressMessage}",
-    "missingModal.discoverySuppress": "وممنوع من الاكتشاف",
+    "missingModal.discoverySuppress": "ومحجوب من الاكتشاف",
     "note": "ملاحظة",
     "checkinNoteModal.heading": "تأكيد الرد",
     "checkinNoteModal.message": "<strong>{title} ({materialType})</strong> (الباركود: {barcode}) به <strong>{count}</strong>{count, plural, one {ملاحظة} other {ملاحظة}} وسيتم <strong>رده</strong>",
