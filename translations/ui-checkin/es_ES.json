@@ -5,8 +5,8 @@
     "processAs": "Proceso como:",
     "processedAs": "Procesado como:",
     "actual": "Real:",
-    "checkinDate": "Fecha de registro",
-    "checkinTime": "Hora de entrada",
+    "checkinDate": "Fecha de devolución",
+    "checkinTime": "Hora de devolución",
     "timeReturnedLabel": "Hora de regreso",
     "endSession": "Fin de sesión",
     "noItems": "No se han ingresado elementos todavía",
@@ -23,7 +23,7 @@
     "itemNoExist": "El artículo con este código de barras no existe",
     "userNoExist": "El usuario {userId} no existe",
     "fillOut": "Por favor, complete ésto para continuar",
-    "meta.title": "Registrarse",
+    "meta.title": "Devolución",
     "today": "today",
     "now": "now",
     "statusModal.back": "Back",
@@ -63,7 +63,7 @@
     "checkinNotes.message": "<strong> {title} ({materialType} ) </strong> (Código de barras: {barcode} ) tiene <strong> {count} </strong> {count, plural, one {note} other {notes}}",
     "date": "Date",
     "source": "Source",
-    "statusModal.delivery.heading": "Route for delivery request",
-    "statusModal.delivery.closeAndCheckout": "Close and check out",
-    "statusModal.delivery.message": "There is a delivery request for <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}). <strong>Please check the item out and route for delivery.</strong>"
+    "statusModal.delivery.heading": "Ruta para enviar la solicitud de reserva",
+    "statusModal.delivery.closeAndCheckout": "Cerrar y prestar",
+    "statusModal.delivery.message": "Hay una solicitud de entrega para <strong> {itemTitle} ( {itemType} ) </strong> (Código de barras: {itemBarcode} ). <strong> Verifique el ítem y diríjalo a la entrega </strong>"
 }
