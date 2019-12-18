@@ -3,6 +3,7 @@
 ## [1.11.0] (IN PROGRESS)
 
 * Provide two options for barcode tokens on staff slips. Refs UICIRC-393.
+* Add missing perms to `All permissions` set. Fixes UICHKIN-148.
 
 ## [1.10.0](https://github.com/folio-org/ui-checkin/tree/v1.10.0) (2019-12-4)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.9.0...v1.10.0)
