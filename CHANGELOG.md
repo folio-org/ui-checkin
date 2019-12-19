@@ -1,5 +1,9 @@
 # Change history for ui-checkin
 
+## 1.10.1 (IN PROGRESS)
+
+* Update `@folio/stripes` dependency to receive country list. Required for UICHKIN-146.
+
 ## [1.10.0](https://github.com/folio-org/ui-checkin/tree/v1.10.0) (2019-12-4)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.9.0...v1.10.0)
 
