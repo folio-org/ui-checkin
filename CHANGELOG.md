@@ -1,10 +1,11 @@
 # Change history for ui-checkin
 
-## 1.10.1 (IN PROGRESS)
+## [1.10.1](https://github.com/folio-org/ui-checkin/tree/v1.10.``) (2019-12-19)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.10.0...v1.10.1)
 
-* Update `@folio/stripes` dependency to receive country list. Required for UICHKIN-146.
+* Correctly populate `{{requester.country}}` token in delivery request staff slips. Refs UICHKIN-146.
 
-## [1.10.0](https://github.com/folio-org/ui-checkin/tree/v1.10.0) (2019-12-4)
+## [1.10.0](https://github.com/folio-org/ui-checkin/tree/v1.10.0) (2019-12-04)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.9.0...v1.10.0)
 
 * Provide correct backend permissions in 'Check in: All permissions" permission. Fixes UICHKIN-110.
