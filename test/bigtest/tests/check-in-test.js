@@ -83,7 +83,7 @@ describe('CheckIn', () => {
     });
 
     it('should hide item list empty message during checkin', () => {
-      expect(checkIn.checkedInItemsListEmptyMessage).to.equal('');
+      expect(checkIn.checkedInItemsList.displaysEmptyMessage).to.be.false;
     });
 
     describe('ending the session', () => {
@@ -126,7 +126,7 @@ describe('CheckIn', () => {
     });
 
     it('should hide item list empty message during check in', () => {
-      expect(checkIn.checkedInItemsListEmptyMessage).to.equal('');
+      expect(checkIn.checkedInItemsList.displaysEmptyMessage).to.be.false;
     });
   });
 

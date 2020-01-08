@@ -88,7 +88,6 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   checkinNoteModal = new CheckinNoteModalInteractor();
   selectEllipse = clickable('[data-test-elipse-select] button');
   checkedInItemsList = scoped('#list-items-checked-in', MultiColumnListInteractor);
-  checkedInItemsListEmptyMessage = text('[data-test-checked-in-items] [class*=mclEmptyMessage---]');
   selectLoanDetails = clickable('[data-test-loan-details]');
   selectPatronDetails = clickable('[data-test-patron-details]');
   selectItemDetails = clickable('[data-test-item-details]');
