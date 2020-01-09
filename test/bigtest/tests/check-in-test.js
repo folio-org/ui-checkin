@@ -83,10 +83,10 @@ describe('CheckIn', () => {
     });
 
     it('should hide item list empty message during checkin', () => {
-      expect(checkIn.checkedInItemsListEmptyMessage).to.equal('');
+      expect(checkIn.checkedInItemsList.displaysEmptyMessage).to.be.false;
     });
 
-    describe.only('ending the session', () => {
+    describe('ending the session', () => {
       beforeEach(async () => {
         await checkIn.endSession();
       });
@@ -94,6 +94,27 @@ describe('CheckIn', () => {
       it('clears the list', () => {
         expect(checkIn.hasCheckedInItems).to.be.false;
       });
+    });
+  });
+
+  describe('showing call number', () => {
+    beforeEach(async function () {
+      const barcode = '9676761472501';
+
+      this.server.create('item', 'withLoan', {
+        barcode,
+        callNumberComponents: {
+          prefix: 'prefix',
+          callNumber: 'callNumber',
+          suffix: 'suffix',
+        },
+      });
+
+      await checkIn.barcode(barcode).clickEnter();
+    });
+
+    it('should be properly formatted', () => {
+      expect(checkIn.checkedInItemsList.rows(0).cells(3).text).to.equal('prefix callNumber suffix');
     });
   });
 
@@ -105,7 +126,7 @@ describe('CheckIn', () => {
     });
 
     it('should hide item list empty message during check in', () => {
-      expect(checkIn.checkedInItemsListEmptyMessage).to.equal('');
+      expect(checkIn.checkedInItemsList.displaysEmptyMessage).to.be.false;
     });
   });
 

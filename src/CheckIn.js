@@ -1,4 +1,7 @@
-import get from 'lodash/get';
+import {
+  get,
+  compact,
+} from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
@@ -304,9 +307,10 @@ class CheckIn extends React.Component {
         const inTransitSp = get(loan, ['item', 'inTransitDestinationServicePoint', 'name']);
         return (inTransitSp) ? `${status} - ${inTransitSp}` : status;
       },
-      'callNumber': (loan) => {
-        const callNumber = `${get(loan, ['item', 'callNumber'])}`;
-        return callNumber !== 'undefined' ? callNumber : ' ';
+      'callNumber': loan => {
+        const callNumberComponents = get(loan, ['item', 'callNumberComponents'], {});
+
+        return compact([callNumberComponents.prefix, callNumberComponents.callNumber, callNumberComponents.suffix]).join(' ');
       },
       ' ': loan => this.renderActions(loan),
     };
