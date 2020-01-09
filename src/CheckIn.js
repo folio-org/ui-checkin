@@ -307,7 +307,7 @@ class CheckIn extends React.Component {
         const inTransitSp = get(loan, ['item', 'inTransitDestinationServicePoint', 'name']);
         return (inTransitSp) ? `${status} - ${inTransitSp}` : status;
       },
-      'callNumber': loan => {
+      'effectiveCallNumber': loan => {
         const callNumberComponents = get(loan, ['item', 'callNumberComponents'], {});
 
         return compact([callNumberComponents.prefix, callNumberComponents.callNumber, callNumberComponents.suffix]).join(' ');
@@ -319,7 +319,7 @@ class CheckIn extends React.Component {
       'timeReturned': formatMessage({ id: 'ui-checkin.timeReturned' }),
       'title': formatMessage({ id: 'ui-checkin.title' }),
       'barcode': formatMessage({ id: 'ui-checkin.barcode' }),
-      'callNumber': formatMessage({ id: 'ui-checkin.callNumber' }),
+      'effectiveCallNumber': formatMessage({ id: 'ui-checkin.effectiveCallNumber' }),
       'location': formatMessage({ id: 'ui-checkin.location' }),
       'status': formatMessage({ id: 'ui-checkin.status' }),
       ' ': <IconButton style={{ marginLeft: '-6px' }} icon="gear" aria-label="action settings" />,
@@ -435,9 +435,9 @@ class CheckIn extends React.Component {
                   <MultiColumnList
                     id="list-items-checked-in"
                     fullWidth
-                    visibleColumns={['timeReturned', 'title', 'barcode', 'callNumber', 'location', 'status', ' ']}
+                    visibleColumns={['timeReturned', 'title', 'barcode', 'effectiveCallNumber', 'location', 'status', ' ']}
                     columnMapping={columnMapping}
-                    columnWidths={{ 'timeReturned': 120, ' ': 80, 'title': 300, 'barcode': 200, 'callNumber': 200, 'location': 200, 'status': 120 }}
+                    columnWidths={{ 'timeReturned': 120, ' ': 80, 'title': 300, 'barcode': 200, 'effectiveCallNumber': 200, 'location': 200, 'status': 120 }}
                     columnOverflow={{ ' ': true }}
                     rowMetadata={['id']}
                     interactive={false}

@@ -16,7 +16,7 @@
   "timeReturned": "Time returned",
   "title": "Title",
   "barcode": "Barcode",
-  "callNumber": "Call number",
+  "effectiveCallNumber": "Effective call number string",
   "location": "Location",
   "status": "Status",
   "loanDetails": "Loan details",
