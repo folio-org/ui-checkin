@@ -13,7 +13,6 @@
     "timeReturned": "归还时间",
     "title": "题名",
     "barcode": "条码",
-    "callNumber": "索书号",
     "location": "馆藏地",
     "status": "状态",
     "loanDetails": "借阅详情",
@@ -65,5 +64,6 @@
     "source": "来源",
     "statusModal.delivery.heading": "Route for delivery request",
     "statusModal.delivery.closeAndCheckout": "Close and check out",
-    "statusModal.delivery.message": "There is a delivery request for <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}). <strong>Please check the item out and route for delivery.</strong>"
+    "statusModal.delivery.message": "There is a delivery request for <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}). <strong>Please check the item out and route for delivery.</strong>",
+    "effectiveCallNumber": "Effective call number string"
 }

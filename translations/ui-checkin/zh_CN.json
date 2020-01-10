@@ -13,7 +13,6 @@
     "timeReturned": "归还时间",
     "title": "题名",
     "barcode": "条码",
-    "callNumber": "索书号",
     "location": "馆藏地",
     "status": "状态",
     "loanDetails": "借阅详情",
@@ -65,5 +64,6 @@
     "source": "来源",
     "statusModal.delivery.heading": "交付请求的路线",
     "statusModal.delivery.closeAndCheckout": "关闭并借出",
-    "statusModal.delivery.message": "<strong> {itemTitle} （ {itemType} ） </strong> （条码： {itemBarcode} ）有交付请求。 <strong>请检出该单件并交付。 </strong>"
+    "statusModal.delivery.message": "<strong> {itemTitle} （ {itemType} ） </strong> （条码： {itemBarcode} ）有交付请求。 <strong>请检出该单件并交付。 </strong>",
+    "effectiveCallNumber": "Effective call number string"
 }

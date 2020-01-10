@@ -13,7 +13,6 @@
     "timeReturned": "وقت الإعادة",
     "title": "العنوان",
     "barcode": "باركود",
-    "callNumber": "رقم الاستدعاء",
     "location": "الموقع",
     "status": "الحالة",
     "loanDetails": "تفاصيل الإعارة",
@@ -65,5 +64,6 @@
     "source": "المصدر",
     "statusModal.delivery.heading": "طريق طلب التوصيل",
     "statusModal.delivery.closeAndCheckout": "إغلاق وإعارة",
-    "statusModal.delivery.message": "طريق <strong>{itemTitle} ({itemType})</strong> (باركود: {itemBarcode}) لطلب التوصيل. <strong>تمت إعارة المادة تلقائيًا إلى مقدم الطلب</strong>"
+    "statusModal.delivery.message": "طريق <strong>{itemTitle} ({itemType})</strong> (باركود: {itemBarcode}) لطلب التوصيل. <strong>تمت إعارة المادة تلقائيًا إلى مقدم الطلب</strong>",
+    "effectiveCallNumber": "مقطع رقم الاستدعاء النشط"
 }

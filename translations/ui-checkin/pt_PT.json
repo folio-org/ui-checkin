@@ -13,7 +13,6 @@
     "timeReturned": "Horário da devolução",
     "title": "Título",
     "barcode": "Código de barras",
-    "callNumber": "Número de chamada",
     "location": "Localização",
     "status": "Status",
     "loanDetails": "Detalhes de empréstimo",
@@ -65,5 +64,6 @@
     "source": "Source",
     "statusModal.delivery.heading": "Route for delivery request",
     "statusModal.delivery.closeAndCheckout": "Close and check out",
-    "statusModal.delivery.message": "There is a delivery request for <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}). <strong>Please check the item out and route for delivery.</strong>"
+    "statusModal.delivery.message": "There is a delivery request for <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}). <strong>Please check the item out and route for delivery.</strong>",
+    "effectiveCallNumber": "Effective call number string"
 }
