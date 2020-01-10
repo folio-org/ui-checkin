@@ -13,7 +13,6 @@
     "timeReturned": "Time returned",
     "title": "Заголовок",
     "barcode": "Штрих-код",
-    "callNumber": "Телефонный номер",
     "location": "Местоположение",
     "status": "Статус",
     "loanDetails": "Детали книговыдачи",
@@ -65,5 +64,6 @@
     "source": "Источник",
     "statusModal.delivery.heading": "Route for delivery request",
     "statusModal.delivery.closeAndCheckout": "Закрыть и проверить",
-    "statusModal.delivery.message": "Существует запрос на доставку для <strong> (itemTitle) (itemTypeType)) </strong> (штрих-код: «itemBarcode»). <strong>Пожалуйста, проверьте товар и маршрут доставки.</strong>"
+    "statusModal.delivery.message": "Существует запрос на доставку для <strong> (itemTitle) (itemTypeType)) </strong> (штрих-код: «itemBarcode»). <strong>Пожалуйста, проверьте товар и маршрут доставки.</strong>",
+    "effectiveCallNumber": "Effective call number string"
 }

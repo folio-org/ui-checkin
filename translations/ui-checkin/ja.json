@@ -13,7 +13,6 @@
     "timeReturned": "返却時間",
     "title": "タイトル",
     "barcode": "バーコード",
-    "callNumber": "請求記号",
     "location": "場所",
     "status": "ステータス",
     "loanDetails": "貸出詳細",
@@ -65,5 +64,6 @@
     "source": "ソース",
     "statusModal.delivery.heading": "Route for delivery request",
     "statusModal.delivery.closeAndCheckout": "Close and check out",
-    "statusModal.delivery.message": "There is a delivery request for <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}). <strong>Please check the item out and route for delivery.</strong>"
+    "statusModal.delivery.message": "There is a delivery request for <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}). <strong>Please check the item out and route for delivery.</strong>",
+    "effectiveCallNumber": "Effective call number string"
 }

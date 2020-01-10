@@ -13,7 +13,6 @@
     "timeReturned": "Hora de regreso",
     "title": "Título",
     "barcode": "Código de barras",
-    "callNumber": "Número de llamada",
     "location": "Localización",
     "status": "Estado",
     "loanDetails": "Detalles del préstamo",
@@ -65,5 +64,6 @@
     "source": "Source",
     "statusModal.delivery.heading": "Ruta para enviar la solicitud de reserva",
     "statusModal.delivery.closeAndCheckout": "Cerrar y prestar",
-    "statusModal.delivery.message": "Hay una solicitud de entrega para <strong> {itemTitle} ( {itemType} ) </strong> (Código de barras: {itemBarcode} ). <strong> Verifique el ítem y diríjalo a la entrega </strong>"
+    "statusModal.delivery.message": "Hay una solicitud de entrega para <strong> {itemTitle} ( {itemType} ) </strong> (Código de barras: {itemBarcode} ). <strong> Verifique el ítem y diríjalo a la entrega </strong>",
+    "effectiveCallNumber": "Effective call number string"
 }

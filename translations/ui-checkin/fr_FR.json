@@ -13,7 +13,6 @@
     "timeReturned": "Heure de retour",
     "title": "Titre",
     "barcode": "Code-barres",
-    "callNumber": "Numéro d'appel",
     "location": "Emplacement",
     "status": "Statut",
     "loanDetails": "Détails du prêt",
@@ -65,5 +64,6 @@
     "source": "Source",
     "statusModal.delivery.heading": "Itinéraire pour la demande de livraison",
     "statusModal.delivery.closeAndCheckout": "Fermer et prêter",
-    "statusModal.delivery.message": "Une demande de livraison a été émise pour {itemTitle} pour <strong> {itemTitle} ( {itemType} ) </strong> (Code à barres: {itemBarcode} ). <strong> Veuillez vérifier l'article et l'itinéraire pour la livraison. </strong>"
+    "statusModal.delivery.message": "Une demande de livraison a été émise pour {itemTitle} pour <strong> {itemTitle} ( {itemType} ) </strong> (Code à barres: {itemBarcode} ). <strong> Veuillez vérifier l'article et l'itinéraire pour la livraison. </strong>",
+    "effectiveCallNumber": "Effective call number string"
 }

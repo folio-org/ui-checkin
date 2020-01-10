@@ -13,7 +13,6 @@
     "timeReturned": "Time returned",
     "title": "Title",
     "barcode": "Barcode",
-    "callNumber": "Call Number",
     "location": "Location",
     "status": "Status",
     "loanDetails": "Loan details",
@@ -65,5 +64,6 @@
     "source": "Source",
     "statusModal.delivery.heading": "Route for delivery request",
     "statusModal.delivery.closeAndCheckout": "Close and check out",
-    "statusModal.delivery.message": "There is a delivery request for <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}). <strong>Please check the item out and route for delivery.</strong>"
+    "statusModal.delivery.message": "There is a delivery request for <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}). <strong>Please check the item out and route for delivery.</strong>",
+    "effectiveCallNumber": "Effective call number string"
 }
