@@ -25,11 +25,11 @@ import {
   Row,
   Col,
   Icon,
-  UncontrolledDropdown,
   InfoPopover,
-  MenuItem,
   KeyValue,
-  DropdownMenu
+  DropdownMenu,
+  Tooltip,
+  Dropdown,
 } from '@folio/stripes/components';
 
 import PrintButton from './components/PrintButton';
@@ -180,89 +180,113 @@ class CheckIn extends React.Component {
     const isCheckInNote = element => element.noteType === 'Check in';
     const checkinNotePresent = get(loan.item, ['circulationNotes'], []).some(isCheckInNote);
 
-    return (
-      <div data-test-elipse-select>
-        <UncontrolledDropdown onSelectItem={this.handleOptionsChange}>
-          <Button data-role="toggle" buttonStyle="hover dropdownActive"><strong>•••</strong></Button>
-          <DropdownMenu data-role="menu">
-            {loan.nextRequest &&
-              <MenuItem>
-                <PrintButton
-                  data-test-print-hold-slip
-                  buttonStyle="dropdownItem"
-                  template={this.getTemplate('hold')}
-                  dataSource={convertToSlipData(loan.staffSlipContext, intl, timezone, locale)}
-                >
-                  <FormattedMessage id="ui-checkin.action.printHoldSlip" />
-                </PrintButton>
-              </MenuItem>
-            }
-            {loan.transitItem &&
-              <MenuItem>
-                <PrintButton
-                  data-test-print-transit-slip
-                  buttonStyle="dropdownItem"
-                  template={this.getTemplate('transit')}
-                  dataSource={convertToSlipData(loan.staffSlipContext, intl, timezone, locale, 'Transit')}
-                >
-                  <FormattedMessage id="ui-checkin.action.printTransitSlip" />
-                </PrintButton>
-              </MenuItem>
-            }
+    const trigger = ({ getTriggerProps, triggerRef }) => {
+      return (
+        <React.Fragment>
+          <Button
+            {...getTriggerProps()}
+            buttonStyle="hover dropdownActive"
+            aria-labelledby="actions-tooltip-text"
+            id="available-actions-button"
+          >
+            <Icon icon="ellipsis" size="large" />
+          </Button>
+          <Tooltip
+            id="actions-tooltip"
+            text={<FormattedMessage id="ui-checkin.actions.moreDetails" />}
+            triggerRef={triggerRef}
+          />
+        </React.Fragment>
+      );
+    };
 
-            {loan.userId &&
-              <MenuItem itemMeta={{ loan, action: 'showLoanDetails' }}>
-                <div data-test-loan-details>
-                  <Button buttonStyle="dropdownItem" href={`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`}>
-                    <FormattedMessage id="ui-checkin.loanDetails" />
-                  </Button>
-                </div>
-              </MenuItem>
-            }
-
-            {loan.userId &&
-              <MenuItem itemMeta={{ loan, action: 'showPatronDetails' }}>
-                <div data-test-patron-details>
-                  <Button buttonStyle="dropdownItem" href={`/users/view/${loan.userId}`}>
-                    <FormattedMessage id="ui-checkin.patronDetails" />
-                  </Button>
-                </div>
-              </MenuItem>
-            }
-
-            <MenuItem itemMeta={{ loan, action: 'showItemDetails' }}>
-              <div data-test-item-details>
-                <Button
-                  buttonStyle="dropdownItem"
-                  href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.item.id}`}
-                >
-                  <FormattedMessage id="ui-checkin.itemDetails" />
-                </Button>
-              </div>
-            </MenuItem>
-            {loan.userId &&
-            <MenuItem itemMeta={{ loan, action: 'newFeeFine' }}>
+    const menu = ({ onToggle }) => {
+      return (
+        <DropdownMenu
+          role="menu"
+          aria-label="available actions"
+          onToggle={onToggle}
+        >
+          {loan.nextRequest &&
+            <PrintButton
+              data-test-print-hold-slip
+              buttonStyle="dropdownItem"
+              template={this.getTemplate('hold')}
+              dataSource={convertToSlipData(loan.staffSlipContext, intl, timezone, locale)}
+            >
+              <FormattedMessage id="ui-checkin.action.printHoldSlip" />
+            </PrintButton>
+          }
+          {loan.transitItem &&
+            <PrintButton
+              data-test-print-transit-slip
+              buttonStyle="dropdownItem"
+              template={this.getTemplate('transit')}
+              dataSource={convertToSlipData(loan.staffSlipContext, intl, timezone, locale, 'Transit')}
+            >
+              <FormattedMessage id="ui-checkin.action.printTransitSlip" />
+            </PrintButton>
+          }
+          {loan.userId &&
+            <div data-test-loan-details>
+              <Button
+                buttonStyle="dropdownItem"
+                href={`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`}
+                onClick={(e) => this.handleOptionsChange({ loan, action: 'showLoanDetails' }, e)}
+              >
+                <FormattedMessage id="ui-checkin.loanDetails" />
+              </Button>
+            </div>
+          }
+          {loan.userId &&
+            <div data-test-patron-details>
               <Button
                 buttonStyle="dropdownItem"
                 href={`/users/view/${loan.userId}`}
+                onClick={(e) => this.handleOptionsChange({ loan, action: 'showPatronDetails' }, e)}
               >
-                <FormattedMessage id="ui-checkin.newFeeFine" />
+                <FormattedMessage id="ui-checkin.patronDetails" />
               </Button>
-            </MenuItem>
-            }
-            {checkinNotePresent &&
-              <MenuItem itemMeta={{ loan, action: 'showCheckinNotes' }}>
-                <div data-test-checkin-notes>
-                  <Button
-                    buttonStyle="dropdownItem"
-                  >
-                    <FormattedMessage id="ui-checkin.checkinNotes" />
-                  </Button>
-                </div>
-              </MenuItem>
-            }
-          </DropdownMenu>
-        </UncontrolledDropdown>
+            </div>
+          }
+          <div data-test-item-details>
+            <Button
+              buttonStyle="dropdownItem"
+              href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.item.id}`}
+              onClick={(e) => this.handleOptionsChange({ loan, action: 'showItemDetails' }, e)}
+            >
+              <FormattedMessage id="ui-checkin.itemDetails" />
+            </Button>
+          </div>
+          {loan.userId &&
+            <Button
+              buttonStyle="dropdownItem"
+              href={`/users/view/${loan.userId}`}
+              onClick={(e) => this.handleOptionsChange({ loan, action: 'newFeeFine' }, e)}
+            >
+              <FormattedMessage id="ui-checkin.newFeeFine" />
+            </Button>
+          }
+          {checkinNotePresent &&
+            <div data-test-checkin-notes>
+              <Button
+                buttonStyle="dropdownItem"
+                onClick={(e) => this.handleOptionsChange({ loan, action: 'showCheckinNotes' }, e)}
+              >
+                <FormattedMessage id="ui-checkin.checkinNotes" />
+              </Button>
+            </div>
+          }
+        </DropdownMenu>
+      );
+    };
+
+    return (
+      <div data-test-elipse-select>
+        <Dropdown
+          renderTrigger={trigger}
+          renderMenu={menu}
+        />
       </div>
     );
   }

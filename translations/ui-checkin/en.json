@@ -65,5 +65,6 @@
   "multipieceModal.item.numberOfMissingPieces": "Number of missing pieces",
   "multipieceModal.item.descriptionOfmissingPieces": "Description of missing pieces",
   "action.printHoldSlip": "Print hold slip",
-  "action.printTransitSlip": "Print transit slip"
+  "action.printTransitSlip": "Print transit slip",
+  "actions.moreDetails": "Get more details about this item"
 }
