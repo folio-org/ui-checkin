@@ -4,6 +4,7 @@
 
 * Provide two options for barcode tokens on staff slips. Refs UICIRC-393.
 * Display effective call number prefix, call number, and call number suffix at check in. Refs UICHKIN-127.
+* Make the Check in ellipsis accessible. Refs UICHKIN-134.
 
 ## [1.10.0](https://github.com/folio-org/ui-checkin/tree/v1.10.0) (2019-12-4)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.9.0...v1.10.0)
