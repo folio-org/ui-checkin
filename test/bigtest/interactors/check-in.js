@@ -88,9 +88,9 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   checkinNoteModal = new CheckinNoteModalInteractor();
   selectEllipse = clickable('[data-test-elipse-select] button');
   checkedInItemsList = scoped('#list-items-checked-in', MultiColumnListInteractor);
-  selectLoanDetails = clickable('[data-test-loan-details]');
-  selectPatronDetails = clickable('[data-test-patron-details]');
-  selectItemDetails = clickable('[data-test-item-details]');
+  selectLoanDetails = clickable('[data-test-loan-details] a');
+  selectPatronDetails = clickable('[data-test-patron-details] a');
+  selectItemDetails = clickable('[data-test-item-details] a');
   fillOutError = text('[data-test-check-in-scan] [class^="feedbackError"]');
   barcodePresent = isPresent('[data-test-check-in-barcode]');
   barcodeInputValue = value('[data-test-check-in-barcode]');
