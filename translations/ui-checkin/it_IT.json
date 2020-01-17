@@ -65,5 +65,6 @@
     "statusModal.delivery.heading": "Route for delivery request",
     "statusModal.delivery.closeAndCheckout": "Chiudi e presta",
     "statusModal.delivery.message": "Esiste una richiesta di consegna per <strong>{itemTitle} ( {itemType} )</strong> (codice a barre: {itemBarcode} ). <strong>Si prega di prestare l'item e di instradarlo per la consegna.</strong>",
-    "effectiveCallNumber": "Effective call number string"
+    "effectiveCallNumber": "Effective call number string",
+    "actions.moreDetails": "Get more details about this item"
 }
