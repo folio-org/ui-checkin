@@ -65,5 +65,6 @@
     "statusModal.delivery.heading": "交付请求的路线",
     "statusModal.delivery.closeAndCheckout": "关闭并借出",
     "statusModal.delivery.message": "<strong> {itemTitle} （ {itemType} ） </strong> （条码： {itemBarcode} ）有交付请求。 <strong>请检出该单件并交付。 </strong>",
-    "effectiveCallNumber": "Effective call number string"
+    "effectiveCallNumber": "Effective call number string",
+    "actions.moreDetails": "Get more details about this item"
 }
