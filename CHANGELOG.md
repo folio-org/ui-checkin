@@ -4,6 +4,7 @@
 
 * Provide two options for barcode tokens on staff slips. Refs UICIRC-393.
 * Display effective call number prefix, call number, and call number suffix at check in. Refs UICHKIN-127.
+* Update okapiInterfaces: `item-storage: 8.0`, `circulation: 9.0`. Refs UICHKIN-149.
 * Make the Check in ellipsis accessible. Refs UICHKIN-134.
 
 ## [1.10.0](https://github.com/folio-org/ui-checkin/tree/v1.10.0) (2019-12-4)
