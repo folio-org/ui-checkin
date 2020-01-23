@@ -326,6 +326,7 @@ class CheckIn extends React.Component {
       },
       'barcode': loan => `${get(loan, ['item', 'barcode'])}`,
       'location': loan => `${get(loan, ['item', 'location', 'name'])}`,
+      'inHouseUse': loan => { return get(loan, 'inHouseUse') ? <Icon icon="plus-sign" size="small" /> : ''; },
       'status': loan => {
         const status = `${get(loan, ['item', 'status', 'name'])}`;
         const inTransitSp = get(loan, ['item', 'inTransitDestinationServicePoint', 'name']);
@@ -462,7 +463,7 @@ class CheckIn extends React.Component {
                     fullWidth
                     visibleColumns={['timeReturned', 'title', 'barcode', 'effectiveCallNumber', 'location', 'inHouseUse', 'status', ' ']}
                     columnMapping={columnMapping}
-                    columnWidths={{ 'timeReturned': 120, ' ': 80, 'title': 300, 'barcode': 200, 'effectiveCallNumber': 200, 'location': 200, 'status': 120 }}
+                    columnWidths={{ 'timeReturned': 120, ' ': 80, 'title': 300, 'barcode': 200, 'effectiveCallNumber': 200, 'location': 200, 'inHouseUse': 80, 'status': 120 }}
                     columnOverflow={{ ' ': true }}
                     rowMetadata={['id']}
                     interactive={false}
