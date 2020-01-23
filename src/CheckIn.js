@@ -345,6 +345,7 @@ class CheckIn extends React.Component {
       'barcode': formatMessage({ id: 'ui-checkin.barcode' }),
       'effectiveCallNumber': formatMessage({ id: 'ui-checkin.effectiveCallNumber' }),
       'location': formatMessage({ id: 'ui-checkin.location' }),
+      'inHouseUse': formatMessage({ id: 'ui-checkin.inHouseUse' }),
       'status': formatMessage({ id: 'ui-checkin.status' }),
       ' ': <IconButton style={{ marginLeft: '-6px' }} icon="gear" aria-label="action settings" />,
     };
@@ -459,7 +460,7 @@ class CheckIn extends React.Component {
                   <MultiColumnList
                     id="list-items-checked-in"
                     fullWidth
-                    visibleColumns={['timeReturned', 'title', 'barcode', 'effectiveCallNumber', 'location', 'status', ' ']}
+                    visibleColumns={['timeReturned', 'title', 'barcode', 'effectiveCallNumber', 'location', 'inHouseUse', 'status', ' ']}
                     columnMapping={columnMapping}
                     columnWidths={{ 'timeReturned': 120, ' ': 80, 'title': 300, 'barcode': 200, 'effectiveCallNumber': 200, 'location': 200, 'status': 120 }}
                     columnOverflow={{ ' ': true }}
