@@ -321,7 +321,7 @@ class Scan extends React.Component {
   }
 
   addScannedItem(checkinResp) {
-    const { loan, item, nextRequest, transitItem, holdItem, staffSlipContext } = checkinResp;
+    const { loan, item, nextRequest, transitItem, holdItem, staffSlipContext, inHouseUse } = checkinResp;
     const { mutator, resources } = this.props;
     const { checkedinItem } = this.state;
     const scannedItem = loan || { item };
@@ -342,6 +342,7 @@ class Scan extends React.Component {
     scannedItem.holdItem = holdItem;
     scannedItem.item.circulationNotes = (checkedinItem || {}).circulationNotes || [];
     scannedItem.staffSlipContext = staffSlipContext;
+    scannedItem.inHouseUse = inHouseUse;
     const scannedItems = [scannedItem].concat(resources.scannedItems);
 
     return mutator.scannedItems.replace(scannedItems);

@@ -18,6 +18,7 @@
   "barcode": "Barcode",
   "effectiveCallNumber": "Effective call number string",
   "location": "Location",
+  "inHouseUse": "In-house use",
   "status": "Status",
   "loanDetails": "Loan details",
   "itemDetails": "Item details",
