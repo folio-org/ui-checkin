@@ -66,5 +66,6 @@
     "statusModal.delivery.closeAndCheckout": "إغلاق وإعارة",
     "statusModal.delivery.message": "طريق <strong>{itemTitle} ({itemType})</strong> (باركود: {itemBarcode}) لطلب التوصيل. <strong>تمت إعارة المادة تلقائيًا إلى مقدم الطلب</strong>",
     "effectiveCallNumber": "مقطع رقم الاستدعاء النشط",
-    "actions.moreDetails": "الحصول على المزيد من التفاصيل حول هذه المادة"
+    "actions.moreDetails": "الحصول على المزيد من التفاصيل حول هذه المادة",
+    "inHouseUse": "استخدام محلي"
 }

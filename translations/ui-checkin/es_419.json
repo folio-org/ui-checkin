@@ -66,5 +66,6 @@
     "statusModal.delivery.closeAndCheckout": "Cerrar y prestar",
     "statusModal.delivery.message": "Hay una solicitud de entrega para <strong> {itemTitle} ( {itemType} ) </strong> (Código de barras: {itemBarcode} ). <strong> Verifique el ítem y diríjalo a la entrega </strong>",
     "effectiveCallNumber": "Effective call number string",
-    "actions.moreDetails": "Get more details about this item"
+    "actions.moreDetails": "Get more details about this item",
+    "inHouseUse": "In-house use"
 }

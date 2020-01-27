@@ -12,7 +12,7 @@
     "noItems": "Nessun item è stato ancora inserito.",
     "timeReturned": "Tempo riconsegna",
     "title": "Titolo",
-    "barcode": "Barcode",
+    "barcode": "Codice a barre",
     "location": "Sezione",
     "status": "Stato",
     "loanDetails": "Dettagli del prestito",
@@ -66,5 +66,6 @@
     "statusModal.delivery.closeAndCheckout": "Chiudi e presta",
     "statusModal.delivery.message": "Esiste una richiesta di consegna per <strong>{itemTitle} ( {itemType} )</strong> (codice a barre: {itemBarcode} ). <strong>Si prega di prestare l'item e di instradarlo per la consegna.</strong>",
     "effectiveCallNumber": "Effective call number string",
-    "actions.moreDetails": "Get more details about this item"
+    "actions.moreDetails": "Ottieni maggiori dettagli su questo item",
+    "inHouseUse": "Uso interno"
 }

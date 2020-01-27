@@ -66,5 +66,6 @@
     "statusModal.delivery.closeAndCheckout": "Закрыть и проверить",
     "statusModal.delivery.message": "Существует запрос на доставку для <strong> (itemTitle) (itemTypeType)) </strong> (штрих-код: «itemBarcode»). <strong>Пожалуйста, проверьте товар и маршрут доставки.</strong>",
     "effectiveCallNumber": "Effective call number string",
-    "actions.moreDetails": "Get more details about this item"
+    "actions.moreDetails": "Get more details about this item",
+    "inHouseUse": "In-house use"
 }
