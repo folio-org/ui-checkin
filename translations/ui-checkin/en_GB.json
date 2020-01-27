@@ -66,5 +66,6 @@
     "statusModal.delivery.closeAndCheckout": "Close and check out",
     "statusModal.delivery.message": "There is a delivery request for <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}). <strong>Please check the item out and route for delivery.</strong>",
     "effectiveCallNumber": "Effective call number string",
-    "actions.moreDetails": "Get more details about this item"
+    "actions.moreDetails": "Get more details about this item",
+    "inHouseUse": "In-house use"
 }
