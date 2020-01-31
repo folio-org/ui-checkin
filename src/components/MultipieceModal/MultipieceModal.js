@@ -65,7 +65,7 @@ const MultipieceModal = (props) => {
         </Col>
         {
           (item.numberOfMissingPieces || item.missingPieces) &&
-          <>
+          <React.Fragment key="missingPieces">
             <Col xs={6}>
               <KeyValue
                 label={<FormattedMessage id="ui-checkin.multipieceModal.item.numberOfMissingPieces" />}
@@ -78,7 +78,7 @@ const MultipieceModal = (props) => {
                 value={get(item, 'missingPieces') || '-'}
               />
             </Col>
-          </>
+          </React.Fragment>
         }
       </Row>
     </Modal>

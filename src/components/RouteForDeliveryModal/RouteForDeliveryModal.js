@@ -62,7 +62,7 @@ class RouteForDeliveryModal extends React.Component {
     } = this.props;
 
     return (
-      <>
+      <React.Fragment key="printAndCheckout">
         <PrintButton
           buttonStyle="primary"
           buttonClass={mfCss.modalFooterButton}
@@ -83,7 +83,7 @@ class RouteForDeliveryModal extends React.Component {
         >
           {this.closeButtonContent}
         </PrintButton>
-      </>
+      </React.Fragment>
     );
   }
 
@@ -94,7 +94,7 @@ class RouteForDeliveryModal extends React.Component {
     } = this.props;
 
     return (
-      <>
+      <React.Fragment key="navigationButtons">
         <Button
           buttonStyle="primary"
           buttonClass={mfCss.modalFooterButton}
@@ -111,7 +111,7 @@ class RouteForDeliveryModal extends React.Component {
         >
           {this.closeButtonContent}
         </Button>
-      </>
+      </React.Fragment>
     );
   }
 

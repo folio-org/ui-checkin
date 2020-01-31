@@ -185,7 +185,7 @@ class CheckIn extends React.Component {
 
     const trigger = ({ getTriggerProps, triggerRef }) => {
       return (
-        <>
+        <React.Fragment key="dropdownTrigger">
           <Button
             {...getTriggerProps()}
             buttonStyle="hover dropdownActive"
@@ -199,7 +199,7 @@ class CheckIn extends React.Component {
             text={<FormattedMessage id="ui-checkin.actions.moreDetails" />}
             triggerRef={triggerRef}
           />
-        </>
+        </React.Fragment>
       );
     };
 
