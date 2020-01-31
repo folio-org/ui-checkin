@@ -38,7 +38,7 @@ class PrintButton extends React.Component {
     const btnProps = omit(this.props, ['dataSource', 'template', 'onBeforePrint', 'onAfterPrint']);
 
     return (
-      <React.Fragment key="printBtn">
+      <>
         <ReactToPrint
           removeAfterPrint
           trigger={() => <Button {...btnProps}>{children}</Button>}
@@ -51,7 +51,7 @@ class PrintButton extends React.Component {
             <ComponentToPrint template={template} dataSource={dataSource} />
           </div>
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }
