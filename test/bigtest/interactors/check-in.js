@@ -1,84 +1,23 @@
-/* eslint-disable */
 import {
-  blurrable,
   clickable,
   fillable,
   interactor,
   isPresent,
   text,
-  triggerable,
-  property,
   scoped,
-  collection,
   value,
 } from '@bigtest/interactor';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 
-@interactor class DatepickerInteractor {
-  clickInput = clickable('input');
-  fillInput = fillable('input');
-  blurInput = blurrable('input');
-
-  pressEnter = triggerable('keydown', {
-    bubbles: true,
-    cancelable: true,
-    keyCode: 13
-  });
-
-  fillAndBlur(date) {
-    return this
-      .clickInput()
-      .fillInput(date)
-      .pressEnter()
-      .blurInput();
-  }
-}
-
-@interactor class TimepickerInteractor {
-  fillInput = fillable('input');
-}
-
-@interactor class ConfirmStatusModal {
-  clickPrintHoldCheckbox = clickable('[data-test-print-slip-checkbox]');
-  clickConfirmButton = clickable('[data-test-confirm-button]');
-
-  isPrintTransitChecked = property('[data-test-print-slip-checkbox]', 'checked');
-}
-
-@interactor class MultiPieceModalInteractor {
-  present = isPresent('[data-test-checkin-button]');
-  clickCheckinBtn = clickable('[data-test-checkin-button]');
-}
-
-@interactor class MissingItemModalInteractor {
-  present = isPresent('[data-test-confirmation-modal-confirm-button]');
-  clickConfirm = clickable('[data-test-confirmation-modal-confirm-button]');
-}
-@interactor class CheckinNoteInteractor {
-  name = text('[data-test-check-in-note-name]');
-  date = text('[data-test-check-in-note-date]');
-  source = text('[data-test-check-in-note-source]');
-}
-
-@interactor class CheckinNoteModalInteractor {
-  defaultScope = '[data-test-check-in-note-modal]';
-
-  checkinNotes = collection('[data-test-check-in-note-modal] [class^="mclRow--"]', CheckinNoteInteractor);
-  present = isPresent('[data-test-checkin-note-modal-confirm-button]');
-  clickConfirm = clickable('[data-test-checkin-note-modal-confirm-button]');
-}
-
-@interactor class DeliveryModalInteractor {
-  defaultScope = '[data-test-delivery-modal]';
-
-  message = text('[data-test-modal-content]');
-  printCheckboxIsChecked = property('[data-test-print-slip-checkbox]', 'checked');
-
-  clickClose = clickable('[data-test="close"]');
-  clickCloseAndCheckout = clickable('[data-test="closeAndCheckout"]');
-}
+import DatepickerInteractor from './datepicker';
+import TimepickerInteractor from './timepicker';
+import ConfirmStatusModal from './confirm-status-modal';
+import DeliveryModalInteractor from './delivery-modal';
+import CheckinNoteModalInteractor from './checkin-note-modal';
+import MissingItemModalInteractor from './missing-item-modal';
+import MultiPieceModalInteractor from './multi-piece-modal';
 
 @interactor class CheckInInteractor {
   processDate = new DatepickerInteractor('[data-test-process-date]');
