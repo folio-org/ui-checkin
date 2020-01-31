@@ -23,6 +23,79 @@ import {
 } from './util';
 
 class Scan extends React.Component {
+  static propTypes = {
+    intl: intlShape,
+    stripes: PropTypes.object,
+    resources: PropTypes.shape({
+      scannedItems: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string,
+        }),
+      ),
+      requests: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      staffSlips: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      servicePoints: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      items: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      })
+    }),
+
+    mutator: PropTypes.shape({
+      query: PropTypes.shape({
+        update: PropTypes.func,
+      }),
+      items: PropTypes.shape({
+        GET: PropTypes.func,
+        PUT: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      checkIn: PropTypes.shape({
+        POST: PropTypes.func,
+      }),
+      requests: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      scannedItems: PropTypes.shape({
+        replace: PropTypes.func,
+      }),
+      staffSlips: PropTypes.shape({
+        GET: PropTypes.func,
+      }),
+      endSession: PropTypes.shape({
+        POST: PropTypes.func,
+      }),
+    }),
+    history: PropTypes.shape({
+      push: PropTypes.func,
+    })
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      loading: false
+    };
+  }
+
+  store = this.props.stripes.store;
+  barcode = React.createRef();
+  checkInData = null;
+  checkinInst = null;
+  checkinInitialValues = {
+    item: {
+      checkinDate: '',
+      checkinTime: '',
+    }
+  };
+
   static manifest = Object.freeze({
     scannedItems: { initialValue: [] },
     query: { initialValue: {} },
@@ -73,66 +146,6 @@ class Scan extends React.Component {
       fetch: false,
     },
   });
-
-  static propTypes = {
-    intl: intlShape,
-    stripes: PropTypes.object,
-    resources: PropTypes.shape({
-      scannedItems: PropTypes.arrayOf(
-        PropTypes.shape({
-          id: PropTypes.string,
-        }),
-      ),
-      requests: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      staffSlips: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      servicePoints: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-    }),
-
-    mutator: PropTypes.shape({
-      query: PropTypes.shape({
-        update: PropTypes.func,
-      }),
-      items: PropTypes.shape({
-        GET: PropTypes.func,
-        PUT: PropTypes.func,
-        reset: PropTypes.func,
-      }),
-      checkIn: PropTypes.shape({
-        POST: PropTypes.func,
-      }),
-      requests: PropTypes.shape({
-        GET: PropTypes.func,
-        reset: PropTypes.func,
-      }),
-      scannedItems: PropTypes.shape({
-        replace: PropTypes.func,
-      }),
-      staffSlips: PropTypes.shape({
-        GET: PropTypes.func,
-      }),
-      endSession: PropTypes.shape({
-        POST: PropTypes.func,
-      }),
-    }),
-  };
-
-  state = { loading: false };
-  store = this.props.stripes.store;
-  barcode = React.createRef();
-  checkInData = null;
-  checkinInst = null;
-  checkinInitialValues = {
-    item: {
-      checkinDate: '',
-      checkinTime: '',
-    }
-  };
 
   setFocusInput = () => {
     this.barcode.current.focus();
@@ -545,7 +558,8 @@ class Scan extends React.Component {
         label={
           <FormattedMessage
             id="ui-checkin.itemNotFound"
-          />}
+          />
+}
         footer={footer}
         dismissible
         onClose={this.onCloseErrorModal}
@@ -592,8 +606,7 @@ class Scan extends React.Component {
             checkinNotesMode={checkinNotesMode}
             onDone={this.checkIn}
             onCancel={this.onCancel}
-          />
-        }
+          />}
         {nextRequest && holdItem && this.renderHoldModal(nextRequest, staffSlipContext)}
         {nextRequest && deliveryItem && this.renderDeliveryModal(deliveryItem, staffSlipContext)}
         {transitItem && this.renderTransitionModal(transitItem, staffSlipContext)}
