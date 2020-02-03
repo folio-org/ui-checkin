@@ -1,21 +1,4 @@
 {
   "parser": "babel-eslint",
-  "extends": "@folio/eslint-config-stripes",
-  "plugins": [
-    "no-only-tests"
-  ],
-  "rules": {
-    "no-only-tests/no-only-tests": [
-      "error",
-      {
-        "block": [
-          "describe",
-          "it"
-        ],
-        "focus": [
-          "only"
-        ]
-      }
-    ]
-  }
+  "extends": "@folio/eslint-config-stripes"
 }

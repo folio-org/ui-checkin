@@ -55,6 +55,9 @@ class CheckIn extends React.Component {
       query: PropTypes.shape({
         update: PropTypes.func,
       }),
+      users: PropTypes.shape({
+        GET: PropTypes.func,
+      }),
     }).isRequired,
     loading: PropTypes.bool.isRequired,
   };
@@ -65,11 +68,11 @@ class CheckIn extends React.Component {
     this.showInfo = this.showInfo.bind(this);
     this.renderActions = this.renderActions.bind(this);
     this.handleOptionsChange = this.handleOptionsChange.bind(this);
-  }
 
-  state = {
-    showPickers: false
-  };
+    this.state = {
+      showPickers: false
+    };
+  }
 
   componentDidMount() {
     this.focusInput();
@@ -182,7 +185,7 @@ class CheckIn extends React.Component {
 
     const trigger = ({ getTriggerProps, triggerRef }) => {
       return (
-        <React.Fragment>
+        <>
           <Button
             {...getTriggerProps()}
             buttonStyle="hover dropdownActive"
@@ -196,7 +199,7 @@ class CheckIn extends React.Component {
             text={<FormattedMessage id="ui-checkin.actions.moreDetails" />}
             triggerRef={triggerRef}
           />
-        </React.Fragment>
+        </>
       );
     };
 
@@ -215,8 +218,7 @@ class CheckIn extends React.Component {
               dataSource={convertToSlipData(loan.staffSlipContext, intl, timezone, locale)}
             >
               <FormattedMessage id="ui-checkin.action.printHoldSlip" />
-            </PrintButton>
-          }
+            </PrintButton>}
           {loan.transitItem &&
             <PrintButton
               data-test-print-transit-slip
@@ -225,8 +227,7 @@ class CheckIn extends React.Component {
               dataSource={convertToSlipData(loan.staffSlipContext, intl, timezone, locale, 'Transit')}
             >
               <FormattedMessage id="ui-checkin.action.printTransitSlip" />
-            </PrintButton>
-          }
+            </PrintButton>}
           {loan.userId &&
             <div data-test-loan-details>
               <Button
@@ -236,8 +237,7 @@ class CheckIn extends React.Component {
               >
                 <FormattedMessage id="ui-checkin.loanDetails" />
               </Button>
-            </div>
-          }
+            </div>}
           {loan.userId &&
             <div data-test-patron-details>
               <Button
@@ -247,8 +247,7 @@ class CheckIn extends React.Component {
               >
                 <FormattedMessage id="ui-checkin.patronDetails" />
               </Button>
-            </div>
-          }
+            </div>}
           <div data-test-item-details>
             <Button
               buttonStyle="dropdownItem"
@@ -265,8 +264,7 @@ class CheckIn extends React.Component {
               onClick={(e) => this.handleOptionsChange({ loan, action: 'newFeeFine' }, e)}
             >
               <FormattedMessage id="ui-checkin.newFeeFine" />
-            </Button>
-          }
+            </Button>}
           {checkinNotePresent &&
             <div data-test-checkin-notes>
               <Button
@@ -275,8 +273,7 @@ class CheckIn extends React.Component {
               >
                 <FormattedMessage id="ui-checkin.checkinNotes" />
               </Button>
-            </div>
-          }
+            </div>}
         </DropdownMenu>
       );
     };
@@ -455,8 +452,7 @@ class CheckIn extends React.Component {
                   <Icon
                     icon="spinner-ellipsis"
                     width="10px"
-                  />
-                }
+                  />}
                 <div data-test-checked-in-items>
                   <MultiColumnList
                     id="list-items-checked-in"

@@ -72,8 +72,7 @@ class ConfirmStatusModal extends React.Component {
             buttonClass={mfCss.modalFooterButton}
           >
             <FormattedMessage id="ui-checkin.statusModal.close" />
-          </Button>
-        }
+          </Button>}
       </div>
     );
 

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -26,9 +26,13 @@ class RouteForDeliveryModal extends React.Component {
     onCloseAndCheckout: PropTypes.func.isRequired,
   };
 
-  state = {
-    isPrintable: this.props.isPrintableByDefault
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isPrintable: this.props.isPrintableByDefault
+    };
+  }
 
   closeButtonContent = <FormattedMessage id="ui-checkin.statusModal.close" />;
   closeAndCheckoutButtonContent = <FormattedMessage id="ui-checkin.statusModal.delivery.closeAndCheckout" />;
@@ -44,8 +48,7 @@ class RouteForDeliveryModal extends React.Component {
       <div className={mfCss.modalFooterButtons}>
         {isPrintable
           ? this.renderPrintButtonsGroup()
-          : this.renderButtonsGroup()
-        }
+          : this.renderButtonsGroup()}
       </div>
     );
   }
@@ -59,7 +62,7 @@ class RouteForDeliveryModal extends React.Component {
     } = this.props;
 
     return (
-      <Fragment>
+      <>
         <PrintButton
           buttonStyle="primary"
           buttonClass={mfCss.modalFooterButton}
@@ -80,7 +83,7 @@ class RouteForDeliveryModal extends React.Component {
         >
           {this.closeButtonContent}
         </PrintButton>
-      </Fragment>
+      </>
     );
   }
 
@@ -91,7 +94,7 @@ class RouteForDeliveryModal extends React.Component {
     } = this.props;
 
     return (
-      <Fragment>
+      <>
         <Button
           buttonStyle="primary"
           buttonClass={mfCss.modalFooterButton}
@@ -108,7 +111,7 @@ class RouteForDeliveryModal extends React.Component {
         >
           {this.closeButtonContent}
         </Button>
-      </Fragment>
+      </>
     );
   }
 
