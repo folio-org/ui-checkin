@@ -77,25 +77,6 @@ class Scan extends React.Component {
     })
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      loading: false
-    };
-  }
-
-  store = this.props.stripes.store;
-  barcode = React.createRef();
-  checkInData = null;
-  checkinInst = null;
-  checkinInitialValues = {
-    item: {
-      checkinDate: '',
-      checkinTime: '',
-    }
-  };
-
   static manifest = Object.freeze({
     scannedItems: { initialValue: [] },
     query: { initialValue: {} },
@@ -146,6 +127,25 @@ class Scan extends React.Component {
       fetch: false,
     },
   });
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      loading: false
+    };
+  }
+
+  store = this.props.stripes.store;
+  barcode = React.createRef();
+  checkInData = null;
+  checkinInst = null;
+  checkinInitialValues = {
+    item: {
+      checkinDate: '',
+      checkinTime: '',
+    }
+  };
 
   setFocusInput = () => {
     this.barcode.current.focus();
