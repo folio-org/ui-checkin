@@ -1,6 +1,5 @@
 import {
   get,
-  compact,
 } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -31,6 +30,7 @@ import {
   Tooltip,
   Dropdown,
 } from '@folio/stripes/components';
+import getEffectiveCallNumber from '@folio/stripes-util/lib/effectiveCallNumber';
 
 import PrintButton from './components/PrintButton';
 import { convertToSlipData } from './util';
@@ -329,12 +329,7 @@ class CheckIn extends React.Component {
         const inTransitSp = get(loan, ['item', 'inTransitDestinationServicePoint', 'name']);
         return (inTransitSp) ? `${status} - ${inTransitSp}` : status;
       },
-      'effectiveCallNumber': loan => {
-        const callNumberComponents = get(loan, ['item', 'callNumberComponents'], {});
-
-        return compact([callNumberComponents.prefix, callNumberComponents.callNumber, callNumberComponents.suffix]).join(' ');
-      },
-      ' ': loan => this.renderActions(loan),
+      'effectiveCallNumber': loan => getEffectiveCallNumber(loan),
     };
 
     const columnMapping = {
