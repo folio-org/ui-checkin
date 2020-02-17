@@ -1,5 +1,5 @@
 import {
-  get,
+  get, compact,
 } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -330,6 +330,7 @@ class CheckIn extends React.Component {
         return (inTransitSp) ? `${status} - ${inTransitSp}` : status;
       },
       'effectiveCallNumber': loan => getEffectiveCallNumber(loan),
+      ' ': loan => this.renderActions(loan),
     };
 
     const columnMapping = {
