@@ -117,7 +117,7 @@ describe('CheckIn', () => {
     });
 
     it('should be properly formatted', () => {
-      const callNumber = 'prefix callNumber suffix enumeration chronology volume';
+      const callNumber = 'prefix callNumber suffix volume enumeration chronology';
 
       expect(checkIn.checkedInItemsList.rows(0).cells(3).text).to.equal(callNumber);
     });
