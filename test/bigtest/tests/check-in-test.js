@@ -108,13 +108,18 @@ describe('CheckIn', () => {
           callNumber: 'callNumber',
           suffix: 'suffix',
         },
+        enumeration: 'enumeration',
+        chronology: 'chronology',
+        volume: 'volume',
       });
 
       await checkIn.barcode(barcode).clickEnter();
     });
 
     it('should be properly formatted', () => {
-      expect(checkIn.checkedInItemsList.rows(0).cells(3).text).to.equal('prefix callNumber suffix');
+      const callNumber = 'prefix callNumber suffix volume enumeration chronology';
+
+      expect(checkIn.checkedInItemsList.rows(0).cells(3).text).to.equal(callNumber);
     });
   });
 
