@@ -67,5 +67,7 @@
   "multipieceModal.item.descriptionOfmissingPieces": "Description of missing pieces",
   "action.printHoldSlip": "Print hold slip",
   "action.printTransitSlip": "Print transit slip",
-  "actions.moreDetails": "Get more details about this item"
+  "actions.moreDetails": "Get more details about this item",
+  "declaredLostModal.heading": "Check in Declared lost item?",
+  "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Declared lost.</strong>"
 }

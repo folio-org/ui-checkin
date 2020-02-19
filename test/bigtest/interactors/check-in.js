@@ -18,6 +18,7 @@ import DeliveryModalInteractor from './delivery-modal';
 import CheckinNoteModalInteractor from './checkin-note-modal';
 import MissingItemModalInteractor from './missing-item-modal';
 import MultiPieceModalInteractor from './multi-piece-modal';
+import DeclaredLostModalInteractor from './declared-lost-modal';
 
 @interactor class CheckInInteractor {
   processDate = new DatepickerInteractor('[data-test-process-date]');
@@ -26,6 +27,7 @@ import MultiPieceModalInteractor from './multi-piece-modal';
   multiPieceModal = new MultiPieceModalInteractor('[data-test-multi-piece-modal]');
   missingItemModal = new MissingItemModalInteractor();
   checkinNoteModal = new CheckinNoteModalInteractor();
+  declaredLostModal = new DeclaredLostModalInteractor();
   selectEllipse = clickable('[data-test-elipse-select] button');
   checkedInItemsList = scoped('#list-items-checked-in', MultiColumnListInteractor);
   selectLoanDetails = clickable('[data-test-loan-details] a');
