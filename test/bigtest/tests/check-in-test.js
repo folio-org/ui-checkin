@@ -516,6 +516,55 @@ describe('CheckIn', () => {
     });
   });
 
+  describe('showing declared lost modal', () => {
+    beforeEach(async function () {
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472501,
+        title: 'Best Book Ever',
+        status: {
+          name: 'Declared lost'
+        },
+        materialType: {
+          name: 'book'
+        },
+        numberOfPieces: 1,
+        instanceId: 'lychee',
+        holdingsRecordId: 'apple'
+      });
+
+      await checkIn.barcode('9676761472501').clickEnter();
+    });
+
+    it('shows declared lost modal', () => {
+      expect(checkIn.declaredLostModal.present).to.be.true;
+    });
+  });
+
+  describe('closes declared lost modal', () => {
+    beforeEach(async function () {
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472501,
+        title: 'Best Book Ever',
+        status: {
+          name: 'Declared lost'
+        },
+        materialType: {
+          name: 'book'
+        },
+        numberOfPieces: 1,
+        instanceId: 'lychee',
+        holdingsRecordId: 'apple'
+      });
+
+      await checkIn.barcode('9676761472501').clickEnter();
+      await checkIn.declaredLostModal.clickConfirm();
+    });
+
+    it('hides declared lost modal', () => {
+      expect(checkIn.declaredLostModal.present).to.be.false;
+    });
+  });
+
   describe('showing missing item modal', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
