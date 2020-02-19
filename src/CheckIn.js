@@ -1,6 +1,4 @@
-import {
-  get, compact,
-} from 'lodash';
+import { get } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
