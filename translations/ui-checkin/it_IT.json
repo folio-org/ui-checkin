@@ -67,5 +67,7 @@
     "statusModal.delivery.message": "Esiste una richiesta di consegna per <strong>{itemTitle} ( {itemType} )</strong> (codice a barre: {itemBarcode} ). <strong>Si prega di prestare l'item e di instradarlo per la consegna.</strong>",
     "effectiveCallNumber": "Effective call number string",
     "actions.moreDetails": "Ottieni maggiori dettagli su questo item",
-    "inHouseUse": "Uso interno"
+    "inHouseUse": "Uso interno",
+    "declaredLostModal.heading": "Check in Declared lost item?",
+    "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Declared lost.</strong>"
 }
