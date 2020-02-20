@@ -67,5 +67,7 @@
     "statusModal.delivery.message": "<strong> {itemTitle} （ {itemType} ） </strong> （条码： {itemBarcode} ）有交付请求。 <strong>请检出该单件并交付。 </strong>",
     "effectiveCallNumber": "Effective call number string",
     "actions.moreDetails": "Get more details about this item",
-    "inHouseUse": "In-house use"
+    "inHouseUse": "In-house use",
+    "declaredLostModal.heading": "Check in Declared lost item?",
+    "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Declared lost.</strong>"
 }

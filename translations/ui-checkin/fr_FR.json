@@ -67,5 +67,7 @@
     "statusModal.delivery.message": "Une demande de livraison a été émise pour {itemTitle} pour <strong> {itemTitle} ( {itemType} ) </strong> (Code à barres: {itemBarcode} ). <strong> Veuillez vérifier l'article et l'itinéraire pour la livraison. </strong>",
     "effectiveCallNumber": "Effective call number string",
     "actions.moreDetails": "Obtenez plus de détails sur cet article",
-    "inHouseUse": "Usage interne"
+    "inHouseUse": "Usage interne",
+    "declaredLostModal.heading": "Retourner l'objet déclaré perdu ?",
+    "declaredLostModal.message": "L'élément <strong> {title} ( {materialType} ) </strong> (Code barres: {barcode} ) a comme statut <strong> Déclaré perdu. </strong>"
 }
