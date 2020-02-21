@@ -210,6 +210,7 @@ class CheckIn extends React.Component {
         >
           {loan.nextRequest &&
             <PrintButton
+              role="menuitem"
               data-test-print-hold-slip
               buttonStyle="dropdownItem"
               template={this.getTemplate('hold')}
@@ -219,6 +220,7 @@ class CheckIn extends React.Component {
             </PrintButton>}
           {loan.transitItem &&
             <PrintButton
+              role="menuitem"
               data-test-print-transit-slip
               buttonStyle="dropdownItem"
               template={this.getTemplate('transit')}
@@ -229,6 +231,7 @@ class CheckIn extends React.Component {
           {loan.userId &&
             <div data-test-loan-details>
               <Button
+                role="menuitem"
                 buttonStyle="dropdownItem"
                 href={`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`}
                 onClick={(e) => this.handleOptionsChange({ loan, action: 'showLoanDetails' }, e)}
@@ -239,6 +242,7 @@ class CheckIn extends React.Component {
           {loan.userId &&
             <div data-test-patron-details>
               <Button
+                role="menuitem"
                 buttonStyle="dropdownItem"
                 href={`/users/view/${loan.userId}`}
                 onClick={(e) => this.handleOptionsChange({ loan, action: 'showPatronDetails' }, e)}
@@ -248,6 +252,7 @@ class CheckIn extends React.Component {
             </div>}
           <div data-test-item-details>
             <Button
+              role="menuitem"
               buttonStyle="dropdownItem"
               href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.item.id}`}
               onClick={(e) => this.handleOptionsChange({ loan, action: 'showItemDetails' }, e)}
@@ -257,6 +262,7 @@ class CheckIn extends React.Component {
           </div>
           {loan.userId &&
             <Button
+              role="menuitem"
               buttonStyle="dropdownItem"
               href={`/users/view/${loan.userId}`}
               onClick={(e) => this.handleOptionsChange({ loan, action: 'newFeeFine' }, e)}
@@ -266,6 +272,7 @@ class CheckIn extends React.Component {
           {checkinNotePresent &&
             <div data-test-checkin-notes>
               <Button
+                role="menuitem"
                 buttonStyle="dropdownItem"
                 onClick={(e) => this.handleOptionsChange({ loan, action: 'showCheckinNotes' }, e)}
               >
@@ -364,7 +371,7 @@ class CheckIn extends React.Component {
                         name="item.barcode"
                         validationEnabled={false}
                         placeholder={scanBarcodeMsg}
-                        aria-label={itemIdLabel}
+                        ariaLabel={itemIdLabel}
                         inputRef={barcodeRef}
                         fullWidth
                         component={TextField}
