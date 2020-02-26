@@ -1,6 +1,6 @@
 # Change history for ui-checkin
 
-## [1.11.0] (IN PROGRESS)
+## [2.0.0] (IN PROGRESS)
 
 * Provide two options for barcode tokens on staff slips. Refs UICIRC-393.
 * Display effective call number prefix, call number, and call number suffix at check in. Refs UICHKIN-127.
@@ -8,6 +8,7 @@
 * Make the Check in ellipsis accessible. Refs UICHKIN-134.
 * Add 'in-house use' column to checked-in items table. Refs UICHKIN-100.
 * Security update eslint to >= 6.2.1 or eslint-util >= 1.4.1. Refs. UICHKIN-150.
+* Migrate to `stripes` `v3.0.0` and move `react-intl` and `react-router` to peerDependencies.
 
 ## [1.10.0](https://github.com/folio-org/ui-checkin/tree/v1.10.0) (2019-12-4)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.9.0...v1.10.0)
