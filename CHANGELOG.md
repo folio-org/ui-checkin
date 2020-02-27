@@ -8,6 +8,9 @@
 * Make the Check in ellipsis accessible. Refs UICHKIN-134.
 * Add 'in-house use' column to checked-in items table. Refs UICHKIN-100.
 * Security update eslint to >= 6.2.1 or eslint-util >= 1.4.1. Refs. UICHKIN-150.
+* Add declared lost modal. Refs UICHKIN-114.
+* Display `effective call number prefix`, `call number`, `call number suffix`, `enumeration`, `chronology`, `volume` in loans contexts. Refs UIU-1391.
+* Fix several accessibility problems. Refs UICHKIN-159.
 * Migrate to `stripes` `v3.0.0` and move `react-intl` and `react-router` to peerDependencies.
 
 ## [1.10.0](https://github.com/folio-org/ui-checkin/tree/v1.10.0) (2019-12-4)

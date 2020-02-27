@@ -67,5 +67,7 @@
     "statusModal.delivery.message": "There is a delivery request for <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}). <strong>Please check the item out and route for delivery.</strong>",
     "effectiveCallNumber": "Effective call number string",
     "actions.moreDetails": "Get more details about this item",
-    "inHouseUse": "In-house use"
+    "inHouseUse": "In-house use",
+    "declaredLostModal.heading": "Check in Declared lost item?",
+    "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Declared lost.</strong>"
 }

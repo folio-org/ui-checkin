@@ -108,13 +108,18 @@ describe('CheckIn', () => {
           callNumber: 'callNumber',
           suffix: 'suffix',
         },
+        enumeration: 'enumeration',
+        chronology: 'chronology',
+        volume: 'volume',
       });
 
       await checkIn.barcode(barcode).clickEnter();
     });
 
     it('should be properly formatted', () => {
-      expect(checkIn.checkedInItemsList.rows(0).cells(3).text).to.equal('prefix callNumber suffix');
+      const callNumber = 'prefix callNumber suffix volume enumeration chronology';
+
+      expect(checkIn.checkedInItemsList.rows(0).cells(3).text).to.equal(callNumber);
     });
   });
 
@@ -508,6 +513,55 @@ describe('CheckIn', () => {
 
     it('left one item in the list', () => {
       expect(checkIn.checkedInItemsList.rowCount).to.equal(1);
+    });
+  });
+
+  describe('showing declared lost modal', () => {
+    beforeEach(async function () {
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472501,
+        title: 'Best Book Ever',
+        status: {
+          name: 'Declared lost'
+        },
+        materialType: {
+          name: 'book'
+        },
+        numberOfPieces: 1,
+        instanceId: 'lychee',
+        holdingsRecordId: 'apple'
+      });
+
+      await checkIn.barcode('9676761472501').clickEnter();
+    });
+
+    it('shows declared lost modal', () => {
+      expect(checkIn.declaredLostModal.present).to.be.true;
+    });
+  });
+
+  describe('closes declared lost modal', () => {
+    beforeEach(async function () {
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472501,
+        title: 'Best Book Ever',
+        status: {
+          name: 'Declared lost'
+        },
+        materialType: {
+          name: 'book'
+        },
+        numberOfPieces: 1,
+        instanceId: 'lychee',
+        holdingsRecordId: 'apple'
+      });
+
+      await checkIn.barcode('9676761472501').clickEnter();
+      await checkIn.declaredLostModal.clickConfirm();
+    });
+
+    it('hides declared lost modal', () => {
+      expect(checkIn.declaredLostModal.present).to.be.false;
     });
   });
 

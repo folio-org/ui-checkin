@@ -67,5 +67,7 @@
     "statusModal.delivery.message": "طريق <strong>{itemTitle} ({itemType})</strong> (باركود: {itemBarcode}) لطلب التوصيل. <strong>تمت إعارة المادة تلقائيًا إلى مقدم الطلب</strong>",
     "effectiveCallNumber": "مقطع رقم الاستدعاء النشط",
     "actions.moreDetails": "الحصول على المزيد من التفاصيل حول هذه المادة",
-    "inHouseUse": "استخدام محلي"
+    "inHouseUse": "استخدام محلي",
+    "declaredLostModal.heading": "رد مادة معلن عن فقدها؟",
+    "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (باركود:{barcode}) له حالة المادة <strong>تم إعلانها مفقودة</strong>"
 }
