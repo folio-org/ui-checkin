@@ -31,6 +31,8 @@ import {
 import getEffectiveCallNumber from '@folio/stripes-util/lib/effectiveCallNumber';
 
 import PrintButton from './components/PrintButton';
+import FeesFinesOwnedStatus from './components/FeesFinesOwnedStatus';
+import FeeFineDetailsButton from './components/FeeFineDetailsButton';
 import { convertToSlipData } from './util';
 import styles from './checkin.css';
 
@@ -260,6 +262,11 @@ class CheckIn extends React.Component {
               <FormattedMessage id="ui-checkin.itemDetails" />
             </Button>
           </div>
+          <FeeFineDetailsButton
+            userId={loan.userId}
+            itemId={loan.itemId}
+            mutator={this.props.mutator}
+          />
           {loan.userId &&
             <Button
               role="menuitem"
@@ -314,12 +321,27 @@ class CheckIn extends React.Component {
 
     const { showPickers } = this.state;
     const itemListFormatter = {
-      'timeReturned': loan => ((loan.returnDate) ?
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <div data-test-check-in-return-time>{formatTime(`${get(loan, ['returnDate'])}`)}</div>
-          <div key={loan.id}>{this.showInfo(loan)}</div>
-        </div> :
-        null
+      'timeReturned': loan => (
+        <div>
+          { loan.returnDate ?
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div data-test-check-in-return-time>
+                {formatTime(`${get(loan, ['returnDate'])}`)}
+              </div>
+              <div key={loan.id}>
+                {this.showInfo(loan)}
+              </div>
+            </div> :
+            null
+          }
+          { loan.userId && loan.itemId &&
+            <FeesFinesOwnedStatus
+              userId={loan.userId}
+              itemId={loan.itemId}
+              mutator={this.props.mutator}
+            />
+          }
+        </div>
       ),
       'title': (loan) => {
         const title = `${get(loan, ['item', 'title'])}`;
