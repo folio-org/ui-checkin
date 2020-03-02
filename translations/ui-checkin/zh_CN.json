@@ -65,9 +65,9 @@
     "statusModal.delivery.heading": "交付请求的路线",
     "statusModal.delivery.closeAndCheckout": "关闭并借出",
     "statusModal.delivery.message": "<strong> {itemTitle} （ {itemType} ） </strong> （条码： {itemBarcode} ）有交付请求。 <strong>请检出该单件并交付。 </strong>",
-    "effectiveCallNumber": "Effective call number string",
-    "actions.moreDetails": "Get more details about this item",
-    "inHouseUse": "In-house use",
-    "declaredLostModal.heading": "Check in Declared lost item?",
-    "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Declared lost.</strong>"
+    "effectiveCallNumber": "有效的索书号字符串",
+    "actions.moreDetails": "获取有关此单件的更多细节",
+    "inHouseUse": "馆内使用",
+    "declaredLostModal.heading": "归还已声称遗失单件？",
+    "declaredLostModal.message": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）的单件状态为<strong>声称遗失。 </strong>"
 }
