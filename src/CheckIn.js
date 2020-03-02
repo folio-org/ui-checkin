@@ -187,13 +187,13 @@ class CheckIn extends React.Component {
           <Button
             {...getTriggerProps()}
             buttonStyle="hover dropdownActive"
-            aria-labelledby="actions-tooltip-text"
-            id="available-actions-button"
+            aria-labelledby={`actions-tooltip-${loan.rowIndex}-text`}
+            id={`available-actions-button-${loan.rowIndex}`}
           >
             <Icon icon="ellipsis" size="large" />
           </Button>
           <Tooltip
-            id="actions-tooltip"
+            id={`actions-tooltip-${loan.rowIndex}`}
             text={<FormattedMessage id="ui-checkin.actions.moreDetails" />}
             triggerRef={triggerRef}
           />
