@@ -2,6 +2,11 @@ import CQLParser, { CQLBoolean } from './cql';
 
 // typical mirage config export
 export default function configure() {
+  this.get('/accounts', {
+    accounts: [],
+    totalRecords: 0,
+  });
+
   // users
   this.get('/users', ({ users }, request) => {
     if (request.queryParams.query) {

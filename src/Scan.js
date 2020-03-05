@@ -27,6 +27,9 @@ class Scan extends React.Component {
     intl: intlShape,
     stripes: PropTypes.object,
     resources: PropTypes.shape({
+      accounts: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
       scannedItems: PropTypes.arrayOf(
         PropTypes.shape({
           id: PropTypes.string,
@@ -47,6 +50,9 @@ class Scan extends React.Component {
     }),
 
     mutator: PropTypes.shape({
+      accounts: PropTypes.shape({
+        GET: PropTypes.func,
+      }),
       query: PropTypes.shape({
         update: PropTypes.func,
       }),
@@ -80,6 +86,12 @@ class Scan extends React.Component {
   static manifest = Object.freeze({
     scannedItems: { initialValue: [] },
     query: { initialValue: {} },
+    accounts: {
+      type: 'okapi',
+      accumulate: 'true',
+      path: 'accounts',
+      fetch: false,
+    },
     patronGroups: {
       type: 'okapi',
       path: 'groups',
