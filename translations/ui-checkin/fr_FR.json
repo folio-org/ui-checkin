@@ -57,7 +57,7 @@
     "note": "Commentaire",
     "checkinNoteModal.heading": "Confirmer le retour",
     "checkinNoteModal.message": "<strong> {title} ( {materialType} ) </strong> (Code-barres: {barcode} ) a <strong> {count} </strong> {count, plural, one { note } other { notes }} et sera <strong> enregistré </strong>",
-    "checkinNotes": "Check in Notes",
+    "checkinNotes": "Notes de retour",
     "checkinNotes.heading": "Notes de retour",
     "checkinNotes.message": "<strong> {title} ( {materialType} ) </strong> (Le code-barres: {barcode} ) comporte <strong> {count} </strong> {count, plural, one { note } other { notes }}",
     "date": "Date",
@@ -69,5 +69,7 @@
     "actions.moreDetails": "Obtenez plus de détails sur cet article",
     "inHouseUse": "Usage interne",
     "declaredLostModal.heading": "Retourner l'objet déclaré perdu ?",
-    "declaredLostModal.message": "L'élément <strong> {title} ( {materialType} ) </strong> (Code barres: {barcode} ) a comme statut <strong> Déclaré perdu. </strong>"
+    "declaredLostModal.message": "L'élément <strong> {title} ( {materialType} ) </strong> (Code barres: {barcode} ) a comme statut <strong> Déclaré perdu. </strong>",
+    "feesFinesOwned": "(fees/fines owned)",
+    "feeFineDetails": "Détails des frais / amende"
 }

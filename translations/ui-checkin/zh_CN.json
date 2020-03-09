@@ -69,5 +69,7 @@
     "actions.moreDetails": "获取有关此单件的更多细节",
     "inHouseUse": "馆内使用",
     "declaredLostModal.heading": "归还已声称遗失单件？",
-    "declaredLostModal.message": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）的单件状态为<strong>声称遗失。 </strong>"
+    "declaredLostModal.message": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）的单件状态为<strong>声称遗失。 </strong>",
+    "feesFinesOwned": "(fees/fines owned)",
+    "feeFineDetails": "Fee/fine details"
 }
