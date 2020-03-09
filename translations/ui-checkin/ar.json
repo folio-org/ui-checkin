@@ -69,5 +69,7 @@
     "actions.moreDetails": "الحصول على المزيد من التفاصيل حول هذه المادة",
     "inHouseUse": "استخدام محلي",
     "declaredLostModal.heading": "رد مادة معلن عن فقدها؟",
-    "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (باركود:{barcode}) له حالة المادة <strong>تم إعلانها مفقودة</strong>"
+    "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (باركود:{barcode}) له حالة المادة <strong>تم إعلانها مفقودة</strong>",
+    "feesFinesOwned": "(الرسوم/الغرامات المملوكة)",
+    "feeFineDetails": "تفاصيل الرسم/الغرامة"
 }

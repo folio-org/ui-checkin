@@ -65,9 +65,11 @@
     "statusModal.delivery.heading": "Rota para solicitação de entrega",
     "statusModal.delivery.closeAndCheckout": "Fechar e emprestar",
     "statusModal.delivery.message": "Há uma solicitação de entrega para <strong>{itemTitle} ({itemType})</strong> (Código de barras: {itemBarcode}). <strong>Verifique o item e envie-o para entrega.</strong>",
-    "effectiveCallNumber": "Seqüência efetiva do número de chamada",
+    "effectiveCallNumber": "Sequência efetiva do número de chamada",
     "actions.moreDetails": "Obtenha mais detalhes sobre este item",
     "inHouseUse": "Uso interno",
     "declaredLostModal.heading": "Devolver um item declarado perdido?",
-    "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) tem o status do item como <strong>Declarado perdido.</strong>"
+    "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) tem o status do item como <strong>Declarado perdido.</strong>",
+    "feesFinesOwned": "(taxas/multas próprias)",
+    "feeFineDetails": "Detalhes da taxa/multa"
 }
