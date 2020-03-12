@@ -2,7 +2,7 @@
     "scanBarcode": "Сканируйте или введите штрих-код для выдачи",
     "itemId": "Идентификатор элемента",
     "enter": "Найти",
-    "processAs": "Процесс как",
+    "processAs": "Преобразовать",
     "processedAs": "Processed as",
     "actual": "Фактический",
     "checkinDate": "Дата возврата",
