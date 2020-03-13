@@ -14,6 +14,7 @@
 * Migrate to `stripes` `v3.0.0` and move `react-intl` and `react-router` to peerDependencies.
 * Fix accessibility problems. Refs UICHKIN-159.
 * Add fee/fine details button. Refs UICHKIN-125.
+* Replace placeholder in-house use icon with the official icon. Refs UICHKIN-162.
 
 ## [1.10.0](https://github.com/folio-org/ui-checkin/tree/v1.10.0) (2019-12-4)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.9.0...v1.10.0)

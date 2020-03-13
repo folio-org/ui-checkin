@@ -350,7 +350,11 @@ class CheckIn extends React.Component {
       },
       'barcode': loan => `${get(loan, ['item', 'barcode'])}`,
       'location': loan => `${get(loan, ['item', 'location', 'name'])}`,
-      'inHouseUse': loan => { return get(loan, 'inHouseUse') ? <Icon icon="plus-sign" size="small" /> : ''; },
+      'inHouseUse': loan => {
+        return get(loan, 'inHouseUse')
+          ? <Icon icon="house" iconClassName={styles['house-icon']} />
+          : '';
+      },
       'status': loan => {
         const status = `${get(loan, ['item', 'status', 'name'])}`;
         const inTransitSp = get(loan, ['item', 'inTransitDestinationServicePoint', 'name']);
