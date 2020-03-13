@@ -1,6 +1,7 @@
 # Change history for ui-checkin
 
-## [2.0.0] (IN PROGRESS)
+## [2.0.0] (https://github.com/folio-org/ui-checkin/tree/v2.0.0) (2019-03-13)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.10.0...v2.0.0)
 
 * Provide two options for barcode tokens on staff slips. Refs UICIRC-393.
 * Display effective call number prefix, call number, and call number suffix at check in. Refs UICHKIN-127.
@@ -10,11 +11,12 @@
 * Security update eslint to >= 6.2.1 or eslint-util >= 1.4.1. Refs. UICHKIN-150.
 * Add declared lost modal. Refs UICHKIN-114.
 * Display `effective call number prefix`, `call number`, `call number suffix`, `enumeration`, `chronology`, `volume` in loans contexts. Refs UIU-1391.
-* Fix several accessibility problems. Refs UICHKIN-159.
 * Migrate to `stripes` `v3.0.0` and move `react-intl` and `react-router` to peerDependencies.
 * Fix accessibility problems. Refs UICHKIN-159.
 * Add fee/fine details button. Refs UICHKIN-125.
 * Replace placeholder in-house use icon with the official icon. Refs UICHKIN-162.
+* Implement automatic end session for check-in. Refs UICHKIN-140.
+* Update translation strings.
 
 ## [1.10.0](https://github.com/folio-org/ui-checkin/tree/v1.10.0) (2019-12-4)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.9.0...v1.10.0)
