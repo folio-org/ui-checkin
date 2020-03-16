@@ -70,6 +70,6 @@
     "inHouseUse": "Usage interne",
     "declaredLostModal.heading": "Retourner l'objet déclaré perdu ?",
     "declaredLostModal.message": "L'élément <strong> {title} ( {materialType} ) </strong> (Code barres: {barcode} ) a comme statut <strong> Déclaré perdu. </strong>",
-    "feesFinesOwned": "(fees/fines owned)",
+    "feesFinesOwned": "Frais / amendes dus",
     "feeFineDetails": "Détails des frais / amende"
 }
