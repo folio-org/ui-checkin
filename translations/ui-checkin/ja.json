@@ -63,7 +63,7 @@
     "date": "日付",
     "source": "ソース",
     "statusModal.delivery.heading": "Route for delivery request",
-    "statusModal.delivery.closeAndCheckout": "Close and check out",
+    "statusModal.delivery.closeAndCheckout": "閉じて貸出",
     "statusModal.delivery.message": "There is a delivery request for <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}). <strong>Please check the item out and route for delivery.</strong>",
     "effectiveCallNumber": "Effective call number string",
     "actions.moreDetails": "Get more details about this item",
