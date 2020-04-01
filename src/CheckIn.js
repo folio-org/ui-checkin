@@ -29,6 +29,7 @@ import {
   Dropdown,
 } from '@folio/stripes/components';
 import getEffectiveCallNumber from '@folio/stripes-util/lib/effectiveCallNumber';
+import { IfPermission } from '@folio/stripes/core';
 
 import PrintButton from './components/PrintButton';
 import FeesFinesOwnedStatus from './components/FeesFinesOwnedStatus';
@@ -262,11 +263,13 @@ class CheckIn extends React.Component {
               <FormattedMessage id="ui-checkin.itemDetails" />
             </Button>
           </div>
-          <FeeFineDetailsButton
-            userId={loan.userId}
-            itemId={loan.itemId}
-            mutator={this.props.mutator}
-          />
+          <IfPermission perm="accounts.collection.get">
+            <FeeFineDetailsButton
+              userId={loan.userId}
+              itemId={loan.itemId}
+              mutator={this.props.mutator}
+            />
+          </IfPermission>
           {loan.userId &&
             <Button
               role="menuitem"
@@ -335,11 +338,13 @@ class CheckIn extends React.Component {
             null
           }
           { loan.userId && loan.itemId &&
-            <FeesFinesOwnedStatus
-              userId={loan.userId}
-              itemId={loan.itemId}
-              mutator={this.props.mutator}
-            />
+            <IfPermission perm="accounts.collection.get">
+              <FeesFinesOwnedStatus
+                userId={loan.userId}
+                itemId={loan.itemId}
+                mutator={this.props.mutator}
+              />
+            </IfPermission>
           }
         </div>
       ),

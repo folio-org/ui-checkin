@@ -1,5 +1,9 @@
 # Change history for ui-checkin
 
+## [2.1.0] IN PROGRESS
+
+* Check for `accounts.collection.get` permission before rendering fee/fines components. Fixes UICHKIN-174.
+
 ## [2.0.0] (https://github.com/folio-org/ui-checkin/tree/v2.0.0) (2019-03-13)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.10.0...v2.0.0)
 
