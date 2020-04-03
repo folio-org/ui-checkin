@@ -28,7 +28,7 @@ import {
   Tooltip,
   Dropdown,
 } from '@folio/stripes/components';
-import getEffectiveCallNumber from '@folio/stripes-util/lib/effectiveCallNumber';
+import { effectiveCallNumber } from '@folio/stripes/util';
 import { IfPermission } from '@folio/stripes/core';
 
 import PrintButton from './components/PrintButton';
@@ -365,7 +365,7 @@ class CheckIn extends React.Component {
         const inTransitSp = get(loan, ['item', 'inTransitDestinationServicePoint', 'name']);
         return (inTransitSp) ? `${status} - ${inTransitSp}` : status;
       },
-      'effectiveCallNumber': loan => getEffectiveCallNumber(loan),
+      'effectiveCallNumber': loan => effectiveCallNumber(loan),
       ' ': loan => this.renderActions(loan),
     };
 
