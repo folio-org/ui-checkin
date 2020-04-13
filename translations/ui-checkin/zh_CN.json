@@ -46,7 +46,7 @@
     "multipieceModal.item.numberOfPieces": "件数",
     "multipieceModal.message": "<strong> {title} </strong> <strong> （ {name} ） </strong> （条码： {barcode} ）将归还。",
     "multipieceModal.item.descriptionOfPieces": "件的描述",
-    "multipieceModal.item.numberOfMissingPieces": "遗失件数量",
+    "multipieceModal.item.numberOfMissingPieces": "遗失件数",
     "multipieceModal.item.descriptionOfmissingPieces": "遗失件的描述",
     "newFeeFine": "新费用/罚款",
     "action.printHoldSlip": "打印预约单",
@@ -66,10 +66,10 @@
     "statusModal.delivery.closeAndCheckout": "关闭并借出",
     "statusModal.delivery.message": "<strong> {itemTitle} （ {itemType} ） </strong> （条码： {itemBarcode} ）有交付请求。 <strong>请检出该单件并交付。 </strong>",
     "effectiveCallNumber": "有效的索书号字符串",
-    "actions.moreDetails": "获取有关此单件的更多细节",
+    "actions.moreDetails": "获取此单件的更多详情",
     "inHouseUse": "馆内使用",
     "declaredLostModal.heading": "归还已声称遗失单件？",
     "declaredLostModal.message": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）的单件状态为<strong>声称遗失。 </strong>",
-    "feesFinesOwned": "(fees/fines owned)",
-    "feeFineDetails": "Fee/fine details"
+    "feesFinesOwned": "（拥有的费用/罚款）",
+    "feeFineDetails": "费用/罚款详情"
 }
