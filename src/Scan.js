@@ -187,14 +187,21 @@ class Scan extends React.Component {
       mutator: { endSession: { POST: endSession } },
     } = this.props;
 
-    const uniquePatronIds = uniqBy(scannedItems, 'userId')
-      .map(({ userId }) => ({ patronId: userId }));
+    const uniquePatrons = scannedItems.reduce((patrons, item) => {
+      const userId = get(item, 'userId');
+
+      if (userId && !patrons.includes(userId)) {
+        patrons.push(userId);
+      }
+
+      return patrons;
+    }, []);
 
     this.clearResources();
     this.clearForm('CheckIn');
 
-    if (!isEmpty(uniquePatronIds)) {
-      const endSessions = uniquePatronIds.map(({ patronId }) => ({
+    if (!isEmpty(uniquePatrons)) {
+      const endSessions = uniquePatrons.map(patronId => ({
         actionType: 'Check-in',
         patronId,
       }));
