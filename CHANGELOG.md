@@ -1,5 +1,10 @@
 # Change history for ui-checkin
 
+## [2.0.1] (https://github.com/folio-org/ui-checkin/tree/v2.0.1) (2019-04-28)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v2.0.0...v2.0.1)
+
+* do not send duplicate check-in notices. Fixes UICHKIN-176.
+
 ## [2.0.0] (https://github.com/folio-org/ui-checkin/tree/v2.0.0) (2019-03-13)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.10.0...v2.0.0)
 
