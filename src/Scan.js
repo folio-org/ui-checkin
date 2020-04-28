@@ -1,10 +1,24 @@
-import { get, upperFirst, keyBy } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-
-import { SubmissionError, change, reset } from 'redux-form';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import {
+  FormattedMessage,
+  injectIntl,
+  intlShape,
+} from 'react-intl';
+import {
+  change,
+  reset,
+  SubmissionError,
+} from 'redux-form';
+import {
+  get,
+  isEmpty,
+  keyBy,
+  upperFirst,
+  uniqBy,
+} from 'lodash';
+
 import {
   Modal,
   ModalFooter,
@@ -172,14 +186,22 @@ class Scan extends React.Component {
       resources: { scannedItems },
       mutator: { endSession: { POST: endSession } },
     } = this.props;
-    // if item is available and it was checked in it doesn't have information about user.
-    const checkedInLoans = scannedItems.filter(({ userId }) => userId);
+
+    const uniquePatrons = scannedItems.reduce((patrons, item) => {
+      const userId = get(item, 'userId');
+
+      if (userId && !patrons.includes(userId)) {
+        patrons.push(userId);
+      }
+
+      return patrons;
+    }, []);
 
     this.clearResources();
     this.clearForm('CheckIn');
 
-    if (checkedInLoans.length) {
-      const endSessions = checkedInLoans.map(({ userId: patronId }) => ({
+    if (!isEmpty(uniquePatrons)) {
+      const endSessions = uniquePatrons.map(patronId => ({
         actionType: 'Check-in',
         patronId,
       }));
