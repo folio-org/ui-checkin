@@ -100,8 +100,13 @@ class CheckIn extends React.Component {
 
     this.focusInput();
 
-    if (this.timer) return;
-    if (!checkinSettings || !checkinSettings.records || checkinSettings.records.length === 0) return;
+    if (this.timer) {
+      return;
+    }
+
+    if (!checkinSettings || !checkinSettings.records || checkinSettings.records.length === 0) {
+      return;
+    }
 
     const parsed = getCheckinSettings(checkinSettings.records);
 

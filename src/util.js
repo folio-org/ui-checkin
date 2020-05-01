@@ -90,7 +90,9 @@ export function getFullName(user = {}) {
 }
 
 export function getCheckinSettings(checkinSettings) {
-  if (!checkinSettings.length) return undefined;
+  if (!checkinSettings.length) {
+    return undefined;
+  }
 
   try {
     return JSON.parse(checkinSettings[0].value);
