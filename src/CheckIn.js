@@ -60,6 +60,10 @@ class CheckIn extends React.Component {
       checkinSettings: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
+      scannedItems: PropTypes.arrayOf(PropTypes.object),
+      staffSlips: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
     }),
     mutator: PropTypes.shape({
       query: PropTypes.shape({
@@ -100,7 +104,7 @@ class CheckIn extends React.Component {
     if (!checkinSettings || !checkinSettings.records || checkinSettings.records.length === 0) return;
 
     const parsed = getCheckinSettings(checkinSettings.records);
-    
+
     if (!parsed.checkoutTimeout) {
       this.timer = null;
       return;
