@@ -89,4 +89,14 @@ export function getFullName(user = {}) {
   return [firstName, lastName].filter(e => e).join(', ');
 }
 
+export function getCheckinSettings(checkinSettings) {
+  if (!checkinSettings.length) return undefined;
+
+  try {
+    return JSON.parse(checkinSettings[0].value);
+  } catch (e) {
+    return {};
+  }
+}
+
 export default {};
