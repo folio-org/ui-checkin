@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
   FormattedMessage,
-  intlShape,
   injectIntl,
   FormattedDate,
   FormattedTime,
@@ -24,7 +23,7 @@ import css from './ModalManager.css';
 
 class ModalManager extends React.Component {
   static propTypes = {
-    intl: intlShape,
+    intl: PropTypes.object,
     checkedinItem: PropTypes.object.isRequired,
     checkinNotesMode: PropTypes.bool,
     onDone: PropTypes.func.isRequired,
