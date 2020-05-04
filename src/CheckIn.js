@@ -1,4 +1,3 @@
-import { get } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
@@ -10,6 +9,10 @@ import {
 } from 'react-intl';
 import moment from 'moment-timezone';
 import createInactivityTimer from 'inactivity-timer';
+import {
+  get,
+  isEmpty,
+} from 'lodash';
 
 import {
   Paneset,
@@ -93,6 +96,9 @@ class CheckIn extends React.Component {
     const {
       resources: {
         checkinSettings,
+        checkinSettings: {
+          records: checkinSettingsRecords,
+        },
         scannedItems,
       },
       onSessionEnd,
@@ -104,11 +110,11 @@ class CheckIn extends React.Component {
       return;
     }
 
-    if (!checkinSettings || !checkinSettings.records || checkinSettings.records.length === 0) {
+    if (!checkinSettings || isEmpty(checkinSettingsRecords)) {
       return;
     }
 
-    const parsed = getCheckinSettings(checkinSettings.records);
+    const parsed = getCheckinSettings(checkinSettingsRecords);
 
     if (!parsed.checkoutTimeout) {
       this.timer = null;
