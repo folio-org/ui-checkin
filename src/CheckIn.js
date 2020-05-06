@@ -104,8 +104,6 @@ class CheckIn extends React.Component {
       onSessionEnd,
     } = this.props;
 
-    this.focusInput();
-
     if (this.timer) {
       return;
     }
