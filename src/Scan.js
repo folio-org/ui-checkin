@@ -4,7 +4,6 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
   FormattedMessage,
   injectIntl,
-  intlShape,
 } from 'react-intl';
 import {
   change,
@@ -38,7 +37,7 @@ import {
 
 class Scan extends React.Component {
   static propTypes = {
-    intl: intlShape,
+    intl: PropTypes.object,
     stripes: PropTypes.object,
     resources: PropTypes.shape({
       accounts: PropTypes.shape({

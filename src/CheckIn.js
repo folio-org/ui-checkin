@@ -6,7 +6,6 @@ import {
   FormattedMessage,
   FormattedTime,
   injectIntl,
-  intlShape
 } from 'react-intl';
 import moment from 'moment-timezone';
 import {
@@ -40,7 +39,7 @@ import styles from './checkin.css';
 class CheckIn extends React.Component {
   static propTypes = {
     stripes: PropTypes.object.isRequired,
-    intl: intlShape.isRequired,
+    intl: PropTypes.object,
     scannedItems: PropTypes.arrayOf(PropTypes.object),
     showCheckinNotes: PropTypes.func,
     handleSubmit: PropTypes.func.isRequired,
