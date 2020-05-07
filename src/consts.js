@@ -5,6 +5,7 @@ const statuses = {
   CHECK_IN: 'Check in',
   AWAITING_DELIVERY: 'Awaiting delivery',
   DECLARED_LOST: 'Declared lost',
+  WITHDRAWN: 'Withdrawn',
 };
 
 const requestTypes = {

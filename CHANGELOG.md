@@ -4,6 +4,7 @@
 
 * Check for `accounts.collection.get` permission before rendering fee/fines components. Fixes UICHKIN-174.
 * Fix import path to stripes util. Fixes UICHKIN-175.
+* Show confirmation modal when item with withdrawn status is checked in. Refs UICHKIN-126.
 * Purge `intlShape` in prep for `react-intl` `v4` migration. Refs STRIPES-672.
 
 ## [2.0.0] (https://github.com/folio-org/ui-checkin/tree/v2.0.0) (2019-03-13)
