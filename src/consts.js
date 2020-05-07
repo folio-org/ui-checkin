@@ -3,6 +3,7 @@ const statuses = {
   AWAITING_PICKUP: 'Awaiting pickup',
   MISSING: 'Missing',
   CHECK_IN: 'Check in',
+  CLAIMED_RETURNED: 'Claimed returned',
   AWAITING_DELIVERY: 'Awaiting delivery',
   DECLARED_LOST: 'Declared lost',
 };
