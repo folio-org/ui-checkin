@@ -152,9 +152,16 @@ class ModalManager extends React.Component {
   }
 
   renderClaimedReturnedModal() {
+    const {
+      checkedinItem,
+      showClaimedReturnedModal,
+    } = this.state;
+console.log("checking item", checkedinItem)
     return (
       <ClaimedReturnedModal
-        open={this.state.showClaimedReturnedModal}
+        item={checkedinItem}
+        open={showClaimedReturnedModal}
+        onCancel={this.onCancel}
       />
     );
   }
