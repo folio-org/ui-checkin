@@ -15,7 +15,6 @@ import {
   isEmpty,
   keyBy,
   upperFirst,
-  uniqBy,
 } from 'lodash';
 
 import {
@@ -59,7 +58,10 @@ class Scan extends React.Component {
       }),
       items: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
-      })
+      }),
+      checkinSettings: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
     }),
 
     mutator: PropTypes.shape({
@@ -150,6 +152,11 @@ class Scan extends React.Component {
       type: 'okapi',
       path: 'circulation/end-patron-action-session',
       fetch: false,
+    },
+    checkinSettings: {
+      type: 'okapi',
+      records: 'configs',
+      path: 'configurations/entries?query=(module=CHECKOUT and configName=other_settings)',
     },
   });
 

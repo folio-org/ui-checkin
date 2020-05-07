@@ -1,4 +1,3 @@
-import { get } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
@@ -8,6 +7,12 @@ import {
   injectIntl,
 } from 'react-intl';
 import moment from 'moment-timezone';
+import createInactivityTimer from 'inactivity-timer';
+import {
+  get,
+  isEmpty,
+} from 'lodash';
+
 import {
   Paneset,
   Pane,
@@ -33,7 +38,10 @@ import { IfPermission } from '@folio/stripes/core';
 import PrintButton from './components/PrintButton';
 import FeesFinesOwnedStatus from './components/FeesFinesOwnedStatus';
 import FeeFineDetailsButton from './components/FeeFineDetailsButton';
-import { convertToSlipData } from './util';
+import {
+  convertToSlipData,
+  getCheckinSettings,
+} from './util';
 import styles from './checkin.css';
 
 class CheckIn extends React.Component {
@@ -50,7 +58,15 @@ class CheckIn extends React.Component {
     }),
     onSessionEnd: PropTypes.func,
     change: PropTypes.func,
-    resources: PropTypes.object,
+    resources: PropTypes.shape({
+      checkinSettings: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      scannedItems: PropTypes.arrayOf(PropTypes.object),
+      staffSlips: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+    }),
     mutator: PropTypes.shape({
       query: PropTypes.shape({
         update: PropTypes.func,
@@ -68,14 +84,53 @@ class CheckIn extends React.Component {
     this.showInfo = this.showInfo.bind(this);
     this.renderActions = this.renderActions.bind(this);
     this.handleOptionsChange = this.handleOptionsChange.bind(this);
+    this.timer = undefined;
 
     this.state = {
       showPickers: false
     };
   }
 
-  componentDidMount() {
-    this.focusInput();
+  componentDidUpdate() {
+    const {
+      resources: {
+        checkinSettings,
+        checkinSettings: {
+          records: checkinSettingsRecords,
+        },
+        scannedItems,
+      },
+      onSessionEnd,
+    } = this.props;
+
+    if (this.timer) {
+      return;
+    }
+
+    if (!checkinSettings || isEmpty(checkinSettingsRecords)) {
+      return;
+    }
+
+    const parsed = getCheckinSettings(checkinSettingsRecords);
+
+    if (!parsed.checkoutTimeout) {
+      this.timer = null;
+      return;
+    }
+
+    if (scannedItems.length) {
+      this.timer = createInactivityTimer(`${parsed.checkoutTimeoutDuration}m`, () => {
+        onSessionEnd();
+      });
+
+      ['keydown', 'mousedown'].forEach((event) => {
+        document.addEventListener(event, () => {
+          if (this.timer) {
+            this.timer.signal();
+          }
+        });
+      });
+    }
   }
 
   focusInput() {
