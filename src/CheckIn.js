@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
+import { Field } from 'react-final-form';
 import {
   FormattedMessage,
   FormattedTime,
   injectIntl,
 } from 'react-intl';
 import moment from 'moment-timezone';
+import stripesFinalForm from '@folio/stripes/final-form';
 import createInactivityTimer from 'inactivity-timer';
 import {
   get,
@@ -76,11 +77,11 @@ class CheckIn extends React.Component {
       }),
     }).isRequired,
     loading: PropTypes.bool.isRequired,
+    form: PropTypes.object.isRequired,
   };
 
   constructor(props) {
     super(props);
-    this.onSubmit = this.onSubmit.bind(this);
     this.showInfo = this.showInfo.bind(this);
     this.renderActions = this.renderActions.bind(this);
     this.handleOptionsChange = this.handleOptionsChange.bind(this);
@@ -89,6 +90,10 @@ class CheckIn extends React.Component {
     this.state = {
       showPickers: false
     };
+  }
+  
+  componentDidMount() {
+    this.props.formRef.current = this.props.form;
   }
 
   componentDidUpdate() {
@@ -135,10 +140,6 @@ class CheckIn extends React.Component {
 
   focusInput() {
     this.props.barcodeRef.current.focus();
-  }
-
-  onSubmit(data) {
-    return this.props.submithandler(data, this);
   }
 
   handleSessionEnd = async () => {
@@ -370,11 +371,17 @@ class CheckIn extends React.Component {
     const {
       handleSubmit,
       intl: { formatDate, formatMessage, formatTime },
+      form,
       scannedItems,
       pristine,
       barcodeRef,
       loading,
     } = this.props;
+
+    const { 
+      hasSubmitErrors = false, 
+      submitErrors = {},
+    } = form.getState();
 
     const { showPickers } = this.state;
     const itemListFormatter = {
@@ -443,7 +450,7 @@ class CheckIn extends React.Component {
     const emptyMessage = !loading ? <FormattedMessage id="ui-checkin.noItems" /> : null;
 
     return (
-      <form onSubmit={handleSubmit(this.onSubmit)}>
+      <form onSubmit={handleSubmit}>
         <div style={containerStyle}>
           <Paneset static>
             <Pane paneTitle={scannedItemsLabel} defaultWidth="100%">
@@ -462,6 +469,7 @@ class CheckIn extends React.Component {
                         component={TextField}
                         data-test-check-in-barcode
                       />
+                      {hasSubmitErrors && <span className={styles.error}>{submitErrors.checkin}</span>}
                     </Layout>
                   </Col>
                   <Col xs={3} sm={1}>
@@ -563,6 +571,6 @@ class CheckIn extends React.Component {
   }
 }
 
-export default reduxForm({
-  form: 'CheckIn',
-})(injectIntl(CheckIn));
+export default stripesFinalForm({
+  navigationCheck: true,
+})(injectIntl(CheckIn));  
