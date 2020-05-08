@@ -380,8 +380,8 @@ class CheckIn extends React.Component {
       loading,
     } = this.props;
 
-    const { 
-      hasSubmitErrors = false, 
+    const {
+      hasSubmitErrors = false,
       submitErrors = {},
     } = form.getState();
 
@@ -575,4 +575,4 @@ class CheckIn extends React.Component {
 
 export default stripesFinalForm({
   navigationCheck: true,
-})(injectIntl(CheckIn));  
+})(injectIntl(CheckIn));

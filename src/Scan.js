@@ -225,6 +225,8 @@ class Scan extends React.Component {
     if (!item || !item.barcode) {
       return { checkin };
     }
+
+    return {};
   }
 
   onCloseErrorModal = () => {
@@ -236,10 +238,11 @@ class Scan extends React.Component {
   }
 
   tryCheckIn = async (data) => {
+    const submitErrors = {};
     this.checkInData = data;
     const errors = this.validate(data.item);
 
-    if (errors) {
+    if (!isEmpty(errors)) {
       return errors;
     }
 
@@ -250,11 +253,13 @@ class Scan extends React.Component {
       try {
         await this.checkIn();
       } catch (error) {
-        return { checkin: error };
+        submitErrors.checkin = error;
       }
     } else {
       this.setState({ checkedinItem });
     }
+
+    return submitErrors;
   }
 
   checkIn = () => {
