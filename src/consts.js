@@ -13,7 +13,13 @@ const requestTypes = {
   DELIVERY: 'Delivery',
 };
 
+const claimedReturnedResolutions = {
+  FOUND: 'Found by library',
+  RETURNED: 'Returned by patron',
+}
+
 export {
+  claimedReturnedResolutions,
   statuses,
   requestTypes,
 };

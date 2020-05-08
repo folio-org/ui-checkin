@@ -8,6 +8,8 @@ import {
 } from '@folio/stripes/components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
+import { claimedReturnedResolutions } from '../../consts';
+
 const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
   const footer = (
     <div >
@@ -18,12 +20,12 @@ const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
           <FormattedMessage id="ui-checkin.multipieceModal.close" />
         </Button>
         <Button
-          onClick={() => onConfirm('Found by library')}
+          onClick={() => onConfirm(claimedReturnedResolutions.FOUND)}
         >
           <FormattedMessage id="ui-checkin.claimedReturnedModal.resolution.found" />
         </Button>
         <Button
-          onClick={() => onConfirm('Returned by patron')}
+          onClick={() => onConfirm(claimedReturnedResolutions.RETURNED)}
         >
           <FormattedMessage id="ui-checkin.claimedReturnedModal.resolution.returned" />
         </Button>
