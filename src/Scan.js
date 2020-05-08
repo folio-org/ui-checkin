@@ -160,7 +160,8 @@ class Scan extends React.Component {
     this.state = {
       loading: false,
       // itemClaimedReturnedResolution is a required checkin field for, unsurprisingly,
-      // items with status 'Claimed returned'. It is set via 
+      // items with status 'Claimed returned'. It is set in ClaimedReturnedModal via
+      // ModalManager.
       itemClaimedReturnedResolution: null,
     };
   }

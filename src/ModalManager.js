@@ -28,6 +28,7 @@ class ModalManager extends React.Component {
     intl: intlShape,
     checkedinItem: PropTypes.object.isRequired,
     checkinNotesMode: PropTypes.bool,
+    claimedReturnedHandler: PropTypes.func,
     onDone: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
   };
