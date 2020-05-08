@@ -13,6 +13,7 @@ class ClaimedReturnedModal extends React.Component {
     const {
       item,
       onCancel,
+      onConfirm,
       open,
     } = this.props;
 
@@ -35,17 +36,21 @@ class ClaimedReturnedModal extends React.Component {
             data-test-confirm-button
             label="test button"
             // id={`clickable-${testId}-confirm`}
-            // onClick={onConfirm}
+            onClick={onCancel}
             buttonStyle="primary"
             // buttonClass={mfCss.modalFooterButton}
           >
             Cancel
             {/* <FormattedMessage id="ui-checkin.statusModal.close" /> */}
           </Button>
-          <Button>
+          <Button
+            onClick={() => onConfirm('Found by library')}
+          >
             Found by library
           </Button>
-          <Button>
+          <Button
+            onClick={() => onConfirm('Returned by patron')}
+          >
             Returned by patron
           </Button>
       </div>

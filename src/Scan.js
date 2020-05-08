@@ -438,6 +438,11 @@ class Scan extends React.Component {
     return (!spSlip || spSlip.printByDefault);
   }
 
+  claimedReturnedHandler = (resolution) => {
+    console.log("It worked!", resolution)
+    this.setState({ itemClaimedReturnedResolution: resolution });
+  }
+
   renderHoldModal(request, staffSlipContext) {
     const {
       intl,
@@ -638,6 +643,7 @@ class Scan extends React.Component {
           <ModalManager
             checkedinItem={checkedinItem}
             checkinNotesMode={checkinNotesMode}
+            claimedReturnedHandler={this.claimedReturnedHandler}
             onDone={this.checkIn}
             onCancel={this.onCancel}
           />}

@@ -118,7 +118,8 @@ class ModalManager extends React.Component {
     );
   }
 
-  confirmClaimedReturnedModal = () => {
+  confirmClaimedReturnedModal = (resolution) => {
+    this.props.claimedReturnedHandler(resolution);
     this.setState({ showClaimedReturnedModal: false }, () => this.execSteps(1));
   }
 
@@ -156,12 +157,13 @@ class ModalManager extends React.Component {
       checkedinItem,
       showClaimedReturnedModal,
     } = this.state;
-console.log("checking item", checkedinItem)
+
     return (
       <ClaimedReturnedModal
         item={checkedinItem}
         open={showClaimedReturnedModal}
         onCancel={this.onCancel}
+        onConfirm={this.confirmClaimedReturnedModal}
       />
     );
   }
