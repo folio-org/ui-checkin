@@ -6,43 +6,26 @@ import {
   Modal,
   Button,
 } from '@folio/stripes/components';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
   const footer = (
     <div >
-      {/* {isPrintable ?
-        <PrintButton
-          data-test-confirm-button
-          buttonStyle="primary"
-          id={`clickable-${testId}-confirm`}
-          buttonClass={mfCss.modalFooterButton}
-          dataSource={slipData}
-          template={slipTemplate}
-          onBeforePrint={onConfirm}
-          onAfterPrint={onCancel}
-        >
-          <FormattedMessage id="ui-checkin.statusModal.close" />
-        </PrintButton> : */}
         <Button
-          data-test-confirm-button
-          label="test button"
-          // id={`clickable-${testId}-confirm`}
-          onClick={onCancel}
           buttonStyle="primary"
-          // buttonClass={mfCss.modalFooterButton}
+          onClick={onCancel}
         >
-          Cancel
-          {/* <FormattedMessage id="ui-checkin.statusModal.close" /> */}
+          <FormattedMessage id="ui-checkin.multipieceModal.close" />
         </Button>
         <Button
           onClick={() => onConfirm('Found by library')}
         >
-          Found by library
+          <FormattedMessage id="ui-checkin.claimedReturnedModal.resolution.found" />
         </Button>
         <Button
           onClick={() => onConfirm('Returned by patron')}
         >
-          Returned by patron
+          <FormattedMessage id="ui-checkin.claimedReturnedModal.resolution.returned" />
         </Button>
     </div>
   );
@@ -52,10 +35,17 @@ const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
       dismissible
       open={open}
       onCancel={onCancel}
-      label="Resolve claim returned item"
+      label={<FormattedMessage id="ui-checkin.claimedReturnedModal.label" />}
       footer={footer}
     >
-      <p><strong>{item.title}</strong> (<strong>{item?.materialType?.name}</strong>) (Barcode: {item.barcode}) has been <strong>claimed returned</strong>.</p>
+      <SafeHTMLMessage
+        id="ui-checkin.claimedReturnedModal.message"
+        values={{
+          title: item.title,
+          barcode: item.barcode,
+          materialType: materialType?.name ?? '',
+        }}
+      />
     </Modal>
   );
 }
