@@ -57,6 +57,9 @@ class CheckIn extends React.Component {
     barcodeRef: PropTypes.shape({
       current: PropTypes.instanceOf(Element)
     }),
+    formRef: PropTypes.shape({
+      current: PropTypes.instanceOf(Element)
+    }),
     onSessionEnd: PropTypes.func,
     change: PropTypes.func,
     resources: PropTypes.shape({
@@ -91,7 +94,7 @@ class CheckIn extends React.Component {
       showPickers: false
     };
   }
-  
+
   componentDidMount() {
     this.props.formRef.current = this.props.form;
   }
