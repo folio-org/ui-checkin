@@ -37,7 +37,7 @@ import WithdrawnModalInteractor from './withdrawn-modal';
   selectPatronDetails = clickable('[data-test-patron-details] a');
   selectItemDetails = clickable('[data-test-item-details] a');
   selectFeeFineDetails = clickable('[data-test-fee-fine-details] a');
-  fillOutError = text('[data-test-check-in-scan] [class^="feedbackError"]');
+  fillOutError = text('[data-test-check-in-scan] [class^="error"]');
   barcodePresent = isPresent('[data-test-check-in-barcode]');
   barcodeInputValue = value('[data-test-check-in-barcode]');
   barcodeInputIsFocused = isPresent('[data-test-check-in-barcode]:focus');

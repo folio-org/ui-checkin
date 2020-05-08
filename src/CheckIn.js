@@ -61,7 +61,6 @@ class CheckIn extends React.Component {
       current: PropTypes.instanceOf(Element)
     }),
     onSessionEnd: PropTypes.func,
-    change: PropTypes.func,
     resources: PropTypes.shape({
       checkinSettings: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
@@ -153,7 +152,7 @@ class CheckIn extends React.Component {
   }
 
   showPickers = () => {
-    const { change, intl: { timeZone } } = this.props;
+    const { form: { change }, intl: { timeZone } } = this.props;
     const now = moment.tz(timeZone);
     change('item.checkinDate', now.format());
     change('item.checkinTime', now.format());
