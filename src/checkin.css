@@ -13,3 +13,7 @@
   height: 1.8em;
   width: 4.5em;
 }
+
+.error {
+  color: var(--error);
+}
