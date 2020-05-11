@@ -17,7 +17,7 @@ const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
           buttonStyle="primary"
           onClick={onCancel}
         >
-          <FormattedMessage id="ui-checkin.multipieceModal.close" />
+          <FormattedMessage id="ui-checkin.multipieceModal.cancel" />
         </Button>
         <Button
           onClick={() => onConfirm(claimedReturnedResolutions.FOUND)}
@@ -34,6 +34,7 @@ const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
 
   return (
     <Modal
+      data-test-claimed-returned-modal
       dismissible
       open={open}
       onCancel={onCancel}
@@ -45,7 +46,7 @@ const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
         values={{
           title: item.title,
           barcode: item.barcode,
-          materialType: materialType?.name ?? '',
+          materialType: item?.materialType?.name ?? '',
         }}
       />
     </Modal>
