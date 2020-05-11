@@ -7,6 +7,7 @@
 * Show confirmation modal when item with withdrawn status is checked in. Refs UICHKIN-126.
 * Purge `intlShape` in prep for `react-intl` `v4` migration. Refs STRIPES-672.
 * Clear Check In Page When Session Expires. Refs UICHCKIN-177.
+* Add support for checking in Claimed returned items. Refs UICHKIN-116.
 
 ## [2.0.0] (https://github.com/folio-org/ui-checkin/tree/v2.0.0) (2019-03-13)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.10.0...v2.0.0)
