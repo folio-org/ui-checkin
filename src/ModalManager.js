@@ -88,7 +88,7 @@ class ModalManager extends React.Component {
     const { checkedinItem } = this.state;
     return get(checkedinItem, 'status.name') === statuses.CLAIMED_RETURNED;
   }
-  
+
   shouldWithdrawnModalBeShown = () => {
     const { checkedinItem } = this.state;
     return checkedinItem?.status?.name === statuses.WITHDRAWN;

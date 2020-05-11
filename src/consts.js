@@ -17,7 +17,7 @@ const requestTypes = {
 const claimedReturnedResolutions = {
   FOUND: 'Found by library',
   RETURNED: 'Returned by patron',
-}
+};
 
 export {
   claimedReturnedResolutions,

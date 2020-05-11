@@ -12,24 +12,24 @@ import { claimedReturnedResolutions } from '../../consts';
 
 const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
   const footer = (
-    <div >
-        <Button
-          data-test-cancel-button
-          buttonStyle="primary"
-          onClick={onCancel}
-        >
-          <FormattedMessage id="ui-checkin.multipieceModal.cancel" />
-        </Button>
-        <Button
-          onClick={() => onConfirm(claimedReturnedResolutions.FOUND)}
-        >
-          <FormattedMessage id="ui-checkin.claimedReturnedModal.resolution.found" />
-        </Button>
-        <Button
-          onClick={() => onConfirm(claimedReturnedResolutions.RETURNED)}
-        >
-          <FormattedMessage id="ui-checkin.claimedReturnedModal.resolution.returned" />
-        </Button>
+    <div>
+      <Button
+        data-test-cancel-button
+        buttonStyle="primary"
+        onClick={onCancel}
+      >
+        <FormattedMessage id="ui-checkin.multipieceModal.cancel" />
+      </Button>
+      <Button
+        onClick={() => onConfirm(claimedReturnedResolutions.FOUND)}
+      >
+        <FormattedMessage id="ui-checkin.claimedReturnedModal.resolution.found" />
+      </Button>
+      <Button
+        onClick={() => onConfirm(claimedReturnedResolutions.RETURNED)}
+      >
+        <FormattedMessage id="ui-checkin.claimedReturnedModal.resolution.returned" />
+      </Button>
     </div>
   );
 
@@ -52,7 +52,7 @@ const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
       />
     </Modal>
   );
-}
+};
 
 ClaimedReturnedModal.propTypes = {
   item: PropTypes.object,
