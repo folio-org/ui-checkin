@@ -14,6 +14,7 @@ const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
   const footer = (
     <div >
         <Button
+          data-test-cancel-button
           buttonStyle="primary"
           onClick={onCancel}
         >
