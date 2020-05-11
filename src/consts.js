@@ -6,6 +6,7 @@ const statuses = {
   CLAIMED_RETURNED: 'Claimed returned',
   AWAITING_DELIVERY: 'Awaiting delivery',
   DECLARED_LOST: 'Declared lost',
+  WITHDRAWN: 'Withdrawn',
 };
 
 const requestTypes = {
