@@ -86,7 +86,7 @@ class ModalManager extends React.Component {
 
   shouldClaimedReturnedModalBeShown = () => {
     const { checkedinItem } = this.state;
-    return get(checkedinItem, 'status.name') === statuses.CLAIMED_RETURNED;
+    return checkedinItem?.status?.name === statuses.CLAIMED_RETURNED;
   }
 
   shouldWithdrawnModalBeShown = () => {
@@ -96,7 +96,7 @@ class ModalManager extends React.Component {
 
   shouldDeclaredLostModalBeShown = () => {
     const { checkedinItem } = this.state;
-    return get(checkedinItem, 'status.name') === statuses.DECLARED_LOST;
+    return checkedinItem?.status?.name === statuses.DECLARED_LOST;
   }
 
   shouldCheckinNoteModalBeShown = () => {
@@ -107,7 +107,7 @@ class ModalManager extends React.Component {
 
   shouldMissingModalBeShown = () => {
     const { checkedinItem } = this.state;
-    return get(checkedinItem, 'status.name') === statuses.MISSING;
+    return checkedinItem?.status?.name === statuses.MISSING;
   }
 
   shouldMultipieceModalBeShown = () => {
