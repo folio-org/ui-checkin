@@ -23,6 +23,7 @@
   "feesFinesOwned": "(fees/fines owned)",
   "loanDetails": "Loan details",
   "itemDetails": "Item details",
+  "requestDetails": "Request details",
   "feeFineDetails": "Fee/fine details",
   "newFeeFine": "New Fee/Fine",
   "itemNotFound": "Item not found",

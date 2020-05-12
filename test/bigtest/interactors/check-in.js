@@ -33,6 +33,7 @@ import DeclaredLostModalInteractor from './declared-lost-modal';
   selectLoanDetails = clickable('[data-test-loan-details] a');
   selectPatronDetails = clickable('[data-test-patron-details] a');
   selectItemDetails = clickable('[data-test-item-details] a');
+  selectRequestDetails = clickable('[data-test-request-details] a');
   selectFeeFineDetails = clickable('[data-test-fee-fine-details] a');
   fillOutError = text('[data-test-check-in-scan] [class^="feedbackError"]');
   barcodePresent = isPresent('[data-test-check-in-barcode]');
