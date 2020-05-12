@@ -186,6 +186,14 @@ class CheckIn extends React.Component {
     });
   }
 
+  showRequestDetails(loan) {
+    const { nextRequest: { id } } = loan;
+
+    this.props.mutator.query.update({
+      _path: `/requests/view/${id}`,
+    });
+  }
+
   showItemDetails(loan) {
     const { item: { instanceId, holdingsRecordId, id } } = loan;
     const path = `/inventory/view/${instanceId}/${holdingsRecordId}/${id}`;
@@ -320,6 +328,18 @@ class CheckIn extends React.Component {
               <FormattedMessage id="ui-checkin.itemDetails" />
             </Button>
           </div>
+          {loan.nextRequest &&
+            <div data-test-request-details>
+              <Button
+                role="menuitem"
+                buttonStyle="dropdownItem"
+                href={`/requests/view/${loan.nextRequest.id}`}
+                onClick={(e) => this.handleOptionsChange({ loan, action: 'showRequestDetails' }, e)}
+              >
+                <FormattedMessage id="ui-checkin.requestDetails" />
+              </Button>
+            </div>
+          }
           <IfPermission perm="accounts.collection.get">
             <FeeFineDetailsButton
               userId={loan.userId}
