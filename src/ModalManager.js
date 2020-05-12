@@ -15,6 +15,7 @@ import {
 import { ConfirmationModal } from '@folio/stripes/components';
 
 import CheckinNoteModal from './components/CheckinNoteModal';
+import ClaimedReturnedModal from './components/ClaimedReturnedModal';
 import MultipieceModal from './components/MultipieceModal';
 import { statuses } from './consts';
 import { getFullName } from './util';
@@ -26,6 +27,7 @@ class ModalManager extends React.Component {
     intl: PropTypes.object,
     checkedinItem: PropTypes.object.isRequired,
     checkinNotesMode: PropTypes.bool,
+    claimedReturnedHandler: PropTypes.func,
     onDone: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
   };
@@ -36,6 +38,10 @@ class ModalManager extends React.Component {
     const { checkedinItem, checkinNotesMode } = props;
     this.state = { checkedinItem, checkinNotesMode };
     this.steps = [
+      {
+        validate: this.shouldClaimedReturnedModalBeShown,
+        exec: () => this.setState({ showClaimedReturnedModal: true }),
+      },
       {
         validate: this.shouldWithdrawnModalBeShown,
         exec: () => this.setState({ showWithdrawnModal: true }),
@@ -78,6 +84,11 @@ class ModalManager extends React.Component {
     return this.props.onDone();
   }
 
+  shouldClaimedReturnedModalBeShown = () => {
+    const { checkedinItem } = this.state;
+    return checkedinItem?.status?.name === statuses.CLAIMED_RETURNED;
+  }
+
   shouldWithdrawnModalBeShown = () => {
     const { checkedinItem } = this.state;
     return checkedinItem?.status?.name === statuses.WITHDRAWN;
@@ -85,7 +96,7 @@ class ModalManager extends React.Component {
 
   shouldDeclaredLostModalBeShown = () => {
     const { checkedinItem } = this.state;
-    return get(checkedinItem, 'status.name') === statuses.DECLARED_LOST;
+    return checkedinItem?.status?.name === statuses.DECLARED_LOST;
   }
 
   shouldCheckinNoteModalBeShown = () => {
@@ -96,7 +107,7 @@ class ModalManager extends React.Component {
 
   shouldMissingModalBeShown = () => {
     const { checkedinItem } = this.state;
-    return get(checkedinItem, 'status.name') === statuses.MISSING;
+    return checkedinItem?.status?.name === statuses.MISSING;
   }
 
   shouldMultipieceModalBeShown = () => {
@@ -116,20 +127,25 @@ class ModalManager extends React.Component {
     );
   }
 
+  confirmClaimedReturnedModal = (resolution) => {
+    this.props.claimedReturnedHandler(resolution);
+    this.setState({ showClaimedReturnedModal: false }, () => this.execSteps(1));
+  }
+
   confirmWithdrawnModal = () => {
-    this.setState({ showWithdrawnModal: false }, () => this.execSteps(1));
+    this.setState({ showWithdrawnModal: false }, () => this.execSteps(2));
   }
 
   confirmDeclareLostModal = () => {
-    this.setState({ showDeclaredLostModal: false }, () => this.execSteps(2));
+    this.setState({ showDeclaredLostModal: false }, () => this.execSteps(3));
   }
 
   confirmMultipieceModal = () => {
-    this.setState({ showMultipieceModal: false }, () => this.execSteps(3));
+    this.setState({ showMultipieceModal: false }, () => this.execSteps(4));
   }
 
   confirmMissingModal = () => {
-    this.setState({ showMissingModal: false }, () => this.execSteps(4));
+    this.setState({ showMissingModal: false }, () => this.execSteps(5));
   }
 
   confirmCheckinNoteModal = () => {
@@ -139,6 +155,7 @@ class ModalManager extends React.Component {
   onCancel = () => {
     this.setState({
       showCheckinNoteModal: false,
+      showClaimedReturnedModal: false,
       checkinNotesMode: false,
       showMissingModal: false,
       showMultipieceModal: false,
@@ -147,6 +164,22 @@ class ModalManager extends React.Component {
     });
 
     this.props.onCancel();
+  }
+
+  renderClaimedReturnedModal() {
+    const {
+      checkedinItem,
+      showClaimedReturnedModal,
+    } = this.state;
+
+    return (
+      <ClaimedReturnedModal
+        item={checkedinItem}
+        open={showClaimedReturnedModal}
+        onCancel={this.onCancel}
+        onConfirm={this.confirmClaimedReturnedModal}
+      />
+    );
   }
 
   getItemValues = (item) => {
@@ -354,6 +387,7 @@ class ModalManager extends React.Component {
 
   render() {
     const {
+      showClaimedReturnedModal,
       showMissingModal,
       showCheckinNoteModal,
       showMultipieceModal,
@@ -363,6 +397,7 @@ class ModalManager extends React.Component {
 
     return (
       <>
+        {showClaimedReturnedModal && this.renderClaimedReturnedModal()}
         {showMissingModal && this.renderMissingModal()}
         {showCheckinNoteModal && this.renderCheckinNoteModal()}
         {showMultipieceModal && this.renderMultipieceModal()}

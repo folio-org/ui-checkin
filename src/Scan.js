@@ -159,7 +159,11 @@ class Scan extends React.Component {
     super(props);
 
     this.state = {
-      loading: false
+      loading: false,
+      // itemClaimedReturnedResolution is a required checkin field for, unsurprisingly,
+      // items with status 'Claimed returned'. It is set in ClaimedReturnedModal via
+      // ModalManager.
+      itemClaimedReturnedResolution: null,
     };
   }
 
@@ -277,6 +281,7 @@ class Scan extends React.Component {
       mutator: { checkIn },
       stripes: { user },
     } = this.props;
+    const { itemClaimedReturnedResolution } = this.state;
 
     const servicePointId = get(user, 'user.curServicePoint.id', '');
     const checkInDate = buildDateTime(checkinDate, checkinTime);
@@ -285,6 +290,12 @@ class Scan extends React.Component {
       checkInDate,
       itemBarcode: barcode.trim(),
     };
+
+    // For items that have the status 'Claimed returned', the claimedReturnedResolution
+    // parameter is required for checkin. For any other status, we don't want it.
+    if (itemClaimedReturnedResolution) {
+      requestData.claimedReturnedResolution = itemClaimedReturnedResolution;
+    }
 
     this.setState({ loading: true });
 
@@ -300,7 +311,7 @@ class Scan extends React.Component {
   processResponse(checkinResp) {
     const { loan, item, staffSlipContext } = checkinResp;
     const checkinRespItem = loan || { item };
-    this.setState({ staffSlipContext });
+    this.setState({ staffSlipContext, itemClaimedReturnedResolution: null });
     if (get(checkinRespItem, 'item.status.name') === statuses.IN_TRANSIT) {
       checkinResp.transitItem = checkinRespItem;
       this.setState({ transitItem: checkinRespItem });
@@ -449,6 +460,12 @@ class Scan extends React.Component {
     const spSlip = servicePoint.staffSlips.find(slip => slip.id === staffSlip.id);
 
     return (!spSlip || spSlip.printByDefault);
+  }
+
+  // Used by ModalManager and ClaimedReturnedModal to assign a claimedReturnedResolution
+  // value for items with the 'claimed returned' status, required for checkin.
+  claimedReturnedHandler = (resolution) => {
+    this.setState({ itemClaimedReturnedResolution: resolution });
   }
 
   renderHoldModal(request, staffSlipContext) {
@@ -651,6 +668,7 @@ class Scan extends React.Component {
           <ModalManager
             checkedinItem={checkedinItem}
             checkinNotesMode={checkinNotesMode}
+            claimedReturnedHandler={this.claimedReturnedHandler}
             onDone={this.checkIn}
             onCancel={this.onCancel}
           />}
