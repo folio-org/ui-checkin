@@ -4,19 +4,12 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
   FormattedMessage,
   injectIntl,
-  intlShape,
 } from 'react-intl';
-import {
-  change,
-  reset,
-  SubmissionError,
-} from 'redux-form';
 import {
   get,
   isEmpty,
   keyBy,
   upperFirst,
-  uniqBy,
 } from 'lodash';
 
 import {
@@ -38,7 +31,7 @@ import {
 
 class Scan extends React.Component {
   static propTypes = {
-    intl: intlShape,
+    intl: PropTypes.object,
     stripes: PropTypes.object,
     resources: PropTypes.shape({
       accounts: PropTypes.shape({
@@ -60,7 +53,10 @@ class Scan extends React.Component {
       }),
       items: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
-      })
+      }),
+      checkinSettings: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
     }),
 
     mutator: PropTypes.shape({
@@ -152,6 +148,11 @@ class Scan extends React.Component {
       path: 'circulation/end-patron-action-session',
       fetch: false,
     },
+    checkinSettings: {
+      type: 'okapi',
+      records: 'configs',
+      path: 'configurations/entries?query=(module=CHECKOUT and configName=other_settings)',
+    },
   });
 
   constructor(props) {
@@ -165,7 +166,7 @@ class Scan extends React.Component {
   store = this.props.stripes.store;
   barcode = React.createRef();
   checkInData = null;
-  checkinInst = null;
+  checkinFormRef = React.createRef();
   checkinInitialValues = {
     item: {
       checkinDate: '',
@@ -198,7 +199,7 @@ class Scan extends React.Component {
     }, []);
 
     this.clearResources();
-    this.clearForm('CheckIn');
+    this.clearForm();
 
     if (!isEmpty(uniquePatrons)) {
       const endSessions = uniquePatrons.map(patronId => ({
@@ -210,8 +211,8 @@ class Scan extends React.Component {
     }
   };
 
-  clearForm(formName) {
-    this.store.dispatch(reset(formName));
+  clearForm() {
+    this.checkinFormRef.current.reset();
   }
 
   clearResources() {
@@ -220,32 +221,45 @@ class Scan extends React.Component {
 
   validate(item) {
     const { intl: { formatMessage } } = this.props;
-    const barcode = formatMessage({ id: 'ui-checkin.fillOut' });
+    const checkin = formatMessage({ id: 'ui-checkin.fillOut' });
     if (!item || !item.barcode) {
-      throw new SubmissionError({ item: { barcode } });
+      return { checkin };
     }
+
+    return {};
   }
 
   onCloseErrorModal = () => {
     this.setState({ itemError: false },
       () => {
-        this.clearField('CheckIn', 'item.barcode');
+        this.clearField('item.barcode');
         this.setFocusInput();
       });
   }
 
-  tryCheckIn = async (data, checkInInst) => {
+  tryCheckIn = async (data) => {
+    const submitErrors = {};
     this.checkInData = data;
-    this.checkInInst = checkInInst;
-    this.validate(data.item);
+    const errors = this.validate(data.item);
+
+    if (!isEmpty(errors)) {
+      return errors;
+    }
+
     const { item: { barcode } } = data;
     const checkedinItem = await this.fetchItem(barcode);
 
     if (!checkedinItem) {
-      this.checkIn();
+      try {
+        await this.checkIn();
+      } catch (error) {
+        submitErrors.checkin = error;
+      }
     } else {
       this.setState({ checkedinItem });
     }
+
+    return submitErrors;
   }
 
   checkIn = () => {
@@ -278,7 +292,7 @@ class Scan extends React.Component {
       .then(checkinResp => this.processResponse(checkinResp))
       .then(checkinResp => this.fetchRequests(checkinResp))
       .then(checkinResp => this.addScannedItem(checkinResp))
-      .then(() => this.clearField('CheckIn', 'item.barcode'))
+      .then(() => this.clearField('item.barcode'))
       .catch(resp => this.processError(resp))
       .finally(() => this.processCheckInDone());
   }
@@ -317,8 +331,7 @@ class Scan extends React.Component {
   }
 
   handleTextError(error) {
-    const item = { barcode: error };
-    throw new SubmissionError({ item });
+    throw error;
   }
 
   handleJsonError({
@@ -395,8 +408,8 @@ class Scan extends React.Component {
     return mutator.scannedItems.replace(scannedItems);
   }
 
-  clearField(formName, fieldName) {
-    this.props.stripes.store.dispatch(change(formName, fieldName, ''));
+  clearField = (fieldName) => {
+    this.checkinFormRef.current.change(fieldName, '');
   }
 
   throwError(error) {
@@ -604,7 +617,7 @@ class Scan extends React.Component {
   }
 
   onCancel = () => {
-    this.clearForm('CheckIn');
+    this.clearForm();
   };
 
   showCheckinNotes = (loan) => {
@@ -650,10 +663,11 @@ class Scan extends React.Component {
           loading={loading}
           scannedItems={scannedItems}
           items={items}
+          formRef={this.checkinFormRef}
           barcodeRef={this.barcode}
           initialValues={this.checkinInitialValues}
           showCheckinNotes={this.showCheckinNotes}
-          submithandler={this.tryCheckIn}
+          onSubmit={this.tryCheckIn}
           onSessionEnd={this.onSessionEnd}
           {...this.props}
         />

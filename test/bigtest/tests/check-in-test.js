@@ -598,6 +598,55 @@ describe('CheckIn', () => {
     });
   });
 
+  describe('showing withdrawn modal', () => {
+    beforeEach(async function () {
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472501,
+        title: 'Best Book Ever',
+        status: {
+          name: 'Withdrawn',
+        },
+        materialType: {
+          name: 'book',
+        },
+        numberOfPieces: 1,
+        instanceId: 'lychee',
+        holdingsRecordId: 'apple',
+      });
+
+      await checkIn.barcode('9676761472501').clickEnter();
+    });
+
+    it('shows withdrawnmodal', () => {
+      expect(checkIn.withdrawnModal.present).to.be.true;
+    });
+  });
+
+  describe('closes withdrawn modal', () => {
+    beforeEach(async function () {
+      this.server.create('item', 'withLoan', {
+        barcode: 9676761472501,
+        title: 'Best Book Ever',
+        status: {
+          name: 'Withdrawn',
+        },
+        materialType: {
+          name: 'book',
+        },
+        numberOfPieces: 1,
+        instanceId: 'lychee',
+        holdingsRecordId: 'apple',
+      });
+
+      await checkIn.barcode('9676761472501').clickEnter();
+      await checkIn.withdrawnModal.clickConfirm();
+    });
+
+    it('hides withdrawn modal', () => {
+      expect(checkIn.withdrawnModal.present).to.be.false;
+    });
+  });
+
   describe('showing missing item modal', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {

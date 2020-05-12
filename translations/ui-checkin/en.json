@@ -72,5 +72,8 @@
   "action.printTransitSlip": "Print transit slip",
   "actions.moreDetails": "Get more details about this item",
   "declaredLostModal.heading": "Check in Declared lost item?",
-  "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Declared lost.</strong>"
+  "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Declared lost.</strong>",
+  "withdrawnModal.heading": "Check in Withdrawn item?",
+  "withdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn </strong> and is suppressed from discovery.",
+  "withdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong>."
 }

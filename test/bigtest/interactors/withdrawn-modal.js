@@ -4,10 +4,10 @@ import {
   isPresent,
 } from '@bigtest/interactor';
 
-@interactor class DeclaredLostModal {
-  defaultScope = '#test-declaredLost-modal';
+@interactor class WithdrawnModal {
+  defaultScope = '#test-withdrawn-modal';
   present = isPresent('[data-test-confirmation-modal-confirm-button]');
   clickConfirm = clickable('[data-test-confirmation-modal-confirm-button]');
 }
 
-export default DeclaredLostModal;
+export default WithdrawnModal;
