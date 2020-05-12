@@ -20,6 +20,7 @@ import MissingItemModalInteractor from './missing-item-modal';
 import MultiPieceModalInteractor from './multi-piece-modal';
 import DeclaredLostModalInteractor from './declared-lost-modal';
 import WithdrawnModalInteractor from './withdrawn-modal';
+import ClaimedReturnedModalInteractor from './claimed-returned-modal';
 
 @interactor class CheckInInteractor {
   processDate = new DatepickerInteractor('[data-test-process-date]');
@@ -30,6 +31,7 @@ import WithdrawnModalInteractor from './withdrawn-modal';
   checkinNoteModal = new CheckinNoteModalInteractor();
   declaredLostModal = new DeclaredLostModalInteractor();
   withdrawnModal = new WithdrawnModalInteractor();
+  claimedReturnedModal = new ClaimedReturnedModalInteractor();
 
   selectEllipse = clickable('[data-test-elipse-select] button');
   checkedInItemsList = scoped('#list-items-checked-in', MultiColumnListInteractor);
@@ -62,6 +64,7 @@ import WithdrawnModalInteractor from './withdrawn-modal';
   errorModal = isPresent('#OverlayContainer');
   clickCancelErrorModalBtn = clickable('[data-test-close-error-modal-button]');
   isPresentConfirmModal = isPresent('[data-test-confirm-status-modal]');
+  claimedReturnedModalPresent = isPresent('[data-test-claimed-returned-modal]');
 
   whenItemsAreLoaded(amount) {
     return this.when(() => this.checkedInItemsList.rowCount === amount);
