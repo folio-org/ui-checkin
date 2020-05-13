@@ -71,5 +71,13 @@
     "declaredLostModal.heading": "Retourner l'objet déclaré perdu ?",
     "declaredLostModal.message": "L'élément <strong> {title} ( {materialType} ) </strong> (Code barres: {barcode} ) a comme statut <strong> Déclaré perdu. </strong>",
     "feesFinesOwned": "Frais / amendes dus",
-    "feeFineDetails": "Détails des frais / amende"
+    "feeFineDetails": "Détails des frais / amende",
+    "withdrawnModal.heading": "Check in Withdrawn item?",
+    "withdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn </strong> and is suppressed from discovery.",
+    "withdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong>.",
+    "claimedReturnedModal.label": "Check in claimed returned item",
+    "claimedReturnedModal.message": "<strong>{title}</strong> (<strong>{materialType}</strong>) (Barcode: {barcode}) has been <strong>claimed returned</strong>.",
+    "claimedReturnedModal.resolution.found": "Found by library",
+    "claimedReturnedModal.resolution.returned": "Returned by patron",
+    "requestDetails": "Request details"
 }
