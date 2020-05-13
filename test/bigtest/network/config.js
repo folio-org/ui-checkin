@@ -117,4 +117,21 @@ export default function configure() {
   this.get('/users/:id', {});
 
   this.post('/circulation/end-patron-action-session', {});
+
+  this.get('/configurations/entries', {
+    'configs': [{
+      'id': '8fee8fd0-49b1-456a-bea0-678050ca9015',
+      'module': 'CHECKOUT',
+      'configName': 'other_settings',
+      'enabled': true,
+      'value': '{"audioAlertsEnabled":false,"prefPatronIdentifier":"","checkoutTimeout":true,"checkoutTimeoutDuration": 0.01}',
+      'metadata': {
+        'createdDate' : '2019-05-15T18:42:52.380+0000',
+        'createdByUserId' : '40d1bd71-ea7d-5987-be10-128e382bd307',
+        'updatedDate' : '2019-05-15T18:48:51.940+0000',
+        'updatedByUserId' : '40d1bd71-ea7d-5987-be10-128e382bd307'
+      }
+    }],
+    'totalRecords': 1,
+  });
 }

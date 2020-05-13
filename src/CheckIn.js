@@ -1,13 +1,19 @@
-import { get } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
+import { Field } from 'react-final-form';
 import {
   FormattedMessage,
   FormattedTime,
   injectIntl,
 } from 'react-intl';
 import moment from 'moment-timezone';
+import stripesFinalForm from '@folio/stripes/final-form';
+import createInactivityTimer from 'inactivity-timer';
+import {
+  get,
+  isEmpty,
+} from 'lodash';
+
 import {
   Paneset,
   Pane,
@@ -33,7 +39,10 @@ import { IfPermission } from '@folio/stripes/core';
 import PrintButton from './components/PrintButton';
 import FeesFinesOwnedStatus from './components/FeesFinesOwnedStatus';
 import FeeFineDetailsButton from './components/FeeFineDetailsButton';
-import { convertToSlipData } from './util';
+import {
+  convertToSlipData,
+  getCheckinSettings,
+} from './util';
 import styles from './checkin.css';
 
 class CheckIn extends React.Component {
@@ -48,9 +57,19 @@ class CheckIn extends React.Component {
     barcodeRef: PropTypes.shape({
       current: PropTypes.instanceOf(Element)
     }),
+    formRef: PropTypes.shape({
+      current: PropTypes.instanceOf(Element)
+    }),
     onSessionEnd: PropTypes.func,
-    change: PropTypes.func,
-    resources: PropTypes.object,
+    resources: PropTypes.shape({
+      checkinSettings: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      scannedItems: PropTypes.arrayOf(PropTypes.object),
+      staffSlips: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+    }),
     mutator: PropTypes.shape({
       query: PropTypes.shape({
         update: PropTypes.func,
@@ -60,14 +79,15 @@ class CheckIn extends React.Component {
       }),
     }).isRequired,
     loading: PropTypes.bool.isRequired,
+    form: PropTypes.object.isRequired,
   };
 
   constructor(props) {
     super(props);
-    this.onSubmit = this.onSubmit.bind(this);
     this.showInfo = this.showInfo.bind(this);
     this.renderActions = this.renderActions.bind(this);
     this.handleOptionsChange = this.handleOptionsChange.bind(this);
+    this.timer = undefined;
 
     this.state = {
       showPickers: false
@@ -75,15 +95,53 @@ class CheckIn extends React.Component {
   }
 
   componentDidMount() {
-    this.focusInput();
+    this.props.formRef.current = this.props.form;
+  }
+
+  componentDidUpdate() {
+    const {
+      resources: {
+        checkinSettings,
+        checkinSettings: {
+          records: checkinSettingsRecords,
+        },
+        scannedItems,
+      },
+      onSessionEnd,
+    } = this.props;
+
+    if (this.timer) {
+      return;
+    }
+
+    if (!checkinSettings || isEmpty(checkinSettingsRecords)) {
+      return;
+    }
+
+    const parsed = getCheckinSettings(checkinSettingsRecords);
+
+    if (!parsed.checkoutTimeout) {
+      this.timer = null;
+      return;
+    }
+
+    if (scannedItems.length) {
+      this.timer = createInactivityTimer(`${parsed.checkoutTimeoutDuration}m`, () => {
+        onSessionEnd();
+      });
+
+      ['keydown', 'mousedown'].forEach((event) => {
+        document.addEventListener(event, () => {
+          if (this.timer) {
+            this.timer.signal();
+          }
+        });
+      });
+    }
   }
 
   focusInput() {
     this.props.barcodeRef.current.focus();
-  }
-
-  onSubmit(data) {
-    return this.props.submithandler(data, this);
   }
 
   handleSessionEnd = async () => {
@@ -94,7 +152,7 @@ class CheckIn extends React.Component {
   }
 
   showPickers = () => {
-    const { change, intl: { timeZone } } = this.props;
+    const { form: { change }, intl: { timeZone } } = this.props;
     const now = moment.tz(timeZone);
     change('item.checkinDate', now.format());
     change('item.checkinTime', now.format());
@@ -125,6 +183,14 @@ class CheckIn extends React.Component {
   showPatronDetails(loan) {
     this.props.mutator.query.update({
       _path: `/users/view/${loan.userId}`,
+    });
+  }
+
+  showRequestDetails(loan) {
+    const { nextRequest: { id } } = loan;
+
+    this.props.mutator.query.update({
+      _path: `/requests/view/${id}`,
     });
   }
 
@@ -262,6 +328,18 @@ class CheckIn extends React.Component {
               <FormattedMessage id="ui-checkin.itemDetails" />
             </Button>
           </div>
+          {loan.nextRequest &&
+            <div data-test-request-details>
+              <Button
+                role="menuitem"
+                buttonStyle="dropdownItem"
+                href={`/requests/view/${loan.nextRequest.id}`}
+                onClick={(e) => this.handleOptionsChange({ loan, action: 'showRequestDetails' }, e)}
+              >
+                <FormattedMessage id="ui-checkin.requestDetails" />
+              </Button>
+            </div>
+          }
           <IfPermission perm="accounts.collection.get">
             <FeeFineDetailsButton
               userId={loan.userId}
@@ -315,11 +393,17 @@ class CheckIn extends React.Component {
     const {
       handleSubmit,
       intl: { formatDate, formatMessage, formatTime },
+      form,
       scannedItems,
       pristine,
       barcodeRef,
       loading,
     } = this.props;
+
+    const {
+      hasSubmitErrors = false,
+      submitErrors = {},
+    } = form.getState();
 
     const { showPickers } = this.state;
     const itemListFormatter = {
@@ -388,7 +472,7 @@ class CheckIn extends React.Component {
     const emptyMessage = !loading ? <FormattedMessage id="ui-checkin.noItems" /> : null;
 
     return (
-      <form onSubmit={handleSubmit(this.onSubmit)}>
+      <form onSubmit={handleSubmit}>
         <div style={containerStyle}>
           <Paneset static>
             <Pane paneTitle={scannedItemsLabel} defaultWidth="100%">
@@ -407,6 +491,7 @@ class CheckIn extends React.Component {
                         component={TextField}
                         data-test-check-in-barcode
                       />
+                      {hasSubmitErrors && <span className={styles.error}>{submitErrors.checkin}</span>}
                     </Layout>
                   </Col>
                   <Col xs={3} sm={1}>
@@ -508,6 +593,6 @@ class CheckIn extends React.Component {
   }
 }
 
-export default reduxForm({
-  form: 'CheckIn',
+export default stripesFinalForm({
+  navigationCheck: true,
 })(injectIntl(CheckIn));
