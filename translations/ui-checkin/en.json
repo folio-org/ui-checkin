@@ -23,6 +23,7 @@
   "feesFinesOwned": "(fees/fines owned)",
   "loanDetails": "Loan details",
   "itemDetails": "Item details",
+  "requestDetails": "Request details",
   "feeFineDetails": "Fee/fine details",
   "newFeeFine": "New Fee/Fine",
   "itemNotFound": "Item not found",
@@ -71,5 +72,12 @@
   "action.printTransitSlip": "Print transit slip",
   "actions.moreDetails": "Get more details about this item",
   "declaredLostModal.heading": "Check in Declared lost item?",
-  "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Declared lost.</strong>"
+  "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Declared lost.</strong>",
+  "withdrawnModal.heading": "Check in Withdrawn item?",
+  "withdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn </strong> and is suppressed from discovery.",
+  "withdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong>.",
+  "claimedReturnedModal.label": "Check in claimed returned item",
+  "claimedReturnedModal.message": "<strong>{title}</strong> (<strong>{materialType}</strong>) (Barcode: {barcode}) has been <strong>claimed returned</strong>.",
+  "claimedReturnedModal.resolution.found": "Found by library",
+  "claimedReturnedModal.resolution.returned": "Returned by patron"
 }
