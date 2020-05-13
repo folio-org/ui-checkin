@@ -1,5 +1,9 @@
 # Change history for ui-checkin
 
+## 3.0.0
+
+* Upgrade to `stripes` `4.0`, `react-intl` `4.5`. Refs STRIPES-672.
+
 ## [2.1.0] IN PROGRESS
 
 * Check for `accounts.collection.get` permission before rendering fee/fines components. Fixes UICHKIN-174.
