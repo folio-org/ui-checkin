@@ -50,7 +50,7 @@ import ClaimedReturnedModalInteractor from './claimed-returned-modal';
   clickEnter = clickable('#clickable-add-item');
   checkedInBookTitle = text('#list-items-checked-in div[role="gridcell"]:nth-child(2)');
   checkedInTimeReturned = text('[data-test-check-in-return-time]');
-  barcodeError = text('#OverlayContainer [class^="modalContent"]>span');
+  barcodeError = text('#OverlayContainer [class^="modalContent"]');
   endSession = clickable('#clickable-end-session');
   hasCheckedInItems = isPresent('#list-items-checked-in');
   clickChangeDate = clickable('[data-test-checkin-modify-date]');

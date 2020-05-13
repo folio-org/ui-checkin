@@ -29,7 +29,7 @@ describe('CheckIn', () => {
   });
 
   describe('entering an invalid barcode', () => {
-    beforeEach(function () {
+    beforeEach(async function () {
       this.server.post('/circulation/check-in-by-barcode', (_, request) => {
         const params = JSON.parse(request.requestBody);
         return new Response(422, { 'Content-Type': 'application/json' }, {
@@ -43,7 +43,7 @@ describe('CheckIn', () => {
         });
       });
 
-      return checkIn.barcode('000000000').clickEnter();
+      await checkIn.barcode('000000000').clickEnter();
     });
 
     it('shows an error', () => {
