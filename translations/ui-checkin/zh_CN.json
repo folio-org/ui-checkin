@@ -71,5 +71,13 @@
     "declaredLostModal.heading": "归还已声称遗失单件？",
     "declaredLostModal.message": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）的单件状态为<strong>声称遗失。 </strong>",
     "feesFinesOwned": "（拥有的费用/罚款）",
-    "feeFineDetails": "费用/罚款详情"
+    "feeFineDetails": "费用/罚款详情",
+    "withdrawnModal.heading": "Check in Withdrawn item?",
+    "withdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn </strong> and is suppressed from discovery.",
+    "withdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong>.",
+    "claimedReturnedModal.label": "Check in claimed returned item",
+    "claimedReturnedModal.message": "<strong>{title}</strong> (<strong>{materialType}</strong>) (Barcode: {barcode}) has been <strong>claimed returned</strong>.",
+    "claimedReturnedModal.resolution.found": "Found by library",
+    "claimedReturnedModal.resolution.returned": "Returned by patron",
+    "requestDetails": "Request details"
 }

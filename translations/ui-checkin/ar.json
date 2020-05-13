@@ -71,5 +71,13 @@
     "declaredLostModal.heading": "رد مادة معلن عن فقدها؟",
     "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (باركود:{barcode}) له حالة المادة <strong>تم إعلانها مفقودة</strong>",
     "feesFinesOwned": "(الرسوم/الغرامات المملوكة)",
-    "feeFineDetails": "تفاصيل الرسم/الغرامة"
+    "feeFineDetails": "تفاصيل الرسم/الغرامة",
+    "withdrawnModal.heading": "رد المادة المسحوبة؟",
+    "withdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (باركود: {barcode}) له حالة المادة <strong>مسحوبة</strong> ومحجوب من الاكتشاف",
+    "withdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (باركود: {barcode}) له حالة المادة <strong>مسحوبة</strong>",
+    "claimedReturnedModal.label": "رد مادة تم إدعاء إعادتها؟",
+    "claimedReturnedModal.message": "<strong>{title}</strong> (<strong>{materialType}</strong> ) (باركود: {barcode}) تم <strong>إدعاء إعادتها</strong>",
+    "claimedReturnedModal.resolution.found": "تم العثور عليها بواسطة المكتبة",
+    "claimedReturnedModal.resolution.returned": "تمت إعادتها بواسطة المستفيد",
+    "requestDetails": "تفاصيل الطلب"
 }
