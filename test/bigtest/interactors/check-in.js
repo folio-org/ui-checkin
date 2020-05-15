@@ -1,6 +1,7 @@
 import {
   clickable,
   fillable,
+  blurrable,
   interactor,
   isPresent,
   text,
@@ -47,6 +48,7 @@ import ClaimedReturnedModalInteractor from './claimed-returned-modal';
   confirmStatusModalPresent = isPresent('[data-test-confirm-status-modal]');
   confirmFeeFineOwnedStatusPresent = isPresent('[data-test-fee-fine-owned-status]');
   barcode = fillable('#input-item-barcode');
+  blurBarcodeField = blurrable('#input-item-barcode');
   clickEnter = clickable('#clickable-add-item');
   checkedInBookTitle = text('#list-items-checked-in div[role="gridcell"]:nth-child(2)');
   checkedInTimeReturned = text('[data-test-check-in-return-time]');

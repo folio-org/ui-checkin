@@ -187,10 +187,16 @@ class CheckIn extends React.Component {
   }
 
   showRequestDetails(loan) {
-    const { nextRequest: { id } } = loan;
+    const {
+      staffSlipContext: {
+        request: {
+          requestID
+        }
+      }
+    } = loan;
 
     this.props.mutator.query.update({
-      _path: `/requests/view/${id}`,
+      _path: `/requests/view/${requestID}`,
     });
   }
 
@@ -248,6 +254,7 @@ class CheckIn extends React.Component {
 
     const isCheckInNote = element => element.noteType === 'Check in';
     const checkinNotePresent = get(loan.item, ['circulationNotes'], []).some(isCheckInNote);
+    const loanOpenRequest = loan?.staffSlipContext?.request ?? {};
 
     const trigger = ({ getTriggerProps, triggerRef }) => {
       return (
@@ -328,12 +335,12 @@ class CheckIn extends React.Component {
               <FormattedMessage id="ui-checkin.itemDetails" />
             </Button>
           </div>
-          {loan.nextRequest &&
+          {!isEmpty(loanOpenRequest) &&
             <div data-test-request-details>
               <Button
                 role="menuitem"
                 buttonStyle="dropdownItem"
-                href={`/requests/view/${loan.nextRequest.id}`}
+                href={`/requests/view/${loanOpenRequest.requestID}`}
                 onClick={(e) => this.handleOptionsChange({ loan, action: 'showRequestDetails' }, e)}
               >
                 <FormattedMessage id="ui-checkin.requestDetails" />

@@ -1,9 +1,11 @@
 import { Factory, faker, trait } from '@bigtest/mirage';
 
 export default Factory.extend({
+  id: () => faker.random.uuid(),
   requestType: () => 'Hold',
   requestDate: () => faker.date.recent().toISOString(),
   requesterId: () => faker.random.uuid(),
+  itemId: () => faker.random.uuid(),
   status: () => 'Open - Not yet filled',
   position: () => 1,
   requester: () => ({
