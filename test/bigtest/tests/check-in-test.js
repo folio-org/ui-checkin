@@ -197,39 +197,6 @@ describe('CheckIn', () => {
     });
   });
 
-  describe('navigating to request details', () => {
-    let request;
-    beforeEach(async function () {
-      const item = this.server.create('item', 'withLoan', {
-        barcode: 9676761472500,
-        title: 'Best Book Ever',
-        materialType: {
-          name: 'book'
-        },
-        status: {
-          name: 'Awaiting pickup',
-        },
-        location: {
-          name: 'Main Library'
-        },
-        instanceId: 'lychee',
-        holdingsRecordId: 'apple'
-      });
-
-      request = this.server.create('request', { status: 'Open - Awaiting pickup', id: item.id });
-
-      await checkIn.barcode('9676761472500').clickEnter();
-      await checkIn.confirmModal.clickConfirmButton();
-      await checkIn.selectEllipse();
-      await checkIn.selectRequestDetails();
-    });
-
-    it('directs to request details page', function () {
-      const { search, pathname } = this.location;
-      expect(pathname + search).to.include(`/requests/view/${request.id}`);
-    });
-  });
-
   describe('navigating to patron details', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
