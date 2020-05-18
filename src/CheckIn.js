@@ -249,25 +249,25 @@ class CheckIn extends React.Component {
     const isCheckInNote = element => element.noteType === 'Check in';
     const checkinNotePresent = get(loan.item, ['circulationNotes'], []).some(isCheckInNote);
 
-    const trigger = ({ getTriggerProps, triggerRef }) => {
-      return (
-        <>
-          <Button
+    const trigger = ({ getTriggerProps, triggerRef }) => (
+      <Tooltip
+        id={`actions-tooltip-${loan.rowIndex}`}
+        text={<FormattedMessage id="ui-checkin.actions.moreDetails" />}
+        triggerRef={triggerRef}
+      >
+        {({ ref, ariaIds }) => (
+          <IconButton
             {...getTriggerProps()}
-            buttonStyle="hover dropdownActive"
-            aria-labelledby={`actions-tooltip-${loan.rowIndex}-text`}
+            icon="ellipsis"
+            size="medium"
+            iconSize="large"
+            aria-labelledby={ariaIds.text}
             id={`available-actions-button-${loan.rowIndex}`}
-          >
-            <Icon icon="ellipsis" size="large" />
-          </Button>
-          <Tooltip
-            id={`actions-tooltip-${loan.rowIndex}`}
-            text={<FormattedMessage id="ui-checkin.actions.moreDetails" />}
-            triggerRef={triggerRef}
+            ref={ref}
           />
-        </>
-      );
-    };
+        )}
+      </Tooltip>
+    );
 
     const menu = ({ onToggle }) => {
       return (
