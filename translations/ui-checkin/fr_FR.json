@@ -17,7 +17,7 @@
     "status": "Statut",
     "loanDetails": "Détails du prêt",
     "itemDetails": "Détails de l'article",
-    "patronDetails": "Détails de l'adhérent",
+    "patronDetails": "Détails de l'utilisateur",
     "loanNoExist": "Le prêt n'existe pas",
     "itemNoExist": "L'article avec ce code à barres n'existe pas",
     "userNoExist": "L'utilisateur {userId} n'existe pas",
