@@ -77,7 +77,7 @@
     "withdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong>.",
     "claimedReturnedModal.label": "Check in claimed returned item",
     "claimedReturnedModal.message": "<strong>{title}</strong> (<strong>{materialType}</strong>) (Barcode: {barcode}) has been <strong>claimed returned</strong>.",
-    "claimedReturnedModal.resolution.found": "Found by library",
-    "claimedReturnedModal.resolution.returned": "Returned by patron",
+    "claimedReturnedModal.resolution.found": "Trouvé par la bibliothèque",
+    "claimedReturnedModal.resolution.returned": "Retourné par l'utilisateur",
     "requestDetails": "Request details"
 }
