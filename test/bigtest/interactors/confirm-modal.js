@@ -4,10 +4,9 @@ import {
   isPresent,
 } from '@bigtest/interactor';
 
-@interactor class WithdrawnModal {
-  defaultScope = '#test-withdrawn-modal';
+@interactor class ConfrmModal {
   present = isPresent('[data-test-confirmation-modal-confirm-button]');
   clickConfirm = clickable('[data-test-confirmation-modal-confirm-button]');
 }
 
-export default WithdrawnModal;
+export default ConfrmModal;
