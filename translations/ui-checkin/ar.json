@@ -79,5 +79,14 @@
     "claimedReturnedModal.message": "<strong>{title}</strong> (<strong>{materialType}</strong> ) (باركود: {barcode}) تم <strong>إدعاء إعادتها</strong>",
     "claimedReturnedModal.resolution.found": "تم العثور عليها بواسطة المكتبة",
     "claimedReturnedModal.resolution.returned": "تمت إعادتها بواسطة المستفيد",
-    "requestDetails": "تفاصيل الطلب"
+    "requestDetails": "تفاصيل الطلب",
+    "confirmModal.heading": "Check in {status} item?",
+    "confirmModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong> {discoverySuppressMessage}",
+    "confirmModal.discoverySuppress": "and is suppressed from discovery",
+    "confirmModal.confirm": "Confirm",
+    "confirmModal.cancel": "Cancel",
+    "statuses.missing": "Missing",
+    "statuses.declaredLost": "'Declared lost",
+    "statuses.withdrawn": "Withdrawn",
+    "statuses.lostAndPaid": "Lost and paid"
 }
