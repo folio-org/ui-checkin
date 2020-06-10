@@ -12,6 +12,13 @@ import {
 import setupApplication from '../helpers/setup-application';
 import CheckInInteractor from '../interactors/check-in';
 
+const statuses = [
+  'Missing',
+  'Declared lost',
+  'Withdrawn',
+  'Lost and paid',
+];
+
 describe('CheckIn', () => {
   setupApplication();
 
@@ -308,7 +315,7 @@ describe('CheckIn', () => {
 
     it('shows print checkbox checked by default', () => {
       expect(checkIn.confirmStatusModalPresent).to.be.true;
-      expect(checkIn.confirmModal.isPrintTransitChecked).to.be.true;
+      expect(checkIn.confirmStatusModal.isPrintTransitChecked).to.be.true;
     });
   });
 
@@ -327,7 +334,7 @@ describe('CheckIn', () => {
 
     it('shows print checkbox checked by default', () => {
       expect(checkIn.confirmStatusModalPresent).to.be.true;
-      expect(checkIn.confirmModal.isPrintTransitChecked).to.be.false;
+      expect(checkIn.confirmStatusModal.isPrintTransitChecked).to.be.false;
     });
   });
 
@@ -352,7 +359,7 @@ describe('CheckIn', () => {
       this.server.create('request', { status: 'Open - Awaiting pickup', id: item.id });
 
       await checkIn.barcode('9676761472500').clickEnter();
-      await checkIn.confirmModal.clickConfirmButton();
+      await checkIn.confirmStatusModal.clickConfirmButton();
       await checkIn.selectEllipse();
     });
 
@@ -386,7 +393,7 @@ describe('CheckIn', () => {
       });
 
       await checkIn.barcode('9676761472500').clickEnter();
-      await checkIn.confirmModal.clickConfirmButton();
+      await checkIn.confirmStatusModal.clickConfirmButton();
       await checkIn.selectEllipse();
     });
 
@@ -439,7 +446,7 @@ describe('CheckIn', () => {
 
       await checkIn.barcode(item.barcode).clickEnter();
       await checkIn.checkinNoteModal.clickConfirm();
-      await checkIn.confirmModal.clickConfirmButton();
+      await checkIn.confirmStatusModal.clickConfirmButton();
       await checkIn.selectEllipse();
     });
 
@@ -513,153 +520,6 @@ describe('CheckIn', () => {
 
     it('left one item in the list', () => {
       expect(checkIn.checkedInItemsList.rowCount).to.equal(1);
-    });
-  });
-
-  describe('showing declared lost modal', () => {
-    beforeEach(async function () {
-      this.server.create('item', 'withLoan', {
-        barcode: 9676761472501,
-        title: 'Best Book Ever',
-        status: {
-          name: 'Declared lost'
-        },
-        materialType: {
-          name: 'book'
-        },
-        numberOfPieces: 1,
-        instanceId: 'lychee',
-        holdingsRecordId: 'apple'
-      });
-
-      await checkIn.barcode('9676761472501').clickEnter();
-    });
-
-    it('shows declared lost modal', () => {
-      expect(checkIn.declaredLostModal.present).to.be.true;
-    });
-  });
-
-  describe('closes declared lost modal', () => {
-    beforeEach(async function () {
-      this.server.create('item', 'withLoan', {
-        barcode: 9676761472501,
-        title: 'Best Book Ever',
-        status: {
-          name: 'Declared lost'
-        },
-        materialType: {
-          name: 'book'
-        },
-        numberOfPieces: 1,
-        instanceId: 'lychee',
-        holdingsRecordId: 'apple'
-      });
-
-      await checkIn.barcode('9676761472501').clickEnter();
-      await checkIn.declaredLostModal.clickConfirm();
-    });
-
-    it('hides declared lost modal', () => {
-      expect(checkIn.declaredLostModal.present).to.be.false;
-    });
-  });
-
-  describe('showing withdrawn modal', () => {
-    beforeEach(async function () {
-      this.server.create('item', 'withLoan', {
-        barcode: 9676761472501,
-        title: 'Best Book Ever',
-        status: {
-          name: 'Withdrawn',
-        },
-        materialType: {
-          name: 'book',
-        },
-        numberOfPieces: 1,
-        instanceId: 'lychee',
-        holdingsRecordId: 'apple',
-      });
-
-      await checkIn.barcode('9676761472501').clickEnter();
-    });
-
-    it('shows withdrawnmodal', () => {
-      expect(checkIn.withdrawnModal.present).to.be.true;
-    });
-  });
-
-  describe('closes withdrawn modal', () => {
-    beforeEach(async function () {
-      this.server.create('item', 'withLoan', {
-        barcode: 9676761472501,
-        title: 'Best Book Ever',
-        status: {
-          name: 'Withdrawn',
-        },
-        materialType: {
-          name: 'book',
-        },
-        numberOfPieces: 1,
-        instanceId: 'lychee',
-        holdingsRecordId: 'apple',
-      });
-
-      await checkIn.barcode('9676761472501').clickEnter();
-      await checkIn.withdrawnModal.clickConfirm();
-    });
-
-    it('hides withdrawn modal', () => {
-      expect(checkIn.withdrawnModal.present).to.be.false;
-    });
-  });
-
-  describe('showing missing item modal', () => {
-    beforeEach(async function () {
-      this.server.create('item', 'withLoan', {
-        barcode: 9676761472501,
-        title: 'Best Book Ever',
-        status: {
-          name: 'Missing'
-        },
-        materialType: {
-          name: 'book'
-        },
-        numberOfPieces: 1,
-        instanceId: 'lychee',
-        holdingsRecordId: 'apple'
-      });
-
-      await checkIn.barcode('9676761472501').clickEnter();
-    });
-
-    it('shows missing item modal', () => {
-      expect(checkIn.missingItemModal.present).to.be.true;
-    });
-  });
-
-  describe('closes missing item modal', () => {
-    beforeEach(async function () {
-      this.server.create('item', 'withLoan', {
-        barcode: 9676761472501,
-        title: 'Best Book Ever',
-        status: {
-          name: 'Missing'
-        },
-        materialType: {
-          name: 'book'
-        },
-        numberOfPieces: 1,
-        instanceId: 'lychee',
-        holdingsRecordId: 'apple'
-      });
-
-      await checkIn.barcode('9676761472501').clickEnter();
-      await checkIn.missingItemModal.clickConfirm();
-    });
-
-    it('hides missing item modal', () => {
-      expect(checkIn.missingItemModal.present).to.be.false;
     });
   });
 
@@ -744,14 +604,14 @@ describe('CheckIn', () => {
       });
 
       await checkIn.barcode('9676761472501').clickEnter();
+      await checkIn.confirmModal.clickConfirm();
       await checkIn.multiPieceModal.clickCheckinBtn();
-      await checkIn.missingItemModal.clickConfirm();
       await checkIn.checkinNoteModal.clickConfirm();
     });
 
     it('hides all pre checkin modals', () => {
+      expect(checkIn.confirmModal.present).to.be.false;
       expect(checkIn.multiPieceModal.present).to.be.false;
-      expect(checkIn.missingItemModal.present).to.be.false;
       expect(checkIn.checkinNoteModal.present).to.be.false;
     });
   });
@@ -815,6 +675,53 @@ describe('CheckIn', () => {
         const { search, pathname } = this.location;
 
         expect(search + pathname).to.equal('/checkout');
+      });
+    });
+  });
+
+  statuses.forEach(name => {
+    describe(`showing ${name} modal`, () => {
+      beforeEach(async function () {
+        this.server.create('item', 'withLoan', {
+          barcode: 9676761472501,
+          title: 'Best Book Ever',
+          status: { name },
+          materialType: {
+            name: 'book',
+          },
+          numberOfPieces: 1,
+          instanceId: 'lychee',
+          holdingsRecordId: 'apple',
+        });
+
+        await checkIn.barcode('9676761472501').clickEnter();
+      });
+
+      it(`shows ${name} modal`, () => {
+        expect(checkIn.confirmModal.present).to.be.true;
+      });
+    });
+
+    describe(`closes ${name} modal`, () => {
+      beforeEach(async function () {
+        this.server.create('item', 'withLoan', {
+          barcode: 9676761472501,
+          title: 'Best Book Ever',
+          status: { name },
+          materialType: {
+            name: 'book',
+          },
+          numberOfPieces: 1,
+          instanceId: 'lychee',
+          holdingsRecordId: 'apple',
+        });
+
+        await checkIn.barcode('9676761472501').clickEnter();
+        await checkIn.confirmModal.clickConfirm();
+      });
+
+      it(`hides ${name} modal`, () => {
+        expect(checkIn.confirmModal.present).to.be.false;
       });
     });
   });

@@ -17,22 +17,18 @@ import TimepickerInteractor from './timepicker';
 import ConfirmStatusModal from './confirm-status-modal';
 import DeliveryModalInteractor from './delivery-modal';
 import CheckinNoteModalInteractor from './checkin-note-modal';
-import MissingItemModalInteractor from './missing-item-modal';
 import MultiPieceModalInteractor from './multi-piece-modal';
-import DeclaredLostModalInteractor from './declared-lost-modal';
-import WithdrawnModalInteractor from './withdrawn-modal';
 import ClaimedReturnedModalInteractor from './claimed-returned-modal';
+import ConfrmModalInteractor from './confirm-modal';
 
 @interactor class CheckInInteractor {
   processDate = new DatepickerInteractor('[data-test-process-date]');
   processTime = new TimepickerInteractor('[data-test-process-time]');
-  confirmModal = new ConfirmStatusModal('[data-test-confirm-status-modal]');
+  confirmStatusModal = new ConfirmStatusModal('[data-test-confirm-status-modal]');
   multiPieceModal = new MultiPieceModalInteractor('[data-test-multi-piece-modal]');
-  missingItemModal = new MissingItemModalInteractor();
   checkinNoteModal = new CheckinNoteModalInteractor();
-  declaredLostModal = new DeclaredLostModalInteractor();
-  withdrawnModal = new WithdrawnModalInteractor();
   claimedReturnedModal = new ClaimedReturnedModalInteractor();
+  confirmModal = new ConfrmModalInteractor();
 
   selectEllipse = clickable('[data-test-elipse-select] button');
   checkedInItemsList = scoped('#list-items-checked-in', MultiColumnListInteractor);

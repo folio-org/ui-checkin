@@ -2,6 +2,7 @@ import {
   get,
   orderBy,
   upperFirst,
+  includes,
 } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -17,7 +18,10 @@ import { ConfirmationModal } from '@folio/stripes/components';
 import CheckinNoteModal from './components/CheckinNoteModal';
 import ClaimedReturnedModal from './components/ClaimedReturnedModal';
 import MultipieceModal from './components/MultipieceModal';
-import { statuses } from './consts';
+import {
+  statuses,
+  statusMessages,
+} from './consts';
 import { getFullName } from './util';
 
 import css from './ModalManager.css';
@@ -43,20 +47,12 @@ class ModalManager extends React.Component {
         exec: () => this.setState({ showClaimedReturnedModal: true }),
       },
       {
-        validate: this.shouldWithdrawnModalBeShown,
-        exec: () => this.setState({ showWithdrawnModal: true }),
-      },
-      {
-        validate: this.shouldDeclaredLostModalBeShown,
-        exec: () => this.setState({ showDeclaredLostModal: true }),
+        validate: this.shouldConfirmStatusModalBeShown,
+        exec: () => this.setState({ showConfirmModal: true }),
       },
       {
         validate: this.shouldMultipieceModalBeShown,
         exec: () => this.setState({ showMultipieceModal: true }),
-      },
-      {
-        validate: this.shouldMissingModalBeShown,
-        exec: () => this.setState({ showMissingModal: true }),
       },
       {
         validate: this.shouldCheckinNoteModalBeShown,
@@ -84,30 +80,28 @@ class ModalManager extends React.Component {
     return this.props.onDone();
   }
 
+  shouldConfirmStatusModalBeShown = () => {
+    const { checkedinItem } = this.state;
+
+    return includes([
+      statuses.WITHDRAWN,
+      statuses.DECLARED_LOST,
+      statuses.MISSING,
+      statuses.LOST_AND_PAID,
+    ], checkedinItem?.status?.name);
+  }
+
   shouldClaimedReturnedModalBeShown = () => {
     const { checkedinItem } = this.state;
+
     return checkedinItem?.status?.name === statuses.CLAIMED_RETURNED;
-  }
-
-  shouldWithdrawnModalBeShown = () => {
-    const { checkedinItem } = this.state;
-    return checkedinItem?.status?.name === statuses.WITHDRAWN;
-  }
-
-  shouldDeclaredLostModalBeShown = () => {
-    const { checkedinItem } = this.state;
-    return checkedinItem?.status?.name === statuses.DECLARED_LOST;
   }
 
   shouldCheckinNoteModalBeShown = () => {
     const { checkedinItem } = this.state;
+
     return get(checkedinItem, 'circulationNotes', [])
       .some(note => note.noteType === statuses.CHECK_IN);
-  }
-
-  shouldMissingModalBeShown = () => {
-    const { checkedinItem } = this.state;
-    return checkedinItem?.status?.name === statuses.MISSING;
   }
 
   shouldMultipieceModalBeShown = () => {
@@ -132,24 +126,16 @@ class ModalManager extends React.Component {
     this.setState({ showClaimedReturnedModal: false }, () => this.execSteps(1));
   }
 
-  confirmWithdrawnModal = () => {
-    this.setState({ showWithdrawnModal: false }, () => this.execSteps(2));
-  }
-
-  confirmDeclareLostModal = () => {
-    this.setState({ showDeclaredLostModal: false }, () => this.execSteps(3));
-  }
-
   confirmMultipieceModal = () => {
-    this.setState({ showMultipieceModal: false }, () => this.execSteps(4));
-  }
-
-  confirmMissingModal = () => {
-    this.setState({ showMissingModal: false }, () => this.execSteps(5));
+    this.setState({ showMultipieceModal: false }, () => this.execSteps(3));
   }
 
   confirmCheckinNoteModal = () => {
     this.setState({ showCheckinNoteModal: false }, () => this.props.onDone());
+  }
+
+  onConfirm = () => {
+    this.setState({ showConfirmModal: false }, () => this.execSteps(2));
   }
 
   onCancel = () => {
@@ -157,10 +143,8 @@ class ModalManager extends React.Component {
       showCheckinNoteModal: false,
       showClaimedReturnedModal: false,
       checkinNotesMode: false,
-      showMissingModal: false,
       showMultipieceModal: false,
-      showDeclaredLostModal: false,
-      showWithdrawnModal: false,
+      showConfirmModal: false,
     });
 
     this.props.onCancel();
@@ -182,69 +166,6 @@ class ModalManager extends React.Component {
     );
   }
 
-  getItemValues = (item) => {
-    const {
-      barcode,
-      title,
-      materialType,
-    } = item;
-
-    return {
-      title,
-      barcode,
-      materialType: upperFirst(materialType?.name ?? ''),
-    };
-  }
-
-  renderConfirmStatusModal = (isOpen, status, messageId, onConfirm) => {
-    const { checkedinItem } = this.state;
-
-    return (
-      <ConfirmationModal
-        id={`test-${status}-modal`}
-        open={isOpen}
-        item={checkedinItem}
-        heading={<FormattedMessage id={`ui-checkin.${status}Modal.heading`} />}
-        message={<SafeHTMLMessage
-          id={messageId}
-          values={this.getItemValues(checkedinItem)}
-        />}
-        onConfirm={onConfirm}
-        onCancel={this.onCancel}
-        confirmLabel={<FormattedMessage id="ui-checkin.statusModal.confirm" />}
-      />
-    );
-  }
-
-  renderWithdrawnModal() {
-    const {
-      showWithdrawnModal,
-      checkedinItem,
-    } = this.state;
-    const messageId = checkedinItem.discoverySuppress ?
-      'ui-checkin.withdrawnModal.suppressedMessage' :
-      'ui-checkin.withdrawnModal.notSuppressedMessage';
-
-    return this.renderConfirmStatusModal(
-      showWithdrawnModal,
-      'withdrawn',
-      messageId,
-      this.confirmWithdrawnModal,
-    );
-  }
-
-  renderDeclaredLostModal() {
-    const { showDeclaredLostModal } = this.state;
-    const messageId = 'ui-checkin.declaredLostModal.message';
-
-    return this.renderConfirmStatusModal(
-      showDeclaredLostModal,
-      'declaredLost',
-      messageId,
-      this.confirmDeclareLostModal,
-    );
-  }
-
   renderMultipieceModal() {
     const { checkedinItem, showMultipieceModal } = this.state;
 
@@ -258,41 +179,44 @@ class ModalManager extends React.Component {
     );
   }
 
-  renderMissingModal() {
+  renderConfirmModal() {
     const { intl: { formatMessage } } = this.props;
     const {
       checkedinItem,
-      showMissingModal,
+      showConfirmModal,
     } = this.state;
     const {
       title,
       barcode,
       discoverySuppress,
+      status: { name },
     } = checkedinItem;
+    const materialType = upperFirst(checkedinItem?.materialType?.name ?? '');
     const discoverySuppressMessage = discoverySuppress
-      ? formatMessage({ id:'ui-checkin.missingModal.discoverySuppress' })
+      ? formatMessage({ id:'ui-checkin.confirmModal.discoverySuppress' })
       : '';
+    const status = formatMessage({ id: statusMessages[name] });
     const message = (
       <SafeHTMLMessage
-        id="ui-checkin.missingModal.message"
+        id="ui-checkin.confirmModal.message"
         values={{
           title,
           barcode,
+          status,
           discoverySuppressMessage,
-          materialType: upperFirst(get(checkedinItem, 'materialType.name', '')),
+          materialType,
         }}
       />
     );
 
     return (
       <ConfirmationModal
-        data-test-missing-item-modal
-        open={showMissingModal}
-        heading={<FormattedMessage id="ui-checkin.missingModal.heading" />}
-        onConfirm={this.confirmMissingModal}
+        open={showConfirmModal}
+        heading={<FormattedMessage id="ui-checkin.confirmModal.heading" values={{ status }} />}
+        onConfirm={this.onConfirm}
         onCancel={this.onCancel}
-        cancelLabel={<FormattedMessage id="ui-checkin.multipieceModal.cancel" />}
-        confirmLabel={<FormattedMessage id="ui-checkin.multipieceModal.confirm" />}
+        cancelLabel={<FormattedMessage id="ui-checkin.confirmModal.cancel" />}
+        confirmLabel={<FormattedMessage id="ui-checkin.confirmModal.confirm" />}
         message={message}
       />
     );
@@ -388,21 +312,17 @@ class ModalManager extends React.Component {
   render() {
     const {
       showClaimedReturnedModal,
-      showMissingModal,
       showCheckinNoteModal,
       showMultipieceModal,
-      showDeclaredLostModal,
-      showWithdrawnModal
+      showConfirmModal,
     } = this.state;
 
     return (
       <>
         {showClaimedReturnedModal && this.renderClaimedReturnedModal()}
-        {showMissingModal && this.renderMissingModal()}
-        {showCheckinNoteModal && this.renderCheckinNoteModal()}
+        {showConfirmModal && this.renderConfirmModal()}
         {showMultipieceModal && this.renderMultipieceModal()}
-        {showDeclaredLostModal && this.renderDeclaredLostModal()}
-        {showWithdrawnModal && this.renderWithdrawnModal()}
+        {showCheckinNoteModal && this.renderCheckinNoteModal()}
       </>
     );
   }

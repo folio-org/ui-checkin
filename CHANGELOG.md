@@ -3,6 +3,7 @@
 ## 3.0.0
 
 * Upgrade to `stripes` `4.0`, `react-intl` `4.5`. Refs STRIPES-672.
+* Show confirmation modal when an item with the status `Lost and paid` is checked in. Refs UICHKIN-119.
 
 ## [2.1.0] IN PROGRESS
 

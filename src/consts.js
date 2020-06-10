@@ -7,6 +7,14 @@ const statuses = {
   AWAITING_DELIVERY: 'Awaiting delivery',
   DECLARED_LOST: 'Declared lost',
   WITHDRAWN: 'Withdrawn',
+  LOST_AND_PAID: 'Lost and paid',
+};
+
+const statusMessages = {
+  'Missing': 'ui-checkin.statuses.missing',
+  'Declared lost': 'ui-checkin.statuses.declaredLost',
+  'Withdrawn': 'ui-checkin.statuses.withdrawn',
+  'Lost and paid': 'ui-checkin.statuses.lostAndPaid',
 };
 
 const requestTypes = {
@@ -23,6 +31,7 @@ export {
   claimedReturnedResolutions,
   statuses,
   requestTypes,
+  statusMessages,
 };
 
 export default {};

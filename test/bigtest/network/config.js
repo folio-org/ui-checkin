@@ -7,6 +7,8 @@ export default function configure() {
     totalRecords: 0,
   });
 
+  this.post('/circulation/end-patron-action-session', {});
+
   // users
   this.get('/users', ({ users }, request) => {
     if (request.queryParams.query) {
@@ -116,7 +118,6 @@ export default function configure() {
 
   this.get('/users/:id', {});
 
-  this.post('/circulation/end-patron-action-session', {});
 
   this.get('/configurations/entries', {
     'configs': [{
