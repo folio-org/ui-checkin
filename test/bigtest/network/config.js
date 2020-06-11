@@ -118,7 +118,6 @@ export default function configure() {
 
   this.get('/users/:id', {});
 
-
   this.get('/configurations/entries', {
     'configs': [{
       'id': '8fee8fd0-49b1-456a-bea0-678050ca9015',
