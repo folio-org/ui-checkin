@@ -3,7 +3,6 @@
 ## 3.0.0
 
 * Upgrade to `stripes` `4.0`, `react-intl` `4.5`. Refs STRIPES-672.
-* Show confirmation modal when an item with the status `Lost and paid` is checked in. Refs UICHKIN-119.
 
 ## [2.1.0] IN PROGRESS
 
@@ -15,6 +14,7 @@
 * Add support for checking in Claimed returned items. Refs UICHKIN-116.
 * Add link to request details in action menu. Refs UICHKIN-103.
 * Don't lookup undefined country value (cleans up testing output).
+* Show confirmation modal when an item with the status `Lost and paid` is checked in. Refs UICHKIN-119.
 
 ## [2.0.0] (https://github.com/folio-org/ui-checkin/tree/v2.0.0) (2019-03-13)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v1.10.0...v2.0.0)
