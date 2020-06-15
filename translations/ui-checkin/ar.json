@@ -80,13 +80,13 @@
     "claimedReturnedModal.resolution.found": "تم العثور عليها بواسطة المكتبة",
     "claimedReturnedModal.resolution.returned": "تمت إعادتها بواسطة المستفيد",
     "requestDetails": "تفاصيل الطلب",
-    "confirmModal.heading": "Check in {status} item?",
-    "confirmModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong> {discoverySuppressMessage}",
-    "confirmModal.discoverySuppress": "and is suppressed from discovery",
-    "confirmModal.confirm": "Confirm",
-    "confirmModal.cancel": "Cancel",
-    "statuses.missing": "Missing",
-    "statuses.declaredLost": "'Declared lost",
-    "statuses.withdrawn": "Withdrawn",
-    "statuses.lostAndPaid": "Lost and paid"
+    "confirmModal.heading": "رد مادة {status}؟",
+    "confirmModal.message": "<strong>{title} ({materialType})</strong> (باركود:{barcode}) له حالة المادة <strong>{status}</strong> {discoverySuppressMessage}",
+    "confirmModal.discoverySuppress": "ومحجوب من الاكتشاف",
+    "confirmModal.confirm": "تأكيد",
+    "confirmModal.cancel": "إلغاء",
+    "statuses.missing": "مفقود",
+    "statuses.declaredLost": "'تم الإعلان عن فقدانه'",
+    "statuses.withdrawn": "مسحوب",
+    "statuses.lostAndPaid": "مفقود وتم الدفع"
 }
