@@ -56,7 +56,7 @@ class FeesFinesOwnedStatus extends React.Component {
     return (
       <div data-test-fee-fine-owned-status>
         { showFeesFinesOwnedStatus
-          ? <FormattedMessage id="ui-checkin.feesFinesOwned" />
+          ? <FormattedMessage id="ui-checkin.feesFinesOwed" />
           : null
         }
       </div>

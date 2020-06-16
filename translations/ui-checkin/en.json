@@ -20,7 +20,7 @@
   "location": "Location",
   "inHouseUse": "In-house use",
   "status": "Status",
-  "feesFinesOwned": "(fees/fines owned)",
+  "feesFinesOwed": "(fees/fines owed)",
   "loanDetails": "Loan details",
   "itemDetails": "Item details",
   "requestDetails": "Request details",
