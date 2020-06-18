@@ -70,7 +70,6 @@
     "inHouseUse": "In-house use",
     "declaredLostModal.heading": "Check in Declared lost item?",
     "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Declared lost.</strong>",
-    "feesFinesOwned": "(fees/fines owned)",
     "feeFineDetails": "Fee/fine details",
     "withdrawnModal.heading": "Выдать издание, изъятое из обращения?",
     "withdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Штрих-код: {barcode}) имеет статус экземпляра  <strong>Изъят из обращения</strong> и скрыт от дискавери поиска.",
@@ -88,5 +87,6 @@
     "statuses.missing": "Missing",
     "statuses.declaredLost": "'Declared lost",
     "statuses.withdrawn": "Withdrawn",
-    "statuses.lostAndPaid": "Lost and paid"
+    "statuses.lostAndPaid": "Утерянный и оплаченный",
+    "feesFinesOwed": "(fees/fines owed)"
 }
