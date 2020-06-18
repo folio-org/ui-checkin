@@ -70,7 +70,6 @@
     "inHouseUse": "Uso interno",
     "declaredLostModal.heading": "¿Desea declarar el ítem como perdido?",
     "declaredLostModal.message": "<strong> {title} ( {materialType} ) </strong> (Código de barras: {barcode} )  ha sido declarado como  <strong> Perdido </strong> .",
-    "feesFinesOwned": "Cuotas/multas adeudadas",
     "feeFineDetails": "Detalles de tarifas/multas",
     "withdrawnModal.heading": "Check in Withdrawn item?",
     "withdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn </strong> and is suppressed from discovery.",
@@ -88,5 +87,6 @@
     "statuses.missing": "Missing",
     "statuses.declaredLost": "'Declared lost",
     "statuses.withdrawn": "Withdrawn",
-    "statuses.lostAndPaid": "Lost and paid"
+    "statuses.lostAndPaid": "Lost and paid",
+    "feesFinesOwed": "(fees/fines owed)"
 }

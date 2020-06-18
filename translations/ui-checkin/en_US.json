@@ -70,7 +70,6 @@
     "inHouseUse": "In-house use",
     "declaredLostModal.heading": "Check in Declared lost item?",
     "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Declared lost.</strong>",
-    "feesFinesOwned": "(fees/fines owned)",
     "feeFineDetails": "Fee/fine details",
     "withdrawnModal.heading": "Check in Withdrawn item?",
     "withdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn </strong> and is suppressed from discovery.",
@@ -88,5 +87,6 @@
     "statuses.missing": "Missing",
     "statuses.declaredLost": "'Declared lost",
     "statuses.withdrawn": "Withdrawn",
-    "statuses.lostAndPaid": "Lost and paid"
+    "statuses.lostAndPaid": "Lost and paid",
+    "feesFinesOwed": "(fees/fines owed)"
 }

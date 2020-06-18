@@ -70,7 +70,6 @@
     "inHouseUse": "Uso interno",
     "declaredLostModal.heading": "Devolver um item declarado perdido?",
     "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) tem o status do item como <strong>Declarado perdido.</strong>",
-    "feesFinesOwned": "(taxas/multas próprias)",
     "feeFineDetails": "Detalhes da taxa/multa",
     "withdrawnModal.heading": "Devolver item descartado?",
     "withdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) tem o status do item <strong>Descartado</strong> e é ocultado na descoberta.",
@@ -88,5 +87,6 @@
     "statuses.missing": "Não encontrado",
     "statuses.declaredLost": "Declarado perdido",
     "statuses.withdrawn": "Descartado",
-    "statuses.lostAndPaid": "Perdido e pago"
+    "statuses.lostAndPaid": "Perdido e pago",
+    "feesFinesOwed": "(taxas/multas devidas)"
 }
