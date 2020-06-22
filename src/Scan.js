@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import { escapeCqlValue } from '@folio/stripes/util';
 import {
   FormattedMessage,
   injectIntl,
@@ -249,8 +250,7 @@ class Scan extends React.Component {
     if (!isEmpty(errors)) {
       return errors;
     }
-
-    const { item: { barcode } } = data;
+    const barcode = '"' + escapeCqlValue(data.item.barcode) + '"';
     const checkedinItem = await this.fetchItem(barcode);
 
     if (!checkedinItem) {
