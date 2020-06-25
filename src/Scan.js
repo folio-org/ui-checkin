@@ -152,7 +152,7 @@ class Scan extends React.Component {
     checkinSettings: {
       type: 'okapi',
       records: 'configs',
-      path: 'configurations/entries?query=(module=CHECKOUT and configName=other_settings)',
+      path: 'configurations/entries?query=(module==CHECKOUT and configName==other_settings)',
     },
   });
 
