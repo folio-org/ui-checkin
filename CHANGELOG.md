@@ -1,5 +1,10 @@
 # Change history for ui-checkin
 
+## [3.0.1] (https://github.com/folio-org/ui-checkin/tree/v3.0.1) (2020-07-01)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v3.0.0...v3.0.1)
+
+* Change check-in message from "fee/fine owned" to "fee/fine owed". Refs UICHCKIN-179.
+
 ## [3.0.0] (https://github.com/folio-org/ui-checkin/tree/v3.0.0) (2020-06-11)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v2.0.1...v3.0.0)
 
