@@ -88,5 +88,5 @@
     "statuses.declaredLost": "Объявлен утерянным",
     "statuses.withdrawn": "Изъятый из обращения",
     "statuses.lostAndPaid": "Утерянный и оплаченный",
-    "feesFinesOwed": "(fees/fines owed)"
+    "feesFinesOwed": "(причитающиеся платежи)"
 }
