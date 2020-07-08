@@ -1,4 +1,5 @@
-import { Factory, faker, trait } from '@bigtest/mirage';
+import { Factory } from 'miragejs';
+import faker from 'faker';
 
 export default Factory.extend({
   systemReturnDate: () => faker.date.recent().toISOString(),
@@ -10,11 +11,14 @@ export default Factory.extend({
   checkinServicePointId: () => faker.random.uuid(),
   status: () => 'Closed',
 
-  withUser: trait({
-    afterCreate(loan, server) {
-      const user = server.create('user');
-      loan.user = user;
-      loan.save();
-    }
-  })
+  withUser: {
+    extension: {
+      afterCreate(loan, server) {
+        const user = server.create('user');
+        loan.user = user;
+        loan.save();
+      }
+    },
+    __isTrait__: true
+  }
 });

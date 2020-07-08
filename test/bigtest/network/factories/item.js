@@ -1,4 +1,5 @@
-import { Factory, faker, trait } from '@bigtest/mirage';
+import { Factory } from 'miragejs';
+import faker from 'faker';
 
 export default Factory.extend({
   title: () => faker.company.catchPhrase(),
@@ -19,11 +20,14 @@ export default Factory.extend({
     return { name: faker.random.word() };
   },
 
-  withLoan: trait({
-    afterCreate(item, server) {
-      server.create('loan', 'withUser', {
-        item
-      });
-    }
-  })
+  withLoan: {
+    extension: {
+      afterCreate(item, server) {
+        server.create('loan', 'withUser', {
+          item
+        });
+      }
+    },
+    __isTrait__: true
+  }
 });

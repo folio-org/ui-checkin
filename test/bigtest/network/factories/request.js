@@ -1,4 +1,5 @@
-import { Factory, faker, trait } from '@bigtest/mirage';
+import { Factory } from 'miragejs';
+import faker from 'faker';
 
 export default Factory.extend({
   id: () => faker.random.uuid(),
@@ -14,10 +15,13 @@ export default Factory.extend({
     middleName : faker.name.firstName(),
     barcode : Math.floor(Math.random() * 9000000000000) + 1000000000000,
   }),
-  withItem: trait({
-    afterCreate(request, server) {
-      const item = server.create('item');
-      item.save();
-    }
-  })
+  withItem: {
+    extension: {
+      afterCreate(request, server) {
+        const item = server.create('item');
+        item.save();
+      }
+    },
+    __isTrait__: true
+  }
 });
