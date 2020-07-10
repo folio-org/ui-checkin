@@ -1,4 +1,3 @@
-// import { camelize } from '@bigtest/mirage';
 import { camelize, underscore } from 'inflected';
 
 // auto-import all mirage submodules

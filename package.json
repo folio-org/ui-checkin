@@ -63,7 +63,6 @@
   },
   "devDependencies": {
     "@bigtest/interactor": "^0.7.0",
-    "@bigtest/mirage": "^0.0.1",
     "@bigtest/mocha": "^0.5.0",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^5.1.0",
