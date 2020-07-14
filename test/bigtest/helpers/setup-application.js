@@ -5,7 +5,10 @@ export default function setupApplication({
   scenarios = ['default'],
 } = {}) {
   setupStripesCore({
-    mirageOptions,
+    mirageOptions: {
+      serverType: 'miragejs',
+      ...mirageOptions
+    },
     scenarios,
     currentUser: {
       curServicePoint: { id: 1 },
