@@ -78,7 +78,7 @@
     "claimedReturnedModal.message": "<strong>{title}</strong> (<strong>{materialType}</strong>) (Barcode: {barcode}) has been <strong>claimed returned</strong>.",
     "claimedReturnedModal.resolution.found": "Trouvé par la bibliothèque",
     "claimedReturnedModal.resolution.returned": "Retourné par l'utilisateur",
-    "requestDetails": "Request details",
+    "requestDetails": "Détails de la demande",
     "confirmModal.heading": "Check in {status} item?",
     "confirmModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong> {discoverySuppressMessage}",
     "confirmModal.discoverySuppress": "and is suppressed from discovery",
@@ -87,6 +87,6 @@
     "statuses.missing": "Manquant",
     "statuses.declaredLost": "Déclaré perdu",
     "statuses.withdrawn": "Withdrawn",
-    "statuses.lostAndPaid": "Lost and paid",
+    "statuses.lostAndPaid": "Perdu et payé",
     "feesFinesOwed": "(fees/fines owed)"
 }
