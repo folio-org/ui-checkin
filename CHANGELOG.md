@@ -1,5 +1,9 @@
 # Change history for ui-checkin
 
+## 3.0.1 (IN PROGRESS)
+
+* Refactor from `bigtest/mirage` to `miragejs`.
+
 ## [3.0.0] (https://github.com/folio-org/ui-checkin/tree/v3.0.0) (2020-06-11)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v2.0.1...v3.0.0)
 

@@ -1,4 +1,4 @@
-import { Factory } from 'miragejs';
+import { Factory, trait } from 'miragejs';
 import faker from 'faker';
 
 export default Factory.extend({
@@ -20,14 +20,11 @@ export default Factory.extend({
     return { name: faker.random.word() };
   },
 
-  withLoan: {
-    extension: {
-      afterCreate(item, server) {
-        server.create('loan', 'withUser', {
-          item
-        });
-      }
-    },
-    __isTrait__: true
-  }
+  withLoan: trait({
+    afterCreate(item, server) {
+      server.create('loan', 'withUser', {
+        item
+      });
+    }
+  })
 });
