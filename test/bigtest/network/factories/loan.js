@@ -1,4 +1,4 @@
-import { Factory } from 'miragejs';
+import { Factory, trait } from 'miragejs';
 import faker from 'faker';
 
 export default Factory.extend({
@@ -11,14 +11,11 @@ export default Factory.extend({
   checkinServicePointId: () => faker.random.uuid(),
   status: () => 'Closed',
 
-  withUser: {
-    extension: {
-      afterCreate(loan, server) {
-        const user = server.create('user');
-        loan.user = user;
-        loan.save();
-      }
-    },
-    __isTrait__: true
-  }
+  withUser: trait({
+    afterCreate(loan, server) {
+      const user = server.create('user');
+      loan.user = user;
+      loan.save();
+    }
+  })
 });
