@@ -407,7 +407,7 @@ class Scan extends React.Component {
 
       scannedItem.returnDate = buildDateTime(checkinDate, checkinTime);
     }
-
+    scannedItem.loanId = loan.id;
     scannedItem.nextRequest = nextRequest;
     scannedItem.transitItem = transitItem;
     scannedItem.holdItem = holdItem;
