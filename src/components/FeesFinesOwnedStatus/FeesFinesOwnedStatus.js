@@ -8,6 +8,7 @@ class FeesFinesOwnedStatus extends React.Component {
   static propTypes = {
     userId: PropTypes.string,
     itemId: PropTypes.string,
+    loanId: PropTypes.string,
     mutator: PropTypes.shape({
       accounts: PropTypes.shape({
         GET: PropTypes.func.isRequired,
@@ -27,11 +28,12 @@ class FeesFinesOwnedStatus extends React.Component {
     const {
       userId,
       itemId,
+      loanId,
       mutator,
     } = this.props;
 
     if (userId && itemId) {
-      const query = `(userId==${userId} and itemId==${itemId}) and status.name=="Open"`;
+      const query = `(userId==${userId} and itemId==${itemId} and loanId==${loanId}) and status.name=="Open"`;
 
       this._asyncRequest = mutator.accounts.GET({ params: { query } }).then((feeFines) => {
         this._asyncRequest = null;

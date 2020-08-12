@@ -430,9 +430,11 @@ class CheckIn extends React.Component {
           { loan.userId && loan.itemId &&
             <IfPermission perm="accounts.collection.get">
               <FeesFinesOwnedStatus
+                key={loan.id}
                 userId={loan.userId}
                 itemId={loan.itemId}
                 mutator={this.props.mutator}
+                loanId={loan.id}
               />
             </IfPermission>
           }
