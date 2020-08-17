@@ -5,6 +5,7 @@
 * Refactor from `bigtest/mirage` to `miragejs`.
 * Increment `@folio/stripes` to `v5`, `react-router` to `v5.2`.
 * Only show fees/fines for checkin items when loan ID matches. Fixes UICHKIN-183.
+* Fix {{requester.country}} token not populating in delivery staff slip. UICHKIN-190
 
 ## [3.0.0] (https://github.com/folio-org/ui-checkin/tree/v3.0.0) (2020-06-11)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v2.0.1...v3.0.0)
