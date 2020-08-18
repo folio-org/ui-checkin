@@ -24,7 +24,7 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
     'requester.middleName': requester.middleName,
     'requester.addressLine1': requester.addressLine1,
     'requester.addressLine2': requester.addressLine2,
-    'requester.country': requester.country
+    'requester.country': requester.countryId
       ? intl.formatMessage({ id: `stripes-components.countries.${requester.countryId}` })
       : '',
     'requester.city': requester.city,
