@@ -88,6 +88,7 @@ class ModalManager extends React.Component {
       statuses.DECLARED_LOST,
       statuses.MISSING,
       statuses.LOST_AND_PAID,
+      statuses.AGED_TO_LOST,
     ], checkedinItem?.status?.name);
   }
 

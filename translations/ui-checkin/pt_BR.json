@@ -88,5 +88,6 @@
     "statuses.declaredLost": "Declarado perdido",
     "statuses.withdrawn": "Descartado",
     "statuses.lostAndPaid": "Perdido e pago",
-    "feesFinesOwed": "(taxas/multas devidas)"
+    "feesFinesOwed": "(taxas/multas devidas)",
+    "statuses.agedToLost": "Aged to lost"
 }
