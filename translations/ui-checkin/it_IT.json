@@ -82,11 +82,12 @@
     "confirmModal.heading": "Check in {status} item?",
     "confirmModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong> {discoverySuppressMessage}",
     "confirmModal.discoverySuppress": "and is suppressed from discovery",
-    "confirmModal.confirm": "Confirm",
-    "confirmModal.cancel": "Cancel",
-    "statuses.missing": "Missing",
-    "statuses.declaredLost": "'Declared lost",
+    "confirmModal.confirm": "Conferma",
+    "confirmModal.cancel": "Annulla",
+    "statuses.missing": "Smarrito",
+    "statuses.declaredLost": "'Dichiarato perso",
     "statuses.withdrawn": "Non disponibile",
     "statuses.lostAndPaid": "Perso e risarcito",
-    "feesFinesOwed": "(fees/fines owed)"
+    "feesFinesOwed": "(fees/fines owed)",
+    "statuses.agedToLost": "Aged to lost"
 }
