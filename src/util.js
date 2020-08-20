@@ -1,11 +1,11 @@
 import moment from 'moment-timezone';
-import { get } from 'lodash';
+import { get, escape } from 'lodash';
 
 export function buildTemplate(str) {
   return o => {
     return str.replace(/{{([^{}]*)}}/g, (a, b) => {
       const r = o[b];
-      return typeof r === 'string' || typeof r === 'number' ? r : '';
+      return typeof r === 'string' || typeof r === 'number' ? escape(r) : '';
     });
   };
 }
