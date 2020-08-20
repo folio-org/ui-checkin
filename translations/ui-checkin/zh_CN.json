@@ -88,5 +88,6 @@
     "statuses.declaredLost": "已声称遗失",
     "statuses.withdrawn": "撤回",
     "statuses.lostAndPaid": "遗失已赔付",
-    "feesFinesOwed": "（欠缴费用/罚款）"
+    "feesFinesOwed": "（欠缴费用/罚款）",
+    "statuses.agedToLost": "Aged to lost"
 }

@@ -88,5 +88,6 @@
     "statuses.declaredLost": "'تم الإعلان عن فقدانه'",
     "statuses.withdrawn": "مسحوب",
     "statuses.lostAndPaid": "مفقود وتم الدفع",
-    "feesFinesOwed": "(الرسوم/الغرامات المستحقة)"
+    "feesFinesOwed": "(الرسوم/الغرامات المستحقة)",
+    "statuses.agedToLost": "تأخر وتم اعتباره مفقوداً"
 }
