@@ -88,5 +88,6 @@
     "statuses.declaredLost": "Für verloren erklärt",
     "statuses.withdrawn": "Zurückgezogen",
     "statuses.lostAndPaid": "Verloren und bezahlt",
-    "feesFinesOwed": "geschuldete Gebühren/Bußgelder"
+    "feesFinesOwed": "geschuldete Gebühren/Bußgelder",
+    "statuses.agedToLost": "Aged to lost"
 }

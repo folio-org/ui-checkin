@@ -88,5 +88,6 @@
     "statuses.declaredLost": "'Declared lost",
     "statuses.withdrawn": "Withdrawn",
     "statuses.lostAndPaid": "Lost and paid",
-    "feesFinesOwed": "(fees/fines owed)"
+    "feesFinesOwed": "(fees/fines owed)",
+    "statuses.agedToLost": "Aged to lost"
 }
