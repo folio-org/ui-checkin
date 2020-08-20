@@ -88,5 +88,6 @@
   "statuses.missing": "Missing",
   "statuses.declaredLost": "'Declared lost",
   "statuses.withdrawn": "Withdrawn",
-  "statuses.lostAndPaid": "Lost and paid"
+  "statuses.lostAndPaid": "Lost and paid",
+  "statuses.agedToLost": "Aged to lost"
 }
