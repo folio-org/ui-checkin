@@ -81,7 +81,7 @@
     "requestDetails": "Dettagli richiesta",
     "confirmModal.heading": "Check in {status} item?",
     "confirmModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong> {discoverySuppressMessage}",
-    "confirmModal.discoverySuppress": "and is suppressed from discovery",
+    "confirmModal.discoverySuppress": "e non è mostrato nel Discovery",
     "confirmModal.confirm": "Conferma",
     "confirmModal.cancel": "Annulla",
     "statuses.missing": "Smarrito",
