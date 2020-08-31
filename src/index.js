@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Route from 'react-router-dom/Route';
-import Switch from 'react-router-dom/Switch';
+import { Switch, Route } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 import Scan from './Scan';
 
