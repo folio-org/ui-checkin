@@ -8,6 +8,7 @@
 * Fix `{{requester.country}}` token not populating in delivery staff slip. Fixes UICHKIN-190.
 * Show confirmation modal when an item with the status `Aged to lost` is checked in. Refs UICHKIN-164.
 * Escape values passed to `react-to-print`. Fixes UICHKIN-193.
+* Update `react-intl` to `v5.7.0`.
 * Handle malformed timestamps. Refs UICHKIN-195.
 
 ## [3.0.0] (https://github.com/folio-org/ui-checkin/tree/v3.0.0) (2020-06-11)

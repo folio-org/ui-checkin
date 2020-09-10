@@ -267,7 +267,6 @@ class CheckIn extends React.Component {
             {...getTriggerProps()}
             icon="ellipsis"
             size="medium"
-            iconSize="large"
             aria-labelledby={ariaIds.text}
             id={`available-actions-button-${loan.rowIndex}`}
             ref={ref}
