@@ -261,11 +261,13 @@ class CheckIn extends React.Component {
         id={`actions-tooltip-${loan.rowIndex}`}
         text={<FormattedMessage id="ui-checkin.actions.moreDetails" />}
         triggerRef={triggerRef}
+        placement="top"
       >
         {({ ref, ariaIds }) => (
           <IconButton
             {...getTriggerProps()}
             icon="ellipsis"
+            placement="top"
             size="medium"
             aria-labelledby={ariaIds.text}
             id={`available-actions-button-${loan.rowIndex}`}
