@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
 import {
   FormattedMessage,
-  FormattedTime,
   injectIntl,
 } from 'react-intl';
 import moment from 'moment-timezone';
@@ -32,6 +31,7 @@ import {
   DropdownMenu,
   Tooltip,
   Dropdown,
+  FormattedTime,
 } from '@folio/stripes/components';
 import { effectiveCallNumber } from '@folio/stripes/util';
 import { IfPermission } from '@folio/stripes/core';
