@@ -10,10 +10,12 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
   FormattedMessage,
   injectIntl,
+} from 'react-intl';
+import {
+  ConfirmationModal,
   FormattedDate,
   FormattedTime,
-} from 'react-intl';
-import { ConfirmationModal } from '@folio/stripes/components';
+} from '@folio/stripes/components';
 
 import CheckinNoteModal from './components/CheckinNoteModal';
 import ClaimedReturnedModal from './components/ClaimedReturnedModal';
