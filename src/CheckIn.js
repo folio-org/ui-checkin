@@ -257,22 +257,14 @@ class CheckIn extends React.Component {
     const loanOpenRequest = loan?.staffSlipContext?.request ?? {};
 
     const trigger = ({ getTriggerProps, triggerRef }) => (
-      <Tooltip
-        id={`actions-tooltip-${loan.rowIndex}`}
-        text={<FormattedMessage id="ui-checkin.actions.moreDetails" />}
-        triggerRef={triggerRef}
-      >
-        {({ ref, ariaIds }) => (
-          <IconButton
-            {...getTriggerProps()}
-            icon="ellipsis"
-            size="medium"
-            aria-labelledby={ariaIds.text}
-            id={`available-actions-button-${loan.rowIndex}`}
-            ref={ref}
-          />
-        )}
-      </Tooltip>
+      <IconButton
+        {...getTriggerProps()}
+        icon="ellipsis"
+        size="medium"
+        aria-label={intl.formatMessage({ id: 'ui-checkin.actionsMenu' })}
+        id={`available-actions-button-${loan.rowIndex}`}
+        ref={triggerRef}
+      />
     );
 
     const menu = ({ onToggle }) => {
@@ -468,7 +460,7 @@ class CheckIn extends React.Component {
       'location': formatMessage({ id: 'ui-checkin.location' }),
       'inHouseUse': formatMessage({ id: 'ui-checkin.inHouseUse' }),
       'status': formatMessage({ id: 'ui-checkin.status' }),
-      ' ': <IconButton style={{ marginLeft: '-6px' }} icon="gear" aria-label="action settings" />,
+      ' ': formatMessage({ id: 'ui-checkin.actions' }),
     };
     const scanBarcodeMsg = formatMessage({ id: 'ui-checkin.scanBarcode' });
     const itemIdLabel = formatMessage({ id: 'ui-checkin.itemId' });
@@ -478,6 +470,16 @@ class CheckIn extends React.Component {
     const timeReturnedLabel = formatMessage({ id: 'ui-checkin.timeReturnedLabel' });
     const scannedItemsLabel = formatMessage({ id: 'ui-checkin.scannedItems' });
     const emptyMessage = !loading ? <FormattedMessage id="ui-checkin.noItems" /> : null;
+    const columnWidths = {
+      'timeReturned': { max: 120 },
+      ' ': { max: 80 },
+      'title': { max: 300 },
+      'barcode': { max: 200 },
+      'effectiveCallNumber': { max: 200 },
+      'location': { max: 200 },
+      'inHouseUse': { max: 80 },
+      'status': { max: 120 }
+    };
 
     return (
       <form onSubmit={handleSubmit}>
@@ -583,7 +585,7 @@ class CheckIn extends React.Component {
                     fullWidth
                     visibleColumns={['timeReturned', 'title', 'barcode', 'effectiveCallNumber', 'location', 'inHouseUse', 'status', ' ']}
                     columnMapping={columnMapping}
-                    columnWidths={{ 'timeReturned': 120, ' ': 80, 'title': 300, 'barcode': 200, 'effectiveCallNumber': 200, 'location': 200, 'inHouseUse': 80, 'status': 120 }}
+                    columnWidths={columnWidths}
                     columnOverflow={{ ' ': true }}
                     rowMetadata={['id']}
                     interactive={false}
