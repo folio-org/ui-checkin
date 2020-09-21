@@ -66,7 +66,6 @@
     "statusModal.delivery.closeAndCheckout": "Cerrar y prestar",
     "statusModal.delivery.message": "Hay una solicitud de entrega para <strong> {itemTitle} ( {itemType} ) </strong> (Código de barras: {itemBarcode} ). <strong> Verifique el ítem y diríjalo a la entrega </strong>",
     "effectiveCallNumber": "Número de Clasificación correcto",
-    "actions.moreDetails": "Obtenga más detalles sobre el item",
     "inHouseUse": "Uso interno",
     "declaredLostModal.heading": "¿Desea declarar el ítem como perdido?",
     "declaredLostModal.message": "<strong> {title} ( {materialType} ) </strong> (Código de barras: {barcode} )  ha sido declarado como  <strong> Perdido </strong> .",
@@ -89,5 +88,7 @@
     "statuses.withdrawn": "Withdrawn",
     "statuses.lostAndPaid": "Lost and paid",
     "feesFinesOwed": "(fees/fines owed)",
-    "statuses.agedToLost": "Aged to lost"
+    "statuses.agedToLost": "Aged to lost",
+    "actions": "Actions",
+    "actionsMenu": "Item actions"
 }

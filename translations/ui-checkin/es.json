@@ -66,7 +66,6 @@
     "statusModal.delivery.closeAndCheckout": "Cerrar y prestar",
     "statusModal.delivery.message": "Hay una solicitud de entrega para <strong> {itemTitle} ( {itemType} ) </strong> (Código de barras: {itemBarcode} ). <strong> Verifique el ítem y diríjalo a la entrega </strong>",
     "effectiveCallNumber": "Effective call number string",
-    "actions.moreDetails": "Get more details about this item",
     "inHouseUse": "In-house use",
     "declaredLostModal.heading": "Check in Declared lost item?",
     "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Declared lost.</strong>",
@@ -89,5 +88,7 @@
     "statuses.withdrawn": "Withdrawn",
     "statuses.lostAndPaid": "Lost and paid",
     "feesFinesOwed": "(fees/fines owed)",
-    "statuses.agedToLost": "Aged to lost"
+    "statuses.agedToLost": "Aged to lost",
+    "actions": "Actions",
+    "actionsMenu": "Item actions"
 }

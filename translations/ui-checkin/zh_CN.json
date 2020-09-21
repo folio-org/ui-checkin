@@ -66,7 +66,6 @@
     "statusModal.delivery.closeAndCheckout": "关闭并借出",
     "statusModal.delivery.message": "<strong> {itemTitle} （ {itemType} ） </strong> （条码： {itemBarcode} ）有交付请求。 <strong>请检出该单件并交付。 </strong>",
     "effectiveCallNumber": "有效的索书号字符串",
-    "actions.moreDetails": "获取此单件的更多详情",
     "inHouseUse": "馆内使用",
     "declaredLostModal.heading": "归还已声称遗失单件？",
     "declaredLostModal.message": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）的单件状态为<strong>声称遗失。 </strong>",
@@ -89,5 +88,7 @@
     "statuses.withdrawn": "撤回",
     "statuses.lostAndPaid": "遗失已赔付",
     "feesFinesOwed": "（欠缴费用/罚款）",
-    "statuses.agedToLost": "超期太久视为遗失"
+    "statuses.agedToLost": "超期太久视为遗失",
+    "actions": "Actions",
+    "actionsMenu": "Item actions"
 }
