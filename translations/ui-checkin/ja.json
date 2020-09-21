@@ -33,7 +33,7 @@
     "statusModal.hold.message": "Place <strong>{title} ({materialType})</strong> (Barcode: {barcode}) on Hold Shelf at <strong>{pickupServicePoint}</strong> for request.",
     "scannedItems": "スキャンされた資料",
     "statusModal.printSlip": "Print slip",
-    "unknownError": "Unknown error occurred",
+    "unknownError": "不明なエラーが発生しました",
     "statusModal.close": "閉じる",
     "close": "Close",
     "errorModal.noItemFound": "The barcode <strong>{barcode}</strong> could not be found.",
@@ -66,7 +66,6 @@
     "statusModal.delivery.closeAndCheckout": "閉じて貸出",
     "statusModal.delivery.message": "There is a delivery request for <strong>{itemTitle} ({itemType})</strong> (Barcode: {itemBarcode}). <strong>Please check the item out and route for delivery.</strong>",
     "effectiveCallNumber": "Effective call number string",
-    "actions.moreDetails": "Get more details about this item",
     "inHouseUse": "In-house use",
     "declaredLostModal.heading": "Check in Declared lost item?",
     "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Declared lost.</strong>",
@@ -83,11 +82,13 @@
     "confirmModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong> {discoverySuppressMessage}",
     "confirmModal.discoverySuppress": "and is suppressed from discovery",
     "confirmModal.confirm": "Confirm",
-    "confirmModal.cancel": "Cancel",
+    "confirmModal.cancel": "キャンセル",
     "statuses.missing": "Missing",
     "statuses.declaredLost": "'Declared lost",
     "statuses.withdrawn": "Withdrawn",
     "statuses.lostAndPaid": "Lost and paid",
     "feesFinesOwed": "(fees/fines owed)",
-    "statuses.agedToLost": "Aged to lost"
+    "statuses.agedToLost": "Aged to lost",
+    "actions": "Actions",
+    "actionsMenu": "Item actions"
 }

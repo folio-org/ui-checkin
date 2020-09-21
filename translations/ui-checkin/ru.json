@@ -66,7 +66,6 @@
     "statusModal.delivery.closeAndCheckout": "Закрыть и проверить",
     "statusModal.delivery.message": "Существует запрос на доставку для <strong> {itemTitle} ({itemType}) </strong> (Штрихкод: {itemBarcode}). <strong>Пожалуйста, проверьте экземпляр и маршрут доставки.</strong>",
     "effectiveCallNumber": "Строка актуального шифра хранения",
-    "actions.moreDetails": "Получить более подробную информацию об этом экземпляре",
     "inHouseUse": "In-house use",
     "declaredLostModal.heading": "Check in Declared lost item?",
     "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Declared lost.</strong>",
@@ -89,5 +88,7 @@
     "statuses.withdrawn": "Изъятый из обращения",
     "statuses.lostAndPaid": "Утерянный и оплаченный",
     "feesFinesOwed": "(причитающиеся платежи)",
-    "statuses.agedToLost": "Aged to lost"
+    "statuses.agedToLost": "Aged to lost",
+    "actions": "Actions",
+    "actionsMenu": "Item actions"
 }
