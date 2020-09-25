@@ -13,6 +13,7 @@
 * Handle malformed timestamps. Refs UICHKIN-195.
 * Apply MultiColumnList columnWidths API - UICHKIN-199
 * Change ' ' column header from gear icon to 'Actions' text.
+* Localize permission names. Refs UICHKIN-201.
 
 ## [3.0.0] (https://github.com/folio-org/ui-checkin/tree/v3.0.0) (2020-06-11)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v2.0.1...v3.0.0)
