@@ -90,5 +90,6 @@
     "feesFinesOwed": "(taxas/multas devidas)",
     "statuses.agedToLost": "Tempo ultrapassado para ser considerado perdido",
     "actions": "Ações",
-    "actionsMenu": "Ações de item"
+    "actionsMenu": "Ações de item",
+    "permission.all": "Devolução: Todas as permissões"
 }
