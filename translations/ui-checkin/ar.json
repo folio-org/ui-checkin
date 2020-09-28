@@ -90,5 +90,6 @@
     "feesFinesOwed": "(الرسوم/الغرامات المستحقة)",
     "statuses.agedToLost": "تأخر وتم اعتباره مفقوداً",
     "actions": "الإجراءات",
-    "actionsMenu": "إجراءات المادة"
+    "actionsMenu": "إجراءات المادة",
+    "permission.all": "الرد: كل الصلاحيات"
 }

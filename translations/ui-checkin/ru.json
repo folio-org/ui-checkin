@@ -90,5 +90,6 @@
     "feesFinesOwed": "(причитающиеся платежи)",
     "statuses.agedToLost": "Aged to lost",
     "actions": "Actions",
-    "actionsMenu": "Item actions"
+    "actionsMenu": "Item actions",
+    "permission.all": "Check in: All permissions"
 }

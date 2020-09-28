@@ -89,6 +89,7 @@
     "statuses.lostAndPaid": "遗失已赔付",
     "feesFinesOwed": "（欠缴费用/罚款）",
     "statuses.agedToLost": "超期太久视为遗失",
-    "actions": "Actions",
-    "actionsMenu": "Item actions"
+    "actions": "操作",
+    "actionsMenu": "单件操作",
+    "permission.all": "归还：所有权限"
 }
