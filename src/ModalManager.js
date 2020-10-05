@@ -11,11 +11,13 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
+
 import {
   ConfirmationModal,
   FormattedDate,
   FormattedTime,
 } from '@folio/stripes/components';
+import { getFullName } from '@folio/stripes/util';
 
 import CheckinNoteModal from './components/CheckinNoteModal';
 import ClaimedReturnedModal from './components/ClaimedReturnedModal';
@@ -24,7 +26,6 @@ import {
   statuses,
   statusMessages,
 } from './consts';
-import { getFullName } from './util';
 
 import css from './ModalManager.css';
 

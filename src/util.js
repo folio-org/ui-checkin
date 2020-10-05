@@ -84,13 +84,6 @@ export function buildDateTime(date, time) {
   }
 }
 
-export function getFullName(user = {}) {
-  const firstName = get(user, 'personal.firstName', '');
-  const lastName = get(user, 'personal.lastName', '');
-
-  return [firstName, lastName].filter(e => e).join(', ');
-}
-
 export function getCheckinSettings(checkinSettings) {
   if (!checkinSettings.length) {
     return undefined;
