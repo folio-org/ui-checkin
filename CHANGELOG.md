@@ -1,6 +1,7 @@
 # Change history for ui-checkin
 
-## 4.0.0 (IN PROGRESS)
+## [4.0.0] (https://github.com/folio-org/ui-checkin/tree/v4.0.0) (2020-10-08)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v3.0.0...v4.0.0)
 
 * Refactor from `bigtest/mirage` to `miragejs`.
 * Increment `@folio/stripes` to `v5`, `react-router` to `v5.2`.
