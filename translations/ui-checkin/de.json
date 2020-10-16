@@ -80,7 +80,7 @@
     "requestDetails": "Bestelldetails",
     "confirmModal.heading": "Check in {status} item?",
     "confirmModal.message": "<strong>{title} ({materialType})</strong> (Mediennummer: {barcode}) hat den Exemplarstatus <strong>{status}</strong> {discoverySuppressMessage}",
-    "confirmModal.discoverySuppress": "und ist im  Discovery System unterdrückt",
+    "confirmModal.discoverySuppress": "und Nachweis wird unterdrückt",
     "confirmModal.confirm": "Confirm",
     "confirmModal.cancel": "Cancel",
     "statuses.missing": "Vermisst",
