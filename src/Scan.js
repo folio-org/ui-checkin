@@ -338,6 +338,7 @@ class Scan extends React.Component {
     this.setState({
       checkedinItem: null,
       loading: false,
+      checkinNotesMode: false,
     }, this.setFocusInput);
   }
 
@@ -635,6 +636,7 @@ class Scan extends React.Component {
 
   onCancel = () => {
     this.clearForm();
+    this.processCheckInDone();
   };
 
   showCheckinNotes = (loan) => {
