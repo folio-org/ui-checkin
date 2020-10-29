@@ -2,7 +2,7 @@
 
 ## [4.1.0] In Progress
 
-* Clear `checkinNotesMode` after succesful checkout or cancel. Fixes UICHKIN-207.
+* Clear `checkinNotesMode` after succesful checkin or cancel. Fixes UICHKIN-207.
 
 ## [4.0.0] (https://github.com/folio-org/ui-checkin/tree/v4.0.0) (2020-10-08)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v3.0.0...v4.0.0)
