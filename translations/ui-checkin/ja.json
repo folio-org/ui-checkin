@@ -35,7 +35,7 @@
     "statusModal.printSlip": "Print slip",
     "unknownError": "不明なエラーが発生しました",
     "statusModal.close": "閉じる",
-    "close": "Close",
+    "close": "閉じる",
     "errorModal.noItemFound": "The barcode <strong>{barcode}</strong> could not be found.",
     "itemNotFound": "Item not found",
     "multipieceModal.confirm": "Confirm",
