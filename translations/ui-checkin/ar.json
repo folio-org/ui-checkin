@@ -88,7 +88,7 @@
     "statuses.withdrawn": "مسحوب",
     "statuses.lostAndPaid": "مفقود وتم الدفع",
     "feesFinesOwed": "(الرسوم/الغرامات المستحقة)",
-    "statuses.agedToLost": "تأخر وتم اعتباره مفقوداً",
+    "statuses.agedToLost": "تقادمت وتم اعتبارها ضائعة",
     "actions": "الإجراءات",
     "actionsMenu": "إجراءات المادة",
     "permission.all": "الرد: كل الصلاحيات"
