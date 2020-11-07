@@ -6,12 +6,7 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
-import {
-  get,
-  isEmpty,
-  keyBy,
-  upperFirst,
-} from 'lodash';
+import { get, isEmpty, keyBy, upperFirst, cloneDeep } from 'lodash';
 
 import {
   Modal,
@@ -20,7 +15,8 @@ import {
 } from '@folio/stripes/components';
 
 import CheckIn from './CheckIn';
-import { statuses } from './consts';
+import { statuses, cancelFeeClaimReturned } from './consts';
+
 import ConfirmStatusModal from './components/ConfirmStatusModal';
 import RouteForDeliveryModal from './components/RouteForDeliveryModal';
 import ModalManager from './ModalManager';
@@ -63,6 +59,11 @@ class Scan extends React.Component {
     mutator: PropTypes.shape({
       accounts: PropTypes.shape({
         GET: PropTypes.func,
+        PUT: PropTypes.func,
+      }),
+      feefineactions: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        POST: PropTypes.func.isRequired,
       }),
       query: PropTypes.shape({
         update: PropTypes.func,
@@ -70,6 +71,10 @@ class Scan extends React.Component {
       items: PropTypes.shape({
         GET: PropTypes.func,
         PUT: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      loan: PropTypes.shape({
+        GET: PropTypes.func,
         reset: PropTypes.func,
       }),
       checkIn: PropTypes.shape({
@@ -88,10 +93,19 @@ class Scan extends React.Component {
       endSession: PropTypes.shape({
         POST: PropTypes.func,
       }),
+      activeAccount: PropTypes.shape({
+        update: PropTypes.func,
+      }).isRequired,
+      lostItemPolicy: PropTypes.shape({
+        GET: PropTypes.func,
+      }),
     }),
     history: PropTypes.shape({
       push: PropTypes.func,
-    })
+    }),
+    okapi: PropTypes.shape({
+      currentUser: PropTypes.object.isRequired,
+    }).isRequired,
   };
 
   static manifest = Object.freeze({
@@ -154,6 +168,27 @@ class Scan extends React.Component {
       records: 'configs',
       path: 'configurations/entries?query=(module=CHECKOUT and configName=other_settings)',
     },
+    feefineactions: {
+      type: 'okapi',
+      records: 'feefineactions',
+      path: 'feefineactions',
+      fetch: false,
+      accumulate: true,
+    },
+    lostItemPolicy: {
+      type: 'okapi',
+      path: 'lost-item-fees-policies',
+      fetch: false,
+      accumulate: true,
+    },
+    loan: {
+      type: 'okapi',
+      records: 'loans',
+      path: 'circulation/loans',
+      fetch: true,
+      accumulate: true,
+    },
+    activeAccount: {},
   });
 
   constructor(props) {
@@ -294,6 +329,10 @@ class Scan extends React.Component {
     // For items that have the status 'Claimed returned', the claimedReturnedResolution
     // parameter is required for checkin. For any other status, we don't want it.
     if (itemClaimedReturnedResolution) {
+      this.processClaimReturned(
+        itemClaimedReturnedResolution,
+        requestData.itemBarcode
+      );
       requestData.claimedReturnedResolution = itemClaimedReturnedResolution;
     }
 
@@ -307,6 +346,116 @@ class Scan extends React.Component {
       .catch(resp => this.processError(resp))
       .finally(() => this.processCheckInDone());
   }
+
+  processClaimReturned = async () => {
+    const { checkedinItem } = this.state;
+
+    const fetchLoan = () => {
+      const { mutator } = this.props;
+      const query = `itemId==${checkedinItem.id} and status.name=Open`;
+      return mutator.loan.GET({ params: { query } });
+    };
+
+    const getAccounts = (loanId) => {
+      const {
+        mutator: {
+          accounts: { GET },
+        },
+      } = this.props;
+      const pathParts = [
+        'accounts?query=',
+        `loanId=="${loanId}"`,
+      ];
+      const path = pathParts.join('');
+      return GET({ path });
+    };
+
+    const getLostItemPolicy = (lostItemPolicyId) => {
+      const { mutator } = this.props;
+      const query = `id==${lostItemPolicyId}`;
+      return mutator.lostItemPolicy.GET({ params: { query } });
+    };
+
+    const createCancelledFeeTemplate = (account) => {
+      const {
+        okapi: {
+          currentUser: {
+            id: currentUserId,
+            curServicePoint: { id: servicePointId },
+          },
+        },
+      } = this.props;
+
+      const now = new Date().toISOString();
+
+      return {
+        dateAction: now,
+        typeAction: cancelFeeClaimReturned.TYPE_ACTION,
+        comments: '',
+        notify: false,
+        amountAction: account.amount,
+        balance: 0,
+        transactionInformation: '',
+        source: `${this.props.okapi.currentUser.lastName}, ${this.props.okapi.currentUser.firstName}`,
+        paymentMethod: '',
+        accountId: account.id,
+        userId: currentUserId,
+        createdAt: servicePointId,
+      };
+    };
+
+    const setPaymentStatus = (record) => {
+      const updatedRec = cloneDeep(record);
+      updatedRec.paymentStatus.name = cancelFeeClaimReturned.CANCEL_PAYMENT_STATUS;
+      return updatedRec;
+    };
+
+    const persistAccountRecord = (record) => {
+      const {
+        mutator: {
+          activeAccount: { update },
+          accounts: { PUT },
+        },
+      } = this.props;
+      update({ id: record.id });
+      return PUT(record);
+    };
+
+    const persistCancelledAction = (action) => {
+      const {
+        mutator: {
+          feefineactions: { POST },
+        },
+      } = this.props;
+      return POST(action);
+    };
+
+    const processAccounts = async () => {
+      const loans = await fetchLoan();
+      const accounts = await getAccounts(loans[0].id);
+      const lostItemFeePolicies = await getLostItemPolicy(loans[0].lostItemPolicyId);
+      const { returnedLostItemProcessingFee } = lostItemFeePolicies.lostItemFeePolicies[0];
+
+      const filterAccounts = accounts.accounts.filter(
+        record => record.paymentStatus.name && record.paymentStatus.name.startsWith(cancelFeeClaimReturned.PAYMENT_STATUS)
+          && (record.feeFineType === cancelFeeClaimReturned.LOST_ITEM_FEE ||
+            (record.feeFineType === cancelFeeClaimReturned.LOST_ITEM_PROCESSING_FEE && returnedLostItemProcessingFee))
+      );
+
+      const createActions = await Promise.all(filterAccounts
+        .map(createCancelledFeeTemplate));
+
+      const persistedCancelledActions = await Promise.all(
+        createActions.map(persistCancelledAction)
+      );
+
+      await Promise.all(filterAccounts.map(setPaymentStatus).map(persistAccountRecord));
+
+      await Promise.all(persistedCancelledActions);
+    };
+
+    await processAccounts();
+  };
 
   processResponse(checkinResp) {
     const { loan, item, staffSlipContext } = checkinResp;
@@ -624,7 +773,7 @@ class Scan extends React.Component {
           <FormattedMessage
             id="ui-checkin.itemNotFound"
           />
-}
+        }
         footer={footer}
         dismissible
         onClose={this.onCloseErrorModal}
