@@ -31,7 +31,7 @@
     "statusModal.transit.message": "Manda <strong>{title} ({materialType})</strong> (Barcode: {barcode}) a <strong>{servicePoint}</strong>.",
     "statusModal.hold.heading": "In attesa di ritiro per una richiesta",
     "statusModal.hold.message": "Metti <strong>{title} ({materialType})</strong> (Barcode: {barcode}) sullo scaffale dei prenotati al <strong>{pickupServicePoint}</strong> per una richiesta.",
-    "scannedItems": "Codici a barre letti",
+    "scannedItems": "Lista barcode inseriti",
     "statusModal.printSlip": "Stampa la ricevuta",
     "unknownError": "Errore sconosciuto",
     "statusModal.close": "Chiudi",
@@ -88,7 +88,7 @@
     "statuses.withdrawn": "Non disponibile",
     "statuses.lostAndPaid": "Perso e risarcito",
     "feesFinesOwed": "(tariffe/multe dovute)",
-    "statuses.agedToLost": "Aged to lost",
+    "statuses.agedToLost": "Dichiarato perso da utente",
     "actions": "Actions",
     "actionsMenu": "Item actions",
     "permission.all": "Check in: All permissions"
