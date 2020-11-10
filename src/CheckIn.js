@@ -5,7 +5,7 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
-import moment from 'moment-timezone';
+import moment from 'moment';
 import stripesFinalForm from '@folio/stripes/final-form';
 import createInactivityTimer from 'inactivity-timer';
 import {
@@ -152,10 +152,12 @@ class CheckIn extends React.Component {
   }
 
   showPickers = () => {
-    const { form: { change }, intl: { timeZone } } = this.props;
-    const now = moment.tz(timeZone);
-    change('item.checkinDate', now.format());
-    change('item.checkinTime', now.format());
+    const { form: { change } } = this.props;
+    const dateNow = moment().format();
+    const timeNow = moment().format("HH:mm");
+
+    change('item.checkinDate', dateNow);
+    change('item.checkinTime', timeNow);
     this.setState({ showPickers: true });
   }
 
@@ -520,6 +522,8 @@ class CheckIn extends React.Component {
                           label={processLabel}
                           component={Datepicker}
                           autoComplete="off"
+                          timeZone="UTC"
+                          backendDateStandard="YYYY-MM-DD"
                           format={(value) => (value ? formatDate(value, { timeZone: 'UTC' }) : '')}
                         />
                       </div>
@@ -547,6 +551,7 @@ class CheckIn extends React.Component {
                           aria-label={checkinTimeLabel}
                           label={timeReturnedLabel}
                           component={Timepicker}
+                          timeZone="UTC"
                           autoComplete="off"
                         />
                       </div>
