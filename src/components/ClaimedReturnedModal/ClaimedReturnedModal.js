@@ -21,11 +21,13 @@ const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
         <FormattedMessage id="ui-checkin.multipieceModal.cancel" />
       </Button>
       <Button
+        data-test-found-button
         onClick={() => onConfirm(claimedReturnedResolutions.FOUND)}
       >
         <FormattedMessage id="ui-checkin.claimedReturnedModal.resolution.found" />
       </Button>
       <Button
+        data-test-returned-button
         onClick={() => onConfirm(claimedReturnedResolutions.RETURNED)}
       >
         <FormattedMessage id="ui-checkin.claimedReturnedModal.resolution.returned" />
