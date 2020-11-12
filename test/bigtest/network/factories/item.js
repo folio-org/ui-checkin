@@ -26,5 +26,17 @@ export default Factory.extend({
         item
       });
     }
+  }),
+
+  withLoanClaimReturned: trait({
+    afterCreate(item, server) {
+      server.create('loan', 'withUser', {
+        item,
+        status: { name: 'Open' }
+      });
+    }
   })
+
 });
+
+

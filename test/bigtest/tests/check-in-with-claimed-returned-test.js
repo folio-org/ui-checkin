@@ -10,13 +10,14 @@ import CheckInInteractor from '../interactors/check-in';
 
 import { statuses, cancelFeeClaimReturned } from '../../../src/consts';
 
-describe('CheckIn with claimed returned', () => {
+describe.only('CheckIn with claimed returned', () => {
   setupApplication();
 
   const checkIn = new CheckInInteractor();
+  let item;
 
   beforeEach(function () {
-    this.server.create('item', {
+    item = this.server.create('item', 'withLoanClaimReturned', {
       barcode: 1234567,
       title: 'I Promise I Really, Really Returned This Book!',
       status: { name: statuses.CLAIMED_RETURNED }
@@ -32,14 +33,7 @@ describe('CheckIn with claimed returned', () => {
   });
 
   describe('entering a barcode', () => {
-    let item;
     beforeEach(async function () {
-      item = this.server.create('item', {
-        barcode: 1234567,
-        title: 'I Promise I Really, Really Returned This Book!',
-        status: { name: statuses.CLAIMED_RETURNED }
-      });
-
       await checkIn.barcode('1234567').clickEnter();
     });
 
@@ -48,21 +42,10 @@ describe('CheckIn with claimed returned', () => {
     });
 
     describe('Found by library', () => {
+      let body;
       beforeEach(async function () {
-        const user = this.server.create('user');
-
-        const loan = this.server.create('loan', {
-          userId: user.id,
-          status: { name: 'Open' },
-          loanPolicyId: 'test',
-          action: 'claimedReturned',
-          actionComment: 'Claim returned confirmation',
-          itemId: item.id,
-          claimedReturnedDate: new Date().toISOString(),
-        });
-
+        
         this.server.create('account', {
-          userId: loan.userId,
           status: {
             name: 'Open',
           },
@@ -72,17 +55,80 @@ describe('CheckIn with claimed returned', () => {
           amount: 200,
           remaining: 20,
           feeFineType: cancelFeeClaimReturned.LOST_ITEM_FEE,
-          loanId: loan.id,
+          loanId: 1,
         });
+        
+
+        this.server.create('lost-item-fee-policy', {
+          name: cancelFeeClaimReturned.LOST_ITEM_FEE_POLICY,
+          returnedLostItemProcessingFee: true,
+        })
+
+        this.server.get('/lost-item-fees-policies');
 
         this.server.get('/accounts');
 
+        /*
+        this.server.post('/accounts',  (_, request) => {
+          parsedRequestBody = JSON.parse(request.requestBody);
+          return new Response(204, {});
+        });
+        */
+        /*
+                this.server.put('/accounts/:id', ({ accounts }, { params, requestBody }) => {
+                  acc = JSON.parse(requestBody);
+                  return accounts.find(params.id).update(acc);
+                });
+        */
+        /*
+                this.server.put('/accounts/:id', (_, request) => {
+                  body = JSON.parse(request.requestBody);
+                  body.paymentStatus.name = 'Cancelled item returned';
+                  return body;
+                });
+                */
         await checkIn.claimedReturnedModal.clickFound.click();
       });
 
       it('Hide claimed returned modal', () => {
         expect(checkIn.claimedReturnedModalPresent).to.be.false;
       });
+
+
+      it('shows claim confirm modal', () => {
+        expect(checkIn.confirmStatusModalPresent).to.be.true;
+      });
+
+      describe('click confirm button', () => {
+        beforeEach(async function () {
+          // await checkIn.confirmStatusModal.clickConfirmButton.click();
+          await checkIn.confirmStatusModal.clickConfirmButton();
+        });
+
+        it('hide claimed confirm modal', () => {
+          expect(checkIn.confirmStatusModalPresent).to.be.false;
+        });
+      });
+
+
+      /*
+            describe('Fee/fines with Cancelled item returned', () => {
+              beforeEach(async function () {
+                let acc;
+                this.server.post('/accounts', function (schema, { requestBody }) {
+                  acc = JSON.parse(requestBody);
+                  return server.create('account', acc);
+                });
+      
+                console.log('acc: ' + JSON.stringify(acc));
+              });
+      
+              it('Visit fee/fines', () => {
+                expect(false).to.be.false;
+              });
+            });
+      */
+
     });
   });
 });

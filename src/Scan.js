@@ -352,7 +352,7 @@ class Scan extends React.Component {
 
     const fetchLoan = () => {
       const { mutator } = this.props;
-      const query = `itemId==${checkedinItem.id} and status.name=Open`;
+      const query = `itemId==${checkedinItem.id} and status.name==Open`;
       return mutator.loan.GET({ params: { query } });
     };
 
