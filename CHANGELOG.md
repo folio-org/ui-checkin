@@ -1,9 +1,11 @@
 # Change history for ui-checkin
 
-## [4.1.0] In Progress
+## [4.0.1] (https://github.com/folio-org/ui-checkin/tree/v4.0.0) (2020-11-12)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v4.0.0...v4.0.1)
 
-* Clear `checkinNotesMode` after succesful checkin or cancel. Fixes UICHKIN-207.
 * `Timepicker` defaults to local time. Refs UICHKIN-206.
+* Clear `checkinNotesMode` after succesful checkin or cancel. Fixes UICHKIN-207.
+
 ## [4.0.0] (https://github.com/folio-org/ui-checkin/tree/v4.0.0) (2020-10-08)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v3.0.0...v4.0.0)
 
