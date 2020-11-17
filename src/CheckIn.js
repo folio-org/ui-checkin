@@ -493,6 +493,7 @@ class CheckIn extends React.Component {
                   <Col xs={9} sm={4}>
                     <Layout className="marginTopLabelSpacer">
                       <Field
+                        autoFocus
                         id="input-item-barcode"
                         name="item.barcode"
                         validationEnabled={false}
