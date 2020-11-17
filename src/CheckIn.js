@@ -96,6 +96,11 @@ class CheckIn extends React.Component {
 
   componentDidMount() {
     this.props.formRef.current = this.props.form;
+    this.setupEventListeners();
+  }
+
+  componentWillUnmount() {
+    this.removeEventListeners();
   }
 
   componentDidUpdate() {
@@ -140,7 +145,15 @@ class CheckIn extends React.Component {
     }
   }
 
-  focusInput() {
+  setupEventListeners = () => {
+    document.getElementById('ModuleMainHeading').addEventListener('click', this.focusInput);
+  }
+
+  removeEventListeners = () => {
+    document.getElementById('ModuleMainHeading').removeEventListener('click', this.focusInput);
+  }
+
+  focusInput = () => {
     this.props.barcodeRef.current.focus();
   }
 
