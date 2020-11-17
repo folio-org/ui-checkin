@@ -34,6 +34,22 @@ describe('CheckIn', () => {
     expect(checkIn.barcodePresent).to.be.true;
   });
 
+  describe('when the module mounts', () => {
+    it('should focus the barcode input field', () => {
+      expect(checkIn.barcodeInputIsFocused).to.be.true;
+    });
+  });
+
+  describe('clicking the home button', () => {
+    beforeEach(async function() {
+      checkIn.homeButton.click();
+    });
+
+    it('should focus the barcode input field', () => {
+      expect(checkIn.barcodeInputIsFocused).to.be.true;
+    });
+  });
+
   describe('entering an invalid barcode', () => {
     beforeEach(async function () {
       this.server.post('/circulation/check-in-by-barcode', (_, request) => {
