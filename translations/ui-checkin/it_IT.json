@@ -31,7 +31,7 @@
     "statusModal.transit.message": "Manda <strong>{title} ({materialType})</strong> (Barcode: {barcode}) a <strong>{servicePoint}</strong>.",
     "statusModal.hold.heading": "In attesa di ritiro per una richiesta",
     "statusModal.hold.message": "Metti <strong>{title} ({materialType})</strong> (Barcode: {barcode}) sullo scaffale dei prenotati al <strong>{pickupServicePoint}</strong> per una richiesta.",
-    "scannedItems": "Lista barcode inseriti",
+    "scannedItems": "Barcode inseriti",
     "statusModal.printSlip": "Stampa la ricevuta",
     "unknownError": "Errore sconosciuto",
     "statusModal.close": "Chiudi",
