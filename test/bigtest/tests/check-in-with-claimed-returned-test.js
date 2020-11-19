@@ -44,7 +44,7 @@ describe.only('CheckIn with claimed returned', () => {
     describe('Found by library', () => {
       let body;
       beforeEach(async function () {
-        
+
         this.server.create('account', {
           status: {
             name: 'Open',
@@ -57,14 +57,14 @@ describe.only('CheckIn with claimed returned', () => {
           feeFineType: cancelFeeClaimReturned.LOST_ITEM_FEE,
           loanId: 1,
         });
-        
+
 
         this.server.create('lost-item-fee-policy', {
           name: cancelFeeClaimReturned.LOST_ITEM_FEE_POLICY,
           returnedLostItemProcessingFee: true,
         })
 
-        this.server.get('/lost-item-fees-policies');
+        this.server.get('/lost-item-fee-policy');
 
         this.server.get('/accounts');
 

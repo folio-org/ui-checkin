@@ -7,6 +7,17 @@ export default function configure() {
     totalRecords: 0,
   });
 
+  this.put('/accounts/:id', ({ account }, request) => {
+    const params = JSON.parse(request.requestBody);
+    const acc = account;
+    return acc;
+  });
+
+  this.post('/feefineactions', (schema, { requestBody }) => {
+    const ffAction = JSON.parse(requestBody);
+    return server.create('feefineaction', ffAction);
+  });
+
   this.post('/circulation/end-patron-action-session', {});
 
   // users
@@ -126,12 +137,16 @@ export default function configure() {
       'enabled': true,
       'value': '{"audioAlertsEnabled":false,"prefPatronIdentifier":"","checkoutTimeout":true,"checkoutTimeoutDuration": 0.01}',
       'metadata': {
-        'createdDate' : '2019-05-15T18:42:52.380+0000',
-        'createdByUserId' : '40d1bd71-ea7d-5987-be10-128e382bd307',
-        'updatedDate' : '2019-05-15T18:48:51.940+0000',
-        'updatedByUserId' : '40d1bd71-ea7d-5987-be10-128e382bd307'
+        'createdDate': '2019-05-15T18:42:52.380+0000',
+        'createdByUserId': '40d1bd71-ea7d-5987-be10-128e382bd307',
+        'updatedDate': '2019-05-15T18:48:51.940+0000',
+        'updatedByUserId': '40d1bd71-ea7d-5987-be10-128e382bd307'
       }
     }],
     'totalRecords': 1,
+  });
+
+  this.get('/lost-item-fees-policies', function ({ lostItemFeePolicies }) {
+    return this.serializerOrRegistry.serialize(lostItemFeePolicies.all());
   });
 }
