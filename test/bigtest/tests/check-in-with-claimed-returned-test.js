@@ -10,7 +10,7 @@ import CheckInInteractor from '../interactors/check-in';
 
 import { statuses, cancelFeeClaimReturned } from '../../../src/consts';
 
-describe.only('CheckIn with claimed returned', () => {
+describe('CheckIn with claimed returned', () => {
   setupApplication();
 
   const checkIn = new CheckInInteractor();

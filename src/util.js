@@ -70,7 +70,7 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
   return slipData;
 }
 
-export function buildDateTime(date, time) {
+export function buildDateTime(date, time, timeZone) {
   if (date && time) {
     let timeString = time;
 
@@ -78,9 +78,9 @@ export function buildDateTime(date, time) {
       timeString = time.split('T')[1];
     }
 
-    return `${date.substring(0, 10)}T${timeString}`;
+    return moment(`${date.substring(0, 10)}T${timeString}`).tz(timeZone).format();
   } else {
-    return moment().tz('UTC').format();
+    return moment().tz(timeZone).format();
   }
 }
 

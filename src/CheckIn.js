@@ -153,9 +153,11 @@ class CheckIn extends React.Component {
 
   showPickers = () => {
     const { form: { change }, intl: { timeZone } } = this.props;
-    const now = moment.tz(timeZone);
+    const now = moment().tz(timeZone);
+
     change('item.checkinDate', now.format());
-    change('item.checkinTime', now.format());
+    change('item.checkinTime', now.format("HH:mm"));
+
     this.setState({ showPickers: true });
   }
 
@@ -164,7 +166,6 @@ class CheckIn extends React.Component {
     e.stopPropagation();
 
     const { loan, action } = itemMeta;
-
     if (action && this[action]) {
       this[action](loan);
     }
@@ -402,7 +403,6 @@ class CheckIn extends React.Component {
       hasSubmitErrors = false,
       submitErrors = {},
     } = form.getState();
-
     const { showPickers } = this.state;
     const itemListFormatter = {
       'timeReturned': loan => (
@@ -410,7 +410,7 @@ class CheckIn extends React.Component {
           { loan.returnDate ?
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <div data-test-check-in-return-time>
-                {formatTime(`${get(loan, ['returnDate'])}`)}
+                {loan.returnDate && formatTime(`${get(loan, ['returnDate'])}`)}
               </div>
               <div key={loan.id}>
                 {this.showInfo(loan)}
@@ -520,6 +520,8 @@ class CheckIn extends React.Component {
                           label={processLabel}
                           component={Datepicker}
                           autoComplete="off"
+                          timeZone="UTC"
+                          backendDateStandard="YYYY-MM-DD"
                           format={(value) => (value ? formatDate(value, { timeZone: 'UTC' }) : '')}
                         />
                       </div>

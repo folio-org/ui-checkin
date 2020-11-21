@@ -7,6 +7,10 @@ export default function configure() {
     totalRecords: 0,
   });
 
+  this.get('/lost-item-fees-policies', function ({ lostItemFeePolicies }) {
+    return this.serializerOrRegistry.serialize(lostItemFeePolicies.all());
+  });
+
   this.put('/accounts/:id', ({ account }, request) => {
     const params = JSON.parse(request.requestBody);
     const acc = account;
@@ -146,7 +150,4 @@ export default function configure() {
     'totalRecords': 1,
   });
 
-  this.get('/lost-item-fees-policies', function ({ lostItemFeePolicies }) {
-    return this.serializerOrRegistry.serialize(lostItemFeePolicies.all());
-  });
 }
