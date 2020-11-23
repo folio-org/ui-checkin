@@ -87,7 +87,7 @@
   "claimedReturnedModal.resolution.found": "Found by library",
   "claimedReturnedModal.resolution.returned": "Returned by patron",
   "statuses.missing": "Missing",
-  "statuses.declaredLost": "'Declared lost",
+  "statuses.declaredLost": "Declared lost",
   "statuses.withdrawn": "Withdrawn",
   "statuses.lostAndPaid": "Lost and paid",
   "statuses.agedToLost": "Aged to lost",
