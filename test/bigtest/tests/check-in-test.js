@@ -41,7 +41,7 @@ describe('CheckIn', () => {
   });
 
   describe('clicking the home button', () => {
-    beforeEach(async function() {
+    beforeEach(async function () {
       checkIn.homeButton.click();
     });
 
