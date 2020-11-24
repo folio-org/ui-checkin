@@ -29,7 +29,6 @@ import {
   InfoPopover,
   KeyValue,
   DropdownMenu,
-  Tooltip,
   Dropdown,
   FormattedTime,
 } from '@folio/stripes/components';
@@ -99,10 +98,6 @@ class CheckIn extends React.Component {
     this.setupEventListeners();
   }
 
-  componentWillUnmount() {
-    this.removeEventListeners();
-  }
-
   componentDidUpdate() {
     const {
       resources: {
@@ -145,6 +140,10 @@ class CheckIn extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.removeEventListeners();
+  }
+
   setupEventListeners = () => {
     document.getElementById('ModuleMainHeading').addEventListener('click', this.focusInput);
   }
@@ -169,7 +168,7 @@ class CheckIn extends React.Component {
     const now = moment().tz(timeZone);
 
     change('item.checkinDate', now.format());
-    change('item.checkinTime', now.format("HH:mm"));
+    change('item.checkinTime', now.format('HH:mm'));
 
     this.setState({ showPickers: true });
   }
