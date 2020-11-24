@@ -5,7 +5,7 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import stripesFinalForm from '@folio/stripes/final-form';
 import createInactivityTimer from 'inactivity-timer';
 import {
@@ -165,12 +165,12 @@ class CheckIn extends React.Component {
   }
 
   showPickers = () => {
-    const { form: { change } } = this.props;
-    const dateNow = moment().format();
-    const timeNow = moment().format("HH:mm");
+    const { form: { change }, intl: { timeZone } } = this.props;
+    const now = moment().tz(timeZone);
 
-    change('item.checkinDate', dateNow);
-    change('item.checkinTime', timeNow);
+    change('item.checkinDate', now.format());
+    change('item.checkinTime', now.format("HH:mm"));
+
     this.setState({ showPickers: true });
   }
 
@@ -179,7 +179,6 @@ class CheckIn extends React.Component {
     e.stopPropagation();
 
     const { loan, action } = itemMeta;
-
     if (action && this[action]) {
       this[action](loan);
     }
@@ -417,7 +416,6 @@ class CheckIn extends React.Component {
       hasSubmitErrors = false,
       submitErrors = {},
     } = form.getState();
-
     const { showPickers } = this.state;
     const itemListFormatter = {
       'timeReturned': loan => (
@@ -425,7 +423,7 @@ class CheckIn extends React.Component {
           { loan.returnDate ?
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <div data-test-check-in-return-time>
-                {formatTime(`${get(loan, ['returnDate'])}`)}
+                {loan.returnDate && formatTime(`${get(loan, ['returnDate'])}`)}
               </div>
               <div key={loan.id}>
                 {this.showInfo(loan)}
@@ -565,7 +563,6 @@ class CheckIn extends React.Component {
                           aria-label={checkinTimeLabel}
                           label={timeReturnedLabel}
                           component={Timepicker}
-                          timeZone="UTC"
                           autoComplete="off"
                         />
                       </div>
