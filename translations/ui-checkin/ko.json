@@ -84,7 +84,7 @@
     "confirmModal.confirm": "확인",
     "confirmModal.cancel": "취소",
     "statuses.missing": "분실",
-    "statuses.declaredLost": "'Declared lost",
+    "statuses.declaredLost": "Declared lost",
     "statuses.withdrawn": "Withdrawn",
     "statuses.lostAndPaid": "Lost and paid",
     "feesFinesOwed": "(fees/fines owed)",
