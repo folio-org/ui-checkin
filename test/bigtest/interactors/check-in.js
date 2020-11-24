@@ -3,6 +3,7 @@ import {
   fillable,
   blurrable,
   interactor,
+  Interactor,
   isPresent,
   text,
   scoped,
@@ -22,6 +23,7 @@ import ClaimedReturnedModalInteractor from './claimed-returned-modal';
 import ConfrmModalInteractor from './confirm-modal';
 
 @interactor class CheckInInteractor {
+  homeButton = new Interactor('#ModuleMainHeading');
   processDate = new DatepickerInteractor('[data-test-process-date]');
   processTime = new TimepickerInteractor('[data-test-process-time]');
   confirmStatusModal = new ConfirmStatusModal('[data-test-confirm-status-modal]');
