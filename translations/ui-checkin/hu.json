@@ -84,7 +84,7 @@
     "confirmModal.confirm": "Confirm",
     "confirmModal.cancel": "Cancel",
     "statuses.missing": "Missing",
-    "statuses.declaredLost": "'Declared lost",
+    "statuses.declaredLost": "Declared lost",
     "statuses.withdrawn": "Withdrawn",
     "statuses.lostAndPaid": "Lost and paid",
     "feesFinesOwed": "(fees/fines owed)",

@@ -1,5 +1,5 @@
 import moment from 'moment-timezone';
-import { get, escape } from 'lodash';
+import { escape } from 'lodash';
 
 export function buildTemplate(str) {
   return o => {
