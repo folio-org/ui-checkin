@@ -315,11 +315,12 @@ class Scan extends React.Component {
     const {
       mutator: { checkIn },
       stripes: { user },
+      intl: { timeZone },
     } = this.props;
     const { itemClaimedReturnedResolution } = this.state;
 
     const servicePointId = get(user, 'user.curServicePoint.id', '');
-    const checkInDate = buildDateTime(checkinDate, checkinTime);
+    const checkInDate = buildDateTime(checkinDate, checkinTime, timeZone);
     const requestData = {
       servicePointId,
       checkInDate,
@@ -543,7 +544,7 @@ class Scan extends React.Component {
 
   addScannedItem(checkinResp) {
     const { loan, item, nextRequest, transitItem, holdItem, staffSlipContext, inHouseUse } = checkinResp;
-    const { mutator, resources } = this.props;
+    const { mutator, resources, intl: { timeZone } } = this.props;
     const { checkedinItem } = this.state;
     const scannedItem = loan || { item };
 
@@ -555,7 +556,7 @@ class Scan extends React.Component {
         },
       } = this.checkInData;
 
-      scannedItem.returnDate = buildDateTime(checkinDate, checkinTime);
+      scannedItem.returnDate = buildDateTime(checkinDate, checkinTime, timeZone);
     }
     scannedItem.loanId = loan?.id || '';
     scannedItem.nextRequest = nextRequest;
