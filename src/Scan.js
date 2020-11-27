@@ -78,13 +78,6 @@ class Scan extends React.Component {
         PUT: PropTypes.func,
         reset: PropTypes.func,
       }),
-      loan: PropTypes.shape({
-        GET: PropTypes.func,
-        reset: PropTypes.func,
-      }),
-      loanId: PropTypes.shape({
-        replace: PropTypes.func.isRequired,
-      }).isRequired,
       checkIn: PropTypes.shape({
         POST: PropTypes.func,
       }),
@@ -102,9 +95,6 @@ class Scan extends React.Component {
         POST: PropTypes.func,
       }),
       activeAccount: PropTypes.shape({
-        update: PropTypes.func,
-      }).isRequired,
-      policyId: PropTypes.shape({
         update: PropTypes.func,
       }).isRequired,
       lostItemPolicy: PropTypes.shape({
@@ -188,20 +178,11 @@ class Scan extends React.Component {
     },
     lostItemPolicy: {
       type: 'okapi',
-      path: 'lost-item-fees-policies/%{policyId}',
+      path: 'lost-item-fees-policies',
       fetch: false,
       accumulate: true,
     },
-    loan: {
-      type: 'okapi',
-      records: 'loan',
-      path: 'circulation/loans/%{loanid}',
-      fetch: true,
-      accumulate: true,
-    },
     activeAccount: {},
-    loanId: {},
-    policyId: {},
   });
 
   constructor(props) {
@@ -360,7 +341,6 @@ class Scan extends React.Component {
 
   processClaimReturned(checkinResp) {
     const fetchLoan = () => {
-      this.props.mutator.loanId.replace(checkinResp.loan.id);
       return checkinResp.loan;
     };
 
@@ -379,8 +359,9 @@ class Scan extends React.Component {
     };
 
     const getLostItemPolicy = (lostItemPolicyId) => {
-      this.props.mutator.policyId.replace(lostItemPolicyId);
-      return this.props.mutator.lostItemPolicy.GET();
+      const { mutator } = this.props;
+      const query = `id==${lostItemPolicyId}`;
+      return mutator.lostItemPolicy.GET({ params: { query } });
     };
 
     const createCancelledFeeTemplate = (account) => {
@@ -438,10 +419,10 @@ class Scan extends React.Component {
     };
 
     const processAccounts = async () => {
-      const loans = await fetchLoan();
-      const accounts = await getAccounts(loans.id);
-      const lostItemFeePolicy = await getLostItemPolicy(loans.lostItemPolicyId);
-      const { returnedLostItemProcessingFee } = lostItemFeePolicy;
+      const loanItem = await fetchLoan();
+      const accounts = await getAccounts(loanItem.id);
+      const lostItemFeePolicies = await getLostItemPolicy(loanItem.lostItemPolicyId);
+      const { returnedLostItemProcessingFee } = lostItemFeePolicies.lostItemFeePolicies[0];
       const filterAccounts = accounts.accounts.filter(
         record => record.paymentStatus.name && record.paymentStatus.name.startsWith(cancelFeeClaimReturned.PAYMENT_STATUS)
           && (record.feeFineType === cancelFeeClaimReturned.LOST_ITEM_FEE ||

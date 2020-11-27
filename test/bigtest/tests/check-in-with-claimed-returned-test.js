@@ -14,14 +14,34 @@ describe('CheckIn with claimed returned', () => {
   setupApplication();
 
   const checkIn = new CheckInInteractor();
-  let item;
-
   beforeEach(function () {
-    item = this.server.create('item', 'withLoanClaimReturned', {
+    this.server.create('lost-item-fee-policy', {
+      id: 1,
+      name: cancelFeeClaimReturned.LOST_ITEM_FEE_POLICY,
+      returnedLostItemProcessingFee: true,
+    });
+
+    this.server.create('item', 'withLoanClaimReturned', {
       barcode: 1234567,
       title: 'I Promise I Really, Really Returned This Book!',
       status: { name: statuses.CLAIMED_RETURNED }
     });
+
+    this.server.create('account', {
+      id: 1,
+      status: {
+        name: 'Open',
+      },
+      paymentStatus: {
+        name: cancelFeeClaimReturned.PAYMENT_STATUS,
+      },
+      amount: 200,
+      remaining: 20,
+      feeFineType: cancelFeeClaimReturned.LOST_ITEM_FEE,
+      loanId: 1,
+    });
+
+    this.server.get('/accounts');
 
     return this.visit('/checkin', () => {
       expect(checkIn.$root).to.exist;
@@ -42,93 +62,30 @@ describe('CheckIn with claimed returned', () => {
     });
 
     describe('Found by library', () => {
-      let body;
+      let acc;
       beforeEach(async function () {
+        const wait = (ms = 10000) => new Promise(resolve => { setTimeout(resolve, ms); });
 
-        this.server.create('account', {
-          status: {
-            name: 'Open',
-          },
-          paymentStatus: {
-            name: cancelFeeClaimReturned.PAYMENT_STATUS,
-          },
-          amount: 200,
-          remaining: 20,
-          feeFineType: cancelFeeClaimReturned.LOST_ITEM_FEE,
-          loanId: 1,
+        this.server.put('/accounts/:id', ({ accounts }, request) => {
+          acc = JSON.parse(request.requestBody);
+          return acc;
         });
 
-
-        this.server.create('lost-item-fee-policy', {
-          name: cancelFeeClaimReturned.LOST_ITEM_FEE_POLICY,
-          returnedLostItemProcessingFee: true,
-        })
-
-        this.server.get('/lost-item-fee-policy');
-
-        this.server.get('/accounts');
-
-        /*
-        this.server.post('/accounts',  (_, request) => {
-          parsedRequestBody = JSON.parse(request.requestBody);
-          return new Response(204, {});
-        });
-        */
-        /*
-                this.server.put('/accounts/:id', ({ accounts }, { params, requestBody }) => {
-                  acc = JSON.parse(requestBody);
-                  return accounts.find(params.id).update(acc);
-                });
-        */
-        /*
-                this.server.put('/accounts/:id', (_, request) => {
-                  body = JSON.parse(request.requestBody);
-                  body.paymentStatus.name = 'Cancelled item returned';
-                  return body;
-                });
-                */
         await checkIn.claimedReturnedModal.clickFound.click();
+        await wait();
       });
 
       it('Hide claimed returned modal', () => {
         expect(checkIn.claimedReturnedModalPresent).to.be.false;
       });
 
-
-      it('shows claim confirm modal', () => {
-        expect(checkIn.confirmStatusModalPresent).to.be.true;
+      it('should hide item list empty message during check in', () => {
+        expect(checkIn.checkedInItemsList.displaysEmptyMessage).to.be.false;
       });
 
-      describe('click confirm button', () => {
-        beforeEach(async function () {
-          // await checkIn.confirmStatusModal.clickConfirmButton.click();
-          await checkIn.confirmStatusModal.clickConfirmButton();
-        });
-
-        it('hide claimed confirm modal', () => {
-          expect(checkIn.confirmStatusModalPresent).to.be.false;
-        });
+      it('Payment status Cancelled item returned', () => {
+        expect(acc.paymentStatus.name).to.equal(cancelFeeClaimReturned.CANCEL_PAYMENT_STATUS);
       });
-
-
-      /*
-            describe('Fee/fines with Cancelled item returned', () => {
-              beforeEach(async function () {
-                let acc;
-                this.server.post('/accounts', function (schema, { requestBody }) {
-                  acc = JSON.parse(requestBody);
-                  return server.create('account', acc);
-                });
-      
-                console.log('acc: ' + JSON.stringify(acc));
-              });
-      
-              it('Visit fee/fines', () => {
-                expect(false).to.be.false;
-              });
-            });
-      */
-
     });
   });
 });

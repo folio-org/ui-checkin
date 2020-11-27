@@ -32,7 +32,8 @@ export default Factory.extend({
     afterCreate(item, server) {
       server.create('loan', 'withUser', {
         item,
-        status: { name: 'Open' }
+        status: { name: 'Open' },
+        lostItemPolicyId: 1,
       });
     }
   })

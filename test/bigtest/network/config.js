@@ -7,19 +7,21 @@ export default function configure() {
     totalRecords: 0,
   });
 
+  this.get('/accounts/:id', ({ accounts }, request) => {
+    return accounts.find(request.params.id).attrs;
+  });
+
   this.get('/lost-item-fees-policies', function ({ lostItemFeePolicies }) {
     return this.serializerOrRegistry.serialize(lostItemFeePolicies.all());
   });
 
-  this.put('/accounts/:id', ({ account }, request) => {
-    const params = JSON.parse(request.requestBody);
-    const acc = account;
-    return acc;
-  });
-
   this.post('/feefineactions', (schema, { requestBody }) => {
     const ffAction = JSON.parse(requestBody);
-    return server.create('feefineaction', ffAction);
+    return this.create('feefineaction', ffAction);
+  });
+
+  this.get('/feefineactions', ({ feefineactions }) => {
+    return this.serializerOrRegistry.serialize(feefineactions.all());
   });
 
   this.post('/circulation/end-patron-action-session', {});
@@ -149,5 +151,4 @@ export default function configure() {
     }],
     'totalRecords': 1,
   });
-
 }
