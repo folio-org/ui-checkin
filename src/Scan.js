@@ -440,7 +440,7 @@ class Scan extends React.Component {
       await Promise.all(persistedCancelledActions);
     };
 
-    processAccounts(checkinResp);
+    processAccounts();
     return checkinResp;
   }
 

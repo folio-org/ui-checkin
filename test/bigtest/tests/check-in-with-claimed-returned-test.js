@@ -66,7 +66,7 @@ describe('CheckIn with claimed returned', () => {
       beforeEach(async function () {
         const wait = (ms = 10000) => new Promise(resolve => { setTimeout(resolve, ms); });
 
-        this.server.put('/accounts/:id', ({ accounts }, request) => {
+        this.server.put('/accounts/:id', (_, request) => {
           acc = JSON.parse(request.requestBody);
           return acc;
         });
