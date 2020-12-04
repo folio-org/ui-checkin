@@ -585,7 +585,7 @@ class Scan extends React.Component {
     const slipData = convertToSlipData(staffSlipContext, intl, timezone, locale, 'Transit');
 
     const destinationServicePoint = get(item, 'inTransitDestinationServicePoint.name', '');
-    const message = (
+    const messages = [
       <SafeHTMLMessage
         id="ui-checkin.statusModal.transit.message"
         values={{
@@ -595,7 +595,7 @@ class Scan extends React.Component {
           servicePoint: destinationServicePoint
         }}
       />
-    );
+    ];
 
     return (
       <ConfirmStatusModal
@@ -604,7 +604,7 @@ class Scan extends React.Component {
         slipData={slipData}
         isPrintable={this.isPrintable('transit')}
         label={<FormattedMessage id="ui-checkin.statusModal.transit.heading" />}
-        message={message}
+        message={messages}
         onConfirm={this.onModalClose}
         onCancel={this.handleOnAfterPrint}
       />
