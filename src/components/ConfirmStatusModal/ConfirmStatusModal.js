@@ -75,6 +75,7 @@ class ConfirmStatusModal extends React.Component {
           </Button>}
       </div>
     );
+    const messageParts = message.map(m => <p>{m}</p>);
 
     return (
       <Modal
@@ -88,7 +89,7 @@ class ConfirmStatusModal extends React.Component {
         size="small"
         footer={footer}
       >
-        <p>{message}</p>
+        {messageParts}
         <Row>
           <Col xs>
             <Checkbox

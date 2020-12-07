@@ -614,9 +614,12 @@ class Scan extends React.Component {
       },
     } = this.props;
 
-    const { item = {} } = request;
+    const {
+      item = {},
+      patronComments,
+    } = request;
     const slipData = convertToSlipData(staffSlipContext, intl, timezone, locale);
-    const message = (
+    const messages = [
       <SafeHTMLMessage
         id="ui-checkin.statusModal.hold.message"
         values={{
@@ -626,7 +629,19 @@ class Scan extends React.Component {
           pickupServicePoint: get(request, 'pickupServicePoint.name', '')
         }}
       />
-    );
+    ];
+
+    if (patronComments) {
+      messages.push(
+        <FormattedMessage
+          id="ui-checkin.statusModal.hold.comment"
+          values={{
+            comment: patronComments,
+            strong: (chunks) => <strong>{chunks}</strong>,
+          }}
+        />
+      );
+    }
 
     return (
       <ConfirmStatusModal
@@ -637,7 +652,7 @@ class Scan extends React.Component {
         isPrintable={this.isPrintable('hold')}
         slipData={slipData}
         label={<FormattedMessage id="ui-checkin.statusModal.hold.heading" />}
-        message={message}
+        message={messages}
       />
     );
   }
@@ -705,7 +720,7 @@ class Scan extends React.Component {
     const slipData = convertToSlipData(staffSlipContext, intl, timezone, locale, 'Transit');
 
     const destinationServicePoint = get(item, 'inTransitDestinationServicePoint.name', '');
-    const message = (
+    const messages = [
       <SafeHTMLMessage
         id="ui-checkin.statusModal.transit.message"
         values={{
@@ -715,7 +730,7 @@ class Scan extends React.Component {
           servicePoint: destinationServicePoint
         }}
       />
-    );
+    ];
 
     return (
       <ConfirmStatusModal
@@ -724,7 +739,7 @@ class Scan extends React.Component {
         slipData={slipData}
         isPrintable={this.isPrintable('transit')}
         label={<FormattedMessage id="ui-checkin.statusModal.transit.heading" />}
-        message={message}
+        message={messages}
         onConfirm={this.onModalClose}
         onCancel={this.handleOnAfterPrint}
       />
