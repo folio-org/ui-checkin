@@ -13,7 +13,6 @@ import {
     click: clickable(),
     isFocused: is(':focus'),
   });
-
 }
 
 export default ClaimedReturnedModalInteractor;
