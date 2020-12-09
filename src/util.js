@@ -1,7 +1,7 @@
 import moment from 'moment-timezone';
 import { escape } from 'lodash';
 
-const escapeValue = (val) => {
+export const escapeValue = (val) => {
   if (val.startsWith('<Barcode>') && val.endsWith('</Barcode>')) {
     return val;
   }
