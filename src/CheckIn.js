@@ -493,7 +493,7 @@ class CheckIn extends React.Component {
                 <Row>
                   <Col xs={9} sm={4}>
                     <Layout className="marginTopLabelSpacer">
-                      <Titled title={title => (this.state.readyToScan ? `[Ready] ${title}` : title)}>
+                      <Titled title={title => (this.state.readyToScan ? `Ready - ${title}` : title)}>
                         <Field
                           id="input-item-barcode"
                           name="item.barcode"
