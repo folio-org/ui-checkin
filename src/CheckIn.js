@@ -6,6 +6,7 @@ import {
   injectIntl,
 } from 'react-intl';
 import moment from 'moment';
+import { Titled } from 'react-titled';
 import stripesFinalForm from '@folio/stripes/final-form';
 import createInactivityTimer from 'inactivity-timer';
 import {
@@ -492,17 +493,21 @@ class CheckIn extends React.Component {
                 <Row>
                   <Col xs={9} sm={4}>
                     <Layout className="marginTopLabelSpacer">
-                      <Field
-                        id="input-item-barcode"
-                        name="item.barcode"
-                        validationEnabled={false}
-                        placeholder={scanBarcodeMsg}
-                        ariaLabel={itemIdLabel}
-                        inputRef={barcodeRef}
-                        fullWidth
-                        component={TextField}
-                        data-test-check-in-barcode
-                      />
+                      <Titled title={title => (this.state.readyToScan ? `📶 ${title}` : title)}>
+                        <Field
+                          id="input-item-barcode"
+                          name="item.barcode"
+                          validationEnabled={false}
+                          placeholder={scanBarcodeMsg}
+                          ariaLabel={itemIdLabel}
+                          inputRef={barcodeRef}
+                          onFocus={() => this.setState({ readyToScan: true })}
+                          onBlur={() => this.setState({ readyToScan: false })}
+                          fullWidth
+                          component={TextField}
+                          data-test-check-in-barcode
+                        />
+                      </Titled>
                       {hasSubmitErrors && <span className={styles.error}>{submitErrors.checkin}</span>}
                     </Layout>
                   </Col>
