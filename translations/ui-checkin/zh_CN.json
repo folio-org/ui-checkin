@@ -91,5 +91,6 @@
     "statuses.agedToLost": "超期太久视为遗失",
     "actions": "操作",
     "actionsMenu": "单件操作",
-    "permission.all": "归还：所有权限"
+    "permission.all": "归还：所有权限",
+    "statusModal.hold.comment": "<strong>读者备注： </strong> {comment}"
 }

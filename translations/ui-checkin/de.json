@@ -88,8 +88,9 @@
     "statuses.withdrawn": "Zurückgezogen",
     "statuses.lostAndPaid": "Verloren und bezahlt",
     "feesFinesOwed": "geschuldete Gebühren/Bußgelder",
-    "statuses.agedToLost": "Aged to lost",
+    "statuses.agedToLost": "Verloren erklärt",
     "actions": "Actions",
     "actionsMenu": "Item actions",
-    "permission.all": "Rückgabe: Alle Berechtigungen"
+    "permission.all": "Rückgabe: Alle Berechtigungen",
+    "statusModal.hold.comment": "<strong>Patron comments:</strong> {comment}"
 }
