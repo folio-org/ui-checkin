@@ -92,5 +92,6 @@
     "actions": "Azioni",
     "actionsMenu": "Azioni oggetto",
     "permission.all": "Check in: tutte le autorizzazioni",
-    "statusModal.hold.comment": "<strong>Patron comments:</strong> {comment}"
+    "statusModal.hold.comment": "<strong>Patron comments:</strong> {comment}",
+    "actions.moreDetails": ""
 }
