@@ -92,6 +92,5 @@
     "actions": "Actions",
     "actionsMenu": "Item actions",
     "permission.all": "Devolución: Todos los permisos",
-    "statusModal.hold.comment": "<strong>Patron comments:</strong> {comment}",
-    "actions.moreDetails": "Obtener más detalles sobre este item"
+    "statusModal.hold.comment": "<strong>Patron comments:</strong> {comment}"
 }

@@ -92,6 +92,5 @@
     "actions": "Ações",
     "actionsMenu": "Ações de item",
     "permission.all": "Devolução: Todas as permissões",
-    "statusModal.hold.comment": "<strong>Comentários do usuário:</strong> {comment}",
-    "actions.moreDetails": ""
+    "statusModal.hold.comment": "<strong>Comentários do usuário:</strong> {comment}"
 }

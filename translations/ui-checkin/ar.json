@@ -92,6 +92,5 @@
     "actions": "الإجراءات",
     "actionsMenu": "إجراءات المادة",
     "permission.all": "الرد: كل الصلاحيات",
-    "statusModal.hold.comment": "<strong>تعليقات المستفيد:</strong> {comment}",
-    "actions.moreDetails": ""
+    "statusModal.hold.comment": "<strong>تعليقات المستفيد:</strong> {comment}"
 }

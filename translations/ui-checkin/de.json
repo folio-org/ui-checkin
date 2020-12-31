@@ -92,6 +92,5 @@
     "actions": "Actions",
     "actionsMenu": "Item actions",
     "permission.all": "Rückgabe: Alle Berechtigungen",
-    "statusModal.hold.comment": "<strong>Patron comments:</strong> {comment}",
-    "actions.moreDetails": ""
+    "statusModal.hold.comment": "<strong>Patron comments:</strong> {comment}"
 }
