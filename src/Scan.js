@@ -354,7 +354,7 @@ class Scan extends React.Component {
         'accounts?query=',
         `loanId=="${loanId}"`,
       ];
-      const path = pathParts.join('');
+      const path = `accounts?query=loanId=="${loanId}"`;
       return GET({ path });
     };
 
