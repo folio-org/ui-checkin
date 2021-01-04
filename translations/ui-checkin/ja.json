@@ -91,5 +91,6 @@
     "statuses.agedToLost": "Aged to lost",
     "actions": "操作",
     "actionsMenu": "Item actions",
-    "permission.all": "返却：すべての権限"
+    "permission.all": "返却：すべての権限",
+    "statusModal.hold.comment": "<strong>Patron comments:</strong> {comment}"
 }

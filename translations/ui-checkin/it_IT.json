@@ -91,5 +91,6 @@
     "statuses.agedToLost": "Dichiarato perso da utente",
     "actions": "Azioni",
     "actionsMenu": "Azioni oggetto",
-    "permission.all": "Check in: tutte le autorizzazioni"
+    "permission.all": "Check in: tutte le autorizzazioni",
+    "statusModal.hold.comment": "<strong>Patron comments:</strong> {comment}"
 }
