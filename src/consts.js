@@ -9,6 +9,7 @@ const statuses = {
   WITHDRAWN: 'Withdrawn',
   LOST_AND_PAID: 'Lost and paid',
   AGED_TO_LOST: 'Aged to lost',
+  RESTRICTED: 'Restricted',
 };
 
 const statusMessages = {
@@ -16,6 +17,7 @@ const statusMessages = {
   'Declared lost': 'ui-checkin.statuses.declaredLost',
   'Withdrawn': 'ui-checkin.statuses.withdrawn',
   'Lost and paid': 'ui-checkin.statuses.lostAndPaid',
+  'Restricted': 'ui-checkin.statuses.restricted',
   'Aged to lost': 'ui-checkin.statuses.agedToLost',
 };
 
