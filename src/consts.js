@@ -18,6 +18,7 @@ const statusMessages = {
   'Withdrawn': 'ui-checkin.statuses.withdrawn',
   'Lost and paid': 'ui-checkin.statuses.lostAndPaid',
   'Restricted': 'ui-checkin.statuses.restricted',
+  'Aged to lost': 'ui-checkin.statuses.agedToLost',
 };
 
 const requestTypes = {
