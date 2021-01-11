@@ -92,6 +92,7 @@
   "statuses.withdrawn": "Withdrawn",
   "statuses.lostAndPaid": "Lost and paid",
   "statuses.agedToLost": "Aged to lost",
+  "statuses.restricted": "Restricted",
 
   "permission.all": "Check in: All permissions"
 }

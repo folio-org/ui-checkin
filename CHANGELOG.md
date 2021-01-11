@@ -8,6 +8,7 @@
 * Fix typo in status label. Fixes UICHKIN-211.
 * Display patron notes in `<ConfirmStatusModal>`. Refs UICHKIN-208.
 * Barcode image not rendering on staff slips. Refs UICHKIN-220.
+* Check in items with Restricted status. Refs UICHKIN-221.
 
 ## [4.0.0] (https://github.com/folio-org/ui-checkin/tree/v4.0.0) (2020-10-08)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v3.0.0...v4.0.0)

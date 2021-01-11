@@ -16,6 +16,7 @@ const statuses = [
   'Withdrawn',
   'Lost and paid',
   'Aged to lost',
+  'Restricted',
 ];
 
 describe('CheckIn', () => {
