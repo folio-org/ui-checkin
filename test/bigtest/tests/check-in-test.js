@@ -19,6 +19,11 @@ const statuses = [
   'Restricted',
 ];
 
+// Assumed to be several non-checked in item statuses
+const nonCheckedInItemStatuses = [
+  'Intellectual item',
+];
+
 describe('CheckIn', () => {
   setupApplication();
 
@@ -82,6 +87,47 @@ describe('CheckIn', () => {
       it('should focus and clear barcode input', () => {
         expect(checkIn.barcodeInputValue).to.equal('');
         // expect(checkIn.barcodeInputIsFocused).to.be.true;
+      });
+    });
+  });
+
+  nonCheckedInItemStatuses.forEach(status => {
+    describe(`checking in item with status ${status}`, () => {
+      let item;
+      let errorMessage;
+
+      beforeEach(async function () {
+        const nonCheckedInItem = this.server.create('item', {
+          status: {
+            name: status,
+          },
+        });
+
+        this.server.post('/circulation/check-in-by-barcode', (schema, request) => {
+          const params = JSON.parse(request.requestBody);
+          item = schema.items.findBy({ barcode: params.itemBarcode });
+          errorMessage = `${item.title} (${item.materialType.name}) (Barcode: ${item.barcode}) has the item status ${item.status.name} and cannot be checked in`;
+
+          return new Response(422, { 'Content-Type': 'application/json' }, {
+            errors: [{
+              message: errorMessage,
+              parameters: [{
+                key : 'itemBarcode',
+                value : params.itemBarcode,
+              }]
+            }]
+          });
+        });
+
+        await checkIn.barcode(nonCheckedInItem.barcode).clickEnter();
+      });
+
+      it('should show error modal', () => {
+        expect(checkIn.errorModal).to.be.true;
+      });
+
+      it('should show error message', () => {
+        expect(checkIn.barcodeError).to.equal(errorMessage);
       });
     });
   });

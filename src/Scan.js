@@ -235,7 +235,7 @@ class Scan extends React.Component {
   }
 
   onCloseErrorModal = () => {
-    this.setState({ itemError: false },
+    this.setState({ itemError: null },
       () => {
         this.clearField('item.barcode');
         this.setFocusInput();
@@ -351,6 +351,7 @@ class Scan extends React.Component {
     errors: [
       {
         parameters,
+        message,
       } = {},
     ] = [],
   }) {
@@ -360,6 +361,7 @@ class Scan extends React.Component {
         _error: 'unknownError',
       }
       : {
+        message,
         barcode: parameters[0].value,
         _error: parameters[0].key,
       };
@@ -611,15 +613,22 @@ class Scan extends React.Component {
     );
   }
 
-  renderErrorModal(error) {
-    const message = (
-      <SafeHTMLMessage
-        id="ui-checkin.errorModal.noItemFound"
-        values={{
-          barcode: error.barcode,
-        }}
-      />
-    );
+  renderErrorModal({ message, barcode }) {
+    let errorMessage;
+    let label;
+
+    if (message === `No item with barcode ${barcode} exists`) {
+      errorMessage = (
+        <SafeHTMLMessage
+          id="ui-checkin.errorModal.noItemFound"
+          values={{ barcode }}
+        />
+      );
+      label = <FormattedMessage id="ui-checkin.itemNotFound" />;
+    } else {
+      errorMessage = message;
+      label = <FormattedMessage id="ui-checkin.itemNotCheckedIn" />;
+    }
 
     const footer = (
       <ModalFooter>
@@ -636,16 +645,12 @@ class Scan extends React.Component {
       <Modal
         open
         size="small"
-        label={
-          <FormattedMessage
-            id="ui-checkin.itemNotFound"
-          />
-}
+        label={label}
         footer={footer}
         dismissible
         onClose={this.onCloseErrorModal}
       >
-        {message}
+        {errorMessage}
       </Modal>
     );
   }
