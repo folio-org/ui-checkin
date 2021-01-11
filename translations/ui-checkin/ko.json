@@ -92,5 +92,6 @@
     "actions": "작업",
     "actionsMenu": "항목 작업",
     "permission.all": "반납 : 모든 권한",
-    "statusModal.hold.comment": "<strong>Patron comments:</strong> {comment}"
+    "statusModal.hold.comment": "<strong>Patron comments:</strong> {comment}",
+    "statuses.restricted": "Restricted"
 }
