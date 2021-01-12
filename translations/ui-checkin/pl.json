@@ -92,5 +92,6 @@
     "actions": "Akcje",
     "actionsMenu": "Item actions",
     "permission.all": "Check in: All permissions",
-    "statusModal.hold.comment": "<strong>Patron comments:</strong> {comment}"
+    "statusModal.hold.comment": "<strong>Patron comments:</strong> {comment}",
+    "statuses.restricted": "Restricted"
 }
