@@ -29,6 +29,7 @@
   "feeFineDetails": "Fee/fine details",
   "newFeeFine": "New Fee/Fine",
   "itemNotFound": "Item not found",
+  "itemNotCheckedIn": "Item not checked in",
   "patronDetails": "Patron details",
   "loanNoExist": "Loan does not exist",
   "itemNoExist": "Item with this barcode does not exist",
