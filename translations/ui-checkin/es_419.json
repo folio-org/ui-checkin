@@ -93,5 +93,6 @@
     "actionsMenu": "Acciones del item",
     "permission.all": "Devolución: Todos los permisos",
     "statusModal.hold.comment": "<strong> Comentarios de los usuarios: </strong> {comment}",
-    "statuses.restricted": "Restricted"
+    "statuses.restricted": "Restricted",
+    "itemNotCheckedIn": "Item not checked in"
 }

@@ -93,5 +93,6 @@
     "actionsMenu": "Azioni oggetto",
     "permission.all": "Check in: tutte le autorizzazioni",
     "statusModal.hold.comment": "<strong>Patron comments:</strong> {comment}",
-    "statuses.restricted": "Restricted"
+    "statuses.restricted": "Restricted",
+    "itemNotCheckedIn": "Item not checked in"
 }
