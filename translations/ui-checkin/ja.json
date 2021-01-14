@@ -93,5 +93,6 @@
     "actionsMenu": "Item actions",
     "permission.all": "返却：すべての権限",
     "statusModal.hold.comment": "<strong>Patron comments:</strong> {comment}",
-    "statuses.restricted": "Restricted"
+    "statuses.restricted": "Restricted",
+    "itemNotCheckedIn": "Item not checked in"
 }
