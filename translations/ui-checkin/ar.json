@@ -94,5 +94,5 @@
     "permission.all": "الرد: كل الصلاحيات",
     "statusModal.hold.comment": "<strong>تعليقات المستفيد:</strong> {comment}",
     "statuses.restricted": "مقيد",
-    "itemNotCheckedIn": "Item not checked in"
+    "itemNotCheckedIn": "لم يتم رد المادة"
 }
