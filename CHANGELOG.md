@@ -1,6 +1,11 @@
 # Change history for ui-checkin
 
-## [4.0.1] (https://github.com/folio-org/ui-checkin/tree/v4.0.0) (2020-11-12)
+## [4.0.2] (https://github.com/folio-org/ui-checkin/tree/v4.0.2) (2021-01-22)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v4.0.1...v4.0.2)
+
+* Barcode image not rendering on staff slips. Refs UICHKIN-220.
+
+## [4.0.1] (https://github.com/folio-org/ui-checkin/tree/v4.0.1) (2020-11-12)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v4.0.0...v4.0.1)
 
 * `Timepicker` defaults to local time. Refs UICHKIN-206.
