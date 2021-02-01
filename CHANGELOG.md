@@ -11,6 +11,7 @@
 * Check in items with Restricted status. Refs UICHKIN-221.
 * Prevent check in when item with intellectual item status is scanned. Refs UICHKIN-210.
 * Update to stripes v6. Refs UICHKIN-226.
+* Fix incorrect ref assignment. Refs UICHKIN-205.
 
 ## [4.0.0] (https://github.com/folio-org/ui-checkin/tree/v4.0.0) (2020-10-08)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v3.0.0...v4.0.0)
