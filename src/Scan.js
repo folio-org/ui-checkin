@@ -839,7 +839,7 @@ class Scan extends React.Component {
           loading={loading}
           scannedItems={scannedItems}
           items={items}
-          formRef={this.checkinFormRef}
+          checkinFormRef={this.checkinFormRef}
           barcodeRef={this.barcode}
           initialValues={this.checkinInitialValues}
           showCheckinNotes={this.showCheckinNotes}
