@@ -94,6 +94,10 @@
   "statuses.lostAndPaid": "Lost and paid",
   "statuses.agedToLost": "Aged to lost",
   "statuses.restricted": "Restricted",
+  "statuses.inProcessNonRequestable": "In process (non-requestable)",
+  "statuses.longMissing": "Long missing",
+  "statuses.unavailable": "Unavailable",
+  "statuses.unknown": "Unknown",
 
   "permission.all": "Check in: All permissions"
 }

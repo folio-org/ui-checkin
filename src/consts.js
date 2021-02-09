@@ -10,6 +10,10 @@ const statuses = {
   LOST_AND_PAID: 'Lost and paid',
   AGED_TO_LOST: 'Aged to lost',
   RESTRICTED: 'Restricted',
+  IN_PROCESS_NON_REQUESTABLE: 'In process (non-requestable)',
+  LONG_MISSING: 'Long missing',
+  UNAVAILABLE: 'Unavailable',
+  UNKNOWN: 'Unknown',
 };
 
 const statusMessages = {
@@ -19,6 +23,10 @@ const statusMessages = {
   'Lost and paid': 'ui-checkin.statuses.lostAndPaid',
   'Restricted': 'ui-checkin.statuses.restricted',
   'Aged to lost': 'ui-checkin.statuses.agedToLost',
+  'In process (non-requestable)': 'ui-checkin.statuses.inProcessNonRequestable',
+  'Long missing': 'ui-checkin.statuses.longMissing',
+  'Unavailable': 'ui-checkin.statuses.unavailable',
+  'Unknown': 'ui-checkin.statuses.unknown',
 };
 
 const requestTypes = {
