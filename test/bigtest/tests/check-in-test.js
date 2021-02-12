@@ -17,6 +17,10 @@ const statuses = [
   'Lost and paid',
   'Aged to lost',
   'Restricted',
+  'In process (non-requestable)',
+  'Long missing',
+  'Unavailable',
+  'Unknown',
 ];
 
 // Assumed to be several non-checked in item statuses
