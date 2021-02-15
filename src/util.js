@@ -1,5 +1,10 @@
 import moment from 'moment-timezone';
-import { escape } from 'lodash';
+import {
+  escape,
+  includes,
+} from 'lodash';
+
+import { statuses } from './consts';
 
 export const escapeValue = (val) => {
   if (val.startsWith('<Barcode>') && val.endsWith('</Barcode>')) {
@@ -102,6 +107,21 @@ export function getCheckinSettings(checkinSettings) {
   } catch (e) {
     return {};
   }
+}
+
+export function shouldConfirmStatusModalBeShown(item) {
+  return includes([
+    statuses.WITHDRAWN,
+    statuses.DECLARED_LOST,
+    statuses.MISSING,
+    statuses.LOST_AND_PAID,
+    statuses.AGED_TO_LOST,
+    statuses.RESTRICTED,
+    statuses.IN_PROCESS_NON_REQUESTABLE,
+    statuses.LONG_MISSING,
+    statuses.UNAVAILABLE,
+    statuses.UNKNOWN,
+  ], item?.status?.name);
 }
 
 export default {};
