@@ -94,5 +94,9 @@
     "permission.all": "返却：すべての権限",
     "statusModal.hold.comment": "<strong>Patron comments:</strong> {comment}",
     "statuses.restricted": "Restricted",
-    "itemNotCheckedIn": "Item not checked in"
+    "itemNotCheckedIn": "Item not checked in",
+    "statuses.inProcessNonRequestable": "In process (non-requestable)",
+    "statuses.longMissing": "Long missing",
+    "statuses.unavailable": "Unavailable",
+    "statuses.unknown": "Unknown"
 }

@@ -56,9 +56,7 @@ class CheckIn extends React.Component {
     barcodeRef: PropTypes.shape({
       current: PropTypes.instanceOf(Element)
     }),
-    formRef: PropTypes.shape({
-      current: PropTypes.instanceOf(Element)
-    }),
+    checkinFormRef: PropTypes.object,
     onSessionEnd: PropTypes.func,
     resources: PropTypes.shape({
       checkinSettings: PropTypes.shape({
@@ -94,7 +92,7 @@ class CheckIn extends React.Component {
   }
 
   componentDidMount() {
-    this.props.formRef.current = this.props.form;
+    this.props.checkinFormRef.current = this.props.form;
     this.setupEventListeners();
   }
 

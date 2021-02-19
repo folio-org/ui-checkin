@@ -93,6 +93,10 @@
     "actionsMenu": "单件操作",
     "permission.all": "归还：所有权限",
     "statusModal.hold.comment": "<strong>读者备注： </strong> {comment}",
-    "statuses.restricted": "Restricted",
-    "itemNotCheckedIn": "Item not checked in"
+    "statuses.restricted": "使用受限",
+    "itemNotCheckedIn": "单件未归还",
+    "statuses.inProcessNonRequestable": "In process (non-requestable)",
+    "statuses.longMissing": "Long missing",
+    "statuses.unavailable": "Unavailable",
+    "statuses.unknown": "Unknown"
 }

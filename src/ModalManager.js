@@ -1,8 +1,8 @@
 import {
   get,
   orderBy,
+  lowerFirst,
   upperFirst,
-  includes,
 } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -26,6 +26,7 @@ import {
   statuses,
   statusMessages,
 } from './consts';
+import { shouldConfirmStatusModalBeShown } from './util';
 
 import css from './ModalManager.css';
 
@@ -50,7 +51,7 @@ class ModalManager extends React.Component {
         exec: () => this.setState({ showClaimedReturnedModal: true }),
       },
       {
-        validate: this.shouldConfirmStatusModalBeShown,
+        validate: () => shouldConfirmStatusModalBeShown(this.state.checkedinItem),
         exec: () => this.setState({ showConfirmModal: true }),
       },
       {
@@ -81,19 +82,6 @@ class ModalManager extends React.Component {
     }
 
     return this.props.onDone();
-  }
-
-  shouldConfirmStatusModalBeShown = () => {
-    const { checkedinItem } = this.state;
-
-    return includes([
-      statuses.WITHDRAWN,
-      statuses.DECLARED_LOST,
-      statuses.MISSING,
-      statuses.LOST_AND_PAID,
-      statuses.AGED_TO_LOST,
-      statuses.RESTRICTED,
-    ], checkedinItem?.status?.name);
   }
 
   shouldClaimedReturnedModalBeShown = () => {
@@ -190,17 +178,25 @@ class ModalManager extends React.Component {
       checkedinItem,
       showConfirmModal,
     } = this.state;
+
     const {
       title,
       barcode,
       discoverySuppress,
       status: { name },
     } = checkedinItem;
+
     const materialType = upperFirst(checkedinItem?.materialType?.name ?? '');
     const discoverySuppressMessage = discoverySuppress
       ? formatMessage({ id:'ui-checkin.confirmModal.discoverySuppress' })
       : '';
     const status = formatMessage({ id: statusMessages[name] });
+    const heading = (
+      <FormattedMessage
+        id="ui-checkin.confirmModal.heading"
+        values={{ status: lowerFirst(status) }}
+      />
+    );
     const message = (
       <SafeHTMLMessage
         id="ui-checkin.confirmModal.message"
@@ -217,7 +213,7 @@ class ModalManager extends React.Component {
     return (
       <ConfirmationModal
         open={showConfirmModal}
-        heading={<FormattedMessage id="ui-checkin.confirmModal.heading" values={{ status }} />}
+        heading={heading}
         onConfirm={this.onConfirm}
         onCancel={this.onCancel}
         cancelLabel={<FormattedMessage id="ui-checkin.confirmModal.cancel" />}
