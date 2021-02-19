@@ -1,7 +1,6 @@
 # Change history for ui-checkin
 
 ## [5.0.0] In Progress
-* Claim returned: Cancel SET COST fee at check in. Refs UICHKIN-225
 * Clear `checkinNotesMode` after succesful checkin or cancel. Fixes UICHKIN-207.
 * `Timepicker` defaults to local time. Refs UICHKIN-206.
 * `Timepicker` defaults to tenant's time. Fixes UICHKIN-206.
@@ -14,6 +13,7 @@
 * Fix incorrect ref assignment. Refs UICHKIN-205.
 * Increment `@folio/stripes-cli` to `v2`. Refs UICHKIN-231.
 * Show confirmation modal when check in an item with one of the new statuses (Long missing, In process (non-requestable), Unavailable, Unknown). Refs UICHKIN-120.
+* Claim returned: Cancel SET COST fee at check in. Refs UICHKIN-225
 
 ## [4.0.0] (https://github.com/folio-org/ui-checkin/tree/v4.0.0) (2020-10-08)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v3.0.0...v4.0.0)

@@ -85,6 +85,9 @@ describe('CheckIn with claimed returned', () => {
 
       it('Payment status Cancelled item returned', () => {
         expect(acc.paymentStatus.name).to.equal(cancelFeeClaimReturned.CANCEL_PAYMENT_STATUS);
+      });
+
+      it('should set remaining to 0', () => {
         expect(acc.remaining).to.equal(0);
       });
     });
