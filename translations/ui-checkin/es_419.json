@@ -94,5 +94,9 @@
     "permission.all": "Devolución: Todos los permisos",
     "statusModal.hold.comment": "<strong> Comentarios de los usuarios: </strong> {comment}",
     "statuses.restricted": "Restringido",
-    "itemNotCheckedIn": "Ejemplar no devuelto"
+    "itemNotCheckedIn": "Ejemplar no devuelto",
+    "statuses.inProcessNonRequestable": "In process (non-requestable)",
+    "statuses.longMissing": "Long missing",
+    "statuses.unavailable": "Unavailable",
+    "statuses.unknown": "Unknown"
 }

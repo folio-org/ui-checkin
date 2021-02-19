@@ -94,5 +94,9 @@
     "permission.all": "الرد: كل الصلاحيات",
     "statusModal.hold.comment": "<strong>تعليقات المستفيد:</strong> {comment}",
     "statuses.restricted": "مقيد",
-    "itemNotCheckedIn": "لم يتم رد المادة"
+    "itemNotCheckedIn": "لم يتم رد المادة",
+    "statuses.inProcessNonRequestable": "قيد المعالجة (غير قابل للطلب)",
+    "statuses.longMissing": "مفقودة منذ مدة",
+    "statuses.unavailable": "غير متاحة",
+    "statuses.unknown": "غير معروف"
 }
