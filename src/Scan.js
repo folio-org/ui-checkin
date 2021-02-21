@@ -350,10 +350,7 @@ class Scan extends React.Component {
           accounts: { GET },
         },
       } = this.props;
-      const pathParts = [
-        'accounts?query=',
-        `loanId=="${loanId}"`,
-      ];
+
       const path = `accounts?query=loanId=="${loanId}"`;
       return GET({ path });
     };
@@ -395,6 +392,7 @@ class Scan extends React.Component {
     const setPaymentStatus = (record) => {
       const updatedRec = cloneDeep(record);
       updatedRec.paymentStatus.name = cancelFeeClaimReturned.CANCEL_PAYMENT_STATUS;
+      updatedRec.remaining = 0;
       return updatedRec;
     };
 
