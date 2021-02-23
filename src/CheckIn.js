@@ -88,7 +88,7 @@ class CheckIn extends React.Component {
     this.renderActions = this.renderActions.bind(this);
     this.handleOptionsChange = this.handleOptionsChange.bind(this);
     this.timer = undefined;
-    this.readyPrefix = props.modules?.app?.filter(el => el.module === '@folio/checkin')?.[0]?.readyPrefix;
+    this.readyPrefix = props.modules?.app?.find(el => el.module === '@folio/checkin')?.readyPrefix;
 
     this.state = {
       showPickers: false
