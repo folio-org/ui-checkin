@@ -33,7 +33,7 @@ import {
   FormattedTime,
 } from '@folio/stripes/components';
 import { effectiveCallNumber } from '@folio/stripes/util';
-import { IfPermission } from '@folio/stripes/core';
+import { IfPermission, TitleManager, withModules } from '@folio/stripes/core';
 
 import PrintButton from './components/PrintButton';
 import FeesFinesOwnedStatus from './components/FeesFinesOwnedStatus';
@@ -67,6 +67,9 @@ class CheckIn extends React.Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
     }),
+    modules: PropTypes.shape({
+      app: PropTypes.arrayOf(PropTypes.object),
+    }),
     mutator: PropTypes.shape({
       query: PropTypes.shape({
         update: PropTypes.func,
@@ -85,6 +88,7 @@ class CheckIn extends React.Component {
     this.renderActions = this.renderActions.bind(this);
     this.handleOptionsChange = this.handleOptionsChange.bind(this);
     this.timer = undefined;
+    this.readyPrefix = props.modules?.app?.filter(el => el.module === '@folio/checkin')?.[0]?.readyPrefix;
 
     this.state = {
       showPickers: false
@@ -500,18 +504,22 @@ class CheckIn extends React.Component {
                 <Row>
                   <Col xs={9} sm={4}>
                     <Layout className="marginTopLabelSpacer">
-                      <Field
-                        autoFocus
-                        id="input-item-barcode"
-                        name="item.barcode"
-                        validationEnabled={false}
-                        placeholder={scanBarcodeMsg}
-                        ariaLabel={itemIdLabel}
-                        inputRef={barcodeRef}
-                        fullWidth
-                        component={TextField}
-                        data-test-check-in-barcode
-                      />
+                      <TitleManager prefix={(this.readyPrefix && this.state.readyToScan) ? this.readyPrefix : undefined}>
+                        <Field
+                          autoFocus
+                          id="input-item-barcode"
+                          name="item.barcode"
+                          validationEnabled={false}
+                          placeholder={scanBarcodeMsg}
+                          ariaLabel={itemIdLabel}
+                          inputRef={barcodeRef}
+                          onFocus={this.readyPrefix ? () => this.setState({ readyToScan: true }) : undefined}
+                          onBlur={this.readyPrefix ? () => this.setState({ readyToScan: false }) : undefined}
+                          fullWidth
+                          component={TextField}
+                          data-test-check-in-barcode
+                        />
+                      </TitleManager>
                       {hasSubmitErrors && <span className={styles.error}>{submitErrors.checkin}</span>}
                     </Layout>
                   </Col>
@@ -618,4 +626,4 @@ class CheckIn extends React.Component {
 
 export default stripesFinalForm({
   navigationCheck: true,
-})(injectIntl(CheckIn));
+})(injectIntl(withModules(CheckIn)));
