@@ -44,7 +44,7 @@
     "multipieceModal.checkIn": "رد",
     "multipieceModal.cancel": "إلغاء",
     "multipieceModal.item.numberOfPieces": "عدد القطع",
-    "multipieceModal.message": "<strong>{title}</strong> <strong>({name})</strong> سيتم رد (الباركود: {barcode})  ",
+    "multipieceModal.message": "<strong>{title}</strong> <strong>({name})</strong> سيتم رد (الباركود: {barcode})",
     "multipieceModal.item.descriptionOfPieces": "وصف القطع",
     "multipieceModal.item.numberOfMissingPieces": "عدد القطع المفقودة",
     "multipieceModal.item.descriptionOfmissingPieces": "وصف القطع المفقودة",
