@@ -97,6 +97,6 @@
     "itemNotCheckedIn": "Item não foi devolvido",
     "statuses.inProcessNonRequestable": "In process (non-requestable)",
     "statuses.longMissing": "Long missing",
-    "statuses.unavailable": "Unavailable",
-    "statuses.unknown": "Unknown"
+    "statuses.unavailable": "Indisponível",
+    "statuses.unknown": "Desconhecido"
 }
