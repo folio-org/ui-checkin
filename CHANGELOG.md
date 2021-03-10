@@ -1,12 +1,9 @@
 # Change history for ui-checkin
 
-## [5.0.0] In Progress
-* Clear `checkinNotesMode` after succesful checkin or cancel. Fixes UICHKIN-207.
-* `Timepicker` defaults to local time. Refs UICHKIN-206.
-* `Timepicker` defaults to tenant's time. Fixes UICHKIN-206.
+## [5.0.0] (https://github.com/folio-org/ui-checkin/tree/v5.0.0) (2021-03-10)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v4.0.2...v5.0.0)
 * Fix typo in status label. Fixes UICHKIN-211.
 * Display patron notes in `<ConfirmStatusModal>`. Refs UICHKIN-208.
-* Barcode image not rendering on staff slips. Refs UICHKIN-220.
 * Check in items with Restricted status. Refs UICHKIN-221.
 * Prevent check in when item with intellectual item status is scanned. Refs UICHKIN-210.
 * Update to stripes v6. Refs UICHKIN-226.
@@ -15,6 +12,17 @@
 * Show confirmation modal when check in an item with one of the new statuses (Long missing, In process (non-requestable), Unavailable, Unknown). Refs UICHKIN-120.
 * Claim returned: Cancel SET COST fee at check in. Refs UICHKIN-225
 * Add support for optional `readyPrefix` property at the module level in stripes.config.js. If set, this prefix will be displayed in the title when the app is ready to receive a scanned item barcode. Implements UICHKIN-224.
+
+## [4.0.2] (https://github.com/folio-org/ui-checkin/tree/v4.0.2) (2021-01-22)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v4.0.1...v4.0.2)
+
+* Barcode image not rendering on staff slips. Refs UICHKIN-220.
+
+## [4.0.1] (https://github.com/folio-org/ui-checkin/tree/v4.0.1) (2020-11-12)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v4.0.0...v4.0.1)
+
+* `Timepicker` defaults to local time. Refs UICHKIN-206.
+* Clear `checkinNotesMode` after succesful checkin or cancel. Fixes UICHKIN-207.
 
 ## [4.0.0] (https://github.com/folio-org/ui-checkin/tree/v4.0.0) (2020-10-08)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v3.0.0...v4.0.0)
