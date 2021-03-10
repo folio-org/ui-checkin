@@ -1,6 +1,6 @@
 # Change history for ui-checkin
 
-## [5.0.1] (IN PROGRESS)
+## [5.1.0] (IN PROGRESS)
 
 * Update the .gitignore file. Refs UICHKIN-232.
 
