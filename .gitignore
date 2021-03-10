@@ -1,8 +1,16 @@
 node_modules
 yarn.lock
+yarn-error.log
 .DS_Store
 .idea
-yarn-error.log
+.vscode
 artifacts
+debug.log
+ModuleDescriptor.json
 .npmrc
+*.swp
+*.swo
+
+# stripes
 stripes.config.js.local
+.stripesclirc
