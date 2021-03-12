@@ -16,7 +16,7 @@
     "location": "Emplacement",
     "status": "Statut",
     "loanDetails": "Détails du prêt",
-    "itemDetails": "Détails de l'article",
+    "itemDetails": "Détails de l'élément",
     "patronDetails": "Détails de l'utilisateur",
     "loanNoExist": "Le prêt n'existe pas",
     "itemNoExist": "L'article avec ce code à barres n'existe pas",
@@ -95,8 +95,8 @@
     "statusModal.hold.comment": "<strong>Patron comments:</strong> {comment}",
     "statuses.restricted": "Restreint",
     "itemNotCheckedIn": "Item not checked in",
-    "statuses.inProcessNonRequestable": "In process (non-requestable)",
-    "statuses.longMissing": "Long missing",
-    "statuses.unavailable": "Unavailable",
-    "statuses.unknown": "Unknown"
+    "statuses.inProcessNonRequestable": "En cours (non demandable)",
+    "statuses.longMissing": "Manquant depuis longtemps",
+    "statuses.unavailable": "Indisponible",
+    "statuses.unknown": "Inconnu"
 }
