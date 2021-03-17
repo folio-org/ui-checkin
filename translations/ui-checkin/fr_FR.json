@@ -1,5 +1,5 @@
 {
-    "scanBarcode": "Scanner ou entrer le code-barres pour retourner l'article",
+    "scanBarcode": "Scanner ou saisir le code-barres pour retourner l'exemplaire",
     "itemId": "ID de l'article",
     "enter": "Valider",
     "processAs": "Traité le",

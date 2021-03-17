@@ -95,8 +95,8 @@
     "statusModal.hold.comment": "<strong>Comentários do usuário:</strong> {comment}",
     "statuses.restricted": "Restrito",
     "itemNotCheckedIn": "Item não foi devolvido",
-    "statuses.inProcessNonRequestable": "In process (non-requestable)",
-    "statuses.longMissing": "Long missing",
+    "statuses.inProcessNonRequestable": "Em processamento (não solicitável)",
+    "statuses.longMissing": "Desaparecido há muito tempo",
     "statuses.unavailable": "Indisponível",
     "statuses.unknown": "Desconhecido"
 }
