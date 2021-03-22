@@ -92,7 +92,7 @@
     "actions": "Aktionen",
     "actionsMenu": "Exemplar-Aktionen",
     "permission.all": "Rückgabe: Alle Berechtigungen",
-    "statusModal.hold.comment": "<strong>Personenkommentar:</strong> {comment}",
+    "statusModal.hold.comment": "<strong>Kommentar Benutzer/-in:</strong> {comment}",
     "statuses.restricted": "Beschränkt",
     "itemNotCheckedIn": "Exemplar nicht zurückgegeben",
     "statuses.inProcessNonRequestable": "In Bearbeitung (nicht bestellbar)",

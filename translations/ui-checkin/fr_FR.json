@@ -54,7 +54,7 @@
     "missingModal.heading": "Article manquant?",
     "missingModal.message": "<strong> {title} ( {materialType} ) </strong> (code-barres: {barcode} ) a comme statut : élément <strong> manquant </strong> {discoverySuppressMessage}",
     "missingModal.discoverySuppress": "est supprimé",
-    "note": "Commentaire",
+    "note": "Note",
     "checkinNoteModal.heading": "Confirmer le retour",
     "checkinNoteModal.message": "<strong> {title} ( {materialType} ) </strong> (Code-barres: {barcode} ) a <strong> {count} </strong> {count, plural, one { note } other { notes }} et sera <strong> enregistré </strong>",
     "checkinNotes": "Notes de retour",
