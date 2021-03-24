@@ -150,7 +150,7 @@ class CheckIn extends React.Component {
     const container = document.getElementById('ModuleMainHeading');
 
     if (container) {
-      container.removeEventListener('click', this.focusInput);
+      container.addEventListener('click', this.focusInput);
     }
   }
 
