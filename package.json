@@ -58,8 +58,9 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build",
-    "test": "jest --colors",
-    "test-coverage": "jest --coverage --colors --watchAll=false",
+    "test": "yarn run test:bigtest && yarn run test:jest ",
+    "test:bigtest": "stripes test karma",
+    "test:jest": "jest --coverage --colors --watchAll",
     "lint": "eslint ."
   },
   "devDependencies": {
