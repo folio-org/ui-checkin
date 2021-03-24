@@ -147,7 +147,11 @@ class CheckIn extends React.Component {
   }
 
   setupEventListeners = () => {
-    document.getElementById('ModuleMainHeading').addEventListener('click', this.focusInput);
+    const container = document.getElementById('ModuleMainHeading');
+
+    if (container) {
+      container.removeEventListener('click', this.focusInput);
+    }
   }
 
   removeEventListeners = () => {
