@@ -14,7 +14,6 @@ const renderFeesFinesOwnedStatus = ({
   userId = 'userId',
   itemId,
   loanId = 'loanId',
-  mutator,
 }) => {
   return render(
     <FeesFinesOwnedStatus
