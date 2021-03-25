@@ -91,7 +91,8 @@ class CheckIn extends React.Component {
     this.readyPrefix = props.modules?.app?.find(el => el.module === '@folio/checkin')?.readyPrefix;
 
     this.state = {
-      showPickers: false
+      showPickers: false,
+      hasEventListener: false,
     };
   }
 
@@ -111,6 +112,10 @@ class CheckIn extends React.Component {
       },
       onSessionEnd,
     } = this.props;
+
+    if (!this.state.hasEventListener) {
+      this.setupEventListeners();
+    }
 
     if (this.timer) {
       return;
@@ -150,6 +155,7 @@ class CheckIn extends React.Component {
     const container = document.getElementById('ModuleMainHeading');
 
     if (container) {
+      this.setState({ hasEventListener: true });
       container.addEventListener('click', this.focusInput);
     }
   }
