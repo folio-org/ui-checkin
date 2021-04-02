@@ -2,19 +2,24 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
+import { loan as loanFixture } from '../../../test/jest/fixtures/loan';
 import FeesFinesOwnedStatus from './FeesFinesOwnedStatus';
 
-const parentMutator = {
-  accounts: {
-    GET: () => new Promise(jest.fn()),
-  }
-};
+const renderFeesFinesOwnedStatus = (loan) => {
+  const {
+    loan: {
+      id: loanId,
+      itemId,
+      userId,
+    } = {}
+  } = loan;
+  const parentMutator = {
+    accounts: {
+      GET: () => new Promise(jest.fn()),
+      cancel: () => new Promise(jest.fn()),
+    }
+  };
 
-const renderFeesFinesOwnedStatus = ({
-  userId = 'userId',
-  itemId,
-  loanId = 'loanId',
-}) => {
   return render(
     <FeesFinesOwnedStatus
       userId={userId}
@@ -25,10 +30,31 @@ const renderFeesFinesOwnedStatus = ({
   );
 };
 
-describe('FeesFinesOwnedStatus component', () => {
-  const { container } = renderFeesFinesOwnedStatus({});
-  it('should be rendered', () => {
-    expect(document.querySelector('[data-test-fee-fine-owned-status]')).toBeInTheDocument();
-    expect(container).toBeDefined();
+describe('FeesFinesOwnedStatus', () => {
+  describe('component without props', () => {
+    beforeEach(() => {
+      renderFeesFinesOwnedStatus({});
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('should be rendered', () => {
+      expect(document.querySelector('[data-test-fee-fine-owned-status]')).toBeInTheDocument();
+    });
+  });
+  describe('render component with props', () => {
+    beforeEach(() => {
+      renderFeesFinesOwnedStatus(loanFixture);
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('should be rendered', () => {
+      expect(document.querySelector('[data-test-fee-fine-owned-status]')).toBeInTheDocument();
+    });
   });
 });

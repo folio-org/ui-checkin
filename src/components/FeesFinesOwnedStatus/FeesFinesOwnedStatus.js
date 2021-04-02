@@ -12,6 +12,7 @@ class FeesFinesOwnedStatus extends React.Component {
     mutator: PropTypes.shape({
       accounts: PropTypes.shape({
         GET: PropTypes.func.isRequired,
+        cancel: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
   }
@@ -46,7 +47,7 @@ class FeesFinesOwnedStatus extends React.Component {
 
   componentWillUnmount() {
     if (this._asyncRequest) {
-      this._asyncRequest.cancel();
+      this.props.mutator.accounts.cancel();
     }
   }
 
