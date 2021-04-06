@@ -79,7 +79,7 @@
     "claimedReturnedModal.resolution.returned": "由讀者歸還",
     "requestDetails": "索取詳細資料",
     "confirmModal.heading": "還入 {status} 館藏?",
-    "confirmModal.message": "<strong>{title}({materialType})</strong> (條碼: {barcode})有館藏狀況 <strong>{status}</strong>",
+    "confirmModal.message": "<strong>{title}({materialType})</strong> (條碼: {barcode})有館藏狀況 <strong>{status}</strong> {discoverySuppressMessage}",
     "confirmModal.discoverySuppress": "並在探索服務中隱藏",
     "confirmModal.confirm": "確認",
     "confirmModal.cancel": "取消",
