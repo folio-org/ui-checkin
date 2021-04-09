@@ -393,6 +393,7 @@ class Scan extends React.Component {
       const updatedRec = cloneDeep(record);
       updatedRec.paymentStatus.name = cancelFeeClaimReturned.CANCEL_PAYMENT_STATUS;
       updatedRec.remaining = 0;
+      updatedRec.status.name = 'Closed';
       return updatedRec;
     };
 
