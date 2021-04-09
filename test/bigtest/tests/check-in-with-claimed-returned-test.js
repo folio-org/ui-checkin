@@ -90,6 +90,10 @@ describe('CheckIn with claimed returned', () => {
       it('should set remaining to 0', () => {
         expect(acc.remaining).to.equal(0);
       });
+
+      it('should set closed fee/fine account', () => {
+        expect(acc.status.name).to.equal('Closed');
+      });
     });
   });
 });

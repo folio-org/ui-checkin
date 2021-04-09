@@ -79,7 +79,7 @@
     "claimedReturnedModal.resolution.returned": "사용자에 의해 반납됨",
     "requestDetails": "상세정보 요청",
     "confirmModal.heading": "{status} 항목을 반납하시겠습니까?",
-    "confirmModal.message": "<strong>{제목}({materialType}))</strong>(바코드: {바코드})에는 항목 상태 <strong>{status}</strong> {디스커버리메시지}",
+    "confirmModal.message": "<strong>{title}({materialType}))</strong>(바코드: {barcode})에는 항목 상태 <strong>{status}</strong> {discoverySuppressMessage}",
     "confirmModal.discoverySuppress": "검색에서 제외됩니다.",
     "confirmModal.confirm": "확인",
     "confirmModal.cancel": "취소",
