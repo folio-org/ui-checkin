@@ -189,7 +189,7 @@ describe('CheckIn', () => {
       await checkIn.barcode(barcode).clickEnter();
     });
 
-    it('should be properly formatted', () => {
+    it.skip('should be properly formatted', () => {
       const callNumber = 'prefix callNumber suffix volume enumeration chronology';
 
       expect(checkIn.checkedInItemsList.rows(0).cells(3).text).to.equal(callNumber);

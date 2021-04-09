@@ -15,6 +15,7 @@ class FeeFineDetailsButton extends React.Component {
     mutator: PropTypes.shape({
       accounts: PropTypes.shape({
         GET: PropTypes.func.isRequired,
+        cancel: PropTypes.func.isRequired,
       }).isRequired,
       query: PropTypes.shape({
         update: PropTypes.func.isRequired,
@@ -59,7 +60,7 @@ class FeeFineDetailsButton extends React.Component {
 
   componentWillUnmount() {
     if (this._asyncRequest) {
-      this._asyncRequest.cancel();
+      this.props.mutator.accounts.cancel();
     }
   }
 
@@ -112,6 +113,7 @@ class FeeFineDetailsButton extends React.Component {
     return (
       <div data-test-fee-fine-details>
         <Button
+          data-test-button
           disabled={this.isDisabled()}
           role="menuitem"
           buttonStyle="dropdownItem"
