@@ -56,7 +56,7 @@
     "missingModal.discoverySuppress": "and is suppressed from discovery",
     "note": "Note",
     "checkinNoteModal.heading": "Bekræft aflevering",
-    "checkinNoteModal.message": "<strong>{title} ({materialType})</strong> (stregkode: {barcode}) har <strong>{count}</strong> {count, plural, en {note} andre {notes}} og vil blive <strong>registreret afleveret</strong> ",
+    "checkinNoteModal.message": "<strong>{title} ({materialType})</strong> (stregkode: {barcode}) har <strong>{count}</strong> {count, plural, one {note} other {notes}} og vil blive <strong>registreret afleveret</strong>",
     "checkinNotes": "Afleveringsnote",
     "checkinNotes.heading": "Afleveringsnote",
     "checkinNotes.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}}",
