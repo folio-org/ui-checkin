@@ -59,7 +59,7 @@
     "checkinNoteModal.message": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) tiene <strong>{count}</strong> {count, plural, one {note} other {notes}} y podría haber sido <strong>devuelto</strong> ",
     "checkinNotes": "Notas de devolución",
     "checkinNotes.heading": "Notas de devolución",
-    "checkinNotes.message": "<strong> {title} ({materialType} ) </strong> (Código de barras: {barcode} ) tiene <strong> {count} </strong> {count, plural, one {note} notas adicionales {notes}}",
+    "checkinNotes.message": "<strong> {title} ({materialType} ) </strong> (Código de barras: {barcode} ) tiene <strong> {count} </strong> {count, plural, one {note} other {notes}}",
     "date": "Fecha",
     "source": "Fuente",
     "statusModal.delivery.heading": "Ruta para enviar la solicitud de reserva",

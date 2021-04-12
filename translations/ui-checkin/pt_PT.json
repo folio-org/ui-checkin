@@ -30,7 +30,7 @@
     "statusModal.transit.heading": "Em trânsito",
     "statusModal.transit.message": "Percurso <strong>{title} ({materialType})</strong> (Código de barras: {barcode}) para <strong>{servicePoint}</strong>.",
     "statusModal.hold.heading": "Awaiting pickup for a request",
-    "statusModal.hold.message": "Coloque <strong>{title} ({materialType})</strong> (Código de barras: {barcode}) na <strong>Estante</strong> para solicitação..",
+    "statusModal.hold.message": "Coloque <strong>{title} ({materialType})</strong> (Código de barras: {barcode}) na <strong>{pickupServicePoint}</strong> para solicitação..",
     "scannedItems": "Itens digitalizados",
     "statusModal.printSlip": "Print slip",
     "unknownError": "Unknown error occurred",
