@@ -1,10 +1,9 @@
 # Change history for ui-checkin
 
-## [5.1.0] (IN PROGRESS)
-
-* Update the .gitignore file. Refs UICHKIN-232.
-* Add pull request template. Refs UICHKIN-233.
+## [5.0.1] (https://github.com/folio-org/ui-checkin/tree/v5.0.1) (2021-04-13)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.0...v5.0.1)
 * Navigating back to `Checkin` page leads to error message. Refs UICHKIN-239.
+* The fee/fine account is fully closed when Claimed Returned item is checked in. Refs UICHKIN-235.
 
 ## [5.0.0] (https://github.com/folio-org/ui-checkin/tree/v5.0.0) (2021-03-10)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v4.0.2...v5.0.0)
