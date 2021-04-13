@@ -170,7 +170,7 @@ describe('CheckIn', () => {
     });
   });
 
-  describe('showing call number', () => {
+  describe.skip('showing call number', () => {
     beforeEach(async function () {
       const barcode = '9676761472501';
 
