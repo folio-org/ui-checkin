@@ -4,6 +4,7 @@
 * Update the .gitignore file. Refs UICHKIN-232.
 * Add pull request template. Refs UICHKIN-233.
 * Add settings up for Jest/RTL tests. Refs UICHKIN-237.
+* Also support `inventory` `10.0`. Refs UICHKIN-244.
 
 ## [5.0.1] (https://github.com/folio-org/ui-checkin/tree/v5.0.1) (2021-04-13)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.0...v5.0.1)
