@@ -46,7 +46,7 @@ class PrintButton extends React.Component {
           onAfterPrint={onAfterPrint}
         />
         <div className={css.hiddenContent}>
-          <div className="ql-editor" ref={this.printContentRef}>
+          <div className={`ql-editor ${css.qlEditor}`} ref={this.printContentRef}>
             <ComponentToPrint template={template} dataSource={dataSource} />
           </div>
         </div>
