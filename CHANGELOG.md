@@ -5,8 +5,11 @@
 * Add pull request template. Refs UICHKIN-233.
 * Add settings up for Jest/RTL tests. Refs UICHKIN-237.
 * Also support `inventory` `10.0`. Refs UICHKIN-244.
-* Fix content cut off for two-page staff slips. Refs UICHKIN-245.
 * Add patron comment token for staff slips. Refs UICHKIN-248.
+
+## [5.0.2] (https://github.com/folio-org/ui-checkin/tree/v5.0.2) (2021-04-21)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.1...v5.0.2)
+* Fix content cut off for two-page staff slips. Refs UICHKIN-245.
 
 ## [5.0.1] (https://github.com/folio-org/ui-checkin/tree/v5.0.1) (2021-04-13)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.0...v5.0.1)
