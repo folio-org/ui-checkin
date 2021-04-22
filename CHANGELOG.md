@@ -5,6 +5,9 @@
 * Add pull request template. Refs UICHKIN-233.
 * Add settings up for Jest/RTL tests. Refs UICHKIN-237.
 * Also support `inventory` `10.0`. Refs UICHKIN-244.
+
+## [5.0.3] (https://github.com/folio-org/ui-checkin/tree/v5.0.3) (2021-04-22)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.2...v5.0.3)
 * Add patron comment token for staff slips. Refs UICHKIN-248.
 
 ## [5.0.2] (https://github.com/folio-org/ui-checkin/tree/v5.0.2) (2021-04-21)
