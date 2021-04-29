@@ -599,7 +599,7 @@ class CheckIn extends React.Component {
                   </Col>
                   <Col xs={12} sm={1}>
                     <Layout className="marginTopLabelSpacer">
-                      <Button id="clickable-end-session" buttonStyle="default" style={{ minWidth: '90px' }} fullWidth onClick={this.handleSessionEnd}>
+                      <Button id="clickable-end-session" buttonStyle="default" style={{ minWidth: '200px' }} fullWidth onClick={this.handleSessionEnd}>
                         <FormattedMessage id="ui-checkin.endSession" />
                       </Button>
                     </Layout>
