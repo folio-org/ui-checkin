@@ -51,7 +51,8 @@
           "module.checkin.enabled",
           "inventory.items.collection.get",
           "inventory-storage.service-points.collection.get",
-          "accounts.collection.get"
+          "accounts.collection.get",
+          "lost-item-fees-policies.collection.get"
         ]
       }
     ]
