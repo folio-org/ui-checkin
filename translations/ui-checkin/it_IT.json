@@ -68,7 +68,7 @@
     "effectiveCallNumber": "Stringa di collocazione effettiva",
     "inHouseUse": "Uso interno",
     "declaredLostModal.heading": "Restituire l'elemento dichiarato perso?",
-    "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) ha lo status di copia <strong>Dichiarato perso.</strong>",
+    "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) ha lo stato di copia <strong>Dichiarato perso.</strong>",
     "feeFineDetails": "Dettagli tariffa/multa",
     "withdrawnModal.heading": "Check in Withdrawn item?",
     "withdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) ha come status dell'item <strong>ritirato</strong> e sarà nascosto dal discovery.",

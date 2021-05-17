@@ -78,7 +78,7 @@
     "claimedReturnedModal.resolution.found": "Trouvé par la bibliothèque",
     "claimedReturnedModal.resolution.returned": "Retourné par l'utilisateur",
     "requestDetails": "Détails de la demande",
-    "confirmModal.heading": "Check in {status} item?",
+    "confirmModal.heading": "Retourner l'exemplaire {status} ?",
     "confirmModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong> {discoverySuppressMessage}",
     "confirmModal.discoverySuppress": "and is suppressed from discovery",
     "confirmModal.confirm": "Confirmer",
