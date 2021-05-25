@@ -70,7 +70,7 @@
     "declaredLostModal.heading": "Retourner l'objet déclaré perdu ?",
     "declaredLostModal.message": "L'exemplaire <strong> {title} ( {materialType} ) </strong> (Code barres: {barcode} ) a comme statut <strong> Déclaré perdu. </strong>",
     "feeFineDetails": "Détails des frais / amendes",
-    "withdrawnModal.heading": "Check in Withdrawn item?",
+    "withdrawnModal.heading": "Retourner l'exemplaire retiré ?",
     "withdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn </strong> and is suppressed from discovery.",
     "withdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong>.",
     "claimedReturnedModal.label": "Check in claimed returned item",
