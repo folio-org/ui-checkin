@@ -92,7 +92,24 @@ export function buildDateTime(date, time, timeZone) {
       timeString = time.split('T')[1];
     }
 
-    return moment(`${date.substring(0, 10)}T${timeString}`).tz(timeZone).format();
+    const effectiveReturnDate = moment(`${date.substring(0, 10)}T${timeString}`).tz(timeZone);
+
+    // Check for DST offset. 'time' is passed in adjusted to UTC from whatever time is specified in
+    // the picker before being converted to a date/time in the local timezone. This works fine if
+    // there is no difference between the UTC offset *now* and the offset at a date/time specified
+    // to count items as returned. If there is, due to a change from daylight savings time to standard
+    // time between the two dates, the recorded time will be an hour off. Unless we do somethng
+    // like this:
+    const inDstNow = moment().tz(timeZone).isDST();
+    const inDstThen = effectiveReturnDate.tz(timeZone).isDST();
+
+    if (inDstNow && !inDstThen) {
+      effectiveReturnDate.add(1, 'hours');
+    } else if (!inDstNow && inDstThen) {
+      effectiveReturnDate.subtract(1, 'hours');
+    }
+
+    return effectiveReturnDate.format();
   } else {
     return moment().tz(timeZone).format();
   }
