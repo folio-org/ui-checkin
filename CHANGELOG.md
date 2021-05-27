@@ -7,6 +7,7 @@
 * Also support `inventory` `10.0`. Refs UICHKIN-244.
 * Include missing fee/fine-related permissions in `ui-checkin.all` pset. Refs UICHKIN-253.
 * Also support `circulation` `11.0`. Refs UICHKIN-254.
+* Fix bug setting wrong checkin time when passing through DST. Fixes UICHKIN-234.
 
 ## [5.0.3] (https://github.com/folio-org/ui-checkin/tree/v5.0.3) (2021-04-22)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.2...v5.0.3)
