@@ -1,11 +1,13 @@
 # Change history for ui-checkin
 
-## 5.0.4 (IN PROGRESS)
+## [5.0.4] (https://github.com/folio-org/ui-checkin/tree/v5.0.4) (2021-06-11)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.3...v5.0.4)
 
 * Include missing fee/fine-related permissions in `ui-checkin.all` pset. Refs UICHKIN-253.
 
 ## [5.0.3] (https://github.com/folio-org/ui-checkin/tree/v5.0.3) (2021-04-22)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.2...v5.0.3)
+
 * Add patron comment token for staff slips. Refs UICHKIN-248.
 
 ## [5.0.2] (https://github.com/folio-org/ui-checkin/tree/v5.0.2) (2021-04-21)
