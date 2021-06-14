@@ -43,16 +43,20 @@
         "description": "Entire set of permissions needed to use Checkin",
         "visible": true,
         "subPermissions": [
-          "circulation.all",
-          "circulation-storage.all",
-          "configuration.all",
           "users.collection.get",
           "usergroups.collection.get",
           "module.checkin.enabled",
           "inventory.items.collection.get",
           "inventory-storage.service-points.collection.get",
           "accounts.collection.get",
-          "lost-item-fees-policies.collection.get"
+          "accounts.item.get",
+          "lost-item-fees-policies.collection.get",
+          "circulation/check-in-by-barcode",
+          "circulation/requests",
+          "feefineactions.collection.get",
+          "configuration.entries.collection.get",
+          "circulation.end-patron-action-session.post",
+          "circulation-storage.staff-slips.collection.get"
         ]
       }
     ]
