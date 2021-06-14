@@ -86,13 +86,7 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
 
 export function buildDateTime(date, time, timeZone) {
   if (date && time) {
-    let timeString = time;
-
-    if (time.indexOf('T') > -1) {
-      timeString = time.split('T')[1];
-    }
-
-    const effectiveReturnDate = moment(`${date.substring(0, 10)}T${timeString}`).tz(timeZone);
+    const effectiveReturnDate = moment(`${date.substring(0, 10)}T${time}`);
 
     // Check for DST offset. 'time' is passed in adjusted to UTC from whatever time is specified in
     // the picker before being converted to a date/time in the local timezone. This works fine if
