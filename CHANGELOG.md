@@ -8,6 +8,8 @@
 * Include missing fee/fine-related permissions in `ui-checkin.all` pset. Refs UICHKIN-253.
 * Also support `circulation` `11.0`. Refs UICHKIN-254.
 * Fix bug setting wrong checkin time when passing through DST. Fixes UICHKIN-234.
+* Fix failed build on ui-checkin. Fixes UICHKIN-265.
+* Fix incorrect check in time. Refs UICHKIN-219.
 * Replace okapiInterfaces dependency `item-storage: 8.0` by `inventory 10.0`. Refs UICHKIN-9, UICHKIN-258.
 * Add alternate okapiInterfaces dependency `inventory: 11.0` for optimistic locking. Refs UICHKIN-258.
 
