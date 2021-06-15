@@ -1,26 +1,30 @@
 # Change history for ui-checkin
 
-## [5.0.4] (https://github.com/folio-org/ui-checkin/tree/v5.0.4) (2021-06-11)
+## 5.0.5 IN PROGRESS
+
+* Adjust `ui-checkin.all` permission set. Fixes UICHKIN-261.
+
+## [5.0.4](https://github.com/folio-org/ui-checkin/tree/v5.0.4) (2021-06-11)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.3...v5.0.4)
 
 * Include missing fee/fine-related permissions in `ui-checkin.all` pset. Refs UICHKIN-253.
 * Fix failed build on ui-checkin. Fixes UICHKIN-265.
 
-## [5.0.3] (https://github.com/folio-org/ui-checkin/tree/v5.0.3) (2021-04-22)
+## [5.0.3](https://github.com/folio-org/ui-checkin/tree/v5.0.3) (2021-04-22)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.2...v5.0.3)
 
 * Add patron comment token for staff slips. Refs UICHKIN-248.
 
-## [5.0.2] (https://github.com/folio-org/ui-checkin/tree/v5.0.2) (2021-04-21)
+## [5.0.2](https://github.com/folio-org/ui-checkin/tree/v5.0.2) (2021-04-21)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.1...v5.0.2)
 * Fix content cut off for two-page staff slips. Refs UICHKIN-245.
 
-## [5.0.1] (https://github.com/folio-org/ui-checkin/tree/v5.0.1) (2021-04-13)
+## [5.0.1](https://github.com/folio-org/ui-checkin/tree/v5.0.1) (2021-04-13)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.0...v5.0.1)
 * Navigating back to `Checkin` page leads to error message. Refs UICHKIN-239.
 * The fee/fine account is fully closed when Claimed Returned item is checked in. Refs UICHKIN-235.
 
-## [5.0.0] (https://github.com/folio-org/ui-checkin/tree/v5.0.0) (2021-03-10)
+## [5.0.0](https://github.com/folio-org/ui-checkin/tree/v5.0.0) (2021-03-10)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v4.0.2...v5.0.0)
 * Fix typo in status label. Fixes UICHKIN-211.
 * Display patron notes in `<ConfirmStatusModal>`. Refs UICHKIN-208.
@@ -33,18 +37,18 @@
 * Claim returned: Cancel SET COST fee at check in. Refs UICHKIN-225
 * Add support for optional `readyPrefix` property at the module level in stripes.config.js. If set, this prefix will be displayed in the title when the app is ready to receive a scanned item barcode. Implements UICHKIN-224.
 
-## [4.0.2] (https://github.com/folio-org/ui-checkin/tree/v4.0.2) (2021-01-22)
+## [4.0.2](https://github.com/folio-org/ui-checkin/tree/v4.0.2) (2021-01-22)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v4.0.1...v4.0.2)
 
 * Barcode image not rendering on staff slips. Refs UICHKIN-220.
 
-## [4.0.1] (https://github.com/folio-org/ui-checkin/tree/v4.0.1) (2020-11-12)
+## [4.0.1](https://github.com/folio-org/ui-checkin/tree/v4.0.1) (2020-11-12)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v4.0.0...v4.0.1)
 
 * `Timepicker` defaults to local time. Refs UICHKIN-206.
 * Clear `checkinNotesMode` after succesful checkin or cancel. Fixes UICHKIN-207.
 
-## [4.0.0] (https://github.com/folio-org/ui-checkin/tree/v4.0.0) (2020-10-08)
+## [4.0.0](https://github.com/folio-org/ui-checkin/tree/v4.0.0) (2020-10-08)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v3.0.0...v4.0.0)
 
 * Refactor from `bigtest/mirage` to `miragejs`.
@@ -61,7 +65,7 @@
 * Localize permission names. Refs UICHKIN-201.
 * Display source as last name, first name. Fixes UICHKIN-147.
 
-## [3.0.0] (https://github.com/folio-org/ui-checkin/tree/v3.0.0) (2020-06-11)
+## [3.0.0](https://github.com/folio-org/ui-checkin/tree/v3.0.0) (2020-06-11)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v2.0.1...v3.0.0)
 
 * Upgrade to `stripes` `4.0`, `react-intl` `4.5`. Refs STRIPES-672.
