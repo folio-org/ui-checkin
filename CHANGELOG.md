@@ -10,6 +10,7 @@
 * Fix bug setting wrong checkin time when passing through DST. Fixes UICHKIN-234.
 * Fix failed build on ui-checkin. Fixes UICHKIN-265.
 * Fix incorrect check in time. Refs UICHKIN-219.
+* Adjust `ui-checkin.all` permission set. Fixes UICHKIN-261.
 
 ## [5.0.3] (https://github.com/folio-org/ui-checkin/tree/v5.0.3) (2021-04-22)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.2...v5.0.3)
