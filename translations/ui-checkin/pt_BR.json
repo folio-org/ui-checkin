@@ -30,7 +30,7 @@
     "statusModal.transit.heading": "Em trânsito",
     "statusModal.transit.message": "Rota <strong>{title} ({materialType})</strong> (Código de barras: {barcode} ) para <strong>{servicePoint}</strong>.",
     "statusModal.hold.heading": "Aguardando a retirada de uma reserva",
-    "statusModal.hold.message": "Coloque <strong>{title} ({materialType})</strong> (Código de barras: {barcode}) na <strong>Estante de reserva</strong> para solicitação.",
+    "statusModal.hold.message": "Coloque <strong>{title} ({materialType})</strong> (Código de barras: {barcode}) na <strong>{pickupServicePoint}</strong> para solicitação.",
     "scannedItems": "Itens escaneados",
     "statusModal.printSlip": "Ficha de reserva",
     "unknownError": "Ocorreu um erro desconhecido",
