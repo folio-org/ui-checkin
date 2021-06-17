@@ -1,6 +1,7 @@
 # Change history for ui-checkin
 
-## [5.1.0] (IN PROGRESS)
+## [5.1.0] (https://github.com/folio-org/ui-checkin/tree/v5.1.0) (2021-06-17)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.3...v5.1.0)
 * Update the .gitignore file. Refs UICHKIN-232.
 * Add pull request template. Refs UICHKIN-233.
 * Add settings up for Jest/RTL tests. Refs UICHKIN-237.
@@ -10,6 +11,7 @@
 * Fix bug setting wrong checkin time when passing through DST. Fixes UICHKIN-234.
 * Fix failed build on ui-checkin. Fixes UICHKIN-265.
 * Fix incorrect check in time. Refs UICHKIN-219.
+* Adjust `ui-checkin.all` permission set. Fixes UICHKIN-261.
 * Replace okapiInterfaces dependency `item-storage: 8.0` by `inventory 10.0`. Refs UICHKIN-9, UICHKIN-258.
 * Add alternate okapiInterfaces dependency `inventory: 11.0` for optimistic locking. Refs UICHKIN-258.
 
