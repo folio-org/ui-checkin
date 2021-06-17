@@ -1,6 +1,7 @@
 # Change history for ui-checkin
 
-## [5.1.0] (IN PROGRESS)
+## [5.1.0] (https://github.com/folio-org/ui-checkin/tree/v5.1.0) (2021-06-17)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.3...v5.1.0)
 * Update the .gitignore file. Refs UICHKIN-232.
 * Add pull request template. Refs UICHKIN-233.
 * Add settings up for Jest/RTL tests. Refs UICHKIN-237.
