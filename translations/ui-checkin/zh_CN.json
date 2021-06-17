@@ -20,7 +20,7 @@
     "patronDetails": "读者详情",
     "loanNoExist": "借阅不存在",
     "itemNoExist": "不存在此条码对应的单件",
-    "userNoExist": "不存在{identifier}的用户",
+    "userNoExist": "不存在{userId}的用户",
     "fillOut": "请填写此内容以继续",
     "meta.title": "归还",
     "today": "今天",
