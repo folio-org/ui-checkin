@@ -20,7 +20,7 @@
     "patronDetails": "讀者詳細資訊",
     "loanNoExist": "借閱不存在",
     "itemNoExist": "沒有此條碼的館藏",
-    "userNoExist": "不存在{identifier}的用户",
+    "userNoExist": "不存在{userId}的用户",
     "fillOut": "請填寫此內容以繼續",
     "meta.title": "還入",
     "today": "今天",
