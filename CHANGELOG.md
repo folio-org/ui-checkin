@@ -1,6 +1,7 @@
 # Change history for ui-checkin
 
-## 5.0.5 IN PROGRESS
+## [5.0.5](https://github.com/folio-org/ui-checkin/tree/v5.0.5) (2021-06-23)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.4...v5.0.5)
 
 * Adjust `ui-checkin.all` permission set. Fixes UICHKIN-261.
 
