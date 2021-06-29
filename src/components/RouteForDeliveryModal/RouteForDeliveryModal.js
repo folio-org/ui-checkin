@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
   Modal,
+  ModalFooter,
   Button,
   Checkbox,
   Row,
-  Col
+  Col,
 } from '@folio/stripes/components';
-
-// eslint-disable-next-line import/no-extraneous-dependencies
-import mfCss from '@folio/stripes-components/lib/ModalFooter/ModalFooter.css';
 
 import PrintButton from '../PrintButton';
 
@@ -45,11 +43,11 @@ class RouteForDeliveryModal extends React.Component {
     const { isPrintable } = this.state;
 
     return (
-      <div className={mfCss.modalFooterButtons}>
+      <ModalFooter>
         {isPrintable
           ? this.renderPrintButtonsGroup()
           : this.renderButtonsGroup()}
-      </div>
+      </ModalFooter>
     );
   }
 
@@ -65,7 +63,6 @@ class RouteForDeliveryModal extends React.Component {
       <>
         <PrintButton
           buttonStyle="primary"
-          buttonClass={mfCss.modalFooterButton}
           onBeforePrint={onCloseAndCheckout}
           dataSource={slipData}
           template={slipTemplate}
@@ -75,7 +72,6 @@ class RouteForDeliveryModal extends React.Component {
         </PrintButton>
         <PrintButton
           buttonStyle="primary"
-          buttonClass={mfCss.modalFooterButton}
           onBeforePrint={onClose}
           dataSource={slipData}
           template={slipTemplate}
@@ -97,7 +93,6 @@ class RouteForDeliveryModal extends React.Component {
       <>
         <Button
           buttonStyle="primary"
-          buttonClass={mfCss.modalFooterButton}
           onClick={onCloseAndCheckout}
           data-test="closeAndCheckout"
         >
@@ -105,7 +100,6 @@ class RouteForDeliveryModal extends React.Component {
         </Button>
         <Button
           buttonStyle="primary"
-          buttonClass={mfCss.modalFooterButton}
           onClick={onClose}
           data-test="close"
         >
