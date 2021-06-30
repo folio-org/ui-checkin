@@ -4,14 +4,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
   Modal,
+  ModalFooter,
   Button,
   Checkbox,
   Row,
-  Col
+  Col,
 } from '@folio/stripes/components';
-
-// eslint-disable-next-line import/no-extraneous-dependencies
-import mfCss from '@folio/stripes-components/lib/ModalFooter/ModalFooter.css';
 
 import PrintButton from '../PrintButton';
 
@@ -49,13 +47,12 @@ class ConfirmStatusModal extends React.Component {
     const { isPrintable } = this.state;
     const testId = uniqueId('confirm-status-');
     const footer = (
-      <div className={mfCss.modalFooterButtons}>
+      <ModalFooter>
         {isPrintable ?
           <PrintButton
             data-test-confirm-button
             buttonStyle="primary"
             id={`clickable-${testId}-confirm`}
-            buttonClass={mfCss.modalFooterButton}
             dataSource={slipData}
             template={slipTemplate}
             onBeforePrint={onConfirm}
@@ -69,11 +66,10 @@ class ConfirmStatusModal extends React.Component {
             id={`clickable-${testId}-confirm`}
             onClick={onConfirm}
             buttonStyle="primary"
-            buttonClass={mfCss.modalFooterButton}
           >
             <FormattedMessage id="ui-checkin.statusModal.close" />
           </Button>}
-      </div>
+      </ModalFooter>
     );
     const messageParts = message.map(m => <p>{m}</p>);
 
