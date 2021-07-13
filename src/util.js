@@ -103,9 +103,9 @@ export function buildDateTime(date, time, timeZone) {
       effectiveReturnDate.subtract(1, 'hours');
     }
 
-    return effectiveReturnDate.format();
+    return effectiveReturnDate.toISOString();
   } else {
-    return moment().tz(timeZone).format();
+    return moment().tz(timeZone).toISOString();
   }
 }
 
