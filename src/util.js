@@ -86,7 +86,7 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
 
 export function buildDateTime(date, time, timeZone, now) {
   if (date && time) {
-    const effectiveReturnDate = moment(`${date.substring(0, 10)}T${time}`);
+    const effectiveReturnDate = moment.tz(`${date.substring(0, 10)}T${time}`, timeZone);
 
     // Check for DST offset. 'time' is passed in adjusted to UTC from whatever time is specified in
     // the picker before being converted to a date/time in the local timezone. This works fine if
@@ -95,7 +95,7 @@ export function buildDateTime(date, time, timeZone, now) {
     // time between the two dates, the recorded time will be an hour off. Unless we do somethng
     // like this:
     const inDstNow = now.isDST();
-    const inDstThen = effectiveReturnDate.tz(timeZone).isDST();
+    const inDstThen = effectiveReturnDate.isDST();
 
     if (inDstNow && !inDstThen) {
       effectiveReturnDate.add(1, 'hours');
