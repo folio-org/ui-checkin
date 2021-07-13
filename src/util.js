@@ -7,7 +7,7 @@ import {
 import { statuses } from './consts';
 
 export const escapeValue = (val) => {
-  if (val.startsWith('<Barcode>') && val.endsWith('</Barcode>')) {
+  if (typeof val === 'string' && val.startsWith('<Barcode>') && val.endsWith('</Barcode>')) {
     return val;
   }
 
@@ -84,7 +84,7 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
   return slipData;
 }
 
-export function buildDateTime(date, time, timeZone) {
+export function buildDateTime(date, time, timeZone, now) {
   if (date && time) {
     const effectiveReturnDate = moment(`${date.substring(0, 10)}T${time}`);
 
@@ -94,7 +94,7 @@ export function buildDateTime(date, time, timeZone) {
     // to count items as returned. If there is, due to a change from daylight savings time to standard
     // time between the two dates, the recorded time will be an hour off. Unless we do somethng
     // like this:
-    const inDstNow = moment().tz(timeZone).isDST();
+    const inDstNow = now.isDST();
     const inDstThen = effectiveReturnDate.tz(timeZone).isDST();
 
     if (inDstNow && !inDstThen) {
@@ -105,7 +105,7 @@ export function buildDateTime(date, time, timeZone) {
 
     return effectiveReturnDate.toISOString();
   } else {
-    return moment().tz(timeZone).toISOString();
+    return moment(now).toISOString();
   }
 }
 

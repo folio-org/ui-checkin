@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment-timezone';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { escapeCqlValue } from '@folio/stripes/util';
 import {
@@ -314,7 +315,9 @@ class Scan extends React.Component {
     const { itemClaimedReturnedResolution } = this.state;
 
     const servicePointId = get(user, 'user.curServicePoint.id', '');
-    const checkInDate = buildDateTime(checkinDate, checkinTime, timeZone);
+    const now = moment().tz(timeZone);
+
+    const checkInDate = buildDateTime(checkinDate, checkinTime, timeZone, now);
     const requestData = {
       servicePointId,
       checkInDate,
