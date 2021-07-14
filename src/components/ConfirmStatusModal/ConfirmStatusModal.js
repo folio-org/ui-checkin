@@ -71,7 +71,7 @@ class ConfirmStatusModal extends React.Component {
           </Button>}
       </ModalFooter>
     );
-    const messageParts = message.map(m => <p>{m}</p>);
+    const messageParts = message.map((m, i) => <p key={i}>{m}</p>);
 
     return (
       <Modal
