@@ -31,6 +31,7 @@ import {
   DropdownMenu,
   Dropdown,
   FormattedTime,
+  Label,
 } from '@folio/stripes/components';
 import { effectiveCallNumber } from '@folio/stripes/util';
 import { IfPermission, TitleManager, withModules } from '@folio/stripes/core';
@@ -38,6 +39,7 @@ import { IfPermission, TitleManager, withModules } from '@folio/stripes/core';
 import PrintButton from './components/PrintButton';
 import FeesFinesOwnedStatus from './components/FeesFinesOwnedStatus';
 import FeeFineDetailsButton from './components/FeeFineDetailsButton';
+import CheckInFooter from './components/CheckInFooter';
 import {
   convertToSlipData,
   getCheckinSettings,
@@ -488,7 +490,7 @@ class CheckIn extends React.Component {
     };
     const scanBarcodeMsg = formatMessage({ id: 'ui-checkin.scanBarcode' });
     const itemIdLabel = formatMessage({ id: 'ui-checkin.itemId' });
-    const processLabel = formatMessage({ id: 'ui-checkin.processAs' });
+    const dateReturnedLabel = formatMessage({ id: 'ui-checkin.dateReturnedLabel' });
     const checkinDateLabel = formatMessage({ id: 'ui-checkin.checkinDate' });
     const checkinTimeLabel = formatMessage({ id: 'ui-checkin.checkinTime' });
     const timeReturnedLabel = formatMessage({ id: 'ui-checkin.timeReturnedLabel' });
@@ -510,124 +512,121 @@ class CheckIn extends React.Component {
         <div style={containerStyle}>
           <Paneset static>
             <Pane paneTitle={scannedItemsLabel} defaultWidth="100%">
-              <div style={{ width: '100%', maxWidth: '1280px', margin: 'auto' }}>
-                <Row>
-                  <Col xs={9} sm={4}>
-                    <Layout className="marginTopLabelSpacer">
-                      <TitleManager prefix={(this.readyPrefix && this.state.readyToScan) ? this.readyPrefix : undefined}>
-                        <Field
-                          autoFocus
-                          id="input-item-barcode"
-                          name="item.barcode"
-                          validationEnabled={false}
-                          placeholder={scanBarcodeMsg}
-                          ariaLabel={itemIdLabel}
-                          inputRef={barcodeRef}
-                          onFocus={this.readyPrefix ? () => this.setState({ readyToScan: true }) : undefined}
-                          onBlur={this.readyPrefix ? () => this.setState({ readyToScan: false }) : undefined}
-                          fullWidth
-                          component={TextField}
-                          data-test-check-in-barcode
-                        />
-                      </TitleManager>
-                      {hasSubmitErrors && <span className={styles.error}>{submitErrors.checkin}</span>}
-                    </Layout>
-                  </Col>
-                  <Col xs={3} sm={1}>
-                    <Layout className="marginTopLabelSpacer">
-                      <Button id="clickable-add-item" buttonStyle="primary" fullWidth type="submit" disabled={pristine}>
-                        <FormattedMessage id="ui-checkin.enter" />
-                      </Button>
-                    </Layout>
-                  </Col>
-                  <Col xs={12} smOffset={2} sm={2}>
-                    {showPickers ? (
-                      <div data-test-process-date>
-                        <Field
-                          name="item.checkinDate"
-                          aria-label={checkinDateLabel}
-                          label={processLabel}
-                          component={Datepicker}
-                          autoComplete="off"
-                          timeZone="UTC"
-                          backendDateStandard="YYYY-MM-DD"
-                          format={(value) => (value ? formatDate(value, { timeZone: 'UTC' }) : '')}
-                        />
-                      </div>
-                    ) : (
-                      <div>
-                        <div className={styles['field-label']}>{processLabel}</div>
-                        <button
-                          data-test-checkin-modify-date
-                          onClick={this.showPickers}
-                          className={styles['modify-datetime-button']}
-                          type="button"
-                        >
-                          <Icon icon="edit" iconPosition="end">
-                            <FormattedMessage id="ui-checkin.today" />
-                          </Icon>
-                        </button>
-                      </div>
-                    )}
-                  </Col>
-                  <Col xs={12} sm={2}>
-                    {showPickers ? (
-                      <div data-test-process-time>
-                        <Field
-                          name="item.checkinTime"
-                          aria-label={checkinTimeLabel}
-                          label={timeReturnedLabel}
-                          component={Timepicker}
-                          autoComplete="off"
-                        />
-                      </div>
-                    ) : (
-                      <div>
-                        <div className={styles['field-label']}>{timeReturnedLabel}</div>
-                        <button
-                          data-test-checkin-modify-time
-                          onClick={this.showPickers}
-                          className={styles['modify-datetime-button']}
-                          type="button"
-                        >
-                          <Icon icon="edit" iconPosition="end">
-                            <FormattedMessage id="ui-checkin.now" />
-                          </Icon>
-                        </button>
-                      </div>
-                    )}
-                  </Col>
-                  <Col xs={12} sm={1}>
-                    <Layout className="marginTopLabelSpacer">
-                      <Button id="clickable-end-session" buttonStyle="default" style={{ minWidth: '90px' }} fullWidth onClick={this.handleSessionEnd}>
-                        <FormattedMessage id="ui-checkin.endSession" />
-                      </Button>
-                    </Layout>
-                  </Col>
-                </Row>
-                {loading &&
-                  <Icon
-                    icon="spinner-ellipsis"
-                    width="10px"
-                  />}
-                <div data-test-checked-in-items>
-                  <MultiColumnList
-                    id="list-items-checked-in"
-                    fullWidth
-                    visibleColumns={['timeReturned', 'title', 'barcode', 'effectiveCallNumber', 'location', 'inHouseUse', 'status', ' ']}
-                    columnMapping={columnMapping}
-                    columnWidths={columnWidths}
-                    columnOverflow={{ ' ': true }}
-                    rowMetadata={['id']}
-                    interactive={false}
-                    contentData={scannedItems}
-                    formatter={itemListFormatter}
-                    isEmptyMessage={emptyMessage}
-                  />
-                </div>
+              <Row>
+                <Col xs={9} sm={4}>
+                  <Layout className="marginTopLabelSpacer">
+                    <TitleManager prefix={(this.readyPrefix && this.state.readyToScan) ? this.readyPrefix : undefined}>
+                      <Field
+                        autoFocus
+                        id="input-item-barcode"
+                        name="item.barcode"
+                        validationEnabled={false}
+                        placeholder={scanBarcodeMsg}
+                        ariaLabel={itemIdLabel}
+                        inputRef={barcodeRef}
+                        onFocus={this.readyPrefix ? () => this.setState({ readyToScan: true }) : undefined}
+                        onBlur={this.readyPrefix ? () => this.setState({ readyToScan: false }) : undefined}
+                        fullWidth
+                        component={TextField}
+                        data-test-check-in-barcode
+                      />
+                    </TitleManager>
+                    {hasSubmitErrors && <span className={styles.error}>{submitErrors.checkin}</span>}
+                  </Layout>
+                </Col>
+                <Col xs={3} sm={1}>
+                  <Layout className="marginTopLabelSpacer">
+                    <Button
+                      id="clickable-add-item"
+                      fullWidth
+                      type="submit"
+                      disabled={pristine}
+                    >
+                      <FormattedMessage id="ui-checkin.enter" />
+                    </Button>
+                  </Layout>
+                </Col>
+                <Col xs={12} smOffset={3} sm={2}>
+                  {showPickers ? (
+                    <div data-test-process-date>
+                      <Field
+                        name="item.checkinDate"
+                        aria-label={checkinDateLabel}
+                        label={dateReturnedLabel}
+                        component={Datepicker}
+                        autoComplete="off"
+                        timeZone="UTC"
+                        backendDateStandard="YYYY-MM-DD"
+                        format={(value) => (value ? formatDate(value, { timeZone: 'UTC' }) : '')}
+                      />
+                    </div>
+                  ) : (
+                    <div>
+                      <Label>{dateReturnedLabel}</Label>
+                      <button
+                        data-test-checkin-modify-date
+                        onClick={this.showPickers}
+                        className={styles['modify-datetime-button']}
+                        type="button"
+                      >
+                        <Icon icon="edit" iconPosition="end">
+                          <FormattedMessage id="ui-checkin.today" />
+                        </Icon>
+                      </button>
+                    </div>
+                  )}
+                </Col>
+                <Col xs={12} sm={2}>
+                  {showPickers ? (
+                    <div data-test-process-time>
+                      <Field
+                        name="item.checkinTime"
+                        aria-label={checkinTimeLabel}
+                        label={timeReturnedLabel}
+                        component={Timepicker}
+                        autoComplete="off"
+                      />
+                    </div>
+                  ) : (
+                    <div>
+                      <Label>{timeReturnedLabel}</Label>
+                      <button
+                        data-test-checkin-modify-time
+                        onClick={this.showPickers}
+                        className={styles['modify-datetime-button']}
+                        type="button"
+                      >
+                        <Icon icon="edit" iconPosition="end">
+                          <FormattedMessage id="ui-checkin.now" />
+                        </Icon>
+                      </button>
+                    </div>
+                  )}
+                </Col>
+              </Row>
+              {loading &&
+                <Icon
+                  icon="spinner-ellipsis"
+                  width="10px"
+                />}
+              <div data-test-checked-in-items>
+                <MultiColumnList
+                  id="list-items-checked-in"
+                  fullWidth
+                  visibleColumns={['timeReturned', 'title', 'barcode', 'effectiveCallNumber', 'location', 'inHouseUse', 'status', ' ']}
+                  columnMapping={columnMapping}
+                  columnWidths={columnWidths}
+                  columnOverflow={{ ' ': true }}
+                  rowMetadata={['id']}
+                  interactive={false}
+                  contentData={scannedItems}
+                  formatter={itemListFormatter}
+                  isEmptyMessage={emptyMessage}
+                />
               </div>
             </Pane>
           </Paneset>
+          <CheckInFooter handleSessionEnd={this.handleSessionEnd} />
         </div>
       </form>
     );

@@ -4,11 +4,6 @@
   padding: 0.5em 0;
 }
 
-.field-label {
-  font-size: var(--font-size-small);
-  line-height: var(--line-height);
-}
-
 .house-icon {
   height: 1.8em;
   width: 4.5em;
