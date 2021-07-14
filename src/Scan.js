@@ -315,9 +315,8 @@ class Scan extends React.Component {
     const { itemClaimedReturnedResolution } = this.state;
 
     const servicePointId = get(user, 'user.curServicePoint.id', '');
-    const now = moment().tz(timeZone);
 
-    const checkInDate = buildDateTime(checkinDate, checkinTime, timeZone, now);
+    const checkInDate = buildDateTime(checkinDate, checkinTime, timeZone, moment().tz(timeZone));
     const requestData = {
       servicePointId,
       checkInDate,
@@ -546,7 +545,7 @@ class Scan extends React.Component {
         },
       } = this.checkInData;
 
-      scannedItem.returnDate = buildDateTime(checkinDate, checkinTime, timeZone);
+      scannedItem.returnDate = buildDateTime(checkinDate, checkinTime, timeZone, moment().tz(timeZone));
     }
     scannedItem.loanId = loan?.id || '';
     scannedItem.nextRequest = nextRequest;
