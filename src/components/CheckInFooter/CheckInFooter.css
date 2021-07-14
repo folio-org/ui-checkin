@@ -1,0 +1,6 @@
+@import "@folio/stripes-components/lib/variables";
+
+.footer {
+  padding: var(--gutter-static);
+  border-top: 1px solid var(--color-border-p2);
+}
