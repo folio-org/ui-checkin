@@ -2,7 +2,6 @@
     "scanBarcode": "Olvassa vagy írja be a vonalkódot a tétel visszavételéhez",
     "itemId": "Tétel azonosító",
     "enter": "Enter",
-    "processAs": "Folyamat:",
     "processedAs": "Feldolgozott:",
     "actual": "Tényleges:",
     "checkinDate": "Visszavételi dátum",
@@ -98,5 +97,6 @@
     "statuses.inProcessNonRequestable": "In process (non-requestable)",
     "statuses.longMissing": "Long missing",
     "statuses.unavailable": "Unavailable",
-    "statuses.unknown": "Unknown"
+    "statuses.unknown": "Unknown",
+    "dateReturnedLabel": "Date returned"
 }

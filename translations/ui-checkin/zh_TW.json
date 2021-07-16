@@ -2,7 +2,6 @@
     "scanBarcode": "掃瞄或輸入條碼還入館藏",
     "itemId": "館藏 ID",
     "enter": "輸入",
-    "processAs": "處理為",
     "processedAs": "已處理為",
     "actual": "實際",
     "checkinDate": "還入日期",
@@ -98,5 +97,6 @@
     "statuses.inProcessNonRequestable": "進行中（非請求）",
     "statuses.longMissing": "長期失踪",
     "statuses.unavailable": "不可借",
-    "statuses.unknown": "未知"
+    "statuses.unknown": "未知",
+    "dateReturnedLabel": "Date returned"
 }

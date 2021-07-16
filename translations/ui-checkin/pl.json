@@ -2,7 +2,6 @@
     "scanBarcode": "Zeskanuj lub wprowadź kod kreskowy aby zarejestrować egzemplarz",
     "itemId": "ID egzemplarza",
     "enter": "Wprowadź",
-    "processAs": "Przetwarzaj jako",
     "processedAs": "Przetwarzane jako",
     "actual": "Bieżący",
     "checkinDate": "Data rejestracji",
@@ -98,5 +97,6 @@
     "statuses.inProcessNonRequestable": "W toku (niewymagane)",
     "statuses.longMissing": "Brakujący od dawna",
     "statuses.unavailable": "Niedostępny",
-    "statuses.unknown": "Nieznany"
+    "statuses.unknown": "Nieznany",
+    "dateReturnedLabel": "Date returned"
 }

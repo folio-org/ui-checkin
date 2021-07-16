@@ -2,7 +2,6 @@
     "scanBarcode": "Escanee o ingrese el código de barras a devolver",
     "itemId": "ID Item",
     "enter": "Devolver",
-    "processAs": "Cambiar fecha devolución:",
     "processedAs": "Procesado como:",
     "actual": "Actual:",
     "checkinDate": "Fecha devolución",
@@ -98,5 +97,6 @@
     "statuses.inProcessNonRequestable": "In process (non-requestable)",
     "statuses.longMissing": "Long missing",
     "statuses.unavailable": "Unavailable",
-    "statuses.unknown": "Desconocido"
+    "statuses.unknown": "Desconocido",
+    "dateReturnedLabel": "Date returned"
 }

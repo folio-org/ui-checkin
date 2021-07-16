@@ -2,7 +2,6 @@
     "scanBarcode": "반납 항목에 바코드 스캔 또는 입력",
     "itemId": "항목 ID",
     "enter": "입력",
-    "processAs": "다음으로 처리",
     "processedAs": "다음으로 처리됨",
     "actual": "실제",
     "checkinDate": "반납 날짜",
@@ -98,5 +97,6 @@
     "statuses.inProcessNonRequestable": "In process (non-requestable)",
     "statuses.longMissing": "Long missing",
     "statuses.unavailable": "Unavailable",
-    "statuses.unknown": "Unknown"
+    "statuses.unknown": "Unknown",
+    "dateReturnedLabel": "Date returned"
 }
