@@ -2,7 +2,6 @@
     "scanBarcode": "Scan or enter barcode to check-in item",
     "itemId": "Item ID",
     "enter": "Enter",
-    "processAs": "Process as",
     "processedAs": "Processed as",
     "actual": "Actual",
     "checkinDate": "Check-in date",
@@ -98,5 +97,6 @@
     "statuses.inProcessNonRequestable": "In process (non-requestable)",
     "statuses.longMissing": "Long missing",
     "statuses.unavailable": "Unavailable",
-    "statuses.unknown": "Unknown"
+    "statuses.unknown": "Unknown",
+    "dateReturnedLabel": "Date returned"
 }

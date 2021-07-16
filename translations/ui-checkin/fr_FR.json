@@ -2,7 +2,6 @@
     "scanBarcode": "Scanner ou saisir le code-barres pour retourner l'exemplaire",
     "itemId": "ID de l'article",
     "enter": "Valider",
-    "processAs": "Traité le",
     "processedAs": "Traité comme",
     "actual": "Réel",
     "checkinDate": "Date du retour",
@@ -98,5 +97,6 @@
     "statuses.inProcessNonRequestable": "En cours (non demandable)",
     "statuses.longMissing": "Manquant depuis longtemps",
     "statuses.unavailable": "Indisponible",
-    "statuses.unknown": "Inconnu"
+    "statuses.unknown": "Inconnu",
+    "dateReturnedLabel": "Date returned"
 }
