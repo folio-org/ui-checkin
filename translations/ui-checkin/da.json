@@ -2,7 +2,6 @@
     "scanBarcode": "Scan eller indtast stregkode for at aflevere",
     "itemId": "Item ID",
     "enter": "Indtast",
-    "processAs": "Process as",
     "processedAs": "Processed as",
     "actual": "Faktiske",
     "checkinDate": "Afleveringsdato",
@@ -98,5 +97,6 @@
     "statuses.inProcessNonRequestable": "In process (non-requestable)",
     "statuses.longMissing": "Bortkommet",
     "statuses.unavailable": "Ikke tilgængelig",
-    "statuses.unknown": "Ukendt"
+    "statuses.unknown": "Ukendt",
+    "dateReturnedLabel": "Date returned"
 }

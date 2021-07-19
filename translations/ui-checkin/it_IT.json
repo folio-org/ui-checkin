@@ -2,7 +2,6 @@
     "scanBarcode": "Scansiona o digita il barcode della copia",
     "itemId": "ID item",
     "enter": "Inserisci",
-    "processAs": "Processa come",
     "processedAs": "Processato come",
     "actual": "Attuale",
     "checkinDate": "Data di restituzione",
@@ -98,5 +97,6 @@
     "statuses.inProcessNonRequestable": "In process (non-requestable)",
     "statuses.longMissing": "Long missing",
     "statuses.unavailable": "Non disponibile",
-    "statuses.unknown": "Unknown"
+    "statuses.unknown": "Unknown",
+    "dateReturnedLabel": "Date returned"
 }

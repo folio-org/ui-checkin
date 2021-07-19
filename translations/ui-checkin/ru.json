@@ -2,7 +2,6 @@
     "scanBarcode": "Сканируйте или введите штрихкод для выдачи экземпляра",
     "itemId": "Идентификатор элемента",
     "enter": "Найти",
-    "processAs": "Преобразовать",
     "processedAs": "Преобразован как",
     "actual": "Фактический",
     "checkinDate": "Дата возврата",
@@ -98,5 +97,6 @@
     "statuses.inProcessNonRequestable": "In process (non-requestable)",
     "statuses.longMissing": "Long missing",
     "statuses.unavailable": "Unavailable",
-    "statuses.unknown": "Unknown"
+    "statuses.unknown": "Unknown",
+    "dateReturnedLabel": "Date returned"
 }

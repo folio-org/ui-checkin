@@ -2,7 +2,6 @@
     "scanBarcode": "Barcode scannen oder eingeben, um Exemplar zurückzugeben",
     "itemId": "Exemplar-ID",
     "enter": "Eingabe",
-    "processAs": "Verarbeitet als",
     "processedAs": "Verarbeitet als",
     "actual": "Tatsächlich",
     "checkinDate": "Rückgabedatum",
@@ -98,5 +97,6 @@
     "statuses.inProcessNonRequestable": "In Bearbeitung (nicht bestellbar)",
     "statuses.longMissing": "Lang vermisst",
     "statuses.unavailable": "Nicht verfügbar",
-    "statuses.unknown": "Unbekannt"
+    "statuses.unknown": "Unbekannt",
+    "dateReturnedLabel": "Date returned"
 }

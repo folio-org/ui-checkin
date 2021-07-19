@@ -2,7 +2,6 @@
     "scanBarcode": "Escanee o ingrese el código de barras para el artículo de facturación",
     "itemId": "ID de artículo",
     "enter": "Entrar",
-    "processAs": "Proceso como:",
     "processedAs": "Procesado como:",
     "actual": "Real:",
     "checkinDate": "Fecha de devolución",
@@ -98,5 +97,6 @@
     "statuses.inProcessNonRequestable": "In process (non-requestable)",
     "statuses.longMissing": "Long missing",
     "statuses.unavailable": "Unavailable",
-    "statuses.unknown": "Unknown"
+    "statuses.unknown": "Unknown",
+    "dateReturnedLabel": "Date returned"
 }

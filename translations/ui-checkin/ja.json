@@ -2,7 +2,6 @@
     "scanBarcode": "バーコードをスキャンまたは入力して資料を返却する",
     "itemId": "資料ID",
     "enter": "Enter",
-    "processAs": "処理日",
     "processedAs": "Processed as",
     "actual": "Actual",
     "checkinDate": "返却日",
@@ -98,5 +97,6 @@
     "statuses.inProcessNonRequestable": "In process (non-requestable)",
     "statuses.longMissing": "Long missing",
     "statuses.unavailable": "Unavailable",
-    "statuses.unknown": "Unknown"
+    "statuses.unknown": "Unknown",
+    "dateReturnedLabel": "Date returned"
 }
