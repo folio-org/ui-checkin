@@ -2,7 +2,6 @@
     "scanBarcode": "扫描或输入条码归还单件",
     "itemId": "单件ID",
     "enter": "输入",
-    "processAs": "处理为",
     "processedAs": "已处理为",
     "actual": "实际",
     "checkinDate": "归还日期",
@@ -98,5 +97,6 @@
     "statuses.inProcessNonRequestable": "处理中（不可请求）",
     "statuses.longMissing": "遗失已久",
     "statuses.unavailable": "不可用",
-    "statuses.unknown": "未知"
+    "statuses.unknown": "未知",
+    "dateReturnedLabel": "Date returned"
 }
