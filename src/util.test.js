@@ -1,6 +1,7 @@
 import moment from 'moment-timezone';
 import {
   escape,
+  noop,
 } from 'lodash';
 
 import {
@@ -15,7 +16,6 @@ import {
 import {
   statuses
 } from './consts';
-
 
 describe('escapeValue', () => {
   it('escapes values', () => {
@@ -59,55 +59,55 @@ describe('convertToSlipData', () => {
   const tz = 'America/New_York';
   const locale = 'en';
 
-  it('substitutes values', () => {
-    const source = {
-      requester: {
-        'firstName': 'firstName',
-        'lastName': 'lastName',
-        'middleName': 'middleName',
-        'addressLine1': 'addressLine1',
-        'addressLine2': 'addressLine2',
-        'countryId': 'countryId',
-        'city': 'city',
-        'stateProvRegion': 'region',
-        'zipPostalCode': 'postalCode',
-        'barcode': 'requester-barcode',
-      },
-      item: {
-        'title': 'title',
-        'primaryContributor': 'primaryContributor',
-        'allContributors': 'allContributors',
-        'barcode': 'item-barcode',
-        'callNumber': 'callNumber',
-        'callNumberPrefix': 'callNumberPrefix',
-        'callNumberSuffix': 'callNumberSuffix',
-        'enumeration': 'enumeration',
-        'volume': 'volume',
-        'chronology': 'chronology',
-        'copy': 'copy',
-        'yearCaption': 'yearCaption',
-        'materialType': 'materialType',
-        'loanType': 'loanType',
-        'numberOfPieces': 'numberOfPieces',
-        'descriptionOfPieces': 'descriptionOfPieces',
-        'lastCheckedInDateTime': 'lastCheckedInDateTime',
-        'fromServicePoint': 'fromServicePoint',
-        'toServicePoint': 'toServicePoint',
-        'effectiveLocationInstitution': 'effectiveLocationInstitution',
-        'effectiveLocationCampus': 'effectiveLocationCampus',
-        'effectiveLocationLibrary': 'effectiveLocationLibrary',
-        'item.effectiveLocationSpecific': 'item.effectiveLocationSpecific',
-      },
-      request: {
-        'servicePointPickup': 'servicePointPickup',
-        'deliveryAddressType': 'deliveryAddressType',
-        'requestExpirationDate': 'requestExpirationDate',
-        'holdShelfExpirationDate': 'holdShelfExpirationDate',
-        'requestID': 'requestID',
-        'patronComments': 'patronComments',
-      }
-    };
+  const source = {
+    requester: {
+      'firstName': 'firstName',
+      'lastName': 'lastName',
+      'middleName': 'middleName',
+      'addressLine1': 'addressLine1',
+      'addressLine2': 'addressLine2',
+      'countryId': 'countryId',
+      'city': 'city',
+      'stateProvRegion': 'region',
+      'zipPostalCode': 'postalCode',
+      'barcode': 'requester-barcode',
+    },
+    item: {
+      'title': 'title',
+      'primaryContributor': 'primaryContributor',
+      'allContributors': 'allContributors',
+      'barcode': 'item-barcode',
+      'callNumber': 'callNumber',
+      'callNumberPrefix': 'callNumberPrefix',
+      'callNumberSuffix': 'callNumberSuffix',
+      'enumeration': 'enumeration',
+      'volume': 'volume',
+      'chronology': 'chronology',
+      'copy': 'copy',
+      'yearCaption': 'yearCaption',
+      'materialType': 'materialType',
+      'loanType': 'loanType',
+      'numberOfPieces': 'numberOfPieces',
+      'descriptionOfPieces': 'descriptionOfPieces',
+      'lastCheckedInDateTime': 'lastCheckedInDateTime',
+      'fromServicePoint': 'fromServicePoint',
+      'toServicePoint': 'toServicePoint',
+      'effectiveLocationInstitution': 'effectiveLocationInstitution',
+      'effectiveLocationCampus': 'effectiveLocationCampus',
+      'effectiveLocationLibrary': 'effectiveLocationLibrary',
+      'item.effectiveLocationSpecific': 'item.effectiveLocationSpecific',
+    },
+    request: {
+      'servicePointPickup': 'servicePointPickup',
+      'deliveryAddressType': 'deliveryAddressType',
+      'requestExpirationDate': 'requestExpirationDate',
+      'holdShelfExpirationDate': 'holdShelfExpirationDate',
+      'requestID': 'requestID',
+      'patronComments': 'patronComments',
+    }
+  };
 
+  it('substitutes values', () => {
     const o = convertToSlipData(source, intl, tz, locale, 'Chicken');
 
     expect(o['staffSlip.Name']).toEqual('Chicken');
@@ -157,9 +157,8 @@ describe('convertToSlipData', () => {
   });
 
   it('handles missing elements', () => {
-    const source = {};
-
-    const o = convertToSlipData(source, intl, tz, locale);
+    const emptySource = {};
+    const o = convertToSlipData(emptySource, intl, tz, locale);
 
     expect(o['staffSlip.Name']).toEqual('Hold');
     expect(o['requester.country']).toEqual('');
@@ -168,13 +167,25 @@ describe('convertToSlipData', () => {
   });
 
   it('handles missing elements', () => {
-    const source = {};
-
-    const o = convertToSlipData(source, intl, tz, locale, 'Chicken');
+    const emptySource = {};
+    const o = convertToSlipData(emptySource, intl, tz, locale, 'Chicken');
 
     expect(o['requester.country']).toEqual('');
     expect(o['request.requestExpirationDate']).toBeUndefined();
     expect(o['request.holdShelfExpirationDate']).toBeUndefined();
+  });
+
+  it('handles empty requester barcode', () => {
+    const sourceWithoutRequesterBarcode = {
+      ...source,
+      requester: {
+        ...source.requester,
+        barcode: noop()
+      }
+    };
+    const o = convertToSlipData(sourceWithoutRequesterBarcode, intl, tz, locale, 'Chicken');
+
+    expect(o['requester.barcodeImage']).toEqual('');
   });
 });
 
