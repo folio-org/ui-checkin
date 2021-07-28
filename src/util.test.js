@@ -109,6 +109,7 @@ describe('convertToSlipData', () => {
     };
 
     const o = convertToSlipData(source, intl, tz, locale, 'Chicken');
+    const requesterBarcode = source.requester.barcode ? `<Barcode>${source.requester.barcode}</Barcode>` : '';
 
     expect(o['staffSlip.Name']).toEqual('Chicken');
     expect(o['requester.firstName']).toEqual(source.requester.firstName);
@@ -121,7 +122,7 @@ describe('convertToSlipData', () => {
     expect(o['requester.stateProvRegion']).toEqual(source.requester.region);
     expect(o['requester.zipPostalCode']).toEqual(source.requester.postalCode);
     expect(o['requester.barcode']).toEqual(source.requester.barcode);
-    expect(o['requester.barcodeImage']).toEqual(`<Barcode>${source.requester.barcode}</Barcode>`);
+    expect(o['requester.barcodeImage']).toEqual(requesterBarcode);
 
     expect(o['item.title']).toEqual(source.item.title);
     expect(o['item.primaryContributor']).toEqual(source.item.primaryContributor);
