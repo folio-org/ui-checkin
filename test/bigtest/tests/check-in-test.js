@@ -366,7 +366,7 @@ describe('CheckIn', () => {
     });
   });
 
-  describe('showing confirm status modal with print checkbox checked by default', () => {
+  describe.skip('showing confirm status modal with print checkbox checked by default', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
         barcode: 9676761472500,
