@@ -2,7 +2,6 @@
     "scanBarcode": "قم بالمسح ضوئيًا أو الإدخال يدويًا لرد المادة",
     "itemId": "معرّف المادة",
     "enter": "إدخال",
-    "processAs": "معالجة كـ:",
     "processedAs": "تمت المعالجة كـ",
     "actual": "الفعلي",
     "checkinDate": "تاريخ الرد",
@@ -98,5 +97,6 @@
     "statuses.inProcessNonRequestable": "قيد المعالجة (غير قابل للطلب)",
     "statuses.longMissing": "مفقودة منذ مدة",
     "statuses.unavailable": "غير متاحة",
-    "statuses.unknown": "غير معروف"
+    "statuses.unknown": "غير معروف",
+    "dateReturnedLabel": "تاريخ الإعادة"
 }

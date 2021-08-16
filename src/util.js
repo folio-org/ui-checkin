@@ -7,7 +7,7 @@ import {
 import { statuses } from './consts';
 
 export const escapeValue = (val) => {
-  if (val.startsWith('<Barcode>') && val.endsWith('</Barcode>')) {
+  if (typeof val === 'string' && val.startsWith('<Barcode>') && val.endsWith('</Barcode>')) {
     return val;
   }
 
@@ -44,7 +44,7 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
     'requester.stateProvRegion': requester.region,
     'requester.zipPostalCode': requester.postalCode,
     'requester.barcode': requester.barcode,
-    'requester.barcodeImage': `<Barcode>${requester.barcode}</Barcode>`,
+    'requester.barcodeImage': requester.barcode ? `<Barcode>${requester.barcode}</Barcode>` : '',
     'item.title': item.title,
     'item.primaryContributor': item.primaryContributor,
     'item.allContributors': item.allContributors,
@@ -84,9 +84,9 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
   return slipData;
 }
 
-export function buildDateTime(date, time, timeZone) {
-  if (date && time) {
-    const effectiveReturnDate = moment(`${date.substring(0, 10)}T${time}`);
+export function buildDateTime(date, time, timezone, now) {
+  if (date && time && timezone) {
+    const effectiveReturnDate = moment.tz(`${date.substring(0, 10)}T${time}`, timezone);
 
     // Check for DST offset. 'time' is passed in adjusted to UTC from whatever time is specified in
     // the picker before being converted to a date/time in the local timezone. This works fine if
@@ -94,8 +94,8 @@ export function buildDateTime(date, time, timeZone) {
     // to count items as returned. If there is, due to a change from daylight savings time to standard
     // time between the two dates, the recorded time will be an hour off. Unless we do somethng
     // like this:
-    const inDstNow = moment().tz(timeZone).isDST();
-    const inDstThen = effectiveReturnDate.tz(timeZone).isDST();
+    const inDstNow = now.isDST();
+    const inDstThen = effectiveReturnDate.isDST();
 
     if (inDstNow && !inDstThen) {
       effectiveReturnDate.add(1, 'hours');
@@ -103,9 +103,9 @@ export function buildDateTime(date, time, timeZone) {
       effectiveReturnDate.subtract(1, 'hours');
     }
 
-    return effectiveReturnDate.format();
+    return effectiveReturnDate.toISOString();
   } else {
-    return moment().tz(timeZone).format();
+    return moment(now).toISOString();
   }
 }
 

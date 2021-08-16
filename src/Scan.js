@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment-timezone';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { escapeCqlValue } from '@folio/stripes/util';
 import {
@@ -314,7 +315,8 @@ class Scan extends React.Component {
     const { itemClaimedReturnedResolution } = this.state;
 
     const servicePointId = get(user, 'user.curServicePoint.id', '');
-    const checkInDate = buildDateTime(checkinDate, checkinTime, timeZone);
+
+    const checkInDate = buildDateTime(checkinDate, checkinTime, timeZone, moment().tz(timeZone));
     const requestData = {
       servicePointId,
       checkInDate,
@@ -419,24 +421,26 @@ class Scan extends React.Component {
 
     const processAccounts = async () => {
       const loanItem = await fetchLoan();
-      const accounts = await getAccounts(loanItem.id);
-      const lostItemFeePolicies = await getLostItemPolicy(loanItem.lostItemPolicyId);
-      const { returnedLostItemProcessingFee } = lostItemFeePolicies.lostItemFeePolicies[0];
-      const filterAccounts = accounts.accounts.filter(
-        record => record.paymentStatus.name && record.paymentStatus.name.startsWith(cancelFeeClaimReturned.PAYMENT_STATUS)
-          && (record.feeFineType === cancelFeeClaimReturned.LOST_ITEM_FEE ||
-            (record.feeFineType === cancelFeeClaimReturned.LOST_ITEM_PROCESSING_FEE && returnedLostItemProcessingFee))
-      );
+      if (loanItem) {
+        const accounts = await getAccounts(loanItem.id);
+        const lostItemFeePolicies = await getLostItemPolicy(loanItem.lostItemPolicyId);
+        const { returnedLostItemProcessingFee } = lostItemFeePolicies.lostItemFeePolicies[0];
+        const filterAccounts = accounts.accounts.filter(
+          record => record.paymentStatus.name && record.paymentStatus.name.startsWith(cancelFeeClaimReturned.PAYMENT_STATUS)
+            && (record.feeFineType === cancelFeeClaimReturned.LOST_ITEM_FEE ||
+              (record.feeFineType === cancelFeeClaimReturned.LOST_ITEM_PROCESSING_FEE && returnedLostItemProcessingFee))
+        );
 
-      const createActions = await Promise.all(filterAccounts
-        .map(createCancelledFeeTemplate));
+        const createActions = await Promise.all(filterAccounts
+          .map(createCancelledFeeTemplate));
 
-      const persistedCancelledActions = await Promise.all(
-        createActions.map(persistCancelledAction)
-      );
+        const persistedCancelledActions = await Promise.all(
+          createActions.map(persistCancelledAction)
+        );
 
-      await Promise.all(filterAccounts.map(setPaymentStatus).map(persistAccountRecord));
-      await Promise.all(persistedCancelledActions);
+        await Promise.all(filterAccounts.map(setPaymentStatus).map(persistAccountRecord));
+        await Promise.all(persistedCancelledActions);
+      }
     };
 
     processAccounts();
@@ -543,7 +547,7 @@ class Scan extends React.Component {
         },
       } = this.checkInData;
 
-      scannedItem.returnDate = buildDateTime(checkinDate, checkinTime, timeZone);
+      scannedItem.returnDate = buildDateTime(checkinDate, checkinTime, timeZone, moment().tz(timeZone));
     }
     scannedItem.loanId = loan?.id || '';
     scannedItem.nextRequest = nextRequest;
