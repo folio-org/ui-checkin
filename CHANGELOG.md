@@ -6,6 +6,7 @@
 * Add changes for UI consistency. Refs UICHKIN-255.
 * Send ISO-8601 dates in API requests. Fixes UICHKIN-272.
 * Undefined Bar Code - Requester info not showing. Refs UICHKIN-276.
+* Increment `stripes` to `v7`, `react` to `v17`. Refs UICHKIN-290.
 
 ## [5.1.0] (https://github.com/folio-org/ui-checkin/tree/v5.1.0) (2021-06-17)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.3...v5.1.0)
