@@ -6,10 +6,10 @@
     "actual": "实际",
     "checkinDate": "归还日期",
     "checkinTime": "归还时间",
-    "timeReturnedLabel": "归还时间",
+    "timeReturnedLabel": "已还时间",
     "endSession": "结束会话",
     "noItems": "尚未输入任何单件",
-    "timeReturned": "归还时间",
+    "timeReturned": "已还时间",
     "title": "题名",
     "barcode": "条码",
     "location": "馆藏地",
@@ -75,7 +75,7 @@
     "claimedReturnedModal.label": "归还声称已还单件",
     "claimedReturnedModal.message": "<strong> {title} </strong> （ <strong> {materialType} </strong> ）（条码： {barcode} ）<strong>声称已还</strong>。",
     "claimedReturnedModal.resolution.found": "图书馆找到",
-    "claimedReturnedModal.resolution.returned": "读者归还",
+    "claimedReturnedModal.resolution.returned": "读者返还",
     "requestDetails": "请求详情",
     "confirmModal.heading": "归还{status}单件？",
     "confirmModal.message": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）的单件状态为<strong> {status} </strong> {discoverySuppressMessage}",
@@ -98,5 +98,5 @@
     "statuses.longMissing": "遗失已久",
     "statuses.unavailable": "不可用",
     "statuses.unknown": "未知",
-    "dateReturnedLabel": "归还日期"
+    "dateReturnedLabel": "返还日期"
 }
