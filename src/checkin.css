@@ -12,3 +12,9 @@
 .error {
   color: var(--error);
 }
+
+@media print {
+  body {
+    height: auto !important;
+  }
+}
