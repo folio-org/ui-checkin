@@ -48,7 +48,7 @@
     "multipieceModal.item.numberOfMissingPieces": "Anzahl der fehlenden Teile",
     "multipieceModal.item.descriptionOfmissingPieces": "Beschreibung der fehlenden Teile",
     "newFeeFine": "Neue Forderungen",
-    "action.printHoldSlip": "Print hold slip",
+    "action.printHoldSlip": "Vormerkungszettel drucken",
     "action.printTransitSlip": "Transportzettel drucken",
     "missingModal.heading": "Rückgabe eines Bandes im Status: Verloren",
     "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) hat den Exemplar-Status <strong>verloren</strong> {discoverySuppressMessage}",
@@ -98,5 +98,5 @@
     "statuses.longMissing": "Lang vermisst",
     "statuses.unavailable": "Nicht verfügbar",
     "statuses.unknown": "Unbekannt",
-    "dateReturnedLabel": "Date returned"
+    "dateReturnedLabel": "Datum der Rückgabe"
 }
