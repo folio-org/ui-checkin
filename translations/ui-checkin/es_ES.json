@@ -29,7 +29,7 @@
     "statusModal.transit.heading": "En tránsito",
     "statusModal.transit.message": "Ruta {title} ({materialType}) (Código de barras: {barcode}) a {servicePoint}",
     "statusModal.hold.heading": "A la espera de recogida",
-    "statusModal.hold.message": "Coloque <strong> {title} ( {materialType} ) </strong> (código de barras: {barcode} ) en el estante de reservas  <strong> {pickupServicePoint} </strong> para solicitarlo.",
+    "statusModal.hold.message": "Coloque <strong> {title} ({materialType}) </strong> (Código de barras: {barcode}) en el estante de reservas <strong> {pickupServicePoint}</strong> a la espera de ser recogido por el solicitante",
     "scannedItems": "Items devueltos",
     "statusModal.printSlip": "Print slip",
     "unknownError": "Se produjo un error desconocido",
