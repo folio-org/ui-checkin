@@ -21,6 +21,7 @@
 * Adjust `ui-checkin.all` permission set. Fixes UICHKIN-261.
 * Replace okapiInterfaces dependency `item-storage: 8.0` by `inventory 10.0`. Refs UICHKIN-9, UICHKIN-258.
 * Add alternate okapiInterfaces dependency `inventory: 11.0` for optimistic locking. Refs UICHKIN-258.
+* Fix failed build on ui-checkin. Refs UICHKIN-302.
 
 ## [5.0.3] (https://github.com/folio-org/ui-checkin/tree/v5.0.3) (2021-04-22)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.2...v5.0.3)
