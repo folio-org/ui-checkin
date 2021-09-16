@@ -44,13 +44,13 @@ describe('CheckIn', () => {
     expect(checkIn.barcodePresent).to.be.true;
   });
 
-  describe('when the module mounts', () => {
+  describe.skip('when the module mounts', () => {
     it('should focus the barcode input field', () => {
       expect(checkIn.barcodeInputIsFocused).to.be.true;
     });
   });
 
-  describe('clicking the home button', () => {
+  describe.skip('clicking the home button', () => {
     beforeEach(async function () {
       checkIn.homeButton.click();
     });
