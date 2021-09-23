@@ -7,6 +7,8 @@
 * Send ISO-8601 dates in API requests. Fixes UICHKIN-272.
 * Undefined Bar Code - Requester info not showing. Refs UICHKIN-276.
 * Increment `stripes` to `v7`, `react` to `v17`. Refs UICHKIN-290.
+* Replace okapiInterfaces dependency `item-storage: 8.0` by `inventory 10.0`. Refs UICHKIN-9, UICHKIN-258.
+* Add alternate okapiInterfaces dependency `inventory: 11.0` for optimistic locking. Refs UICHKIN-258.
 
 ## [5.1.0] (https://github.com/folio-org/ui-checkin/tree/v5.1.0) (2021-06-17)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.3...v5.1.0)
@@ -20,8 +22,6 @@
 * Fix failed build on ui-checkin. Fixes UICHKIN-265.
 * Fix incorrect check in time. Refs UICHKIN-219.
 * Adjust `ui-checkin.all` permission set. Fixes UICHKIN-261.
-* Replace okapiInterfaces dependency `item-storage: 8.0` by `inventory 10.0`. Refs UICHKIN-9, UICHKIN-258.
-* Add alternate okapiInterfaces dependency `inventory: 11.0` for optimistic locking. Refs UICHKIN-258.
 * Fix failed build on ui-checkin. Refs UICHKIN-302.
 
 ## [5.0.3] (https://github.com/folio-org/ui-checkin/tree/v5.0.3) (2021-04-22)
