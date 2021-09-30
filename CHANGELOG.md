@@ -1,6 +1,7 @@
 # Change history for ui-checkin
 
-## [6.0.0] (IN PROGRESS)
+## [6.0.0] (https://github.com/folio-org/ui-checkin/tree/v6.0.0) (2021-09-30)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.1.0...v6.0.0)
 
 * Fix import paths. Refs UICHKIN-256.
 * Add changes for UI consistency. Refs UICHKIN-255.
@@ -23,6 +24,17 @@
 * Fix incorrect check in time. Refs UICHKIN-219.
 * Adjust `ui-checkin.all` permission set. Fixes UICHKIN-261.
 * Fix failed build on ui-checkin. Refs UICHKIN-302.
+
+## [5.0.5] (https://github.com/folio-org/ui-checkin/tree/v5.0.5) (2021-06-23)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.4...v5.0.5)
+
+* Adjust `ui-checkin.all` permission set. Fixes UICHKIN-261.
+
+## [5.0.4] (https://github.com/folio-org/ui-checkin/tree/v5.0.4) (2021-06-11)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.3...v5.0.4)
+
+* Include missing fee/fine-related permissions in `ui-checkin.all` pset. Refs UICHKIN-253.
+* Fix failed build on ui-checkin. Fixes UICHKIN-265.
 
 ## [5.0.3] (https://github.com/folio-org/ui-checkin/tree/v5.0.3) (2021-04-22)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.0.2...v5.0.3)
