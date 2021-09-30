@@ -27,7 +27,7 @@
     "statusModal.back": "Atrás",
     "statusModal.confirm": "Confirmar",
     "statusModal.transit.heading": "En tránsito",
-    "statusModal.transit.message": "Ruta {title} ({materialType}) (Código de barras: {barcode}) a {servicePoint}",
+    "statusModal.transit.message": "Ruta <strong>{title} ({materialType})</strong> (Código de barras: {barcode}) a <strong>{servicePoint}</strong>.",
     "statusModal.hold.heading": "A la espera de recogida",
     "statusModal.hold.message": "Coloque <strong> {title} ({materialType}) </strong> (Código de barras: {barcode}) en el estante de reservas <strong> {pickupServicePoint}</strong> a la espera de ser recogido por el solicitante",
     "scannedItems": "Items devueltos",
