@@ -1,5 +1,9 @@
 # Change history for ui-checkin
 
+## IN PROGRESS
+
+* Upgrade `@folio/react-intl-safe-html` for compatibility with `@folio/stripes` `v7`. Refs UICHKIN-308.
+
 ## [6.0.0] (https://github.com/folio-org/ui-checkin/tree/v6.0.0) (2021-09-30)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.1.0...v6.0.0)
 
