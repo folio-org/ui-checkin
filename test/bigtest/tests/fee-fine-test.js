@@ -20,8 +20,8 @@ describe('CheckIn fee(s) fine(s)', () => {
         'account',
         'inventory-items',
         'circulation-check-in-by-barcode-without-user',
-        'circulation-requests'
-      ]
+        'circulation-requests',
+      ],
     });
 
     const checkIn = new CheckInInteractor();
@@ -39,17 +39,10 @@ describe('CheckIn fee(s) fine(s)', () => {
       beforeEach(async function () {
         await checkIn.selectEllipse();
         await wait();
-        await checkIn.selectFeeFineDetails();
       });
 
-      it('should not navigate to fee/fine details page', function () {
-        const {
-          search,
-          pathname,
-        } = this.location;
-
-        expect(pathname + search)
-          .to.include('/checkin');
+      it('should not be rendered', function () {
+        expect(checkIn.confirmFeeFineDetailsPresent).to.be.false;
       });
     });
 
@@ -66,8 +59,8 @@ describe('CheckIn fee(s) fine(s)', () => {
         'account',
         'inventory-items',
         'circulation-check-in-by-barcode',
-        'circulation-requests'
-      ]
+        'circulation-requests',
+      ],
     });
 
     const checkIn = new CheckInInteractor();
@@ -113,8 +106,8 @@ describe('CheckIn fee(s) fine(s)', () => {
         'accounts',
         'inventory-items',
         'circulation-check-in-by-barcode',
-        'circulation-requests'
-      ]
+        'circulation-requests',
+      ],
     });
 
     const checkIn = new CheckInInteractor();
