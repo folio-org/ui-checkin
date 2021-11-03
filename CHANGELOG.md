@@ -1,5 +1,9 @@
 # Change history for ui-checkin
 
+## IN PROGRESS
+
+* Fix the issue when fee/fine details doesn't open up if fee/fines have been refunded. Refs UICHKIN-312.
+
 ## [6.0.0] (https://github.com/folio-org/ui-checkin/tree/v6.0.0) (2021-09-30)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v5.1.0...v6.0.0)
 
