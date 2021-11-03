@@ -8,6 +8,11 @@ import {
   Button,
 } from '@folio/stripes/components';
 
+const FEE_FINES_STATUSES = {
+  open: 'Open',
+  closed: 'Closed',
+};
+
 class FeeFineDetailsButton extends React.Component {
   static propTypes = {
     userId: PropTypes.string,
@@ -29,6 +34,7 @@ class FeeFineDetailsButton extends React.Component {
     this.state = {
       feeFinesCount: null,
       feeFineId: null,
+      feeFinesStatusToRedirect: null,
     };
   }
 
@@ -40,18 +46,28 @@ class FeeFineDetailsButton extends React.Component {
     } = this.props;
 
     if (userId && itemId) {
-      const query = `(userId==${userId} and itemId==${itemId}) and status.name=="Open"`;
+      const query = `(userId==${userId} and itemId==${itemId}) AND (status.name=="${FEE_FINES_STATUSES.open}" OR status.name=="${FEE_FINES_STATUSES.closed}")`;
 
       this._asyncRequest = mutator.accounts.GET({ params: { query } }).then((feeFines) => {
         this._asyncRequest = null;
-
         this.setState({
           feeFinesCount: feeFines.totalRecords,
         });
 
-        if (feeFines.totalRecords === 1) {
+        const openFeeFines = feeFines.accounts.filter(item => item.status.name === FEE_FINES_STATUSES.open);
+        const closedFeeFines = feeFines.accounts.filter(item => item.status.name === FEE_FINES_STATUSES.closed);
+
+        if (openFeeFines.length > 1) {
+          this.setState({ feeFinesStatusToRedirect: 'open' });
+        } else if (openFeeFines.length === 1) {
           this.setState({
-            feeFineId: feeFines.accounts[0].id,
+            feeFineId: openFeeFines[0].id,
+          });
+        } else if (closedFeeFines.length > 1) {
+          this.setState({ feeFinesStatusToRedirect: 'closed' });
+        } else if (closedFeeFines.length === 1) {
+          this.setState({
+            feeFineId: closedFeeFines[0].id,
           });
         }
       });
@@ -82,7 +98,6 @@ class FeeFineDetailsButton extends React.Component {
       userId,
     } = this.props;
     const {
-      feeFinesCount,
       feeFineId,
     } = this.state;
 
@@ -90,11 +105,11 @@ class FeeFineDetailsButton extends React.Component {
       return '#';
     }
 
-    if (feeFinesCount === 1) {
+    if (this.state.feeFineId) {
       return `/users/${userId}/accounts/view/${feeFineId}`;
     }
 
-    return `/users/${userId}/accounts/open`;
+    return `/users/${userId}/accounts/${this.state.feeFinesStatusToRedirect}`;
   };
 
   isDisabled = () => {
@@ -110,6 +125,10 @@ class FeeFineDetailsButton extends React.Component {
   };
 
   render() {
+    if (this.isDisabled()) {
+      return null;
+    }
+
     return (
       <div data-test-fee-fine-details>
         <Button

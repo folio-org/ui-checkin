@@ -45,6 +45,7 @@ import ConfrmModalInteractor from './confirm-modal';
   barcodeInputIsFocused = isPresent('[data-test-check-in-barcode]:focus');
   confirmStatusModalPresent = isPresent('[data-test-confirm-status-modal]');
   confirmFeeFineOwnedStatusPresent = isPresent('[data-test-fee-fine-owned-status]');
+  confirmFeeFineDetailsPresent = isPresent('[data-test-fee-fine-details] a');
   barcode = fillable('#input-item-barcode');
   blurBarcodeField = blurrable('#input-item-barcode');
   clickEnter = clickable('#clickable-add-item');
