@@ -3,6 +3,10 @@
 ## IN PROGRESS
 
 * Upgrade `@folio/react-intl-safe-html` for compatibility with `@folio/stripes` `v7`. Refs UICHKIN-308.
+
+## [6.0.1] (https://github.com/folio-org/ui-checkin/tree/v6.0.1) (2021-11-08)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v6.0.0...v6.0.1)
+
 * Fix the issue when fee/fine details doesn't open up if fee/fines have been refunded. Refs UICHKIN-312.
 
 ## [6.0.0] (https://github.com/folio-org/ui-checkin/tree/v6.0.0) (2021-09-30)
