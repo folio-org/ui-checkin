@@ -54,4 +54,4 @@ export const cancelFeeClaimReturned = {
   TYPE_ACTION: 'Cancelled item returned',
 };
 
-export default {};
+export const MAX_RECORDS = '1000';
