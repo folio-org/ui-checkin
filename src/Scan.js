@@ -12,7 +12,7 @@ import {
   isEmpty,
   keyBy,
   upperFirst,
-  cloneDeep
+  cloneDeep,
 } from 'lodash';
 
 import {
@@ -22,7 +22,11 @@ import {
 } from '@folio/stripes/components';
 
 import CheckIn from './CheckIn';
-import { statuses, cancelFeeClaimReturned } from './consts';
+import {
+  statuses,
+  cancelFeeClaimReturned,
+  MAX_RECORDS,
+} from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
 import RouteForDeliveryModal from './components/RouteForDeliveryModal';
 import ModalManager from './ModalManager';
@@ -146,13 +150,13 @@ class Scan extends React.Component {
     staffSlips: {
       type: 'okapi',
       records: 'staffSlips',
-      path: 'staff-slips-storage/staff-slips?limit=100',
+      path: `staff-slips-storage/staff-slips?limit=${MAX_RECORDS}`,
       throwErrors: false,
     },
     servicePoints: {
       type: 'okapi',
       records: 'servicepoints',
-      path: 'service-points?limit=100',
+      path: `service-points?limit=${MAX_RECORDS}`,
     },
     checkIn: {
       type: 'okapi',
@@ -206,7 +210,7 @@ class Scan extends React.Component {
     item: {
       checkinDate: '',
       checkinTime: '',
-    }
+    },
   };
 
   setFocusInput = () => {
@@ -631,9 +635,9 @@ class Scan extends React.Component {
           title: item.title,
           barcode: item.barcode,
           materialType: upperFirst(get(item, 'materialType.name', '')),
-          pickupServicePoint: get(request, 'pickupServicePoint.name', '')
+          pickupServicePoint: get(request, 'pickupServicePoint.name', ''),
         }}
-      />
+      />,
     ];
 
     if (patronComments) {
@@ -708,7 +712,7 @@ class Scan extends React.Component {
       state: {
         itemBarcode: deliveryItem.item.barcode,
         patronBarcode: nextRequest.requester.barcode,
-      }
+      },
     });
   }
 
@@ -732,9 +736,9 @@ class Scan extends React.Component {
           title: item.title,
           barcode: item.barcode,
           materialType: upperFirst(get(item, 'materialType.name', '')),
-          servicePoint: destinationServicePoint
+          servicePoint: destinationServicePoint,
         }}
-      />
+      />,
     ];
 
     return (
