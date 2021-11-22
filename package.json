@@ -107,8 +107,7 @@
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.0",
     "regenerator-runtime": "^0.13.3",
-    "sinon": "^6.3.4",
-    "webpack": "^4.16.0"
+    "sinon": "^6.3.4"
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^3.1.0",
