@@ -12,4 +12,6 @@ jest.mock('@folio/stripes/components', () => ({
       </span>
     </button>
   )),
+  Col: jest.fn(({ children, ...rest }) => <div {...rest}>{children}</div>),
+  Row: jest.fn(({ children, ...rest }) => <div {...rest}>{children}</div>),
 }));
