@@ -5,6 +5,7 @@
 * Upgrade `@folio/react-intl-safe-html` for compatibility with `@folio/stripes` `v7`. Refs UICHKIN-308.
 * Use `MAX_RECORDS` constant instead of hardcoded value for query limits. Refs UICHKIN-317.
 * Remove webpack from dependencies. Refs UICHKIN-316.
+* Add RTL/Jest testing for `CheckInFooter` component. Refs UICHKIN-278.
 
 ## [6.0.1] (https://github.com/folio-org/ui-checkin/tree/v6.0.1) (2021-11-08)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v6.0.0...v6.0.1)
