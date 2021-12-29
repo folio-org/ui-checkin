@@ -24,7 +24,7 @@ describe('CheckIn with claimed returned', () => {
     this.server.create('item', 'withLoanClaimReturned', {
       barcode: 1234567,
       title: 'I Promise I Really, Really Returned This Book!',
-      status: { name: statuses.CLAIMED_RETURNED }
+      status: { name: statuses.CLAIMED_RETURNED },
     });
 
     this.server.create('account', {
@@ -64,15 +64,12 @@ describe('CheckIn with claimed returned', () => {
     describe('Found by library', () => {
       let acc;
       beforeEach(async function () {
-        const wait = (ms = 10000) => new Promise(resolve => { setTimeout(resolve, ms); });
-
         this.server.put('/accounts/:id', (_, request) => {
           acc = JSON.parse(request.requestBody);
           return acc;
         });
 
         await checkIn.claimedReturnedModal.clickFound.click();
-        await wait();
       });
 
       it('Hide claimed returned modal', () => {
