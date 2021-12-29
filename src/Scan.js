@@ -486,7 +486,12 @@ class Scan extends React.Component {
   }
 
   handleTextError(error) {
-    throw error;
+    this.setState({
+      itemError: {
+        message: error,
+        _error: 'unknownError',
+      },
+    });
   }
 
   handleJsonError({
@@ -497,15 +502,15 @@ class Scan extends React.Component {
       } = {},
     ] = [],
   }) {
-    const itemError = (!parameters || !parameters.length)
+    const itemError = (parameters?.length)
       ? {
-        barcode: <FormattedMessage id="ui-checkin.unknownError" />,
-        _error: 'unknownError',
-      }
-      : {
         message,
         barcode: parameters[0].value,
         _error: parameters[0].key,
+      }
+      : {
+        message,
+        _error: 'unknownError',
       };
 
     this.setState({ itemError });
@@ -756,6 +761,7 @@ class Scan extends React.Component {
   }
 
   renderErrorModal({ message, barcode }) {
+    const { formatMessage } = this.props.intl;
     let errorMessage;
     let label;
 
@@ -768,7 +774,11 @@ class Scan extends React.Component {
       );
       label = <FormattedMessage id="ui-checkin.itemNotFound" />;
     } else {
-      errorMessage = message;
+      errorMessage = (
+        <div>
+          {`${formatMessage({ id: 'ui-checkin.errorModal.unhandledError' })} ${message || null}`}
+        </div>
+      );
       label = <FormattedMessage id="ui-checkin.itemNotCheckedIn" />;
     }
 
