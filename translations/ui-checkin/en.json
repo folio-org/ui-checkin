@@ -14,6 +14,7 @@
   "timeReturnedLabel": "Time returned",
   "endSession": "End session",
   "errorModal.noItemFound": "The barcode <strong>{barcode}</strong> could not be found.",
+  "errorModal.unhandledError": "This is an unhandled exception.",
   "noItems": "No items have been entered yet.",
   "timeReturned": "Time returned",
   "title": "Title",
