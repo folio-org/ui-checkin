@@ -98,5 +98,6 @@
     "statuses.longMissing": "مفقودة منذ مدة",
     "statuses.unavailable": "غير متاحة",
     "statuses.unknown": "غير معروف",
-    "dateReturnedLabel": "تاريخ الإعادة"
+    "dateReturnedLabel": "تاريخ الإعادة",
+    "errorModal.unhandledError": "This is an unhandled exception."
 }

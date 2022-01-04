@@ -98,5 +98,6 @@
     "statuses.longMissing": "Bortkommet",
     "statuses.unavailable": "Ikke tilgængelig",
     "statuses.unknown": "Ukendt",
-    "dateReturnedLabel": "Date returned"
+    "dateReturnedLabel": "Date returned",
+    "errorModal.unhandledError": "This is an unhandled exception."
 }
