@@ -98,5 +98,6 @@
     "statuses.longMissing": "長期失踪",
     "statuses.unavailable": "不可借",
     "statuses.unknown": "未知",
-    "dateReturnedLabel": "歸還日期"
+    "dateReturnedLabel": "歸還日期",
+    "errorModal.unhandledError": "This is an unhandled exception."
 }
