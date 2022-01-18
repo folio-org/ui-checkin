@@ -23,7 +23,7 @@ describe('CheckIn', () => {
     });
   });
 
-  describe('Automated end session', () => {
+  describe.skip('Automated end session', () => {
     // waiting for checkoutTimeoutDuration = 0.01 min
     const wait = (ms = 650) => new Promise(resolve => { setTimeout(resolve, ms); });
     const checkinSettingsRecords = [{
@@ -54,7 +54,7 @@ describe('CheckIn', () => {
       const parsed = getCheckinSettings(checkinSettingsRecords);
       if (scannedItems.length) {
         timer = createInactivityTimer(`${parsed.checkoutTimeoutDuration}m`, async () => {
-          return checkIn.endSession();
+          await checkIn.endSession();
         });
       }
       await checkIn.barcode('9676761472500').clickEnter();
@@ -63,8 +63,7 @@ describe('CheckIn', () => {
       await timer.signal();
     });
 
-    it('should automatically clears the list', function () {
-      this.timeout(10000);
+    it('should automatically clears the list', () => {
       expect(checkIn.hasCheckedInItems).to.be.false;
     });
   });
