@@ -54,7 +54,7 @@ describe('CheckIn', () => {
       const parsed = getCheckinSettings(checkinSettingsRecords);
       if (scannedItems.length) {
         timer = createInactivityTimer(`${parsed.checkoutTimeoutDuration}m`, async () => {
-          await checkIn.endSession();
+          return checkIn.endSession();
         });
       }
       await checkIn.barcode('9676761472500').clickEnter();
