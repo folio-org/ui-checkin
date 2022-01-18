@@ -70,9 +70,9 @@ describe('CheckIn', () => {
             message: `No item with barcode ${params.itemBarcode} exists`,
             parameters: [{
               key: 'itemBarcode',
-              value: params.itemBarcode
-            }]
-          }]
+              value: params.itemBarcode,
+            }],
+          }],
         });
       });
 
@@ -119,8 +119,8 @@ describe('CheckIn', () => {
               parameters: [{
                 key : 'itemBarcode',
                 value : params.itemBarcode,
-              }]
-            }]
+              }],
+            }],
           });
         });
 
@@ -132,7 +132,7 @@ describe('CheckIn', () => {
       });
 
       it('should show error message', () => {
-        expect(checkIn.barcodeError).to.equal(errorMessage);
+        expect(checkIn.barcodeError).to.equal(`This is an unhandled exception. ${errorMessage}`);
       });
     });
   });
@@ -144,8 +144,8 @@ describe('CheckIn', () => {
         title: 'Best Book Ever',
         userId: 'test',
         materialType: {
-          name: 'book'
-        }
+          name: 'book',
+        },
       });
 
       await checkIn.barcode('9676761472500').clickEnter();
@@ -236,8 +236,8 @@ describe('CheckIn', () => {
         barcode: 9676761472500,
         title: 'Best Book Ever',
         materialType: {
-          name: 'book'
-        }
+          name: 'book',
+        },
       });
 
       await checkIn.clickChangeDate();
@@ -256,8 +256,8 @@ describe('CheckIn', () => {
         barcode: '9676761472500',
         title: 'Best Book Ever',
         materialType: {
-          name: 'book'
-        }
+          name: 'book',
+        },
       });
 
       await checkIn.barcode('9676761472500').clickEnter();
@@ -277,8 +277,8 @@ describe('CheckIn', () => {
         barcode: '9676761472500',
         title: 'Best Book Ever',
         materialType: {
-          name: 'book'
-        }
+          name: 'book',
+        },
       });
 
       await checkIn.barcode('9676761472500').clickEnter();
@@ -298,10 +298,10 @@ describe('CheckIn', () => {
         barcode: '9676761472500',
         title: 'Best Book Ever',
         materialType: {
-          name: 'book'
+          name: 'book',
         },
         instanceId: 'lychee',
-        holdingsRecordId: 'apple'
+        holdingsRecordId: 'apple',
       });
 
       await checkIn.barcode('9676761472500').clickEnter();
@@ -328,8 +328,8 @@ describe('CheckIn', () => {
         barcode: '9676761472500',
         title: 'Best Book Ever',
         materialType: {
-          name: 'book'
-        }
+          name: 'book',
+        },
       });
 
       await checkIn.clickChangeTime();
@@ -384,13 +384,13 @@ describe('CheckIn', () => {
         barcode: '9676761472500',
         title: 'Best Book Ever',
         materialType: {
-          name: 'book'
+          name: 'book',
         },
         status: {
           name: 'In transit',
         },
         instanceId: 'lychee',
-        holdingsRecordId: 'apple'
+        holdingsRecordId: 'apple',
       });
 
       await checkIn.barcode('9676761472500').clickEnter();
@@ -407,7 +407,7 @@ describe('CheckIn', () => {
         barcode: '9676761472500',
         status: {
           name: 'In transit',
-        }
+        },
       });
       this.server.create('servicePoint', { id: 1 });
 
@@ -426,7 +426,7 @@ describe('CheckIn', () => {
         barcode: '9676761472500',
         status: {
           name: 'In transit',
-        }
+        },
       });
       this.server.create('servicePoint', { id: 2 });
 
@@ -445,16 +445,16 @@ describe('CheckIn', () => {
         barcode: '9676761472500',
         title: 'Best Book Ever',
         materialType: {
-          name: 'book'
+          name: 'book',
         },
         status: {
           name: 'Awaiting pickup',
         },
         location: {
-          name: 'Main Library'
+          name: 'Main Library',
         },
         instanceId: 'lychee',
-        holdingsRecordId: 'apple'
+        holdingsRecordId: 'apple',
       });
 
       this.server.create('request', { status: 'Open - Awaiting pickup', id: item.id });
@@ -484,13 +484,13 @@ describe('CheckIn', () => {
         barcode: '9676761472500',
         title: 'Best Book Ever',
         materialType: {
-          name: 'book'
+          name: 'book',
         },
         status: {
           name: 'In transit',
         },
         instanceId: 'lychee',
-        holdingsRecordId: 'apple'
+        holdingsRecordId: 'apple',
       });
 
       await checkIn.barcode('9676761472500').clickEnter();
@@ -510,7 +510,7 @@ describe('CheckIn', () => {
       item = this.server.create('item', 'withLoan', {
         title: 'Best Book Ever',
         materialType: {
-          name: 'book'
+          name: 'book',
         },
         circulationNotes: [
           {
@@ -523,7 +523,7 @@ describe('CheckIn', () => {
                 firstName: faker.name.firstName(),
               },
             },
-            date: faker.date.past()
+            date: faker.date.past(),
           },
           {
             note: 'test note 1',
@@ -535,14 +535,14 @@ describe('CheckIn', () => {
                 firstName: faker.name.firstName(),
               },
             },
-            date: faker.date.future()
-          }
+            date: faker.date.future(),
+          },
         ],
         status: {
           name: 'In transit',
         },
         instanceId: 'lychee',
-        holdingsRecordId: 'apple'
+        holdingsRecordId: 'apple',
       });
 
       await checkIn.barcode(item.barcode).clickEnter();
@@ -577,11 +577,11 @@ describe('CheckIn', () => {
         barcode: '9676761472501',
         title: 'Best Book Ever',
         materialType: {
-          name: 'book'
+          name: 'book',
         },
         numberOfPieces: 2,
         instanceId: 'lychee',
-        holdingsRecordId: 'apple'
+        holdingsRecordId: 'apple',
       });
 
       await checkIn.barcode('9676761472501').clickEnter();
@@ -602,11 +602,11 @@ describe('CheckIn', () => {
         barcode: '9676761472501',
         title: 'Best Book Ever',
         materialType: {
-          name: 'book'
+          name: 'book',
         },
         numberOfPieces: 2,
         instanceId: 'lychee',
-        holdingsRecordId: 'apple'
+        holdingsRecordId: 'apple',
       });
 
       await checkIn.barcode(firstItem.barcode).clickEnter();
@@ -634,14 +634,14 @@ describe('CheckIn', () => {
             note: 'test note',
             noteType: 'Check in',
             staffOnly: false,
-          }
+          },
         ],
         materialType: {
-          name: 'book'
+          name: 'book',
         },
         numberOfPieces: 1,
         instanceId: 'lychee',
-        holdingsRecordId: 'apple'
+        holdingsRecordId: 'apple',
       });
 
       await checkIn.barcode('9676761472501').clickEnter();
@@ -662,14 +662,14 @@ describe('CheckIn', () => {
             note: 'test note',
             noteType: 'Check in',
             staffOnly: false,
-          }
+          },
         ],
         materialType: {
-          name: 'book'
+          name: 'book',
         },
         numberOfPieces: 1,
         instanceId: 'lychee',
-        holdingsRecordId: 'apple'
+        holdingsRecordId: 'apple',
       });
 
       await checkIn.barcode('9676761472501').clickEnter();
@@ -691,17 +691,17 @@ describe('CheckIn', () => {
             note: 'test note',
             noteType: 'Check in',
             staffOnly: false,
-          }
+          },
         ],
         materialType: {
-          name: 'book'
+          name: 'book',
         },
         status: {
-          name: 'Missing'
+          name: 'Missing',
         },
         numberOfPieces: 2,
         instanceId: 'lychee',
-        holdingsRecordId: 'apple'
+        holdingsRecordId: 'apple',
       });
 
       await checkIn.barcode('9676761472501').clickEnter();
