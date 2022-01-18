@@ -50,6 +50,7 @@ describe('CheckIn', () => {
     let timer = null;
 
     beforeEach(async function () {
+      this.timeout(10000);
       this.server.create('item', 'withLoan', item);
       const parsed = getCheckinSettings(checkinSettingsRecords);
       if (scannedItems.length) {
