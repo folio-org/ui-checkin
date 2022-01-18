@@ -50,7 +50,6 @@ describe('CheckIn', () => {
     let timer = null;
 
     beforeEach(async function () {
-      this.timeout(10000);
       this.server.create('item', 'withLoan', item);
       const parsed = getCheckinSettings(checkinSettingsRecords);
       if (scannedItems.length) {
@@ -64,7 +63,8 @@ describe('CheckIn', () => {
       await timer.signal();
     });
 
-    it('should automatically clears the list', () => {
+    it('should automatically clears the list', function () {
+      this.timeout(10000);
       expect(checkIn.hasCheckedInItems).to.be.false;
     });
   });
