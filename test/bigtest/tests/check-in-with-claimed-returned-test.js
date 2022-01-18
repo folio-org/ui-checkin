@@ -22,7 +22,7 @@ describe('CheckIn with claimed returned', () => {
     });
 
     this.server.create('item', 'withLoanClaimReturned', {
-      barcode: 1234567,
+      barcode: '1234567',
       title: 'I Promise I Really, Really Returned This Book!',
       status: { name: statuses.CLAIMED_RETURNED }
     });
