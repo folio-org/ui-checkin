@@ -98,5 +98,6 @@
     "statuses.longMissing": "Manquant depuis longtemps",
     "statuses.unavailable": "Indisponible",
     "statuses.unknown": "Inconnu",
-    "dateReturnedLabel": "Date returned"
+    "dateReturnedLabel": "Date returned",
+    "errorModal.unhandledError": "This is an unhandled exception."
 }
