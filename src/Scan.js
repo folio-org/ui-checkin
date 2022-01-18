@@ -321,7 +321,7 @@ class Scan extends React.Component {
     if (checkedinItems.length > 1) {
       this.setState({ checkedinItems });
     } else if (isEmpty(checkedinItems)) {
-      this.checkInData.item.barcode = barcode.replace(/^(")|"$/g, '');
+      this.checkInData.item.barcode = barcode.replace(/(^")|("$)/g, '');
       try {
         await this.checkIn();
       } catch (error) {
