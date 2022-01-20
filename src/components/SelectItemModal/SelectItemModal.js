@@ -39,11 +39,11 @@ const COLUMN_MAP = {
 
 const formatter = {
   itemStatus: item => item.status.name,
-  location: item => get(item, 'effectiveLocation.name', ''),
+  location: item => item.effectiveLocation?.name ?? '',
   materialType: item => item.materialType.name,
   loanType: item => (item.temporaryLoanType
-    ? get(item, 'temporaryLoanType.name', '')
-    : get(item, 'permanentLoanType.name', '')
+    ? item.temporaryLoanType.name ?? ''
+    : item.permanentLoanType?.name ?? ''
   ),
 };
 

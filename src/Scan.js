@@ -287,17 +287,15 @@ class Scan extends React.Component {
     // that we can avoid a "414 Request URI Too Long" response from Okapi.
     const CHUNK_SIZE = 40;
     const chunkedItems = chunk(items, CHUNK_SIZE);
-    const data = [];
+    requests.reset();
 
-    for (const itemChunk of chunkedItems) {
+    const allRequests = chunkedItems.map(itemChunk => {
       let query = itemChunk.map(i => `itemId==${i.id}`).join(' or ');
       query = `(${query}) and (status="Open")`;
-      requests.reset();
-      const result = await requests.GET({ params: { query, limit: 1000 } });
-      data.push(...result);
-    }
+      return requests.GET({ params: { query, limit: 1000 } });
+    });
 
-    return data;
+    return Promise.all(allRequests).then(res => res.flat());
   }
 
   tryCheckIn = async (data) => {
