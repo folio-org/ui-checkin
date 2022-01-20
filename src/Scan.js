@@ -587,7 +587,7 @@ class Scan extends React.Component {
       checkedinItems: null,
     });
     mutator.items.reset();
-    const itemsResp = await mutator.items.GET({ params: { query } });
+    const itemsResp = await mutator.items.GET({ params: { query, limit: 9999 } });
 
     return get(itemsResp, 'items');
   }
