@@ -592,20 +592,21 @@ class Scan extends React.Component {
     const { items, totalRecords } = await mutator.items.GET({ params: { query, limit: LIMIT } });
 
     if (totalRecords > LIMIT) {
-      // Split the list of items into small chunks to create a short enough query string
-      // that we can avoid a "414 Request URI Too Long" response from Okapi.
-      const restRecordsCount = totalRecords - LIMIT;
-      const chunkedItems = chunk(new Array(restRecordsCount), LIMIT);
+      // Split the request of items into smaller ones to avoid too long response
+      const remainingItemsCount = totalRecords - LIMIT;
+      const chunksCount = Math.ceil(remainingItemsCount / LIMIT);
+      const requestsForItems = [];
 
-      const restItemsReq = chunkedItems.map((_, index) => {
-        const offset = LIMIT * (index + 1);
-        return mutator.items.GET({ params: { query, limit: LIMIT, offset } });
-      });
+      for (let i = 0; i < chunksCount; i++) {
+        const offset = LIMIT * (i + 1);
+        const request = mutator.items.GET({ params: { query, limit: LIMIT, offset } });
+        requestsForItems.push(request);
+      }
 
-      const restItemsResp = await Promise.all(restItemsReq);
-      const restItems = restItemsResp.map(itemResp => itemResp.items).flat();
+      let remainingItems = await Promise.all(requestsForItems);
+      remainingItems = remainingItems.map(itemResp => itemResp.items).flat();
 
-      return [...items, ...restItems];
+      return [...items, ...remainingItems];
     }
 
     return items;
