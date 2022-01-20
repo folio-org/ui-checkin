@@ -311,7 +311,7 @@ class Scan extends React.Component {
     }
     const parsed = getCheckinSettings(checkinSettings.records);
     const asterisk = parsed?.wildcardLookupEnabled ? '*' : '';
-    const barcode = '"' + escapeCqlValue(data.item.barcode) + asterisk + '"';
+    const barcode = `"${escapeCqlValue(data.item.barcode)}${asterisk}"`;
     let checkedinItems = await this.fetchItems(barcode);
     const requests = await this.fetchManyRequests(checkedinItems);
     const requestMap = countBy(requests, 'itemId');
