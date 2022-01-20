@@ -582,14 +582,33 @@ class Scan extends React.Component {
   async fetchItems(barcode) {
     const { mutator } = this.props;
     const query = `barcode==${barcode}`;
+    const LIMIT = 300;
+
     this.setState({
       checkedinItem: null,
       checkedinItems: null,
     });
     mutator.items.reset();
-    const itemsResp = await mutator.items.GET({ params: { query, limit: 9999 } });
+    const { items, totalRecords } = await mutator.items.GET({ params: { query, limit: LIMIT } });
 
-    return get(itemsResp, 'items');
+    if (totalRecords > LIMIT) {
+      // Split the list of items into small chunks to create a short enough query string
+      // that we can avoid a "414 Request URI Too Long" response from Okapi.
+      const restRecordsCount = totalRecords - LIMIT;
+      const chunkedItems = chunk(new Array(restRecordsCount), LIMIT);
+
+      const restItemsReq = chunkedItems.map((_, index) => {
+        const offset = LIMIT * (index + 1);
+        return mutator.items.GET({ params: { query, limit: LIMIT, offset } });
+      });
+
+      const restItemsResp = await Promise.all(restItemsReq);
+      const restItems = restItemsResp.map(itemResp => itemResp.items).flat();
+
+      return [...items, ...restItems];
+    }
+
+    return items;
   }
 
   addScannedItem(checkinResp) {
