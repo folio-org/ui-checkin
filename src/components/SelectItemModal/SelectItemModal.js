@@ -40,10 +40,7 @@ const formatter = {
   itemStatus: item => item.status.name,
   location: item => item.effectiveLocation?.name ?? '',
   materialType: item => item.materialType.name,
-  loanType: item => (item.temporaryLoanType
-    ? item.temporaryLoanType.name ?? ''
-    : item.permanentLoanType?.name ?? ''
-  ),
+  loanType: item => (item.temporaryLoanType?.name || item.permanentLoanType?.name || ''),
 };
 
 const MAX_HEIGHT = 500;

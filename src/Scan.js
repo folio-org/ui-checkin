@@ -281,7 +281,7 @@ class Scan extends React.Component {
       });
   }
 
-  async fetchManyRequests(items) {
+  async fetchAllOpenRequests(items) {
     const { mutator: { requests } } = this.props;
     // Split the list of items into small chunks to create a short enough query string
     // that we can avoid a "414 Request URI Too Long" response from Okapi.
@@ -311,7 +311,7 @@ class Scan extends React.Component {
     const asterisk = parsed?.wildcardLookupEnabled ? '*' : '';
     const barcode = `"${escapeCqlValue(data.item.barcode)}${asterisk}"`;
     let checkedinItems = await this.fetchItems(barcode);
-    const requests = await this.fetchManyRequests(checkedinItems);
+    const requests = await this.fetchAllOpenRequests(checkedinItems);
     const requestMap = countBy(requests, 'itemId');
     checkedinItems = checkedinItems.map(item => ({ ...item, requestQueue: requestMap[item.id] || 0 }));
     const checkedinItem = checkedinItems[0];
