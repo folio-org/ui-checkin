@@ -592,7 +592,7 @@ class Scan extends React.Component {
     const { items, totalRecords } = await mutator.items.GET({ params: { query, limit: LIMIT } });
 
     if (totalRecords > LIMIT) {
-      // Split the request of items into smaller ones to avoid too long response
+      // Split the request into chunks to avoid a too long response
       const remainingItemsCount = totalRecords - LIMIT;
       const chunksCount = Math.ceil(remainingItemsCount / LIMIT);
       const requestsForItems = [];
