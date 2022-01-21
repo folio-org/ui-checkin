@@ -292,7 +292,7 @@ class Scan extends React.Component {
     const allRequests = chunkedItems.map(itemChunk => {
       let query = itemChunk.map(i => `itemId==${i.id}`).join(' or ');
       query = `(${query}) and (status="Open")`;
-      return requests.GET({ params: { query, limit: 1000 } });
+      return requests.GET({ params: { query, limit: MAX_RECORDS } });
     });
 
     return Promise.all(allRequests).then(res => res.flat());
@@ -582,25 +582,24 @@ class Scan extends React.Component {
   async fetchItems(barcode) {
     const { mutator } = this.props;
     const query = `barcode==${barcode}`;
-    const LIMIT = 1000;
 
     this.setState({
       checkedinItem: null,
       checkedinItems: null,
     });
     mutator.items.reset();
-    const { items, totalRecords } = await mutator.items.GET({ params: { query, limit: LIMIT } });
+    const { items, totalRecords } = await mutator.items.GET({ params: { query, limit: MAX_RECORDS } });
 
-    if (totalRecords > LIMIT) {
+    if (totalRecords > MAX_RECORDS) {
       // Split the request into chunks to avoid a too long response
-      const remainingItemsCount = totalRecords - LIMIT;
-      const chunksCount = Math.ceil(remainingItemsCount / LIMIT);
+      const remainingItemsCount = totalRecords - MAX_RECORDS;
+      const chunksCount = Math.ceil(remainingItemsCount / MAX_RECORDS);
       const requestsForItems = [];
       let offset = 0;
 
       for (let i = 0; i < chunksCount; i++) {
-        offset += LIMIT;
-        const request = mutator.items.GET({ params: { query, limit: LIMIT, offset } });
+        offset += MAX_RECORDS;
+        const request = mutator.items.GET({ params: { query, limit: MAX_RECORDS, offset } });
         requestsForItems.push(request);
       }
 
