@@ -281,7 +281,7 @@ class Scan extends React.Component {
       });
   }
 
-  async fetchAllOpenRequests(items) {
+  async fetchRequestsWithOpenStatus(items) {
     const { mutator: { requests } } = this.props;
     // Split the list of items into small chunks to create a short enough query string
     // that we can avoid a "414 Request URI Too Long" response from Okapi.
@@ -311,7 +311,7 @@ class Scan extends React.Component {
     const asterisk = parsed?.wildcardLookupEnabled ? '*' : '';
     const barcode = `"${escapeCqlValue(data.item.barcode)}${asterisk}"`;
     let checkedinItems = await this.fetchItems(barcode);
-    const requests = await this.fetchAllOpenRequests(checkedinItems);
+    const requests = await this.fetchRequestsWithOpenStatus(checkedinItems);
     const requestMap = countBy(requests, 'itemId');
     checkedinItems = checkedinItems.map(item => ({ ...item, requestQueue: requestMap[item.id] || 0 }));
     const checkedinItem = checkedinItems[0];
@@ -582,7 +582,7 @@ class Scan extends React.Component {
   async fetchItems(barcode) {
     const { mutator } = this.props;
     const query = `barcode==${barcode}`;
-    const LIMIT = 300;
+    const LIMIT = 1000;
 
     this.setState({
       checkedinItem: null,
@@ -596,9 +596,10 @@ class Scan extends React.Component {
       const remainingItemsCount = totalRecords - LIMIT;
       const chunksCount = Math.ceil(remainingItemsCount / LIMIT);
       const requestsForItems = [];
+      let offset = 0;
 
       for (let i = 0; i < chunksCount; i++) {
-        const offset = LIMIT * (i + 1);
+        offset += LIMIT;
         const request = mutator.items.GET({ params: { query, limit: LIMIT, offset } });
         requestsForItems.push(request);
       }
