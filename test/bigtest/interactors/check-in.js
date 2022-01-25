@@ -21,6 +21,7 @@ import CheckinNoteModalInteractor from './checkin-note-modal';
 import MultiPieceModalInteractor from './multi-piece-modal';
 import ClaimedReturnedModalInteractor from './claimed-returned-modal';
 import ConfrmModalInteractor from './confirm-modal';
+import SelectItemModalInteractor from './select-item-modal';
 
 @interactor class CheckInInteractor {
   homeButton = new Interactor('#ModuleMainHeading');
@@ -31,6 +32,7 @@ import ConfrmModalInteractor from './confirm-modal';
   checkinNoteModal = new CheckinNoteModalInteractor();
   claimedReturnedModal = new ClaimedReturnedModalInteractor();
   confirmModal = new ConfrmModalInteractor();
+  selectItemModal = new SelectItemModalInteractor();
 
   selectEllipse = clickable('[data-test-elipse-select] button');
   checkedInItemsList = scoped('#list-items-checked-in', MultiColumnListInteractor);

@@ -99,6 +99,15 @@
   "statuses.longMissing": "Long missing",
   "statuses.unavailable": "Unavailable",
   "statuses.unknown": "Unknown",
+  "selectItemModal.heading": "Select item",
+  "selectItemModal.itemsList": "List of items",
+  "selectItemModal.resultCount": "{count} Records found",
+  "selectItemModal.barcode": "Barcode",
+  "selectItemModal.itemStatus": "Item status",
+  "selectItemModal.requestQueue": "Request queue",
+  "selectItemModal.location": "Location",
+  "selectItemModal.materialType": "Material type",
+  "selectItemModal.loanType": "Loan type",
 
   "permission.all": "Check in: All permissions"
 }

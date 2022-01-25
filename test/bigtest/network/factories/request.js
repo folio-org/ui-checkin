@@ -13,7 +13,7 @@ export default Factory.extend({
     lastName: faker.name.lastName(),
     firstName: faker.name.firstName(),
     middleName : faker.name.firstName(),
-    barcode : Math.floor(Math.random() * 9000000000000) + 1000000000000,
+    barcode : (Math.floor(Math.random() * 9000000000000) + 1000000000000).toString(),
   }),
   withItem: trait({
     afterCreate(request, server) {

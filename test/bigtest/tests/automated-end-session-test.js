@@ -39,7 +39,7 @@ describe('CheckIn', () => {
       }`
     }];
     const item = {
-      barcode: 9676761472500,
+      barcode: '9676761472500',
       title: 'Best Book Ever',
       userId: 'test',
       materialType: {

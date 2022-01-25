@@ -9,6 +9,7 @@ import faker from 'faker';
 
 import setupApplication from '../helpers/setup-application';
 import CheckInInteractor from '../interactors/check-in';
+import wait from '../helpers/helpers';
 
 const statuses = [
   'Missing',
@@ -139,7 +140,7 @@ describe('CheckIn', () => {
   describe('entering a barcode', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
-        barcode: 9676761472500,
+        barcode: '9676761472500',
         title: 'Best Book Ever',
         userId: 'test',
         materialType: {
@@ -252,7 +253,7 @@ describe('CheckIn', () => {
   describe('navigating to loan details', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
-        barcode: 9676761472500,
+        barcode: '9676761472500',
         title: 'Best Book Ever',
         materialType: {
           name: 'book',
@@ -273,7 +274,7 @@ describe('CheckIn', () => {
   describe('navigating to patron details', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
-        barcode: 9676761472500,
+        barcode: '9676761472500',
         title: 'Best Book Ever',
         materialType: {
           name: 'book',
@@ -294,7 +295,7 @@ describe('CheckIn', () => {
   describe('navigating to item details', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
-        barcode: 9676761472500,
+        barcode: '9676761472500',
         title: 'Best Book Ever',
         materialType: {
           name: 'book',
@@ -343,10 +344,44 @@ describe('CheckIn', () => {
     });
   });
 
+  describe('showing modal with the list of items to select one', () => {
+    beforeEach(async function () {
+      this.server.get('/configurations/entries', {
+        'configs': [{
+          'value': '{"wildcardLookupEnabled":true}',
+        }],
+      });
+      this.server.createList('item', 2, 'withLoan', { barcode: '9676761472500*' });
+      await wait(); // waiting for checkinSettings records
+      await checkIn.barcode('9676761472500').clickEnter();
+    });
+
+    it('should be visible when there is more than one item and wildcard is enabled', () => {
+      expect(checkIn.selectItemModal.present).to.be.true;
+    });
+
+    it('shows two items to select', () => {
+      expect(checkIn.selectItemModal.rowCount).to.equal(2);
+    });
+
+    describe('select item of the list', () => {
+      beforeEach(async function () {
+        await checkIn.selectItemModal.rowClick();
+      });
+      it('should close modal', () => {
+        expect(checkIn.selectItemModal.present).to.be.false;
+      });
+
+      it('should add the item to the checked in the items list', () => {
+        expect(checkIn.checkedInItemsList.rowCount).to.equal(1);
+      });
+    });
+  });
+
   describe('showing confirm status modal', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
-        barcode: 9676761472500,
+        barcode: '9676761472500',
         title: 'Best Book Ever',
         materialType: {
           name: 'book',
@@ -369,7 +404,7 @@ describe('CheckIn', () => {
   describe.skip('showing confirm status modal with print checkbox checked by default', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
-        barcode: 9676761472500,
+        barcode: '9676761472500',
         status: {
           name: 'In transit',
         },
@@ -388,7 +423,7 @@ describe('CheckIn', () => {
   describe('showing confirm status modal with print checkbox unchecked by default', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
-        barcode: 9676761472500,
+        barcode: '9676761472500',
         status: {
           name: 'In transit',
         },
@@ -407,7 +442,7 @@ describe('CheckIn', () => {
   describe('showing print hold slip option', () => {
     beforeEach(async function () {
       const item = this.server.create('item', 'withLoan', {
-        barcode: 9676761472500,
+        barcode: '9676761472500',
         title: 'Best Book Ever',
         materialType: {
           name: 'book',
@@ -446,7 +481,7 @@ describe('CheckIn', () => {
   describe('showing print transit slip option', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
-        barcode: 9676761472500,
+        barcode: '9676761472500',
         title: 'Best Book Ever',
         materialType: {
           name: 'book',
@@ -539,7 +574,7 @@ describe('CheckIn', () => {
   describe('showing multipiece item modal', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
-        barcode: 9676761472501,
+        barcode: '9676761472501',
         title: 'Best Book Ever',
         materialType: {
           name: 'book',
@@ -564,7 +599,7 @@ describe('CheckIn', () => {
         title: 'Best Book Ever',
       });
       this.server.create('item', 'withLoan', {
-        barcode: 9676761472501,
+        barcode: '9676761472501',
         title: 'Best Book Ever',
         materialType: {
           name: 'book',
@@ -592,7 +627,7 @@ describe('CheckIn', () => {
   describe('showing checkinNote modal', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
-        barcode: 9676761472501,
+        barcode: '9676761472501',
         title: 'Best Book Ever',
         circulationNotes: [
           {
@@ -620,7 +655,7 @@ describe('CheckIn', () => {
   describe('closes checkinNote modal', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
-        barcode: 9676761472501,
+        barcode: '9676761472501',
         title: 'Best Book Ever',
         circulationNotes: [
           {
@@ -649,7 +684,7 @@ describe('CheckIn', () => {
   describe('shows and hides all pre checkin modals one after another', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
-        barcode: 9676761472501,
+        barcode: '9676761472501',
         title: 'Best Book Ever',
         circulationNotes: [
           {
@@ -749,7 +784,7 @@ describe('CheckIn', () => {
     describe(`showing ${name} modal`, () => {
       beforeEach(async function () {
         this.server.create('item', 'withLoan', {
-          barcode: 9676761472501,
+          barcode: '9676761472501',
           title: 'Best Book Ever',
           status: { name },
           materialType: {
@@ -771,7 +806,7 @@ describe('CheckIn', () => {
     describe(`closes ${name} modal`, () => {
       beforeEach(async function () {
         this.server.create('item', 'withLoan', {
-          barcode: 9676761472501,
+          barcode: '9676761472501',
           title: 'Best Book Ever',
           status: { name },
           materialType: {

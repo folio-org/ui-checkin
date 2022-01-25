@@ -13,6 +13,8 @@ import {
   keyBy,
   upperFirst,
   cloneDeep,
+  countBy,
+  chunk,
 } from 'lodash';
 
 import {
@@ -29,11 +31,13 @@ import {
 } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
 import RouteForDeliveryModal from './components/RouteForDeliveryModal';
+import SelectItemModal from './components/SelectItemModal';
 import ModalManager from './ModalManager';
 
 import {
   buildDateTime,
   convertToSlipData,
+  getCheckinSettings,
 } from './util';
 
 class Scan extends React.Component {
@@ -199,6 +203,7 @@ class Scan extends React.Component {
       // items with status 'Claimed returned'. It is set in ClaimedReturnedModal via
       // ModalManager.
       itemClaimedReturnedResolution: null,
+      checkedinItems: null,
     };
   }
 
@@ -276,29 +281,71 @@ class Scan extends React.Component {
       });
   }
 
+  async fetchRequestsWithOpenStatus(items) {
+    const { mutator: { requests } } = this.props;
+    // Split the list of items into small chunks to create a short enough query string
+    // that we can avoid a "414 Request URI Too Long" response from Okapi.
+    const CHUNK_SIZE = 40;
+    const chunkedItems = chunk(items, CHUNK_SIZE);
+    requests.reset();
+
+    const allRequests = chunkedItems.map(itemChunk => {
+      let query = itemChunk.map(i => `itemId==${i.id}`).join(' or ');
+      query = `(${query}) and (status="Open")`;
+      return requests.GET({ params: { query, limit: MAX_RECORDS } });
+    });
+
+    return Promise.all(allRequests).then(res => res.flat());
+  }
+
   tryCheckIn = async (data) => {
+    const { resources: { checkinSettings } } = this.props;
     const submitErrors = {};
-    this.checkInData = data;
+    this.checkInData = cloneDeep(data);
     const errors = this.validate(data.item);
 
     if (!isEmpty(errors)) {
       return errors;
     }
-    const barcode = '"' + escapeCqlValue(data.item.barcode) + '"';
-    const checkedinItem = await this.fetchItem(barcode);
+    const parsed = getCheckinSettings(checkinSettings.records);
+    const asterisk = parsed?.wildcardLookupEnabled ? '*' : '';
+    const barcode = `"${escapeCqlValue(data.item.barcode)}${asterisk}"`;
+    let checkedinItems = await this.fetchItems(barcode);
+    const requests = await this.fetchRequestsWithOpenStatus(checkedinItems);
+    const requestMap = countBy(requests, 'itemId');
+    checkedinItems = checkedinItems.map(item => ({ ...item, requestQueue: requestMap[item.id] || 0 }));
+    const checkedinItem = checkedinItems[0];
 
-    if (!checkedinItem) {
+    if (checkedinItems.length > 1) {
+      this.setState({ checkedinItems });
+    } else if (isEmpty(checkedinItems)) {
+      this.checkInData.item.barcode = barcode.replace(/(^")|("$)/g, '');
       try {
         await this.checkIn();
       } catch (error) {
         submitErrors.checkin = error;
       }
     } else {
+      this.checkInData.item.barcode = checkedinItem.barcode;
       this.setState({ checkedinItem });
     }
 
     return submitErrors;
   }
+
+  handleItemSelection = (_, item) => {
+    this.checkInData.item.barcode = item.barcode;
+    this.setState({
+      checkedinItems: null,
+      checkedinItem: item,
+    });
+  };
+
+  handleCloseSelectItemModal = () => {
+    this.setState({ checkedinItems: null });
+    this.clearForm();
+    this.setFocusInput();
+  };
 
   checkIn = () => {
     if (this.state.loading) return undefined;
@@ -532,14 +579,37 @@ class Scan extends React.Component {
     });
   }
 
-  async fetchItem(barcode) {
+  async fetchItems(barcode) {
     const { mutator } = this.props;
     const query = `barcode==${barcode}`;
-    this.setState({ checkedinItem: null });
-    mutator.items.reset();
-    const itemsResp = await mutator.items.GET({ params: { query } });
 
-    return get(itemsResp, 'items[0]');
+    this.setState({
+      checkedinItem: null,
+      checkedinItems: null,
+    });
+    mutator.items.reset();
+    const { items, totalRecords } = await mutator.items.GET({ params: { query, limit: MAX_RECORDS } });
+
+    if (totalRecords > MAX_RECORDS) {
+      // Split the request into chunks to avoid a too long response
+      const remainingItemsCount = totalRecords - MAX_RECORDS;
+      const chunksCount = Math.ceil(remainingItemsCount / MAX_RECORDS);
+      const requestsForItems = [];
+      let offset = 0;
+
+      for (let i = 0; i < chunksCount; i++) {
+        offset += MAX_RECORDS;
+        const request = mutator.items.GET({ params: { query, limit: MAX_RECORDS, offset } });
+        requestsForItems.push(request);
+      }
+
+      let remainingItems = await Promise.all(requestsForItems);
+      remainingItems = remainingItems.map(itemResp => itemResp.items).flat();
+
+      return [...items, ...remainingItems];
+    }
+
+    return items;
   }
 
   addScannedItem(checkinResp) {
@@ -830,6 +900,7 @@ class Scan extends React.Component {
       itemError,
       holdItem,
       checkedinItem,
+      checkedinItems,
       checkinNotesMode,
       staffSlipContext,
       deliveryItem,
@@ -838,6 +909,12 @@ class Scan extends React.Component {
 
     return (
       <div data-test-check-in-scan>
+        {checkedinItems &&
+          <SelectItemModal
+            checkedinItems={checkedinItems}
+            onClose={this.handleCloseSelectItemModal}
+            onSelectItem={this.handleItemSelection}
+          />}
         { /* manages pre checkin modals */}
         {checkedinItem &&
           <ModalManager

@@ -10,6 +10,7 @@
 * Also support `circulation` `12.0`. Refs UICHKIN-310.
 * Unhandled errors bubble up on UI to say that somethin go wrong. Refs UICHKIN-163.
 * Also support `circulation` `13.0`. Refs UICHKIN-319.
+* Perform Wildcard Item Lookup Before Performing Check in Transactions in Check in App. Refs UICHKIN-309.
 
 ## [6.0.1] (https://github.com/folio-org/ui-checkin/tree/v6.0.1) (2021-11-08)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v6.0.0...v6.0.1)
