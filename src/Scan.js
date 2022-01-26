@@ -13,8 +13,6 @@ import {
   keyBy,
   upperFirst,
   cloneDeep,
-  countBy,
-  chunk,
 } from 'lodash';
 
 import {
@@ -281,23 +279,6 @@ class Scan extends React.Component {
       });
   }
 
-  async fetchRequestsWithOpenStatus(items) {
-    const { mutator: { requests } } = this.props;
-    // Split the list of items into small chunks to create a short enough query string
-    // that we can avoid a "414 Request URI Too Long" response from Okapi.
-    const CHUNK_SIZE = 40;
-    const chunkedItems = chunk(items, CHUNK_SIZE);
-    requests.reset();
-
-    const allRequests = chunkedItems.map(itemChunk => {
-      let query = itemChunk.map(i => `itemId==${i.id}`).join(' or ');
-      query = `(${query}) and (status="Open")`;
-      return requests.GET({ params: { query, limit: MAX_RECORDS } });
-    });
-
-    return Promise.all(allRequests).then(res => res.flat());
-  }
-
   tryCheckIn = async (data) => {
     const { resources: { checkinSettings } } = this.props;
     const submitErrors = {};
@@ -310,10 +291,7 @@ class Scan extends React.Component {
     const parsed = getCheckinSettings(checkinSettings.records);
     const asterisk = parsed?.wildcardLookupEnabled ? '*' : '';
     const barcode = `"${escapeCqlValue(data.item.barcode)}${asterisk}"`;
-    let checkedinItems = await this.fetchItems(barcode);
-    const requests = await this.fetchRequestsWithOpenStatus(checkedinItems);
-    const requestMap = countBy(requests, 'itemId');
-    checkedinItems = checkedinItems.map(item => ({ ...item, requestQueue: requestMap[item.id] || 0 }));
+    const checkedinItems = await this.fetchItems(barcode);
     const checkedinItem = checkedinItems[0];
 
     if (checkedinItems.length > 1) {

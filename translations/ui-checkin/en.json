@@ -104,8 +104,9 @@
   "selectItemModal.resultCount": "{count} Records found",
   "selectItemModal.barcode": "Barcode",
   "selectItemModal.itemStatus": "Item status",
-  "selectItemModal.requestQueue": "Request queue",
   "selectItemModal.location": "Location",
+  "selectItemModal.title": "Title",
+  "selectItemModal.callNumber": "Call number",
   "selectItemModal.materialType": "Material type",
   "selectItemModal.loanType": "Loan type",
 
