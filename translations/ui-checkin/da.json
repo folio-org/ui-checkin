@@ -98,5 +98,16 @@
     "statuses.longMissing": "Bortkommet",
     "statuses.unavailable": "Ikke tilgængelig",
     "statuses.unknown": "Ukendt",
-    "dateReturnedLabel": "Date returned"
+    "dateReturnedLabel": "Date returned",
+    "errorModal.unhandledError": "This is an unhandled exception.",
+    "selectItemModal.heading": "Select item",
+    "selectItemModal.itemsList": "List of items",
+    "selectItemModal.resultCount": "{count} Records found",
+    "selectItemModal.barcode": "Barcode",
+    "selectItemModal.itemStatus": "Item status",
+    "selectItemModal.location": "Location",
+    "selectItemModal.materialType": "Material type",
+    "selectItemModal.loanType": "Loan type",
+    "selectItemModal.title": "Title",
+    "selectItemModal.callNumber": "Call number"
 }

@@ -98,5 +98,16 @@
     "statuses.longMissing": "Desaparecido hace mucho tiempo",
     "statuses.unavailable": "No disponible",
     "statuses.unknown": "Desconocido",
-    "dateReturnedLabel": "Fecha de devolución"
+    "dateReturnedLabel": "Fecha de devolución",
+    "errorModal.unhandledError": "This is an unhandled exception.",
+    "selectItemModal.heading": "Select item",
+    "selectItemModal.itemsList": "List of items",
+    "selectItemModal.resultCount": "{count} Records found",
+    "selectItemModal.barcode": "Barcode",
+    "selectItemModal.itemStatus": "Item status",
+    "selectItemModal.location": "Location",
+    "selectItemModal.materialType": "Material type",
+    "selectItemModal.loanType": "Loan type",
+    "selectItemModal.title": "Title",
+    "selectItemModal.callNumber": "Call number"
 }

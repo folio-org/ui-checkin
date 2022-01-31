@@ -98,5 +98,16 @@
     "statuses.longMissing": "Long missing",
     "statuses.unavailable": "Unavailable",
     "statuses.unknown": "Unknown",
-    "dateReturnedLabel": "Date returned"
+    "dateReturnedLabel": "Date returned",
+    "errorModal.unhandledError": "This is an unhandled exception.",
+    "selectItemModal.heading": "Select item",
+    "selectItemModal.itemsList": "רשימת פריטים",
+    "selectItemModal.resultCount": "{count} Records found",
+    "selectItemModal.barcode": "ברקוד",
+    "selectItemModal.itemStatus": "מצב פריט",
+    "selectItemModal.location": "מקום",
+    "selectItemModal.materialType": "Material type",
+    "selectItemModal.loanType": "סוג הלוואה",
+    "selectItemModal.title": "Title",
+    "selectItemModal.callNumber": "Call number"
 }

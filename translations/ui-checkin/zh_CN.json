@@ -98,5 +98,16 @@
     "statuses.longMissing": "遗失已久",
     "statuses.unavailable": "不可用",
     "statuses.unknown": "未知",
-    "dateReturnedLabel": "返还日期"
+    "dateReturnedLabel": "返还日期",
+    "errorModal.unhandledError": "这是一个未处理的异常。",
+    "selectItemModal.heading": "选择单件",
+    "selectItemModal.itemsList": "单件清单",
+    "selectItemModal.resultCount": "找到{count}条记录",
+    "selectItemModal.barcode": "条码",
+    "selectItemModal.itemStatus": "单件状态",
+    "selectItemModal.location": "位置",
+    "selectItemModal.materialType": "资料类型",
+    "selectItemModal.loanType": "借阅类型",
+    "selectItemModal.title": "题名",
+    "selectItemModal.callNumber": "索书号"
 }
