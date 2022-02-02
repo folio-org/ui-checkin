@@ -98,5 +98,16 @@
     "statuses.longMissing": "長期失踪",
     "statuses.unavailable": "不可借",
     "statuses.unknown": "未知",
-    "dateReturnedLabel": "歸還日期"
+    "dateReturnedLabel": "歸還日期",
+    "errorModal.unhandledError": "This is an unhandled exception.",
+    "selectItemModal.heading": "選擇館藏",
+    "selectItemModal.resultCount": "找到 {count} 筆紀錄",
+    "selectItemModal.barcode": "條碼",
+    "selectItemModal.itemStatus": "館藏狀態",
+    "selectItemModal.location": "館藏地",
+    "selectItemModal.materialType": "資料類型",
+    "selectItemModal.loanType": "借閱類型",
+    "selectItemModal.title": "Title",
+    "selectItemModal.callNumber": "Call number",
+    "selectItemModal.itemListHeader": "List of items: choose one"
 }

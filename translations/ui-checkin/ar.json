@@ -98,5 +98,16 @@
     "statuses.longMissing": "مفقودة منذ مدة",
     "statuses.unavailable": "غير متاحة",
     "statuses.unknown": "غير معروف",
-    "dateReturnedLabel": "تاريخ الإعادة"
+    "dateReturnedLabel": "تاريخ الإعادة",
+    "errorModal.unhandledError": "هذا استثناء لم تتم معالجته.",
+    "selectItemModal.heading": "تحديد مادة",
+    "selectItemModal.resultCount": "تم العثور على {count} تسجيلة",
+    "selectItemModal.barcode": "الباركود",
+    "selectItemModal.itemStatus": "حالة المادة",
+    "selectItemModal.location": "الموقع",
+    "selectItemModal.materialType": "نوع المادة",
+    "selectItemModal.loanType": "نوع الإعارة",
+    "selectItemModal.title": "العنوان",
+    "selectItemModal.callNumber": "رقم الاستدعاء",
+    "selectItemModal.itemListHeader": "قائمة المواد: اختر واحدة"
 }
