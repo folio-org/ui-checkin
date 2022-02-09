@@ -102,12 +102,12 @@
     "errorModal.unhandledError": "This is an unhandled exception.",
     "selectItemModal.heading": "Select item",
     "selectItemModal.resultCount": "{count} Records found",
-    "selectItemModal.barcode": "Barcode",
+    "selectItemModal.barcode": "Código de barras",
     "selectItemModal.itemStatus": "Item status",
-    "selectItemModal.location": "Location",
-    "selectItemModal.materialType": "Material type",
-    "selectItemModal.loanType": "Loan type",
-    "selectItemModal.title": "Title",
+    "selectItemModal.location": "Ubicación",
+    "selectItemModal.materialType": "Tipo de material",
+    "selectItemModal.loanType": "Tipo de préstamo",
+    "selectItemModal.title": "Título",
     "selectItemModal.callNumber": "Call number",
     "selectItemModal.itemListHeader": "List of items: choose one"
 }
