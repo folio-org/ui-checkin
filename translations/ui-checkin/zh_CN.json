@@ -109,5 +109,5 @@
     "selectItemModal.loanType": "借阅类型",
     "selectItemModal.title": "题名",
     "selectItemModal.callNumber": "索书号",
-    "selectItemModal.itemListHeader": "List of items: choose one"
+    "selectItemModal.itemListHeader": "单件清单：选择一个"
 }
