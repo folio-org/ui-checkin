@@ -100,14 +100,14 @@
     "statuses.unknown": "Desconocido",
     "dateReturnedLabel": "Fecha de devolución",
     "errorModal.unhandledError": "This is an unhandled exception.",
-    "selectItemModal.heading": "Select item",
-    "selectItemModal.resultCount": "{count} Records found",
+    "selectItemModal.heading": "Selecciona ejemplar",
+    "selectItemModal.resultCount": "{count} Registros encontrados",
     "selectItemModal.barcode": "Código de barras",
-    "selectItemModal.itemStatus": "Item status",
+    "selectItemModal.itemStatus": "Estatus del ejemplar",
     "selectItemModal.location": "Ubicación",
     "selectItemModal.materialType": "Tipo de material",
     "selectItemModal.loanType": "Tipo de préstamo",
     "selectItemModal.title": "Título",
     "selectItemModal.callNumber": "Call number",
-    "selectItemModal.itemListHeader": "List of items: choose one"
+    "selectItemModal.itemListHeader": "Lista de ejemplares: selecciona uno"
 }
