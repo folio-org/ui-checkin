@@ -10,11 +10,11 @@ import {
   convertToSlipData,
   escapeValue,
   getCheckinSettings,
-  shouldConfirmStatusModalBeShown
+  shouldConfirmStatusModalBeShown,
 } from './util';
 
 import {
-  statuses
+  statuses,
 } from './consts';
 
 describe('escapeValue', () => {
@@ -104,7 +104,7 @@ describe('convertToSlipData', () => {
       'holdShelfExpirationDate': 'holdShelfExpirationDate',
       'requestID': 'requestID',
       'patronComments': 'patronComments',
-    }
+    },
   };
 
   it('substitutes values', () => {
@@ -140,7 +140,7 @@ describe('convertToSlipData', () => {
     expect(o['item.loanType']).toEqual(source.item.loanType);
     expect(o['item.numberOfPieces']).toEqual(source.item.numberOfPieces);
     expect(o['item.descriptionOfPieces']).toEqual(source.item.descriptionOfPieces);
-    expect(o['item.lastCheckedInDateTime']).toEqual(source.item.lastCheckedInDateTime);
+    expect(o['item.lastCheckedInDateTime']).toEqual(`lastCheckedInDateTime ${tz} ${locale}`);
     expect(o['item.fromServicePoint']).toEqual(source.item.fromServicePoint);
     expect(o['item.toServicePoint']).toEqual(source.item.toServicePoint);
     expect(o['item.effectiveLocationInstitution']).toEqual(source.item.effectiveLocationInstitution);
@@ -180,8 +180,8 @@ describe('convertToSlipData', () => {
       ...source,
       requester: {
         ...source.requester,
-        barcode: noop()
-      }
+        barcode: noop(),
+      },
     };
     const o = convertToSlipData(sourceWithoutRequesterBarcode, intl, tz, locale, 'Chicken');
 
