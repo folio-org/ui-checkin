@@ -205,6 +205,15 @@ class Scan extends React.Component {
     };
   }
 
+  componentDidMount = () => {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount = () => {
+    this._isMounted = false;
+  }
+
+  _isMounted = false;
   store = this.props.stripes.store;
   barcode = React.createRef();
   checkInData = null;
@@ -223,6 +232,7 @@ class Scan extends React.Component {
   handleOnAfterPrint = () => {
     this.setFocusInput();
   };
+
 
   onSessionEnd = async () => {
     const {
@@ -295,7 +305,9 @@ class Scan extends React.Component {
     const checkedinItem = checkedinItems[0];
 
     if (checkedinItems.length > 1) {
-      this.setState({ checkedinItems });
+      if (this._isMounted) {
+        this.setState({ checkedinItems });
+      }
     } else if (isEmpty(checkedinItems)) {
       this.checkInData.item.barcode = barcode.replace(/(^")|("$)/g, '');
       try {
@@ -305,7 +317,9 @@ class Scan extends React.Component {
       }
     } else {
       this.checkInData.item.barcode = checkedinItem.barcode;
-      this.setState({ checkedinItem });
+      if (this._isMounted) {
+        this.setState({ checkedinItem });
+      }
     }
 
     return submitErrors;
@@ -479,35 +493,50 @@ class Scan extends React.Component {
   processResponse(checkinResp) {
     const { loan, item, staffSlipContext } = checkinResp;
     const checkinRespItem = loan || { item };
-    this.setState({ staffSlipContext, itemClaimedReturnedResolution: null });
+    if (this._isMounted) {
+      this.setState({ staffSlipContext, itemClaimedReturnedResolution: null });
+    }
+
     if (get(checkinRespItem, 'item.status.name') === statuses.IN_TRANSIT) {
       checkinResp.transitItem = checkinRespItem;
-      this.setState({ transitItem: checkinRespItem });
+      if (this._isMounted) {
+        this.setState({ transitItem: checkinRespItem });
+      }
     } else if (get(checkinRespItem, 'item.status.name') === statuses.AWAITING_PICKUP) {
       checkinResp.holdItem = checkinRespItem;
-      this.setState({ holdItem: checkinRespItem });
+      if (this._isMounted) {
+        this.setState({ holdItem: checkinRespItem });
+      }
     } else if (get(checkinRespItem, 'item.status.name') === statuses.AWAITING_DELIVERY) {
       checkinResp.deliveryItem = checkinRespItem;
-      this.setState({ deliveryItem: checkinRespItem });
+      if (this._isMounted) {
+        this.setState({ deliveryItem: checkinRespItem });
+      }
     }
     return checkinResp;
   }
 
   processError(resp) {
-    const contentType = resp.headers.get('Content-Type') || '';
-    if (contentType.startsWith('application/json')) {
-      return resp.json().then(error => this.handleJsonError(error));
+    if (this._isMounted) {
+      const contentType = resp.headers.get('Content-Type') || '';
+      if (contentType.startsWith('application/json')) {
+        return resp.json().then(error => this.handleJsonError(error));
+      } else {
+        return resp.text().then(error => this.handleTextError(error));
+      }
     } else {
-      return resp.text().then(error => this.handleTextError(error));
+      return Promise.resolve();
     }
   }
 
   processCheckInDone() {
-    this.setState({
-      checkedinItem: null,
-      loading: false,
-      checkinNotesMode: false,
-    }, this.setFocusInput);
+    if (this._isMounted) {
+      this.setState({
+        checkedinItem: null,
+        loading: false,
+        checkinNotesMode: false,
+      }, this.setFocusInput);
+    }
   }
 
   handleTextError(error) {
@@ -551,7 +580,9 @@ class Scan extends React.Component {
         const nextRequest = requests[0];
         nextRequest.item = item;
         checkinResp.nextRequest = nextRequest;
-        this.setState({ nextRequest });
+        if (this._isMounted) {
+          this.setState({ nextRequest });
+        }
       }
       return checkinResp;
     });

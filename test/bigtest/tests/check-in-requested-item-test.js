@@ -29,7 +29,7 @@ describe('CheckIn requested item', () => {
       await checkIn.selectRequestDetails();
     });
 
-    it('should directs to request details page', function () {
+    it('should redirect to request details page', function () {
       const { search, pathname } = this.location;
       expect(pathname + search).to.include('/requests/view/requestID');
     });

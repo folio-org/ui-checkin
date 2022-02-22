@@ -423,6 +423,7 @@ class CheckIn extends React.Component {
       pristine,
       barcodeRef,
       loading,
+      stripes,
     } = this.props;
 
     const {
@@ -515,7 +516,10 @@ class CheckIn extends React.Component {
               <Row>
                 <Col xs={9} sm={4}>
                   <Layout className="marginTopLabelSpacer">
-                    <TitleManager prefix={(this.readyPrefix && this.state.readyToScan) ? this.readyPrefix : undefined}>
+                    <TitleManager
+                      prefix={(this.readyPrefix && this.state.readyToScan) ? this.readyPrefix : undefined}
+                      stripes={stripes}
+                    >
                       <Field
                         autoFocus
                         id="input-item-barcode"
