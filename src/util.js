@@ -29,6 +29,15 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
     request = {},
     requester = {},
   } = source;
+  const DEFAULT_DATE_OPTIONS = {
+    timeZone,
+    locale,
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  };
 
   const slipData = {
     'staffSlip.Name': slipName,
@@ -62,7 +71,9 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
     'item.loanType': item.loanType,
     'item.numberOfPieces': item.numberOfPieces,
     'item.descriptionOfPieces': item.descriptionOfPieces,
-    'item.lastCheckedInDateTime': item.lastCheckedInDateTime,
+    'item.lastCheckedInDateTime': item.lastCheckedInDateTime
+      ? intl.formatDate(item.lastCheckedInDateTime, DEFAULT_DATE_OPTIONS)
+      : item.lastCheckedInDateTime,
     'item.fromServicePoint': item.fromServicePoint,
     'item.toServicePoint': item.toServicePoint,
     'item.effectiveLocationInstitution': item.effectiveLocationInstitution,
@@ -72,10 +83,10 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
     'request.servicePointPickup': request.servicePointPickup,
     'request.deliveryAddressType': request.deliveryAddressType,
     'request.requestExpirationDate': request.requestExpirationDate
-      ? intl.formatDate(request.requestExpirationDate, { timeZone, locale })
+      ? intl.formatDate(request.requestExpirationDate, DEFAULT_DATE_OPTIONS)
       : request.requestExpirationDate,
     'request.holdShelfExpirationDate': request.holdShelfExpirationDate
-      ? intl.formatDate(request.holdShelfExpirationDate, { timeZone, locale })
+      ? intl.formatDate(request.holdShelfExpirationDate, DEFAULT_DATE_OPTIONS)
       : request.holdShelfExpirationDate,
     'request.requestID': request.requestID,
     'request.patronComments': request.patronComments,
