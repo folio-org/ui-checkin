@@ -1,6 +1,7 @@
 # Change history for ui-checkin
 
-## IN PROGRESS
+## [7.0.0] (https://github.com/folio-org/ui-checkin/tree/v7.0.0) (2022-02-24)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v6.0.1...v7.0.0)
 
 * Upgrade `@folio/react-intl-safe-html` for compatibility with `@folio/stripes` `v7`. Refs UICHKIN-308.
 * Use `MAX_RECORDS` constant instead of hardcoded value for query limits. Refs UICHKIN-317.
