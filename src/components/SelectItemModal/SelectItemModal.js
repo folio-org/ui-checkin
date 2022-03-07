@@ -74,6 +74,7 @@ const SelectItemModal = ({
         static
       >
         <Pane
+          id="check-in-items-list"
           paneTitle={<FormattedMessage id="ui-checkin.selectItemModal.itemListHeader" />}
           paneSub={<FormattedMessage id="ui-checkin.selectItemModal.resultCount" values={{ count: checkedinItems.length }} />}
           defaultWidth="fill"
