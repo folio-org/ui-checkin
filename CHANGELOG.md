@@ -1,5 +1,8 @@
 # Change history for ui-checkin
 
+## IN PROGRESS
+* Add id for Pane component. Refs UICHKIN-329.
+
 ## [7.0.0] (https://github.com/folio-org/ui-checkin/tree/v7.0.0) (2022-02-24)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v6.0.1...v7.0.0)
 
