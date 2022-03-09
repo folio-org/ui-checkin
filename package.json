@@ -69,7 +69,7 @@
     "test:jest": "jest --ci --coverage --colors",
     "lint": "eslint .",
     "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
-    "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-checkin ./translations/checkin/compiled"
+    "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-checkin ./translations/ui-checkin/compiled"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.13.0",
