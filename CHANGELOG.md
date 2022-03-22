@@ -17,6 +17,7 @@
 * Also support `circulation` `13.0`. Refs UICHKIN-319.
 * Perform Wildcard Item Lookup Before Performing Check in Transactions in Check in App. Refs UICHKIN-309.
 * Fix date formats when slip print. Refs UICHKIN-320.
+* Cover CheckInNoteModal component by RTL/jest tests
 
 ## [6.0.1] (https://github.com/folio-org/ui-checkin/tree/v6.0.1) (2021-11-08)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v6.0.0...v6.0.1)
