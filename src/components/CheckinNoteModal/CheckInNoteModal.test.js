@@ -7,23 +7,36 @@ import {
 
 import '../../../test/jest/__mock__';
 
+import {
+  Modal,
+  MultiColumnList,
+} from '@folio/stripes/components';
+
 import CheckinNoteModal from './CheckinNoteModal';
 
 const cancelLabel = 'Cancel Label';
 const confirmLabel = 'Confirm Label';
+const message = 'test message';
+const labelIds = {
+  cancel: 'ui-checkin.statusModal.cancel',
+  confirm: 'ui-checkin.statusModal.confirm',
+};
 
 const initialProps = {
   open: true,
   hideCancel: false,
   hideConfirm: false,
   id: 'id',
-  message: 'test message',
   notes: [],
+  columnMapping: {},
+  columnWidths: {},
   heading: 'Test Heading',
   onConfirm: jest.fn(),
   onCancel: jest.fn(),
+  visibleColumns: ['test'],
   cancelLabel,
   confirmLabel,
+  message,
 };
 
 const renderModal = (props = initialProps) => {
@@ -44,33 +57,58 @@ describe('CheckinNoteModal', () => {
       container = renderModal();
     });
 
-    it('CheckInNoteModal should be rendered if "open" property is true', () => {
-      expect(container.getByTestId('modal-window')).toBeInTheDocument();
+    it('CheckInNoteModal should get correct props', () => {
+      const expectedProps = {
+        size: 'small',
+        open: initialProps.open,
+        label: initialProps.heading,
+        id: initialProps.id,
+        dismissible: true,
+        'data-test-check-in-note-modal': true,
+      };
+      expect(Modal).toHaveBeenCalledWith(expect.objectContaining(expectedProps), {});
     });
 
-    it('CheckInNoteModal footer should have confirm and cancel buttons', () => {
+    it('MultiColumnList should get correct props', () => {
+      const expectedProps = {
+        visibleColumns: initialProps.visibleColumns,
+        contentData: initialProps.notes,
+        columnMapping: initialProps.columnMapping,
+        columnWidths: initialProps.columnWidths,
+        fullWidth: true,
+        interactive: false,
+      };
+      expect(MultiColumnList).toHaveBeenCalledWith(expect.objectContaining(expectedProps), {});
+    });
+
+    it('CheckInNoteModal footer should have confirm button', () => {
       expect(container.queryByText(confirmLabel)).toBeInTheDocument();
+    });
+
+    it('CheckInNoteModal footer should have cancel button', () => {
       expect(container.queryByText(cancelLabel)).toBeInTheDocument();
     });
-  });
 
-  it('CheckInNoteModal should not be rendered if "open" property is false', () => {
-    const container = renderModal({
-      ...initialProps,
-      open: false,
+    it('Appropriate message should be displayed in modal window', () => {
+      expect(container.queryByText(message)).toBeInTheDocument();
     });
-
-    expect(container.queryByTestId('modal-window')).not.toBeInTheDocument();
   });
 
-  it('CheckInNoteModal footer should not have confirm and cancel buttons', () => {
+  it('CheckInNoteModal footer should not have confirm button', () => {
     const container = renderModal({
       ...initialProps,
-      hideCancel: true,
       hideConfirm: true,
     });
 
     expect(container.queryByText(confirmLabel)).not.toBeInTheDocument();
+  });
+
+  it('CheckInNoteModal footer should not have cancel button', () => {
+    const container = renderModal({
+      ...initialProps,
+      hideCancel: true,
+    });
+
     expect(container.queryByText(cancelLabel)).not.toBeInTheDocument();
   });
 
@@ -79,7 +117,9 @@ describe('CheckinNoteModal', () => {
       ...initialProps,
       hideCancel: true,
     });
+
     fireEvent.click(container.getByRole('button'));
+
     expect(initialProps.onConfirm).toHaveBeenCalled();
   });
 
@@ -88,22 +128,31 @@ describe('CheckinNoteModal', () => {
       ...initialProps,
       hideConfirm: true,
     });
+
     fireEvent.click(container.getByRole('button'));
+
     expect(initialProps.onCancel).toHaveBeenCalled();
   });
 
-  it('should return default messages if there are no "cancelLabel" and "confirmLabel" properties', () => {
+  it('Should return default message if there is no "cancelLabel" property', () => {
     const container = renderModal({
       ...initialProps,
       cancelLabel: undefined,
+    });
+
+    expect(container.getByText(labelIds.cancel)).toBeInTheDocument();
+  });
+
+  it('Should return default message if there is no "confirmLabel" property', () => {
+    const container = renderModal({
+      ...initialProps,
       confirmLabel: undefined,
     });
 
-    expect(container.getByText('ui-checkin.statusModal.cancel')).toBeInTheDocument();
-    expect(container.getByText('ui-checkin.statusModal.confirm')).toBeInTheDocument();
+    expect(container.getByText(labelIds.confirm)).toBeInTheDocument();
   });
 
-  it('unique id should be generated if property is not provided', () => {
+  it('Unique id should be generated if property is not provided', () => {
     const container = renderModal({
       ...initialProps,
       id: undefined,
