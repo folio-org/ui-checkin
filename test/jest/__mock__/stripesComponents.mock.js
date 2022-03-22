@@ -13,5 +13,22 @@ jest.mock('@folio/stripes/components', () => ({
     </button>
   )),
   Col: jest.fn(({ children, ...rest }) => <div {...rest}>{children}</div>),
+  Modal: jest.fn(({ children, open, label, footer, id }) => open && (
+    <div id={id} data-testid="modal-window">
+      <p>{label}</p>
+      {children}
+      {footer}
+    </div>
+  )),
+  ModalFooter: jest.fn(({ children }) => (
+    <div>
+      {children}
+    </div>
+  )),
+  MultiColumnList: jest.fn(({ children }) => (
+    <div>
+      {children}
+    </div>
+  )),
   Row: jest.fn(({ children, ...rest }) => <div {...rest}>{children}</div>),
 }));
