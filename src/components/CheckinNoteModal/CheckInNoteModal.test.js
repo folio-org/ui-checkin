@@ -17,6 +17,7 @@ import CheckinNoteModal from './CheckinNoteModal';
 const cancelLabel = 'Cancel Label';
 const confirmLabel = 'Confirm Label';
 const message = 'test message';
+const onCancel = jest.fn();
 const labelIds = {
   cancel: 'ui-checkin.statusModal.cancel',
   confirm: 'ui-checkin.statusModal.confirm',
@@ -32,8 +33,8 @@ const initialProps = {
   columnWidths: {},
   heading: 'Test Heading',
   onConfirm: jest.fn(),
-  onCancel: jest.fn(),
   visibleColumns: ['test'],
+  onCancel,
   cancelLabel,
   confirmLabel,
   message,
@@ -57,25 +58,24 @@ describe('CheckinNoteModal', () => {
       container = renderModal();
     });
 
-    it('CheckInNoteModal should get correct props', () => {
+    it('"Modal" should get correct props', () => {
       const expectedProps = {
         size: 'small',
         open: initialProps.open,
         label: initialProps.heading,
         id: initialProps.id,
         dismissible: true,
-        'data-test-check-in-note-modal': true,
+        onClose: onCancel,
       };
       expect(Modal).toHaveBeenCalledWith(expect.objectContaining(expectedProps), {});
     });
 
-    it('MultiColumnList should get correct props', () => {
+    it('"MultiColumnList" should get correct props', () => {
       const expectedProps = {
         visibleColumns: initialProps.visibleColumns,
         contentData: initialProps.notes,
         columnMapping: initialProps.columnMapping,
         columnWidths: initialProps.columnWidths,
-        fullWidth: true,
         interactive: false,
       };
       expect(MultiColumnList).toHaveBeenCalledWith(expect.objectContaining(expectedProps), {});
