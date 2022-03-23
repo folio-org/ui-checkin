@@ -6,7 +6,6 @@ import {
 } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
   FormattedMessage,
   injectIntl,
@@ -198,7 +197,7 @@ class ModalManager extends React.Component {
       />
     );
     const message = (
-      <SafeHTMLMessage
+      <FormattedMessage
         id="ui-checkin.confirmModal.message"
         values={{
           title,
@@ -279,7 +278,7 @@ class ModalManager extends React.Component {
       <FormattedMessage id="ui-checkin.multipieceModal.cancel" />;
 
     const message = (
-      <SafeHTMLMessage
+      <FormattedMessage
         id={id}
         values={{
           title,

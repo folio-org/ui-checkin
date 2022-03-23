@@ -2,7 +2,6 @@ import { get } from 'lodash';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
   Modal,
   ModalFooter,
@@ -45,7 +44,7 @@ const MultipieceModal = (props) => {
       {...props}
     >
       <p>
-        <SafeHTMLMessage
+        <FormattedMessage
           id="ui-checkin.multipieceModal.message"
           values={{ title, barcode, name: (materialType.name) }}
         />
