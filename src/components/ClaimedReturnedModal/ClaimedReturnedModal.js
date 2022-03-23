@@ -6,7 +6,6 @@ import {
   Modal,
   Button,
 } from '@folio/stripes/components';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import { claimedReturnedResolutions } from '../../consts';
 
@@ -44,7 +43,7 @@ const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
       label={<FormattedMessage id="ui-checkin.claimedReturnedModal.label" />}
       footer={footer}
     >
-      <SafeHTMLMessage
+      <FormattedMessage
         id="ui-checkin.claimedReturnedModal.message"
         values={{
           title: item.title,
