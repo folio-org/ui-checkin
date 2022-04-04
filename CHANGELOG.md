@@ -4,6 +4,7 @@
 * Add id for Pane component. Refs UICHKIN-329.
 * Compile Translation Files into AST Format. Refs UICHKIN-243.
 * Refactor away from react-intl-safe-html Refs UICHKIN-260.
+* Fix heading of `Request delivery slip`. Refs UICHKIN-334.
 
 ## [7.0.0] (https://github.com/folio-org/ui-checkin/tree/v7.0.0) (2022-02-24)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v6.0.1...v7.0.0)

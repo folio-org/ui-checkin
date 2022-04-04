@@ -727,7 +727,7 @@ class Scan extends React.Component {
       },
     } = this.props;
 
-    const slipData = convertToSlipData(staffSlipContext, intl, timezone, locale);
+    const slipData = convertToSlipData(staffSlipContext, intl, timezone, locale, 'Request delivery');
     const message = (
       <FormattedMessage
         id="ui-checkin.statusModal.delivery.message"
