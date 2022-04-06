@@ -38,6 +38,8 @@ import {
   getCheckinSettings,
 } from './util';
 
+const REQUEST_DELIVERY_HEADING = 'Request delivery';
+
 class Scan extends React.Component {
   static propTypes = {
     intl: PropTypes.object,
@@ -728,7 +730,7 @@ class Scan extends React.Component {
       },
     } = this.props;
 
-    const slipData = convertToSlipData(staffSlipContext, intl, timezone, locale);
+    const slipData = convertToSlipData(staffSlipContext, intl, timezone, locale, REQUEST_DELIVERY_HEADING);
     const message = (
       <SafeHTMLMessage
         id="ui-checkin.statusModal.delivery.message"
