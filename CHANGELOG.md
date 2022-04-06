@@ -1,6 +1,7 @@
 # Change history for ui-checkin
 
-## IN PROGRESS
+## [7.0.1] (https://github.com/folio-org/ui-checkin/tree/v7.0.1) (2022-04-06)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v7.0.0...v7.0.1)
 
 * Fix heading of `Request delivery slip`. Refs UICHKIN-334.
 
