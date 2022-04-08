@@ -1,9 +1,14 @@
 import React from 'react';
 
 jest.mock('@folio/stripes/components', () => ({
-  Button: jest.fn(({ children, onClick }) => (
+  Button: jest.fn(({
+    children,
+    onClick,
+    'data-testid': testId,
+  }) => (
     <button
       data-test-button
+      data-testid={testId}
       type="button"
       onClick={onClick}
     >
