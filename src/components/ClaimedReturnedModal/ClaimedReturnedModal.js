@@ -59,7 +59,13 @@ const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
 };
 
 ClaimedReturnedModal.propTypes = {
-  item: PropTypes.object,
+  item: PropTypes.shape({
+    title: PropTypes.string,
+    barcode: PropTypes.string,
+    materialType:  PropTypes.shape({
+      name: PropTypes.string,
+    }),
+  }).isRequired,
   onCancel: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,

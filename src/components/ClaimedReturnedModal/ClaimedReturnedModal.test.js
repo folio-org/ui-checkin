@@ -7,8 +7,6 @@ import {
 
 import '../../../test/jest/__mock__';
 
-import { FormattedMessage } from 'react-intl';
-
 import {
   Modal,
 } from '@folio/stripes/components';
@@ -18,25 +16,6 @@ import ClaimedReturnedModal from './ClaimedReturnedModal';
 import { getById } from '../../../test/jest/helpers';
 
 import { claimedReturnedResolutions } from '../../consts';
-
-FormattedMessage.mockImplementation(({ id, values }) => {
-  const renderValues = (currentValues) => (
-    <>
-      { currentValues.title }
-      { currentValues.barcode }
-      { currentValues.materialType }
-    </>
-  );
-
-  return (
-    <span>
-      {id}
-      {
-        values && renderValues(values)
-      }
-    </span>
-  );
-});
 
 describe('ClaimedReturnedModal', () => {
   const labelIds = {
@@ -132,9 +111,6 @@ describe('ClaimedReturnedModal', () => {
   });
 
   it('should correctly render "message"', () => {
-    expect(screen.getByText(new RegExp(labelIds.message))).toBeInTheDocument();
-    expect(screen.getByText(new RegExp(item.title))).toBeInTheDocument();
-    expect(screen.getByText(new RegExp(item.barcode))).toBeInTheDocument();
-    expect(screen.getByText(new RegExp(item.materialType.name))).toBeInTheDocument();
+    expect(screen.getByText(labelIds.message)).toBeInTheDocument();
   });
 });
