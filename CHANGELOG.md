@@ -4,6 +4,7 @@
 * Add id for Pane component. Refs UICHKIN-329.
 * Compile Translation Files into AST Format. Refs UICHKIN-243.
 * Refactor away from react-intl-safe-html Refs UICHKIN-260.
+* Add Jest/RTL testing for `ClaimedReturnedModal` component in `src\components\ClaimedReturnedModal`. Refs UICHKIN-280.
 
 ## [7.0.1] (https://github.com/folio-org/ui-checkin/tree/v7.0.1) (2022-04-06)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v7.0.0...v7.0.1)
