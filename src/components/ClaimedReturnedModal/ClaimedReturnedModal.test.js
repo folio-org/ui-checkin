@@ -3,7 +3,6 @@ import {
   render,
   screen,
   fireEvent,
-  within,
 } from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
@@ -12,12 +11,11 @@ import { FormattedMessage } from 'react-intl';
 
 import {
   Modal,
-  Button,
 } from '@folio/stripes/components';
 
 import ClaimedReturnedModal from './ClaimedReturnedModal';
 
-import { getById } from '../../../test/jest/helpers/utils';
+import { getById } from '../../../test/jest/helpers';
 
 import { claimedReturnedResolutions } from '../../consts';
 
