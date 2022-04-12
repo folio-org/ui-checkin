@@ -4,10 +4,12 @@ jest.mock('@folio/stripes/components', () => ({
   Button: jest.fn(({
     children,
     onClick,
+    'data-testid': testId,
     ...rest
   }) => (
     <button
       data-test-button
+      data-testid={testId}
       type="button"
       onClick={onClick}
       {...rest}
