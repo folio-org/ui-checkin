@@ -1,16 +1,27 @@
 import React from 'react';
 
 jest.mock('@folio/stripes/components', () => ({
-  Button: jest.fn(({ children, onClick }) => (
+  Button: jest.fn(({
+    children,
+    onClick,
+    ...rest
+  }) => (
     <button
       data-test-button
       type="button"
       onClick={onClick}
+      {...rest}
     >
       <span>
         {children}
       </span>
     </button>
+  )),
+  Checkbox: jest.fn((props) => (
+    <label htmlFor="id">
+      {props.label}
+      <input id="id" type="checkbox" {...props} />
+    </label>
   )),
   Col: jest.fn(({ children, ...rest }) => <div {...rest}>{children}</div>),
   Modal: jest.fn(({ children, label, footer, id }) => (
