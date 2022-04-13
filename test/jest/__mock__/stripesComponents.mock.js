@@ -5,17 +5,25 @@ jest.mock('@folio/stripes/components', () => ({
     children,
     onClick,
     'data-testid': testId,
+    ...rest
   }) => (
     <button
       data-test-button
       data-testid={testId}
       type="button"
       onClick={onClick}
+      {...rest}
     >
       <span>
         {children}
       </span>
     </button>
+  )),
+  Checkbox: jest.fn((props) => (
+    <label htmlFor="id">
+      {props.label}
+      <input id="id" type="checkbox" {...props} />
+    </label>
   )),
   Col: jest.fn(({ children, ...rest }) => <div {...rest}>{children}</div>),
   Modal: jest.fn(({ children, label, footer, id }) => (
