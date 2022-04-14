@@ -168,4 +168,41 @@ describe('RouteForDeliveryModal', () => {
       expect(printButtons[0]).not.toBeInTheDocument();
     });
   });
+
+  describe('When "isPrintableByDefault" true and "slipTemplate" is defined', () => {
+    const props = {
+      ...defaultProps,
+      isPrintableByDefault: true,
+    };
+
+    beforeEach(() => {
+      render(
+        <RouteForDeliveryModal
+          {...props}
+        />
+      );
+    });
+
+    it('"Close and checkout" print button should be called with correct props', () => {
+      const expectedProps = {
+        buttonStyle: 'primary',
+        onBeforePrint: defaultProps.onCloseAndCheckout,
+        dataSource: defaultProps.slipData,
+        template: defaultProps.slipTemplate,
+      };
+
+      expect(PrintButton).toHaveBeenNthCalledWith(buttonCallOrder.closeAndCheckout, expect.objectContaining(expectedProps), {});
+    });
+
+    it('"Close" print button should be called with correct props', () => {
+      const expectedProps = {
+        buttonStyle: 'primary',
+        onBeforePrint: defaultProps.onClose,
+        dataSource: defaultProps.slipData,
+        template: defaultProps.slipTemplate,
+      };
+
+      expect(PrintButton).toHaveBeenNthCalledWith(buttonCallOrder.close, expect.objectContaining(expectedProps), {});
+    });
+  });
 });
