@@ -17,7 +17,7 @@ import RouteForDeliveryModal from './RouteForDeliveryModal';
 import PrintButton from '../PrintButton';
 
 jest.mock('../PrintButton', () => jest.fn(({ children, ...rest }) => (
-  <button type="button" data-testid="print-button" {...rest}>
+  <button type="button" {...rest}>
     {children}
   </button>
 )));
@@ -31,6 +31,11 @@ const defaultProps = {
   slipTemplate: 'test-template',
   slipData: {},
   isPrintableByDefault: false,
+};
+
+const testIds = {
+  closeAndCheckout: 'closeAndCheckoutPrintButton',
+  close: 'closeButton',
 };
 
 const messageIds = {
@@ -160,12 +165,14 @@ describe('RouteForDeliveryModal', () => {
       expect(screen.getByText(messageIds.close)).toBeInTheDocument();
     });
 
-    it('After clicking on checkbox "PrintButton" should disappear', () => {
-      const printButtons = screen.getAllByTestId('print-button');
+    it('After clicking on checkbox "PrintButtons" should disappear', () => {
+      const closeAndCheckoutPrintButton = screen.getByTestId(testIds.closeAndCheckout);
+      const closePrintButton = screen.getByTestId(testIds.close);
 
       fireEvent.click(screen.getByText(messageIds.printSlip));
 
-      expect(printButtons[0]).not.toBeInTheDocument();
+      expect(closeAndCheckoutPrintButton).not.toBeInTheDocument();
+      expect(closePrintButton).not.toBeInTheDocument();
     });
   });
 
