@@ -8,7 +8,7 @@ export const getById = (id) => within(screen.getByTestId(id));
 export const componentPropsCheck = (Component, testId, expectedProps, partialCompare = false) => {
   const propertiesForCompare = Component.mock.calls
     .reverse()
-    .find(item => item[0]['data-testid'] === testId);
+    .find(item => item?.[0]?.['data-testid'] === testId);
 
   const resultExpectedProps = partialCompare
     ? expect.objectContaining(expectedProps)
