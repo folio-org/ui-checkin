@@ -118,6 +118,10 @@ describe('ModalManager', () => {
     onCancel,
   };
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe('when "checkinNotesMode" is true', () => {
     beforeEach(() => {
       render(
@@ -126,10 +130,6 @@ describe('ModalManager', () => {
           checkinNotesMode
         />
       );
-    });
-
-    afterEach(() => {
-      jest.clearAllMocks();
     });
 
     it('should render "CheckinNoteModal" ', () => {
@@ -244,13 +244,9 @@ describe('ModalManager', () => {
           expect(modal).not.toBeInTheDocument();
         });
 
-        describe('after "ClaimedReturnedModal" confrimation', () => {
+        describe('after "ClaimedReturnedModal" confirmation', () => {
           beforeEach(() => {
             fireEvent.click(getById(testIds.claimedReturnedModal).getByText(labelIds.confirmButton));
-          });
-
-          afterEach(() => {
-            jest.clearAllMocks();
           });
 
           it('should render "MultipieceModal" with correct props', () => {
