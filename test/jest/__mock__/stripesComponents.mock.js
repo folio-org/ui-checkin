@@ -26,6 +26,32 @@ jest.mock('@folio/stripes/components', () => ({
     </label>
   )),
   Col: jest.fn(({ children, ...rest }) => <div {...rest}>{children}</div>),
+  ConfirmationModal: jest.fn(({
+    heading,
+    message,
+    onCancel,
+    onConfirm,
+    cancelLabel,
+    confirmLabel,
+    ...rest
+  }) => (
+    <div data-testid="confirmationModal" {...rest}>
+      <span>{heading}</span>
+      <span>{message}</span>
+      <button type="button" onClick={onCancel}>{cancelLabel || 'Cancel'}</button>
+      <button type="button" onClick={onConfirm}>{confirmLabel || 'Confirm'}</button>
+    </div>
+  )),
+  FormattedDate: jest.fn(({ value }) => (
+    <div data-testid>
+      {value}
+    </div>
+  )),
+  FormattedTime: jest.fn(({ value }) => (
+    <div>
+      {value}
+    </div>
+  )),
   Modal: jest.fn(({ children, label, footer, id }) => (
     <div
       id={id}
