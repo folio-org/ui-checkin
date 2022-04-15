@@ -5,9 +5,10 @@
 * Compile Translation Files into AST Format. Refs UICHKIN-243.
 * Refactor away from react-intl-safe-html Refs UICHKIN-260.
 * Add Jest/RTL testing for `ClaimedReturnedModal` component in `src\components\ClaimedReturnedModal`. Refs UICHKIN-280.
-* Cover ConfirmStatusModal component by RTL/jest tests. Refs UICHKIN-282.
+* Cover `ConfirmStatusModal` component by RTL/jest tests. Refs UICHKIN-282.
 * UI tests replacement with RTL/Jest for component `MultipieceModal`. Refs UICHKIN-283.
 * Cover `PrintButton` component by RTL/jest tests. Refs UICHKIN-285.
+* Cover `RouteForDeliveryModal` component by RTL/jest tests. Refs UICHKIN-286.
 
 ## [7.0.1] (https://github.com/folio-org/ui-checkin/tree/v7.0.1) (2022-04-06)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v7.0.0...v7.0.1)
