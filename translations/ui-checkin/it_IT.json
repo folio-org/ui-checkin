@@ -91,7 +91,7 @@
     "actions": "Azioni",
     "actionsMenu": "Azioni oggetto",
     "permission.all": "Check in: tutte le autorizzazioni",
-    "statusModal.hold.comment": "<strong>Patron comments:</strong> {comment}",
+    "statusModal.hold.comment": "<strong>Commenti dell'utente:</strong> {comment}",
     "statuses.restricted": "Riservato",
     "itemNotCheckedIn": "Item not checked in",
     "statuses.inProcessNonRequestable": "In lavorazione (non richiedibile)",
