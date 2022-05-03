@@ -119,7 +119,6 @@
     "prop-types": "^15.6.0",
     "react-barcode": "^1.3.2",
     "react-final-form": "^6.4.0",
-    "react-hot-loader": "^4.3.12",
     "react-to-print": "^2.3.2"
   },
   "peerDependencies": {
