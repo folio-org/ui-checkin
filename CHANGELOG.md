@@ -11,6 +11,7 @@
 * Cover `RouteForDeliveryModal` component by RTL/jest tests. Refs UICHKIN-286.
 * Add Jest/RTL testing for `ModalManager` component. Refs UICHKIN-288.
 * Remove react-hot-loader. Refs UICHKIN-333.
+* Replace babel-eslint with @babel/eslint-parser. Refs UICHKIN-336.
 
 ## [7.0.1] (https://github.com/folio-org/ui-checkin/tree/v7.0.1) (2022-04-06)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v7.0.0...v7.0.1)

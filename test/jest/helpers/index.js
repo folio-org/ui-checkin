@@ -1,2 +1,2 @@
 export * from './utils';
-export { dafault as translationsProperties } from './translationsProperties';
+export { default as translationsProperties } from './translationsProperties';
