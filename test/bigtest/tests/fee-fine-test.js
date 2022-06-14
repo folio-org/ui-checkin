@@ -8,8 +8,6 @@ import {
   it,
 } from '@bigtest/mocha';
 
-import wait from '../helpers/helpers';
-
 import setupApplication from '../helpers/setup-application';
 import CheckInInteractor from '../interactors/check-in';
 

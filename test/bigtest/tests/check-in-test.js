@@ -317,36 +317,6 @@ describe('CheckIn', () => {
     });
   });
 
-  // This problem reproduced when tenant timezone not UTC.
-  describe.skip('changing check-in date and time', () => {
-    let body;
-    beforeEach(async function () {
-      this.server.post('/circulation/check-in-by-barcode', (_, request) => {
-        body = JSON.parse(request.requestBody);
-        body.item = {};
-        return body;
-      });
-
-      this.server.create('item', 'withLoan', {
-        barcode: '9676761472500',
-        title: 'Best Book Ever',
-        materialType: {
-          name: 'book',
-        },
-      });
-
-      await checkIn.clickChangeTime();
-      await checkIn.processDate.fillAndBlur('04/25/2018');
-      await checkIn.processTime.fillInput('4:25 PM');
-      await checkIn.barcode('9676761472500').clickEnter();
-    });
-
-    it('changes the date and time in the payload', () => {
-      expect(body.checkInDate).to.include('2018-04-25');
-      expect(body.checkInDate).to.include('16:25:00');
-    });
-  });
-
   describe('showing modal with the list of items to select one', () => {
     beforeEach(async function () {
       this.server.get('/configurations/entries', {
