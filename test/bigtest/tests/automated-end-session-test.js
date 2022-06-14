@@ -11,10 +11,12 @@ import { getCheckinSettings } from '../../../src/util';
 import setupApplication from '../helpers/setup-application';
 import CheckInInteractor from '../interactors/check-in';
 
+import { DEFAULT_TIMEOUT } from '../constants';
+
 describe('CheckIn', () => {
   setupApplication();
 
-  const checkIn = new CheckInInteractor();
+  const checkIn = new CheckInInteractor({ timeout: DEFAULT_TIMEOUT });
 
   beforeEach(function () {
     this.server.createList('item', 5, 'withLoan');
@@ -23,7 +25,7 @@ describe('CheckIn', () => {
     });
   });
 
-  describe.skip('Automated end session', () => {
+  describe('Automated end session', () => {
     // waiting for checkoutTimeoutDuration = 0.01 min
     const wait = (ms = 650) => new Promise(resolve => { setTimeout(resolve, ms); });
     const checkinSettingsRecords = [{
@@ -59,7 +61,6 @@ describe('CheckIn', () => {
       }
       await checkIn.barcode('9676761472500').clickEnter();
       await checkIn.whenItemsAreLoaded(1);
-      await wait();
       await timer.signal();
     });
 

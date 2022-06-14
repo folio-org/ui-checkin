@@ -11,6 +11,8 @@ import setupApplication from '../helpers/setup-application';
 import CheckInInteractor from '../interactors/check-in';
 import wait from '../helpers/helpers';
 
+import { DEFAULT_TIMEOUT } from '../constants';
+
 const statuses = [
   'Missing',
   'Declared lost',
@@ -32,7 +34,7 @@ const nonCheckedInItemStatuses = [
 describe('CheckIn', () => {
   setupApplication();
 
-  const checkIn = new CheckInInteractor();
+  const checkIn = new CheckInInteractor({ timeout: DEFAULT_TIMEOUT });
 
   beforeEach(function () {
     this.server.createList('item', 5, 'withLoan');
@@ -45,13 +47,13 @@ describe('CheckIn', () => {
     expect(checkIn.barcodePresent).to.be.true;
   });
 
-  describe.skip('when the module mounts', () => {
+  describe('when the module mounts', () => {
     it('should focus the barcode input field', () => {
       expect(checkIn.barcodeInputIsFocused).to.be.true;
     });
   });
 
-  describe.skip('clicking the home button', () => {
+  describe('clicking the home button', () => {
     beforeEach(async function () {
       checkIn.homeButton.click();
     });
@@ -190,7 +192,7 @@ describe('CheckIn', () => {
       await checkIn.barcode(barcode).clickEnter();
     });
 
-    it.skip('should be properly formatted', () => {
+    it('should be properly formatted', () => {
       const callNumber = 'prefix callNumber suffix volume enumeration chronology';
 
       expect(checkIn.checkedInItemsList.rows(0).cells(3).text).to.equal(callNumber);
@@ -402,7 +404,7 @@ describe('CheckIn', () => {
     });
   });
 
-  describe.skip('showing confirm status modal with print checkbox checked by default', () => {
+  describe('showing confirm status modal with print checkbox checked by default', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
         barcode: '9676761472500',

@@ -13,6 +13,8 @@ import wait from '../helpers/helpers';
 import setupApplication from '../helpers/setup-application';
 import CheckInInteractor from '../interactors/check-in';
 
+import { DEFAULT_TIMEOUT } from '../constants';
+
 describe('CheckIn fee(s) fine(s)', () => {
   describe('fee fine absent', () => {
     setupApplication({
@@ -24,7 +26,7 @@ describe('CheckIn fee(s) fine(s)', () => {
       ],
     });
 
-    const checkIn = new CheckInInteractor();
+    const checkIn = new CheckInInteractor({ timeout: DEFAULT_TIMEOUT });
 
     beforeEach(async function () {
       this.visit('/checkin', () => {
@@ -32,13 +34,11 @@ describe('CheckIn fee(s) fine(s)', () => {
       });
 
       await checkIn.barcode('9676761472500').clickEnter();
-      await wait();
     });
 
     describe('fee fine details button', () => {
       beforeEach(async function () {
         await checkIn.selectEllipse();
-        await wait();
       });
 
       it('should not be rendered', function () {
@@ -63,7 +63,7 @@ describe('CheckIn fee(s) fine(s)', () => {
       ],
     });
 
-    const checkIn = new CheckInInteractor();
+    const checkIn = new CheckInInteractor({ timeout: DEFAULT_TIMEOUT });
 
     beforeEach(async function () {
       this.visit('/checkin', () => {
@@ -71,13 +71,11 @@ describe('CheckIn fee(s) fine(s)', () => {
       });
 
       await checkIn.barcode('9676761472500').clickEnter();
-      await wait();
     });
 
     describe('fee fine details button', () => {
       beforeEach(async function () {
         await checkIn.selectEllipse();
-        await wait();
         await checkIn.selectFeeFineDetails();
       });
 
@@ -110,7 +108,7 @@ describe('CheckIn fee(s) fine(s)', () => {
       ],
     });
 
-    const checkIn = new CheckInInteractor();
+    const checkIn = new CheckInInteractor({ timeout: DEFAULT_TIMEOUT });
 
     beforeEach(async function () {
       this.visit('/checkin', () => {
@@ -118,13 +116,11 @@ describe('CheckIn fee(s) fine(s)', () => {
       });
 
       await checkIn.barcode('9676761472500').clickEnter();
-      await wait();
     });
 
     describe('fees fines details button', () => {
       beforeEach(async function () {
         await checkIn.selectEllipse();
-        await wait();
         await checkIn.selectFeeFineDetails();
       });
 
