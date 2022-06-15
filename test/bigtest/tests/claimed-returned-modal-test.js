@@ -9,10 +9,12 @@ import setupApplication from '../helpers/setup-application';
 import CheckInInteractor from '../interactors/check-in';
 import { statuses } from '../../../src/consts';
 
+import { DEFAULT_TIMEOUT } from '../constants';
+
 describe('Claimed returned modal', () => {
   setupApplication();
 
-  const checkIn = new CheckInInteractor();
+  const checkIn = new CheckInInteractor({ timeout: DEFAULT_TIMEOUT });
 
   beforeEach(function () {
     this.server.createList('item', 5, 'withLoan');

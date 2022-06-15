@@ -10,10 +10,12 @@ import CheckInInteractor from '../interactors/check-in';
 
 import { statuses, cancelFeeClaimReturned } from '../../../src/consts';
 
+import { DEFAULT_TIMEOUT } from '../constants';
+
 describe('CheckIn with claimed returned', () => {
   setupApplication();
 
-  const checkIn = new CheckInInteractor();
+  const checkIn = new CheckInInteractor({ timeout: DEFAULT_TIMEOUT });
   beforeEach(function () {
     this.server.create('lost-item-fee-policy', {
       id: 1,

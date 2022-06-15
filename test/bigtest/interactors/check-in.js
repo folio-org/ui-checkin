@@ -23,16 +23,18 @@ import ClaimedReturnedModalInteractor from './claimed-returned-modal';
 import ConfrmModalInteractor from './confirm-modal';
 import SelectItemModalInteractor from './select-item-modal';
 
+import { DEFAULT_TIMEOUT } from '../constants';
+
 @interactor class CheckInInteractor {
-  homeButton = new Interactor('#ModuleMainHeading');
-  processDate = new DatepickerInteractor('[data-test-process-date]');
-  processTime = new TimepickerInteractor('[data-test-process-time]');
-  confirmStatusModal = new ConfirmStatusModal('[data-test-confirm-status-modal]');
-  multiPieceModal = new MultiPieceModalInteractor('[data-test-multi-piece-modal]');
-  checkinNoteModal = new CheckinNoteModalInteractor();
-  claimedReturnedModal = new ClaimedReturnedModalInteractor();
-  confirmModal = new ConfrmModalInteractor();
-  selectItemModal = new SelectItemModalInteractor();
+  homeButton = new Interactor({ scope: '#ModuleMainHeading', timeout: DEFAULT_TIMEOUT });
+  processDate = new DatepickerInteractor({ scope: '[data-test-process-date]', timeout: DEFAULT_TIMEOUT });
+  processTime = new TimepickerInteractor({ scope: '[data-test-process-time]', timeout: DEFAULT_TIMEOUT });
+  confirmStatusModal = new ConfirmStatusModal({ scope: '[data-test-confirm-status-modal]', timeout: DEFAULT_TIMEOUT });
+  multiPieceModal = new MultiPieceModalInteractor({ scope: '[data-test-multi-piece-modal]', timeout: DEFAULT_TIMEOUT });
+  checkinNoteModal = new CheckinNoteModalInteractor({ timeout: DEFAULT_TIMEOUT });
+  claimedReturnedModal = new ClaimedReturnedModalInteractor({ timeout: DEFAULT_TIMEOUT });
+  confirmModal = new ConfrmModalInteractor({ timeout: DEFAULT_TIMEOUT });
+  selectItemModal = new SelectItemModalInteractor({ timeout: DEFAULT_TIMEOUT });
 
   selectEllipse = clickable('[data-test-elipse-select] button');
   checkedInItemsList = scoped('#list-items-checked-in', MultiColumnListInteractor);
@@ -62,7 +64,7 @@ import SelectItemModalInteractor from './select-item-modal';
   printTransitSlipItemPresent = isPresent('[data-test-print-transit-slip]');
   checkinNotesPresent = isPresent('[data-test-checkin-notes]');
   checkinNotesButton= scoped('[data-test-checkin-notes] button');
-  deliveryModal = new DeliveryModalInteractor();
+  deliveryModal = new DeliveryModalInteractor({ timeout: DEFAULT_TIMEOUT });
   deliveryModalIsDisplayed = isPresent('[data-test-delivery-modal]');
   errorModal = isPresent('#OverlayContainer');
   clickCancelErrorModalBtn = clickable('[data-test-close-error-modal-button]');

@@ -8,12 +8,14 @@ import {
 import setupApplication from '../helpers/setup-application';
 import CheckInInteractor from '../interactors/check-in';
 
+import { DEFAULT_TIMEOUT } from '../constants';
+
 describe('CheckIn requested item', () => {
   setupApplication({
     scenarios: ['default', 'check-in-by-barcode-with-request']
   });
 
-  const checkIn = new CheckInInteractor();
+  const checkIn = new CheckInInteractor({ timeout: DEFAULT_TIMEOUT });
 
   beforeEach(async function () {
     return this.visit('/checkin', () => {
