@@ -81,6 +81,7 @@ describe('FeeFineDetailsButton', () => {
   });
 
   describe('button href should redirect to', () => {
+    const buttonRole = 'menuitem';
     const userId = loanFixture.loan.userId;
     const feeFineId = accountFixture.accounts[0].id;
 
@@ -91,7 +92,7 @@ describe('FeeFineDetailsButton', () => {
 
       await renderFeeFineDetailsButton(loanFixture, accountFixture);
 
-      fireEvent.click(screen.getByRole('button'));
+      fireEvent.click(screen.getByRole(buttonRole));
       expect(mockedQueryUpdate).toHaveBeenLastCalledWith(expectedResult);
     });
 
@@ -114,7 +115,7 @@ describe('FeeFineDetailsButton', () => {
 
       await renderFeeFineDetailsButton(loanFixture, accountDataWithTwoOpenFeeFines);
 
-      fireEvent.click(screen.getByRole('button'));
+      fireEvent.click(screen.getByRole(buttonRole));
       expect(mockedQueryUpdate).toHaveBeenLastCalledWith(expectedResult);
     });
 
@@ -140,7 +141,7 @@ describe('FeeFineDetailsButton', () => {
 
       await renderFeeFineDetailsButton(loanFixture, accountDataWithOneClosedFeeFine);
 
-      fireEvent.click(screen.getByRole('button'));
+      fireEvent.click(screen.getByRole(buttonRole));
       expect(mockedQueryUpdate).toHaveBeenLastCalledWith(expectedResult);
     });
 
@@ -169,7 +170,7 @@ describe('FeeFineDetailsButton', () => {
 
       await renderFeeFineDetailsButton(loanFixture, accountDataWithTwoClosedFeeFines);
 
-      fireEvent.click(screen.getByRole('button'));
+      fireEvent.click(screen.getByRole(buttonRole));
       expect(mockedQueryUpdate).toHaveBeenLastCalledWith(expectedResult);
     });
   });

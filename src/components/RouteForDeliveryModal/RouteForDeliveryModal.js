@@ -62,6 +62,7 @@ class RouteForDeliveryModal extends React.Component {
     return (
       <>
         <PrintButton
+          data-testid="closeAndCheckoutPrintButton"
           buttonStyle="primary"
           onBeforePrint={onCloseAndCheckout}
           dataSource={slipData}
@@ -71,6 +72,7 @@ class RouteForDeliveryModal extends React.Component {
           {this.closeAndCheckoutButtonContent}
         </PrintButton>
         <PrintButton
+          data-testid="closeButton"
           buttonStyle="primary"
           onBeforePrint={onClose}
           dataSource={slipData}

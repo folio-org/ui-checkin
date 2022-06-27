@@ -1,8 +1,10 @@
 import { get } from 'lodash';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import {
+  injectIntl,
+  FormattedMessage,
+} from 'react-intl';
 import PropTypes from 'prop-types';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
   Modal,
   ModalFooter,
@@ -13,12 +15,18 @@ import {
 } from '@folio/stripes/components';
 
 const MultipieceModal = (props) => {
-  const { item, onClose, onConfirm } = props;
+  const {
+    intl: { formatMessage },
+    item,
+    onClose,
+    onConfirm,
+  } = props;
   const { title, barcode, materialType } = item;
 
   const footer = (
-    <ModalFooter>
+    <ModalFooter data-testid="multipieceModalFooter">
       <Button
+        data-testid="multipieceModalConfirmButton"
         buttonStyle="primary"
         data-test-checkin-button
         onClick={() => onConfirm()}
@@ -26,6 +34,7 @@ const MultipieceModal = (props) => {
         <FormattedMessage id="ui-checkin.multipieceModal.checkIn" />
       </Button>
       <Button
+        data-testid="multipieceModalCancelButton"
         onClick={onClose}
       >
         <FormattedMessage id="ui-checkin.multipieceModal.cancel" />
@@ -34,18 +43,17 @@ const MultipieceModal = (props) => {
   );
   return (
     <Modal
+      data-testid="multipieceModal"
       id="multipiece-modal"
       data-test-multi-piece-modal
       size="small"
       footer={footer}
       dismissible
-      label={
-        <FormattedMessage id="ui-checkin.multipieceModal.label" />
-      }
+      label={formatMessage({ id: 'ui-checkin.multipieceModal.label' })}
       {...props}
     >
       <p>
-        <SafeHTMLMessage
+        <FormattedMessage
           id="ui-checkin.multipieceModal.message"
           values={{ title, barcode, name: (materialType.name) }}
         />
@@ -53,13 +61,15 @@ const MultipieceModal = (props) => {
       <Row>
         <Col xs={6}>
           <KeyValue
-            label={<FormattedMessage id="ui-checkin.multipieceModal.item.numberOfPieces" />}
+            data-testid="numberOfPieces"
+            label={formatMessage({ id: 'ui-checkin.multipieceModal.item.numberOfPieces' })}
             value={get(item, 'numberOfPieces', '-')}
           />
         </Col>
         <Col xs={6}>
           <KeyValue
-            label={<FormattedMessage id="ui-checkin.multipieceModal.item.descriptionOfPieces" />}
+            data-testid="descriptionOfPieces"
+            label={formatMessage({ id: 'ui-checkin.multipieceModal.item.descriptionOfPieces' })}
             value={get(item, 'descriptionOfPieces', '-')}
           />
         </Col>
@@ -68,13 +78,15 @@ const MultipieceModal = (props) => {
           <>
             <Col xs={6}>
               <KeyValue
-                label={<FormattedMessage id="ui-checkin.multipieceModal.item.numberOfMissingPieces" />}
+                data-testid="numberOfMissingPieces"
+                label={formatMessage({ id: 'ui-checkin.multipieceModal.item.numberOfMissingPieces' })}
                 value={get(item, 'numberOfMissingPieces') || '-'}
               />
             </Col>
             <Col xs={6}>
               <KeyValue
-                label={<FormattedMessage id="ui-checkin.multipieceModal.item.descriptionOfmissingPieces" />}
+                data-testid="descriptionOfmissingPieces"
+                label={formatMessage({ id: 'ui-checkin.multipieceModal.item.descriptionOfmissingPieces' })}
                 value={get(item, 'missingPieces') || '-'}
               />
             </Col>
@@ -86,10 +98,11 @@ const MultipieceModal = (props) => {
 };
 
 MultipieceModal.propTypes = {
+  intl: PropTypes.object.isRequired,
   open: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   item: PropTypes.object,
 };
 
-export default MultipieceModal;
+export default injectIntl(MultipieceModal);

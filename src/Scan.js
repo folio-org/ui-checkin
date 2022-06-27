@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment-timezone';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { escapeCqlValue } from '@folio/stripes/util';
 import {
   FormattedMessage,
@@ -37,6 +36,8 @@ import {
   convertToSlipData,
   getCheckinSettings,
 } from './util';
+
+const REQUEST_DELIVERY_HEADING = 'Request delivery';
 
 class Scan extends React.Component {
   static propTypes = {
@@ -713,7 +714,7 @@ class Scan extends React.Component {
     } = request;
     const slipData = convertToSlipData(staffSlipContext, intl, timezone, locale);
     const messages = [
-      <SafeHTMLMessage
+      <FormattedMessage
         id="ui-checkin.statusModal.hold.message"
         values={{
           title: item.title,
@@ -759,9 +760,9 @@ class Scan extends React.Component {
       },
     } = this.props;
 
-    const slipData = convertToSlipData(staffSlipContext, intl, timezone, locale);
+    const slipData = convertToSlipData(staffSlipContext, intl, timezone, locale, REQUEST_DELIVERY_HEADING);
     const message = (
-      <SafeHTMLMessage
+      <FormattedMessage
         id="ui-checkin.statusModal.delivery.message"
         values={{
           itemTitle: deliveryItem.item.title,
@@ -814,7 +815,7 @@ class Scan extends React.Component {
 
     const destinationServicePoint = get(item, 'inTransitDestinationServicePoint.name', '');
     const messages = [
-      <SafeHTMLMessage
+      <FormattedMessage
         id="ui-checkin.statusModal.transit.message"
         values={{
           title: item.title,
@@ -846,7 +847,7 @@ class Scan extends React.Component {
 
     if (message === `No item with barcode ${barcode} exists`) {
       errorMessage = (
-        <SafeHTMLMessage
+        <FormattedMessage
           id="ui-checkin.errorModal.noItemFound"
           values={{ barcode }}
         />

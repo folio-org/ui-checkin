@@ -512,7 +512,11 @@ class CheckIn extends React.Component {
       <form onSubmit={handleSubmit}>
         <div style={containerStyle}>
           <Paneset static>
-            <Pane paneTitle={scannedItemsLabel} defaultWidth="100%">
+            <Pane
+              id="check-in"
+              paneTitle={scannedItemsLabel}
+              defaultWidth="100%"
+            >
               <Row>
                 <Col xs={9} sm={4}>
                   <Layout className="marginTopLabelSpacer">

@@ -11,6 +11,8 @@ import setupApplication from '../helpers/setup-application';
 import CheckInInteractor from '../interactors/check-in';
 import wait from '../helpers/helpers';
 
+import { DEFAULT_TIMEOUT } from '../constants';
+
 const statuses = [
   'Missing',
   'Declared lost',
@@ -32,7 +34,7 @@ const nonCheckedInItemStatuses = [
 describe('CheckIn', () => {
   setupApplication();
 
-  const checkIn = new CheckInInteractor();
+  const checkIn = new CheckInInteractor({ timeout: DEFAULT_TIMEOUT });
 
   beforeEach(function () {
     this.server.createList('item', 5, 'withLoan');
@@ -45,13 +47,13 @@ describe('CheckIn', () => {
     expect(checkIn.barcodePresent).to.be.true;
   });
 
-  describe.skip('when the module mounts', () => {
+  describe('when the module mounts', () => {
     it('should focus the barcode input field', () => {
       expect(checkIn.barcodeInputIsFocused).to.be.true;
     });
   });
 
-  describe.skip('clicking the home button', () => {
+  describe('clicking the home button', () => {
     beforeEach(async function () {
       checkIn.homeButton.click();
     });
@@ -190,7 +192,7 @@ describe('CheckIn', () => {
       await checkIn.barcode(barcode).clickEnter();
     });
 
-    it.skip('should be properly formatted', () => {
+    it('should be properly formatted', () => {
       const callNumber = 'prefix callNumber suffix volume enumeration chronology';
 
       expect(checkIn.checkedInItemsList.rows(0).cells(3).text).to.equal(callNumber);
@@ -315,35 +317,6 @@ describe('CheckIn', () => {
     });
   });
 
-  describe('changing check-in date and time', () => {
-    let body;
-    beforeEach(async function () {
-      this.server.post('/circulation/check-in-by-barcode', (_, request) => {
-        body = JSON.parse(request.requestBody);
-        body.item = {};
-        return body;
-      });
-
-      this.server.create('item', 'withLoan', {
-        barcode: '9676761472500',
-        title: 'Best Book Ever',
-        materialType: {
-          name: 'book',
-        },
-      });
-
-      await checkIn.clickChangeTime();
-      await checkIn.processDate.fillAndBlur('04/25/2018');
-      await checkIn.processTime.fillInput('4:25 PM');
-      await checkIn.barcode('9676761472500').clickEnter();
-    });
-
-    it('changes the date and time in the payload', () => {
-      expect(body.checkInDate).to.include('2018-04-25');
-      expect(body.checkInDate).to.include('16:25:00');
-    });
-  });
-
   describe('showing modal with the list of items to select one', () => {
     beforeEach(async function () {
       this.server.get('/configurations/entries', {
@@ -401,7 +374,7 @@ describe('CheckIn', () => {
     });
   });
 
-  describe.skip('showing confirm status modal with print checkbox checked by default', () => {
+  describe('showing confirm status modal with print checkbox checked by default', () => {
     beforeEach(async function () {
       this.server.create('item', 'withLoan', {
         barcode: '9676761472500',

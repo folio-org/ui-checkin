@@ -6,7 +6,6 @@ import {
   Modal,
   Button,
 } from '@folio/stripes/components';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import { claimedReturnedResolutions } from '../../consts';
 
@@ -15,6 +14,7 @@ const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
     <div>
       <Button
         data-test-cancel-button
+        data-testid="cancelButton"
         buttonStyle="primary"
         onClick={onCancel}
       >
@@ -22,12 +22,14 @@ const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
       </Button>
       <Button
         data-test-found-button
+        data-testid="foundButton"
         onClick={() => onConfirm(claimedReturnedResolutions.FOUND)}
       >
         <FormattedMessage id="ui-checkin.claimedReturnedModal.resolution.found" />
       </Button>
       <Button
         data-test-returned-button
+        data-testid="returnedButton"
         onClick={() => onConfirm(claimedReturnedResolutions.RETURNED)}
       >
         <FormattedMessage id="ui-checkin.claimedReturnedModal.resolution.returned" />
@@ -44,7 +46,7 @@ const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
       label={<FormattedMessage id="ui-checkin.claimedReturnedModal.label" />}
       footer={footer}
     >
-      <SafeHTMLMessage
+      <FormattedMessage
         id="ui-checkin.claimedReturnedModal.message"
         values={{
           title: item.title,
@@ -57,7 +59,13 @@ const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
 };
 
 ClaimedReturnedModal.propTypes = {
-  item: PropTypes.object,
+  item: PropTypes.shape({
+    title: PropTypes.string,
+    barcode: PropTypes.string,
+    materialType:  PropTypes.shape({
+      name: PropTypes.string,
+    }),
+  }).isRequired,
   onCancel: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,

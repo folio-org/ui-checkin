@@ -6,9 +6,7 @@ import {
 } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
-  FormattedMessage,
   injectIntl,
 } from 'react-intl';
 
@@ -191,23 +189,19 @@ class ModalManager extends React.Component {
       ? formatMessage({ id:'ui-checkin.confirmModal.discoverySuppress' })
       : '';
     const status = formatMessage({ id: statusMessages[name] });
-    const heading = (
-      <FormattedMessage
-        id="ui-checkin.confirmModal.heading"
-        values={{ status: lowerFirst(status) }}
-      />
+    const heading = formatMessage(
+      { id: 'ui-checkin.confirmModal.heading' },
+      { status: lowerFirst(status) }
     );
-    const message = (
-      <SafeHTMLMessage
-        id="ui-checkin.confirmModal.message"
-        values={{
-          title,
-          barcode,
-          status,
-          discoverySuppressMessage,
-          materialType,
-        }}
-      />
+    const message = formatMessage(
+      { id: 'ui-checkin.confirmModal.message' },
+      {
+        title,
+        barcode,
+        status,
+        discoverySuppressMessage,
+        materialType,
+      }
     );
 
     return (
@@ -216,8 +210,8 @@ class ModalManager extends React.Component {
         heading={heading}
         onConfirm={this.onConfirm}
         onCancel={this.onCancel}
-        cancelLabel={<FormattedMessage id="ui-checkin.confirmModal.cancel" />}
-        confirmLabel={<FormattedMessage id="ui-checkin.confirmModal.confirm" />}
+        cancelLabel={formatMessage({ id: 'ui-checkin.confirmModal.cancel' })}
+        confirmLabel={formatMessage({ id: 'ui-checkin.confirmModal.confirm' })}
         message={message}
       />
     );
@@ -229,6 +223,9 @@ class ModalManager extends React.Component {
       showCheckinNoteModal,
       checkinNotesMode,
     } = this.state;
+    const {
+      intl: { formatMessage },
+    } = this.props;
     const {
       title,
       barcode,
@@ -258,9 +255,9 @@ class ModalManager extends React.Component {
         </div>),
     };
     const columnMapping = {
-      date: <FormattedMessage id="ui-checkin.date" />,
-      note: <FormattedMessage id="ui-checkin.note" />,
-      source: <FormattedMessage id="ui-checkin.source" />,
+      date: formatMessage({ id: 'ui-checkin.date' }),
+      note: formatMessage({ id: 'ui-checkin.note' }),
+      source: formatMessage({ id: 'ui-checkin.source' }),
     };
     const visibleColumns = ['date', 'note', 'source'];
     const columnWidths = {
@@ -272,22 +269,20 @@ class ModalManager extends React.Component {
       'ui-checkin.checkinNotes.message' :
       'ui-checkin.checkinNoteModal.message';
     const heading = checkinNotesMode ?
-      <FormattedMessage id="ui-checkin.checkinNotes.heading" /> :
-      <FormattedMessage id="ui-checkin.checkinNoteModal.heading" />;
+      formatMessage({ id: 'ui-checkin.checkinNotes.heading' }) :
+      formatMessage({ id: 'ui-checkin.checkinNoteModal.heading' });
     const cancelLabel = checkinNotesMode ?
-      <FormattedMessage id="ui-checkin.close" /> :
-      <FormattedMessage id="ui-checkin.multipieceModal.cancel" />;
+      formatMessage({ id: 'ui-checkin.close' }) :
+      formatMessage({ id: 'ui-checkin.multipieceModal.cancel' });
 
-    const message = (
-      <SafeHTMLMessage
-        id={id}
-        values={{
-          title,
-          barcode,
-          materialType: upperFirst(get(checkedinItem, 'materialType.name', '')),
-          count: notesSorted.length
-        }}
-      />
+    const message = formatMessage(
+      { id },
+      {
+        title,
+        barcode,
+        materialType: upperFirst(get(checkedinItem, 'materialType.name', '')),
+        count: notesSorted.length,
+      }
     );
 
     return (
@@ -299,7 +294,7 @@ class ModalManager extends React.Component {
         onCancel={this.onCancel}
         hideConfirm={checkinNotesMode}
         cancelLabel={cancelLabel}
-        confirmLabel={<FormattedMessage id="ui-checkin.multipieceModal.confirm" />}
+        confirmLabel={formatMessage({ id: 'ui-checkin.multipieceModal.confirm' })}
         notes={notesSorted}
         formatter={formatter}
         message={message}

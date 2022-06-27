@@ -1,6 +1,27 @@
 # Change history for ui-checkin
 
 ## IN PROGRESS
+* Add id for Pane component. Refs UICHKIN-329.
+* Compile Translation Files into AST Format. Refs UICHKIN-243.
+* Refactor away from react-intl-safe-html Refs UICHKIN-260.
+* Add Jest/RTL testing for `ClaimedReturnedModal` component in `src\components\ClaimedReturnedModal`. Refs UICHKIN-280.
+* Cover `ConfirmStatusModal` component by RTL/jest tests. Refs UICHKIN-282.
+* UI tests replacement with RTL/Jest for component `MultipieceModal`. Refs UICHKIN-283.
+* Cover `PrintButton` component by RTL/jest tests. Refs UICHKIN-285.
+* Cover `RouteForDeliveryModal` component by RTL/jest tests. Refs UICHKIN-286.
+* Add Jest/RTL testing for `ModalManager` component. Refs UICHKIN-288.
+* Remove react-hot-loader. Refs UICHKIN-333.
+* Replace babel-eslint with @babel/eslint-parser. Refs UICHKIN-336.
+* Update NodeJS to v16 in GitHub Actions. Refs UICHKIN-338.
+* Improvement for bigtest running. Refs UICHKIN-341.
+
+## [7.0.1] (https://github.com/folio-org/ui-checkin/tree/v7.0.1) (2022-04-06)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v7.0.0...v7.0.1)
+
+* Fix heading of `Request delivery slip`. Refs UICHKIN-334.
+
+## [7.0.0] (https://github.com/folio-org/ui-checkin/tree/v7.0.0) (2022-02-24)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v6.0.1...v7.0.0)
 
 * Upgrade `@folio/react-intl-safe-html` for compatibility with `@folio/stripes` `v7`. Refs UICHKIN-308.
 * Use `MAX_RECORDS` constant instead of hardcoded value for query limits. Refs UICHKIN-317.
@@ -11,6 +32,8 @@
 * Unhandled errors bubble up on UI to say that somethin go wrong. Refs UICHKIN-163.
 * Also support `circulation` `13.0`. Refs UICHKIN-319.
 * Perform Wildcard Item Lookup Before Performing Check in Transactions in Check in App. Refs UICHKIN-309.
+* Fix date formats when slip print. Refs UICHKIN-320.
+* Cover CheckInNoteModal component by RTL/jest tests
 
 ## [6.0.1] (https://github.com/folio-org/ui-checkin/tree/v6.0.1) (2021-11-08)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v6.0.0...v6.0.1)
