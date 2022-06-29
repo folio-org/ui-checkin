@@ -1,6 +1,8 @@
 # Change history for ui-checkin
 
-## IN PROGRESS
+## [7.1.0] (https://github.com/folio-org/ui-checkin/tree/v7.1.0) (2022-06-29)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v7.0.1...v7.1.0)
+
 * Add id for Pane component. Refs UICHKIN-329.
 * Compile Translation Files into AST Format. Refs UICHKIN-243.
 * Refactor away from react-intl-safe-html Refs UICHKIN-260.
