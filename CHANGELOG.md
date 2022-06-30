@@ -1,5 +1,9 @@
 # Change history for ui-checkin
 
+## IN PROGRESS
+
+* Add Jest/RTL testing for `ComponentToPrint` component. Refs UICHKIN-281.
+
 ## [7.1.0] (https://github.com/folio-org/ui-checkin/tree/v7.1.0) (2022-06-29)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v7.0.1...v7.1.0)
 
