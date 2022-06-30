@@ -4,6 +4,10 @@ import HtmlToReact, { Parser } from 'html-to-react';
 import Barcode from 'react-barcode';
 import { buildTemplate } from '../../util';
 
+export const shouldProcessNode = node => node.name === 'barcode';
+
+export const processNode = (node, children) => (<Barcode value={children[0] ? children[0].trim() : ' '} />);
+
 class ComponentToPrint extends React.Component {
   static propTypes = {
     template: PropTypes.string.isRequired,
@@ -18,13 +22,13 @@ class ComponentToPrint extends React.Component {
     this.rules = [
       {
         replaceChildren: true,
-        shouldProcessNode: node => node.name === 'barcode',
-        processNode: (node, children) => (<Barcode value={children[0] ? children[0].trim() : ' '} />),
+        shouldProcessNode,
+        processNode,
       },
       {
         shouldProcessNode: () => true,
         processNode: processNodeDefinitions.processDefaultNode,
-      }
+      },
     ];
 
     this.parser = new Parser();
