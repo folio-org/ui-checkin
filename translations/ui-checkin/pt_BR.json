@@ -73,7 +73,7 @@
     "withdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) tem o status do item <strong>Descartado</strong> e é ocultado na descoberta.",
     "withdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) tem o status do item <strong>Descartado</strong>.",
     "claimedReturnedModal.label": "Item devolvido agora que tinha sido alegado devolvido anteriormente",
-    "claimedReturnedModal.message": "<strong>{title}</strong> (<strong>{materialType}</strong>) (Código de barras: {barcode}) foi <strong>reivindicado como devolvido</strong>.",
+    "claimedReturnedModal.message": "<strong>{title}</strong> (<strong>{materialType}</strong>) (Código de barras: {barcode}) foi <strong>alegado pelo usuário como já sido devolvido</strong>.",
     "claimedReturnedModal.resolution.found": "Encontrado pela biblioteca",
     "claimedReturnedModal.resolution.returned": "Devolvido pelo usuário",
     "requestDetails": "Detalhes da requisição",
