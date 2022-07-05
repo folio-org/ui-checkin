@@ -94,7 +94,7 @@
     "statusModal.hold.comment": "<strong>Comentarios del usuario:</strong> {comment}",
     "statuses.restricted": "Restricted",
     "itemNotCheckedIn": "Item no devuelto",
-    "statuses.inProcessNonRequestable": "In process (non-requestable)",
+    "statuses.inProcessNonRequestable": "En proceso (no solicitable)",
     "statuses.longMissing": "Long missing",
     "statuses.unavailable": "No disponible",
     "statuses.unknown": "Unknown",
@@ -103,11 +103,11 @@
     "selectItemModal.heading": "Select item",
     "selectItemModal.resultCount": "{count} Records found",
     "selectItemModal.barcode": "Código de barras",
-    "selectItemModal.itemStatus": "Item status",
+    "selectItemModal.itemStatus": "Estado del item",
     "selectItemModal.location": "Location",
     "selectItemModal.materialType": "Material type",
     "selectItemModal.loanType": "Tipo de préstamo",
     "selectItemModal.title": "Title",
-    "selectItemModal.callNumber": "Call number",
+    "selectItemModal.callNumber": "Signatura",
     "selectItemModal.itemListHeader": "List of items: choose one"
 }
