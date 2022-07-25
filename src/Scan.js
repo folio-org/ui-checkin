@@ -339,12 +339,12 @@ class Scan extends React.Component {
     } = data;
     const {
       mutator: { checkIn },
-      stripes: { user },
       intl: { timeZone },
+      okapi,
     } = this.props;
     const { itemClaimedReturnedResolution } = this.state;
 
-    const servicePointId = get(user, 'user.curServicePoint.id', '');
+    const servicePointId = get(okapi, 'currentUser.curServicePoint.id', '');
 
     const checkInDate = buildDateTime(checkinDate, checkinTime, timeZone, moment().tz(timeZone));
     const requestData = {
