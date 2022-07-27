@@ -3,6 +3,10 @@
 ## IN PROGRESS
 
 * Add Jest/RTL testing for `ComponentToPrint` component. Refs UICHKIN-281.
+
+## [7.1.1] (https://github.com/folio-org/ui-checkin/tree/v7.1.1) (2022-07-27)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v7.1.0...v7.1.1)
+
 * Retrieve service point from `okapi.currentUser` because `stripes.user` is out of sync. Refs UICHKIN-344.
 
 ## [7.1.0] (https://github.com/folio-org/ui-checkin/tree/v7.1.0) (2022-06-29)
