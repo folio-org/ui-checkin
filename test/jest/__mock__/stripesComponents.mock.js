@@ -42,6 +42,14 @@ jest.mock('@folio/stripes/components', () => ({
       <button type="button" onClick={onConfirm}>{confirmLabel || 'Confirm'}</button>
     </div>
   )),
+  Datepicker: jest.fn((props) => <div {...props} />),
+  Label: jest.fn(({
+    htmlFor,
+    id,
+    children,
+    ...rest
+  }) => (<label htmlFor={htmlFor} id={id} {...rest}>{children}</label>)),
+  Timepicker: jest.fn((props) => <div {...props} />),
   FormattedDate: jest.fn(({ value }) => (
     <div data-testid>
       {value}
@@ -71,6 +79,10 @@ jest.mock('@folio/stripes/components', () => ({
     <div>
       {children}
     </div>
+  )),
+  Icon: jest.fn((props) => (<span {...props} />)),
+  IconButton: jest.fn((props) => (
+    <button type="button" {...props} />
   )),
   Row: jest.fn(({ children, ...rest }) => <div {...rest}>{children}</div>),
   KeyValue: jest.fn(({ 'data-testid': testId }) => <div data-testid={testId} />),
