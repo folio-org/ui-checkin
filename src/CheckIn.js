@@ -6,7 +6,6 @@ import {
   injectIntl,
 } from 'react-intl';
 import moment from 'moment-timezone';
-import stripesFinalForm from '@folio/stripes/final-form';
 import createInactivityTimer from 'inactivity-timer';
 import {
   get,
@@ -14,36 +13,34 @@ import {
 } from 'lodash';
 
 import {
+  IfPermission,
+  TitleManager,
+  withModules,
+} from '@folio/stripes/core';
+import {
   Paneset,
   Pane,
   Button,
-  MultiColumnList,
   TextField,
-  Datepicker,
-  Timepicker,
   IconButton,
   Layout,
   Row,
   Col,
-  Icon,
-  InfoPopover,
-  KeyValue,
   DropdownMenu,
   Dropdown,
-  FormattedTime,
-  Label,
 } from '@folio/stripes/components';
-import { effectiveCallNumber } from '@folio/stripes/util';
-import { IfPermission, TitleManager, withModules } from '@folio/stripes/core';
+import stripesFinalForm from '@folio/stripes/final-form';
 
 import PrintButton from './components/PrintButton';
-import FeesFinesOwnedStatus from './components/FeesFinesOwnedStatus';
 import FeeFineDetailsButton from './components/FeeFineDetailsButton';
+import CheckinDateTime from './components/CheckinDateTime';
+import CheckedInListItems from './components/CheckedInListItems';
 import CheckInFooter from './components/CheckInFooter';
 import {
   convertToSlipData,
   getCheckinSettings,
 } from './util';
+
 import styles from './checkin.css';
 
 class CheckIn extends React.Component {
@@ -56,7 +53,7 @@ class CheckIn extends React.Component {
     pristine: PropTypes.bool,
     submithandler: PropTypes.func,
     barcodeRef: PropTypes.shape({
-      current: PropTypes.instanceOf(Element)
+      current: PropTypes.instanceOf(Element),
     }),
     checkinFormRef: PropTypes.object,
     onSessionEnd: PropTypes.func,
@@ -86,9 +83,9 @@ class CheckIn extends React.Component {
 
   constructor(props) {
     super(props);
-    this.showInfo = this.showInfo.bind(this);
     this.renderActions = this.renderActions.bind(this);
     this.handleOptionsChange = this.handleOptionsChange.bind(this);
+    this.showPickers = this.showPickers.bind(this);
     this.timer = undefined;
     this.readyPrefix = props.modules?.app?.find(el => el.module === '@folio/checkin')?.readyPrefix;
 
@@ -131,6 +128,7 @@ class CheckIn extends React.Component {
 
     if (!parsed.checkoutTimeout) {
       this.timer = null;
+
       return;
     }
 
@@ -171,14 +169,25 @@ class CheckIn extends React.Component {
   }
 
   handleSessionEnd = async () => {
-    const { onSessionEnd } = this.props;
+    const {
+      onSessionEnd,
+    } = this.props;
+
     this.setState({ showPickers: false });
     await onSessionEnd();
+
     this.focusInput();
   }
 
   showPickers = () => {
-    const { form: { change }, intl: { timeZone } } = this.props;
+    const {
+      form: {
+        change,
+      },
+      intl: {
+        timeZone,
+      },
+    } = this.props;
     const now = moment().tz(timeZone);
 
     change('item.checkinDate', now.format());
@@ -217,9 +226,9 @@ class CheckIn extends React.Component {
     const {
       staffSlipContext: {
         request: {
-          requestID
-        }
-      }
+          requestID,
+        },
+      },
     } = loan;
 
     this.props.mutator.query.update({
@@ -228,46 +237,41 @@ class CheckIn extends React.Component {
   }
 
   showItemDetails(loan) {
-    const { item: { instanceId, holdingsRecordId, id } } = loan;
+    const {
+      item: {
+        instanceId,
+        holdingsRecordId,
+        id,
+      },
+    } = loan;
     const path = `/inventory/view/${instanceId}/${holdingsRecordId}/${id}`;
+
     this.props.mutator.query.update({ _path: path });
   }
 
   async newFeeFine(loan) {
-    const { resources, mutator } = this.props;
-
+    const {
+      resources,
+      mutator,
+    } = this.props;
     const query = `id=${loan.userId}`;
     const patronGroups = get(resources, ['patronGroups', 'records'], []);
     const users = await mutator.users.GET({ params: { query } });
     const patron = get(users, [0, 'patronGroup'], '');
     const pg = (patronGroups.find(p => p.id === patron) || {}).group;
     const path = `/users/view/${loan.userId}?filters=pg.${pg}&layer=charge&loan=${loan.id}`;
+
     this.props.mutator.query.update({ _path: path });
   }
 
   getTemplate(type) {
-    const { resources } = this.props;
+    const {
+      resources,
+    } = this.props;
     const staffSlips = (resources.staffSlips || {}).records || [];
     const staffSlip = staffSlips.find(slip => slip.name.toLowerCase() === type);
+
     return get(staffSlip, ['template'], '');
-  }
-
-  showInfo(loan) {
-    const content =
-    (
-      <div>
-        <KeyValue label={<FormattedMessage id="ui-checkin.processedAs" />}>
-          <FormattedTime value={loan.returnDate} day="numeric" month="numeric" year="numeric" />
-        </KeyValue>
-        <KeyValue label={<FormattedMessage id="ui-checkin.actual" />}>
-          <FormattedTime value={new Date()} day="numeric" month="numeric" year="numeric" />
-        </KeyValue>
-      </div>
-    );
-
-    return (
-      <InfoPopover content={content} />
-    );
   }
 
   renderActions(loan) {
@@ -417,7 +421,9 @@ class CheckIn extends React.Component {
 
     const {
       handleSubmit,
-      intl: { formatDate, formatMessage, formatTime },
+      intl: {
+        formatMessage,
+      },
       form,
       scannedItems,
       pristine,
@@ -429,83 +435,13 @@ class CheckIn extends React.Component {
       hasSubmitErrors = false,
       submitErrors = {},
     } = form.getState();
-    const { showPickers } = this.state;
-    const itemListFormatter = {
-      'timeReturned': loan => (
-        <div>
-          { loan.returnDate ?
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <div data-test-check-in-return-time>
-                {loan.returnDate && formatTime(`${get(loan, ['returnDate'])}`)}
-              </div>
-              <div key={loan.id}>
-                {this.showInfo(loan)}
-              </div>
-            </div> :
-            null
-          }
-          { loan.userId && loan.itemId &&
-            <IfPermission perm="accounts.collection.get">
-              <FeesFinesOwnedStatus
-                key={loan.id}
-                userId={loan.userId}
-                itemId={loan.itemId}
-                mutator={this.props.mutator}
-                loanId={loan.id}
-              />
-            </IfPermission>
-          }
-        </div>
-      ),
-      'title': (loan) => {
-        const title = `${get(loan, ['item', 'title'])}`;
-        const materialType = `${get(loan, ['item', 'materialType', 'name'])}`;
-        return `${title} (${materialType})`;
-      },
-      'barcode': loan => `${get(loan, ['item', 'barcode'])}`,
-      'location': loan => `${get(loan, ['item', 'location', 'name'])}`,
-      'inHouseUse': loan => {
-        return get(loan, 'inHouseUse')
-          ? <Icon icon="house" iconClassName={styles['house-icon']} />
-          : '';
-      },
-      'status': loan => {
-        const status = `${get(loan, ['item', 'status', 'name'])}`;
-        const inTransitSp = get(loan, ['item', 'inTransitDestinationServicePoint', 'name']);
-        return (inTransitSp) ? `${status} - ${inTransitSp}` : status;
-      },
-      'effectiveCallNumber': loan => effectiveCallNumber(loan),
-      ' ': loan => this.renderActions(loan),
-    };
+    const {
+      showPickers,
+    } = this.state;
 
-    const columnMapping = {
-      'timeReturned': formatMessage({ id: 'ui-checkin.timeReturned' }),
-      'title': formatMessage({ id: 'ui-checkin.title' }),
-      'barcode': formatMessage({ id: 'ui-checkin.barcode' }),
-      'effectiveCallNumber': formatMessage({ id: 'ui-checkin.effectiveCallNumber' }),
-      'location': formatMessage({ id: 'ui-checkin.location' }),
-      'inHouseUse': formatMessage({ id: 'ui-checkin.inHouseUse' }),
-      'status': formatMessage({ id: 'ui-checkin.status' }),
-      ' ': formatMessage({ id: 'ui-checkin.actions' }),
-    };
     const scanBarcodeMsg = formatMessage({ id: 'ui-checkin.scanBarcode' });
     const itemIdLabel = formatMessage({ id: 'ui-checkin.itemId' });
-    const dateReturnedLabel = formatMessage({ id: 'ui-checkin.dateReturnedLabel' });
-    const checkinDateLabel = formatMessage({ id: 'ui-checkin.checkinDate' });
-    const checkinTimeLabel = formatMessage({ id: 'ui-checkin.checkinTime' });
-    const timeReturnedLabel = formatMessage({ id: 'ui-checkin.timeReturnedLabel' });
     const scannedItemsLabel = formatMessage({ id: 'ui-checkin.scannedItems' });
-    const emptyMessage = !loading ? <FormattedMessage id="ui-checkin.noItems" /> : null;
-    const columnWidths = {
-      'timeReturned': { max: 120 },
-      ' ': { max: 80 },
-      'title': { max: 300 },
-      'barcode': { max: 200 },
-      'effectiveCallNumber': { max: 200 },
-      'location': { max: 200 },
-      'inHouseUse': { max: 80 },
-      'status': { max: 120 }
-    };
 
     return (
       <form onSubmit={handleSubmit}>
@@ -550,84 +486,17 @@ class CheckIn extends React.Component {
                     </Button>
                   </Layout>
                 </Col>
-                <Col xs={12} smOffset={3} sm={2}>
-                  {showPickers ? (
-                    <div data-test-process-date>
-                      <Field
-                        name="item.checkinDate"
-                        aria-label={checkinDateLabel}
-                        label={dateReturnedLabel}
-                        component={Datepicker}
-                        autoComplete="off"
-                        timeZone="UTC"
-                        backendDateStandard="YYYY-MM-DD"
-                        format={(value) => (value ? formatDate(value, { timeZone: 'UTC' }) : '')}
-                      />
-                    </div>
-                  ) : (
-                    <div>
-                      <Label>{dateReturnedLabel}</Label>
-                      <button
-                        data-test-checkin-modify-date
-                        onClick={this.showPickers}
-                        className={styles['modify-datetime-button']}
-                        type="button"
-                      >
-                        <Icon icon="edit" iconPosition="end">
-                          <FormattedMessage id="ui-checkin.today" />
-                        </Icon>
-                      </button>
-                    </div>
-                  )}
-                </Col>
-                <Col xs={12} sm={2}>
-                  {showPickers ? (
-                    <div data-test-process-time>
-                      <Field
-                        name="item.checkinTime"
-                        aria-label={checkinTimeLabel}
-                        label={timeReturnedLabel}
-                        component={Timepicker}
-                        autoComplete="off"
-                      />
-                    </div>
-                  ) : (
-                    <div>
-                      <Label>{timeReturnedLabel}</Label>
-                      <button
-                        data-test-checkin-modify-time
-                        onClick={this.showPickers}
-                        className={styles['modify-datetime-button']}
-                        type="button"
-                      >
-                        <Icon icon="edit" iconPosition="end">
-                          <FormattedMessage id="ui-checkin.now" />
-                        </Icon>
-                      </button>
-                    </div>
-                  )}
-                </Col>
-              </Row>
-              {loading &&
-                <Icon
-                  icon="spinner-ellipsis"
-                  width="10px"
-                />}
-              <div data-test-checked-in-items>
-                <MultiColumnList
-                  id="list-items-checked-in"
-                  fullWidth
-                  visibleColumns={['timeReturned', 'title', 'barcode', 'effectiveCallNumber', 'location', 'inHouseUse', 'status', ' ']}
-                  columnMapping={columnMapping}
-                  columnWidths={columnWidths}
-                  columnOverflow={{ ' ': true }}
-                  rowMetadata={['id']}
-                  interactive={false}
-                  contentData={scannedItems}
-                  formatter={itemListFormatter}
-                  isEmptyMessage={emptyMessage}
+                <CheckinDateTime
+                  showPickers={showPickers}
+                  onClick={this.showPickers}
                 />
-              </div>
+              </Row>
+              <CheckedInListItems
+                loading={loading}
+                scannedItems={scannedItems}
+                mutator={this.props.mutator}
+                renderActions={this.renderActions}
+              />
             </Pane>
           </Paneset>
           <CheckInFooter handleSessionEnd={this.handleSessionEnd} />
