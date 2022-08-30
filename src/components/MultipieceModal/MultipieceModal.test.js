@@ -58,7 +58,7 @@ describe('MultipieceModal', () => {
     item: testItem,
     open: testOpen,
   };
-  const missingValueMark = '-';
+  const missingValueMark = '';
 
   afterEach(() => {
     jest.clearAllMocks();
