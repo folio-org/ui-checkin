@@ -63,14 +63,14 @@ const MultipieceModal = (props) => {
           <KeyValue
             data-testid="numberOfPieces"
             label={formatMessage({ id: 'ui-checkin.multipieceModal.item.numberOfPieces' })}
-            value={get(item, 'numberOfPieces', '-')}
+            value={get(item, 'numberOfPieces', '')}
           />
         </Col>
         <Col xs={6}>
           <KeyValue
             data-testid="descriptionOfPieces"
             label={formatMessage({ id: 'ui-checkin.multipieceModal.item.descriptionOfPieces' })}
-            value={get(item, 'descriptionOfPieces', '-')}
+            value={get(item, 'descriptionOfPieces', '')}
           />
         </Col>
         {
@@ -80,14 +80,14 @@ const MultipieceModal = (props) => {
               <KeyValue
                 data-testid="numberOfMissingPieces"
                 label={formatMessage({ id: 'ui-checkin.multipieceModal.item.numberOfMissingPieces' })}
-                value={get(item, 'numberOfMissingPieces') || '-'}
+                value={get(item, 'numberOfMissingPieces', '')}
               />
             </Col>
             <Col xs={6}>
               <KeyValue
                 data-testid="descriptionOfmissingPieces"
                 label={formatMessage({ id: 'ui-checkin.multipieceModal.item.descriptionOfmissingPieces' })}
-                value={get(item, 'missingPieces') || '-'}
+                value={get(item, 'missingPieces', '')}
               />
             </Col>
           </>
