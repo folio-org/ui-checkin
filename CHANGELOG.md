@@ -5,6 +5,7 @@
 * Add Jest/RTL testing for `ComponentToPrint` component. Refs UICHKIN-281.
 * Add improvement and Jest/RTL testing for `CheckIn` component. Refs UICHKIN-343.
 * Remove hardcoded empty values. Refs UICHKIN-356.
+* Also support `inventory` `12.0`. Refs UICHKIN-357.
 
 ## [7.1.1] (https://github.com/folio-org/ui-checkin/tree/v7.1.1) (2022-07-27)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v7.1.0...v7.1.1)
