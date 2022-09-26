@@ -2,6 +2,7 @@
 
 ## IN PROGRESS
 
+* Add support for users intervace 16.0.  Refs UICHKIN-345.
 * Add Jest/RTL testing for `ComponentToPrint` component. Refs UICHKIN-281.
 * Add improvement and Jest/RTL testing for `CheckIn` component. Refs UICHKIN-343.
 * Remove hardcoded empty values. Refs UICHKIN-356.
