@@ -1,6 +1,7 @@
 # Change history for ui-checkin
 
-## IN PROGRESS
+## [7.2.0] (https://github.com/folio-org/ui-checkin/tree/v7.2.0) (2022-10-20)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v7.1.1...v7.2.0)
 
 * Add support for users intervace 16.0.  Refs UICHKIN-345.
 * Add Jest/RTL testing for `ComponentToPrint` component. Refs UICHKIN-281.
