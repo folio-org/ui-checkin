@@ -99,7 +99,7 @@
     "statuses.unavailable": "Nicht verfügbar",
     "statuses.unknown": "Unbekannt",
     "dateReturnedLabel": "Datum der Rückgabe",
-    "errorModal.unhandledError": "This is an unhandled exception.",
+    "errorModal.unhandledError": "Dies ist eine nicht behandelte Ausnahme",
     "selectItemModal.heading": "Exemplar auswählen",
     "selectItemModal.resultCount": "{count} Datensätze gefunden",
     "selectItemModal.barcode": "Barcode",
@@ -109,5 +109,5 @@
     "selectItemModal.loanType": "Ausleihtyp",
     "selectItemModal.title": "Titel",
     "selectItemModal.callNumber": "Signatur",
-    "selectItemModal.itemListHeader": "List of items: choose one"
+    "selectItemModal.itemListHeader": "Exemplarliste: Exemplar auswählen"
 }
