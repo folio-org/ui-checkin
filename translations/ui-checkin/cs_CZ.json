@@ -29,7 +29,7 @@
     "statusModal.transit.heading": "Na cestě",
     "statusModal.transit.message": "Trasa <strong>{title} ({materialType})</strong> (Čárový kód: {barcode}) do <strong>{servicePoint}</strong>.",
     "statusModal.hold.heading": "Čekání na vyzvednutí žádanky",
-    "statusModal.hold.message": "Umístěte <strong>{title} ({materialType})</strong> (Čárový kód: {barcode}) na polici rezervací <strong>{pickupServicePoint}</strong> na vyžádání.",
+    "statusModal.hold.message": "Umístěte <strong>{title} ({materialType})</strong> (Čárový kód: {barcode}) na regál rezervací <strong>{pickupServicePoint}</strong> na vyžádání.",
     "scannedItems": "Načtené jednotky",
     "statusModal.printSlip": "Tiskový lístek",
     "unknownError": "Došlo k neznámé chybě",
