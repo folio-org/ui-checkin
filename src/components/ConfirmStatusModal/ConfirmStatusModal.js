@@ -1,5 +1,5 @@
 import uniqueId from 'lodash/uniqueId';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -58,9 +58,9 @@ const ConfirmStatusModal = (props) => {
 
   const messageParts = message.map(m => <p key={m}>{m}</p>);
 
-  const changePrintable = () => {
+  const changePrintable = useCallback(() => {
     setIsPrintable(!isPrintable);
-  };
+  }, [isPrintable]);
 
   return (
     <Modal
