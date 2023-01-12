@@ -58,6 +58,10 @@ const ConfirmStatusModal = (props) => {
 
   const messageParts = message.map(m => <p key={m}>{m}</p>);
 
+  const changePrintable = () => {
+    setIsPrintable(!isPrintable);
+  };
+
   return (
     <Modal
       data-test-confirm-status-modal
@@ -77,7 +81,7 @@ const ConfirmStatusModal = (props) => {
             name="printSlip"
             data-test-print-slip-checkbox
             label={<FormattedMessage id="ui-checkin.statusModal.printSlip" />}
-            onChange={() => setIsPrintable(!isPrintable)}
+            onChange={changePrintable}
             checked={isPrintable}
             value={isPrintable + ''}
           />
