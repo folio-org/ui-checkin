@@ -189,6 +189,19 @@ describe('convertToSlipData', () => {
 
     expect(o['requester.barcodeImage']).toEqual('');
   });
+
+  it('should handle preferred first name when preferred first name is null', () => {
+    const sourceWithoutRequesterPrefferedFirstname = {
+      ...source,
+      requester: {
+        ...source.requester,
+        preferredFirstName: null,
+      },
+    };
+    const o = convertToSlipData(sourceWithoutRequesterPrefferedFirstname, intl, tz, locale, 'Chicken');
+
+    expect(o['requester.barcodeImage']).toEqual(`${source.requester.firstName}`);
+  });
 });
 
 describe('buildDateTime', () => {
