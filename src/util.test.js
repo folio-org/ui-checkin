@@ -200,7 +200,7 @@ describe('convertToSlipData', () => {
     };
     const o = convertToSlipData(sourceWithoutRequesterPrefferedFirstname, intl, tz, locale, 'Chicken');
 
-    expect(o['requester.barcodeImage']).toEqual(`${source.requester.firstName}`);
+    expect(o['requester.preferredFirstName']).toEqual('firstName');
   });
 });
 
