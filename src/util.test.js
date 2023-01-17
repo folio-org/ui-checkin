@@ -116,11 +116,8 @@ describe('convertToSlipData', () => {
     expect(o['requester.firstName']).toEqual(source.requester.firstName);
     expect(o['requester.lastName']).toEqual(source.requester.lastName);
     expect(o['requester.middleName']).toEqual(source.requester.middleName);
-<<<<<<< HEAD
     expect(o['requester.patronGroup']).toEqual(source.requester.patronGroup);
-=======
     expect(o['requester.preferredFirstName']).toEqual(source.requester.preferredFirstName);
->>>>>>> master
     expect(o['requester.addressLine1']).toEqual(source.requester.addressLine1);
     expect(o['requester.addressLine2']).toEqual(source.requester.addressLine2);
     expect(o['requester.country']).toEqual(`stripes-components.countries.${source.requester.countryId}`);
