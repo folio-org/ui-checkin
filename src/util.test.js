@@ -64,6 +64,7 @@ describe('convertToSlipData', () => {
       'firstName': 'firstName',
       'lastName': 'lastName',
       'middleName': 'middleName',
+      'preferredFirstName': 'preferredFirstName',
       'patronGroup': 'patronGroup',
       'addressLine1': 'addressLine1',
       'addressLine2': 'addressLine2',
@@ -115,7 +116,11 @@ describe('convertToSlipData', () => {
     expect(o['requester.firstName']).toEqual(source.requester.firstName);
     expect(o['requester.lastName']).toEqual(source.requester.lastName);
     expect(o['requester.middleName']).toEqual(source.requester.middleName);
+<<<<<<< HEAD
     expect(o['requester.patronGroup']).toEqual(source.requester.patronGroup);
+=======
+    expect(o['requester.preferredFirstName']).toEqual(source.requester.preferredFirstName);
+>>>>>>> master
     expect(o['requester.addressLine1']).toEqual(source.requester.addressLine1);
     expect(o['requester.addressLine2']).toEqual(source.requester.addressLine2);
     expect(o['requester.country']).toEqual(`stripes-components.countries.${source.requester.countryId}`);
@@ -188,6 +193,19 @@ describe('convertToSlipData', () => {
     const o = convertToSlipData(sourceWithoutRequesterBarcode, intl, tz, locale, 'Chicken');
 
     expect(o['requester.barcodeImage']).toEqual('');
+  });
+
+  it('should handle preferred first name when preferred first name is null', () => {
+    const sourceWithoutRequesterPrefferedFirstname = {
+      ...source,
+      requester: {
+        ...source.requester,
+        preferredFirstName: null,
+      },
+    };
+    const o = convertToSlipData(sourceWithoutRequesterPrefferedFirstname, intl, tz, locale, 'Chicken');
+
+    expect(o['requester.preferredFirstName']).toEqual('firstName');
   });
 });
 
