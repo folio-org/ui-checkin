@@ -29,6 +29,7 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
     request = {},
     requester = {},
   } = source;
+
   const DEFAULT_DATE_OPTIONS = {
     timeZone,
     locale,
@@ -44,6 +45,7 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
     'requester.firstName': requester.firstName,
     'requester.lastName': requester.lastName,
     'requester.middleName': requester.middleName,
+    'requester.preferredFirstName': requester.preferredFirstName ? requester.preferredFirstName : requester.firstName,
     'requester.addressLine1': requester.addressLine1,
     'requester.addressLine2': requester.addressLine2,
     'requester.country': requester.countryId
