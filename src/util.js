@@ -46,6 +46,7 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
     'requester.lastName': requester.lastName,
     'requester.middleName': requester.middleName,
     'requester.preferredFirstName': requester.preferredFirstName ? requester.preferredFirstName : requester.firstName,
+    'requester.patronGroup': requester.patronGroup,
     'requester.addressLine1': requester.addressLine1,
     'requester.addressLine2': requester.addressLine2,
     'requester.country': requester.countryId
