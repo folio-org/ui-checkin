@@ -2,6 +2,7 @@
 
 ## IN PROGRESS
 * Bump major versions of several @folio/stripes-* packages. Refs UICHKIN-369.
+* Remove unneeded `react-redux`. Refs UICHKIN-371.
 
 ## [7.2.0] (https://github.com/folio-org/ui-checkin/tree/v7.2.0) (2022-10-20)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v7.1.1...v7.2.0)
