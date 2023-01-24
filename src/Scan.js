@@ -457,7 +457,7 @@ class Scan extends React.Component {
         const { returnedLostItemProcessingFee } = lostItemFeePolicies.lostItemFeePolicies[0];
         const filterAccounts = accounts.accounts.filter(
           record => record.paymentStatus.name && record.paymentStatus.name.startsWith(cancelFeeClaimReturned.PAYMENT_STATUS)
-            && (record.feeFineType === cancelFeeClaimReturned.LOST_ITEM_FEE ||
+            && (record.feeFineType === cancelFeeClaimReturned.LOST_ITEM_FEE || record.feeFineType === cancelFeeClaimReturned.LOST_ITEM_FEE_ACTUAL_COST ||
               (record.feeFineType === cancelFeeClaimReturned.LOST_ITEM_PROCESSING_FEE && returnedLostItemProcessingFee))
         );
 

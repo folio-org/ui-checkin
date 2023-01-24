@@ -50,6 +50,7 @@ export const cancelFeeClaimReturned = {
   CANCEL_PAYMENT_STATUS: 'Cancelled item returned',
   PAYMENT_STATUS: 'Suspended claim returned',
   LOST_ITEM_FEE: 'Lost item fee',
+  LOST_ITEM_FEE_ACTUAL_COST: 'Lost item fee (actual cost)',
   LOST_ITEM_PROCESSING_FEE: 'Lost item processing fee',
   TYPE_ACTION: 'Cancelled item returned',
 };
