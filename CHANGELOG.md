@@ -1,6 +1,8 @@
 # Change history for ui-checkin
 
 ## IN PROGRESS
+* Bump major versions of several @folio/stripes-* packages. Refs UICHKIN-369.
+* Remove unneeded `react-redux`. Refs UICHKIN-371.
 * Support `inventory` `13.0` interface version. Refs UICHKIN-366.
 
 ## [7.2.0] (https://github.com/folio-org/ui-checkin/tree/v7.2.0) (2022-10-20)
@@ -11,6 +13,8 @@
 * Add improvement and Jest/RTL testing for `CheckIn` component. Refs UICHKIN-343.
 * Remove hardcoded empty values. Refs UICHKIN-356.
 * Also support `inventory` `12.0`. Refs UICHKIN-357.
+* Populate the token "requester.preferredFirstName" in the hold, request delivery and transit slips, with the data provided by the backend in the ui-checkin module. Refs UICHKIN-349.
+* Populate the token "requester.patronGroup" in the hold, request delivery and transit slips, with the data provided by the backend in the ui-checkin module. Refs UICHKIN-347.
 
 ## [7.1.1] (https://github.com/folio-org/ui-checkin/tree/v7.1.1) (2022-07-27)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v7.1.0...v7.1.1)
