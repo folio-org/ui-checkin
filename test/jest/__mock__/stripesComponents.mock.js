@@ -60,10 +60,11 @@ jest.mock('@folio/stripes/components', () => ({
       {value}
     </div>
   )),
-  Modal: jest.fn(({ children, label, footer, id }) => (
+  Modal: jest.fn(({ children, label, footer, id, ...rest }) => (
     <div
       id={id}
       data-testid="modal-window"
+      {...rest}
     >
       <p>{label}</p>
       {children}
@@ -86,4 +87,6 @@ jest.mock('@folio/stripes/components', () => ({
   )),
   Row: jest.fn(({ children, ...rest }) => <div {...rest}>{children}</div>),
   KeyValue: jest.fn(({ 'data-testid': testId }) => <div data-testid={testId} />),
+  Pane: jest.fn((props) => (<div {...props} />)),
+  Paneset: jest.fn((props) => (<div {...props} />)),
 }));
