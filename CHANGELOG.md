@@ -6,6 +6,7 @@
 * Support `inventory` `13.0` interface version. Refs UICHKIN-366.
 * Cover `SelectItemModal` by jest/RTL tests. UICHKIN-360.
 * The fee/fine account (Actual Cost) is fully closed when Claimed Returned item is checked in. Refs UICHKIN-372.
+* UI tests replacement with RTL/Jest for `index.js`. Refs UICHKIN-362.
 
 ## [7.2.0] (https://github.com/folio-org/ui-checkin/tree/v7.2.0) (2022-10-20)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v7.1.1...v7.2.0)

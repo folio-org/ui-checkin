@@ -33,13 +33,14 @@ class CheckInRouting extends React.Component {
 
   render() {
     const { match: { path } } = this.props;
+
     return (
       <Switch>
         <Route
           path={`${path}`}
           render={() => <this.connectedApp {...this.props} />}
         />
-        <Route component={() => { this.NoMatch(); }} />
+        <Route component={() => this.NoMatch()} />
       </Switch>
     );
   }

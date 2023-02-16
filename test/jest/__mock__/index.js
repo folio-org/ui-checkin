@@ -5,3 +5,4 @@ import './intl.mock';
 import './finalFormComponents.mock';
 import './finalFormArrayComponents.mock';
 import './stripesComponents.mock';
+import './stripesFinalForm.mock';
