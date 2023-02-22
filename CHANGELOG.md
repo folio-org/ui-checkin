@@ -1,6 +1,10 @@
 # Change history for ui-checkin
 
 ## IN PROGRESS
+
+## [8.0.0] (https://github.com/folio-org/ui-checkin/tree/v8.0.0) (2023-02-22)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v7.2.0...v8.0.0)
+
 * Bump major versions of several @folio/stripes-* packages. Refs UICHKIN-369.
 * Remove unneeded `react-redux`. Refs UICHKIN-371.
 * Support `inventory` `13.0` interface version. Refs UICHKIN-366.
