@@ -158,7 +158,7 @@ describe('CheckinNoteModal', () => {
       id: undefined,
     });
 
-    expect(container.getByTestId('modal-window')
+    expect(container.getByTestId('modalWindow')
       .getAttribute('id'))
       .toContain('confirmation-');
   });

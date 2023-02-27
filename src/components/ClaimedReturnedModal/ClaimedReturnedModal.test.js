@@ -29,7 +29,7 @@ describe('ClaimedReturnedModal', () => {
     cancelButton: 'cancelButton',
     foundButton: 'foundButton',
     returnedButton: 'returnedButton',
-    modalWindow: 'modal-window',
+    modalWindow: 'modalWindow',
   };
   const item = {
     title: 'testTitle',
