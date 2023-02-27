@@ -63,7 +63,7 @@ jest.mock('@folio/stripes/components', () => ({
   Modal: jest.fn(({ children, label, footer, id, ...rest }) => (
     <div
       id={id}
-      data-testid="modal-window"
+      data-testid="modalWindow"
       {...rest}
     >
       <p>{label}</p>

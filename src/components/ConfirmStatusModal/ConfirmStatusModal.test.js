@@ -17,7 +17,7 @@ import ConfirmStatusModal from './ConfirmStatusModal';
 import PrintButton from '../PrintButton';
 
 jest.mock('../PrintButton', () => jest.fn(({ children, ...rest }) => (
-  <button type="button" data-testid="print-button" {...rest}>
+  <button type="button" data-testid="printButton" {...rest}>
     {children}
   </button>
 )));
@@ -133,7 +133,7 @@ describe('ConfirmStatusModal', () => {
     });
 
     it('After clicking on checkbox "PrintButton" should disappear', () => {
-      const printButton = screen.getByTestId('print-button');
+      const printButton = screen.getByTestId('printButton');
 
       fireEvent.click(screen.getByText(messageIds.printSlip));
 
