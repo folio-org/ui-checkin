@@ -155,7 +155,7 @@ describe('CheckedInListItems', () => {
       const inHouseUse = getItemListFormatter(mutator, renderActions)[COLUMNS_NAME.IN_HOUSE_USE](basicLoan);
       const expectedProps = {
         icon: 'house',
-        iconClassName: "houseIcon",
+        iconClassName: 'houseIcon',
       };
 
       render(inHouseUse);

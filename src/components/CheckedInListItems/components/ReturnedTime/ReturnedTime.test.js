@@ -6,7 +6,7 @@ import {
 
 import '../../../../../test/jest/__mock__';
 
-import ReturnedTime from "./ReturnedTime";
+import ReturnedTime from './ReturnedTime';
 import FeesFinesOwnedStatus from '../FeesFinesOwnedStatus';
 
 const testIds = {

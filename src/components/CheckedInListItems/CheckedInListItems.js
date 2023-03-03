@@ -69,18 +69,17 @@ export const getItemListFormatter = (mutator, renderActions) => ({
   [COLUMNS_NAME.BARCODE]: (loan) => `${get(loan, ['item', 'barcode'])}`,
   [COLUMNS_NAME.LOCATION]: (loan) => `${get(loan, ['item', 'location', 'name'])}`,
   [COLUMNS_NAME.IN_HOUSE_USE]: loan => {
-    return get(loan, 'inHouseUse')
-      ? <Icon
+    return get(loan, 'inHouseUse') ?
+      <Icon
         icon="house"
         iconClassName={css.houseIcon}
-      />
-      : '';
+      /> :
+      '';
   },
   [COLUMNS_NAME.STATUS]: (loan) => {
     const status = `${get(loan, ['item', 'status', 'name'])}`;
     const inTransitSp = get(loan, ['item', 'inTransitDestinationServicePoint', 'name']);
 
-    console.log(loan);
     return (inTransitSp) ? `${status} - ${inTransitSp}` : status;
   },
   [COLUMNS_NAME.EFFECTIVE_CALL_NUMBER]: (loan) => effectiveCallNumber(loan),
