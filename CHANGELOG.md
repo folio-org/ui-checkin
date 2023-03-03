@@ -3,6 +3,7 @@
 ## IN PROGRESS
 
 * Use camel case notation for all data-testid. Refs UICHKIN-375.
+* UI tests replacement with RTL/Jest for CheckedInListItems. Refs UICHKIN-361.
 
 ## [8.0.0] (https://github.com/folio-org/ui-checkin/tree/v8.0.0) (2023-02-22)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v7.2.0...v8.0.0)

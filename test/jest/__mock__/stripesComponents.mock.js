@@ -43,6 +43,7 @@ jest.mock('@folio/stripes/components', () => ({
     </div>
   )),
   Datepicker: jest.fn((props) => <div {...props} />),
+  InfoPopover: jest.fn(({ content }) => <div>{content}</div>),
   Label: jest.fn(({
     htmlFor,
     id,
@@ -86,7 +87,14 @@ jest.mock('@folio/stripes/components', () => ({
     <button type="button" {...props} />
   )),
   Row: jest.fn(({ children, ...rest }) => <div {...rest}>{children}</div>),
-  KeyValue: jest.fn(({ 'data-testid': testId }) => <div data-testid={testId} />),
+  KeyValue: jest.fn(({
+    'data-testid': testId,
+    label,
+  }) => (
+    <div data-testid={testId}>
+      <div>{label}</div>
+    </div>
+  )),
   Pane: jest.fn((props) => (<div {...props} />)),
   Paneset: jest.fn((props) => (<div {...props} />)),
 }));
