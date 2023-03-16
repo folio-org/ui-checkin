@@ -16,12 +16,6 @@ import {
 
 import css from './CheckinDateTime.css';
 
-export const datePickerValue = (value, formatDate) => (
-  value
-    ? formatDate(value, { timeZone: 'UTC' })
-    : ''
-);
-
 class CheckinDateTime extends React.Component {
   static propTypes = {
     intl: PropTypes.shape({
@@ -35,7 +29,6 @@ class CheckinDateTime extends React.Component {
   render() {
     const {
       intl: {
-        formatDate,
         formatMessage,
       },
       showPickers,
@@ -59,7 +52,6 @@ class CheckinDateTime extends React.Component {
                 autoComplete="off"
                 timeZone="UTC"
                 backendDateStandard="YYYY-MM-DD"
-                format={(value) => datePickerValue(value, formatDate)}
               />
             </div>
           ) : (
@@ -91,6 +83,7 @@ class CheckinDateTime extends React.Component {
                 label={timeReturnedLabel}
                 component={Timepicker}
                 autoComplete="off"
+                timeZone="UTC"
               />
             </div>
           ) : (
