@@ -7,9 +7,7 @@ import {
 
 import '../../../test/jest/__mock__';
 
-import CheckinDateTime, {
-  datePickerValue,
-} from './CheckinDateTime';
+import CheckinDateTime from './CheckinDateTime';
 
 const labelIds = {
   dateReturnedLabel: 'ui-checkin.dateReturnedLabel',
@@ -24,7 +22,6 @@ const testIds = {
 
 const showPickers = true;
 const onClick = jest.fn();
-const formatDate = jest.fn();
 const initialProps = {
   showPickers,
   onClick,
@@ -93,20 +90,6 @@ describe('CheckinDateTime', () => {
 
         expect(onClick).toBeCalled();
       });
-    });
-  });
-
-  describe('datePickerValue', () => {
-    it('should return empty string', () => {
-      expect(datePickerValue()).toEqual('');
-    });
-
-    it('should call formatDate with correct props', () => {
-      const value = '7/7/2077';
-
-      datePickerValue(value, formatDate);
-
-      expect(formatDate).toHaveBeenCalledWith(value, { timeZone: 'UTC' });
     });
   });
 });
