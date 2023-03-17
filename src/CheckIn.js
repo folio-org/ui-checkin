@@ -185,13 +185,16 @@ class CheckIn extends React.Component {
         change,
       },
       intl: {
+        formatTime,
         timeZone,
       },
     } = this.props;
     const now = moment().tz(timeZone);
+    const formattedDate = now.format('YYYY-MM-DD');
+    const formattedTime = formatTime(now);
 
-    change('item.checkinDate', now.format());
-    change('item.checkinTime', now.format().substring(11));
+    change('item.checkinDate', formattedDate);
+    change('item.checkinTime', formattedTime);
 
     this.setState({ showPickers: true });
   }
