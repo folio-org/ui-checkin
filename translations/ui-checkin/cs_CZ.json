@@ -1,7 +1,7 @@
 {
     "scanBarcode": "Naskenovat nebo zadat čárový kód pro návrat jednotky",
     "itemId": "ID jednotky",
-    "enter": "Vstoupit",
+    "enter": "Potvrdit",
     "processedAs": "Zpracováno jako",
     "actual": "Aktuální",
     "checkinDate": "Datum návratu",
@@ -29,7 +29,7 @@
     "statusModal.transit.heading": "Na cestě",
     "statusModal.transit.message": "Trasa <strong>{title} ({materialType})</strong> (Čárový kód: {barcode}) do <strong>{servicePoint}</strong>.",
     "statusModal.hold.heading": "Čekání na vyzvednutí žádanky",
-    "statusModal.hold.message": "Umístěte <strong>{title} ({materialType})</strong> (Čárový kód: {barcode}) na regál rezervací <strong>{pickupServicePoint}</strong> na vyžádání.",
+    "statusModal.hold.message": "Umístit rezervaci z regálu <strong>{title} ({materialType})</strong> (Čárový kód: {barcode}) na vyžádání na <strong>{pickupServicePoint}</strong>.",
     "scannedItems": "Načtené jednotky",
     "statusModal.printSlip": "Tiskový lístek",
     "unknownError": "Došlo k neznámé chybě",
