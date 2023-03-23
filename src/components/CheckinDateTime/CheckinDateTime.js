@@ -16,6 +16,8 @@ import {
 
 import css from './CheckinDateTime.css';
 
+export const parser = (value) => (value);
+
 class CheckinDateTime extends React.Component {
   static propTypes = {
     intl: PropTypes.shape({
@@ -84,6 +86,7 @@ class CheckinDateTime extends React.Component {
                 component={Timepicker}
                 autoComplete="off"
                 timeZone="UTC"
+                parser={parser}
               />
             </div>
           ) : (
