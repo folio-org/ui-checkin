@@ -7,7 +7,9 @@ import {
 
 import '../../../test/jest/__mock__';
 
-import CheckinDateTime from './CheckinDateTime';
+import CheckinDateTime, {
+  parser,
+} from './CheckinDateTime';
 
 const labelIds = {
   dateReturnedLabel: 'ui-checkin.dateReturnedLabel',
@@ -28,6 +30,14 @@ const initialProps = {
 };
 
 describe('CheckinDateTime', () => {
+  describe('parser', () => {
+    it('should return value without changes', () => {
+      const value = '11:11';
+
+      expect(parser(value)).toEqual(value);
+    });
+  });
+
   describe('with show pickers true', () => {
     beforeEach(() => {
       render(
