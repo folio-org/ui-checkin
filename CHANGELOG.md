@@ -1,6 +1,7 @@
 # Change history for ui-checkin
 
-## IN PROGRESS
+## [8.0.1] (https://github.com/folio-org/ui-checkin/tree/v8.0.1) (2023-03-28)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v8.0.0...v8.0.1)
 
 * Fix incorrect checkin time. Refs UICHKIN-377.
 

@@ -1,6 +1,6 @@
 {
   "name": "@folio/checkin",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "description": "Item Check-in",
   "repository": "folio-org/ui-checkin",
   "publishConfig": {
