@@ -57,6 +57,7 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
     'requester.zipPostalCode': requester.postalCode,
     'requester.barcode': requester.barcode,
     'requester.barcodeImage': requester.barcode ? `<Barcode>${requester.barcode}</Barcode>` : '',
+    'requester.departments': requester.departments,
     'item.title': item.title,
     'item.primaryContributor': item.primaryContributor,
     'item.allContributors': item.allContributors,
