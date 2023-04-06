@@ -73,7 +73,7 @@ describe('convertToSlipData', () => {
       'stateProvRegion': 'region',
       'zipPostalCode': 'postalCode',
       'barcode': 'requester-barcode',
-      'departments': 'departments',
+      'departments': ['departments'],
     },
     item: {
       'title': 'title',
