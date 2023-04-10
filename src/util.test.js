@@ -208,7 +208,7 @@ describe('convertToSlipData', () => {
   });
 });
 
-describe.only('buildDateTime', () => {
+describe('buildDateTime', () => {
   it('without separate date/time input, returns the "now" value', () => {
     const ts = '2021-02-14T18:14:16.000Z';
     const v = buildDateTime('', '', 'UTC', ts);
