@@ -107,12 +107,16 @@ describe('convertToSlipData', () => {
       'requestID': 'requestID',
       'patronComments': 'patronComments',
     },
+    staffSlip: {
+      currentDateTime: '3/18/22, 11:59 AM',
+    }
   };
 
   it('substitutes values', () => {
     const o = convertToSlipData(source, intl, tz, locale, 'Chicken');
 
     expect(o['staffSlip.Name']).toEqual('Chicken');
+    expect(o['staffSlip.currentDateTime']).toEqual('3/18/22, 11:59 AM');
     expect(o['requester.firstName']).toEqual(source.requester.firstName);
     expect(o['requester.lastName']).toEqual(source.requester.lastName);
     expect(o['requester.middleName']).toEqual(source.requester.middleName);
