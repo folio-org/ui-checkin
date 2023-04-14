@@ -73,7 +73,7 @@ describe('convertToSlipData', () => {
       'stateProvRegion': 'region',
       'zipPostalCode': 'postalCode',
       'barcode': 'requester-barcode',
-      'departments': ['departments'],
+      'departments': 'departments',
     },
     item: {
       'title': 'title',
@@ -127,7 +127,7 @@ describe('convertToSlipData', () => {
     expect(o['requester.zipPostalCode']).toEqual(source.requester.postalCode);
     expect(o['requester.barcode']).toEqual(source.requester.barcode);
     expect(o['requester.barcodeImage']).toEqual(`<Barcode>${source.requester.barcode}</Barcode>`);
-    expect(o['requester.departments']).toEqual(source.requester.departments.join('; '));
+    expect(o['requester.departments']).toEqual(source.requester.departments);
 
     expect(o['item.title']).toEqual(source.item.title);
     expect(o['item.primaryContributor']).toEqual(source.item.primaryContributor);
