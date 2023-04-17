@@ -108,6 +108,6 @@
     "selectItemModal.materialType": "Tipo de material",
     "selectItemModal.loanType": "Tipo de préstamo",
     "selectItemModal.title": "Título",
-    "selectItemModal.callNumber": "Call number",
+    "selectItemModal.callNumber": "Número de llamada",
     "selectItemModal.itemListHeader": "Lista de ejemplares: selecciona uno"
 }
