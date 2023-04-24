@@ -80,11 +80,15 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
       : item.lastCheckedInDateTime,
     'item.fromServicePoint': item.fromServicePoint,
     'item.toServicePoint': item.toServicePoint,
+    'item.effectiveLocationPrimaryServicePointName': item.effectiveLocationPrimaryServicePointName,
     'item.effectiveLocationInstitution': item.effectiveLocationInstitution,
     'item.effectiveLocationCampus': item.effectiveLocationCampus,
     'item.effectiveLocationLibrary': item.effectiveLocationLibrary,
     'item.effectiveLocationSpecific': item.effectiveLocationSpecific,
     'request.servicePointPickup': request.servicePointPickup,
+    'request.requestDate': request.requestDate
+        ? intl.formatDate(request.requestDate, DEFAULT_DATE_OPTIONS)
+        : request.requestDate,
     'request.deliveryAddressType': request.deliveryAddressType,
     'request.requestExpirationDate': request.requestExpirationDate
       ? intl.formatDate(request.requestExpirationDate, DEFAULT_DATE_OPTIONS)
