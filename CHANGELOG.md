@@ -5,6 +5,7 @@
 * Use camel case notation for all data-testid. Refs UICHKIN-375.
 * UI tests replacement with RTL/Jest for CheckedInListItems. Refs UICHKIN-361.
 * Support `feesfines` interface version `17.0` and `18.0`. Refs UICHKIN-379.
+* Populate the token "requester.departments" in the hold, request delivery and transit slips, with the data provided by the backend in the ui-checkin module. Refs UICHKIN-350.
 * Populate the token "currentDateTime" in the hold, request delivery and transit slips, with the data provided by the backend in the ui-checkin module. Refs UICHKIN-348.
 
 ## [8.0.1] (https://github.com/folio-org/ui-checkin/tree/v8.0.1) (2023-03-28)
