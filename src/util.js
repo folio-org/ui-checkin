@@ -23,11 +23,19 @@ export function buildTemplate(str) {
   };
 }
 
+export function buildLocaleDateAndTime(dateTime, timezone, locale) {
+  return moment(dateTime)
+    .tz(timezone)
+    .locale(locale)
+    .format('L LT');
+}
+
 export function convertToSlipData(source = {}, intl, timeZone, locale, slipName = 'Hold') {
   const {
     item = {},
     request = {},
     requester = {},
+    currentDateTime = null,
   } = source;
 
   const DEFAULT_DATE_OPTIONS = {
@@ -42,6 +50,7 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
 
   const slipData = {
     'staffSlip.Name': slipName,
+    'staffSlip.currentDateTime': buildLocaleDateAndTime(currentDateTime, timeZone, locale),
     'requester.firstName': requester.firstName,
     'requester.lastName': requester.lastName,
     'requester.middleName': requester.middleName,

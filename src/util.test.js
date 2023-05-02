@@ -7,6 +7,7 @@ import {
 import {
   buildDateTime,
   buildTemplate,
+  buildLocaleDateAndTime,
   convertToSlipData,
   escapeValue,
   getCheckinSettings,
@@ -108,12 +109,14 @@ describe('convertToSlipData', () => {
       'requestID': 'requestID',
       'patronComments': 'patronComments',
     },
+    currentDateTime: '3/18/22, 11:59 AM',
   };
 
   it('substitutes values', () => {
     const o = convertToSlipData(source, intl, tz, locale, 'Chicken');
 
     expect(o['staffSlip.Name']).toEqual('Chicken');
+    expect(o['staffSlip.currentDateTime']).toEqual(buildLocaleDateAndTime(source.currentDateTime, tz, locale));
     expect(o['requester.firstName']).toEqual(source.requester.firstName);
     expect(o['requester.lastName']).toEqual(source.requester.lastName);
     expect(o['requester.middleName']).toEqual(source.requester.middleName);
