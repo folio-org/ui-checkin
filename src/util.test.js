@@ -100,6 +100,7 @@ describe('convertToSlipData', () => {
       'effectiveLocationCampus': 'effectiveLocationCampus',
       'effectiveLocationLibrary': 'effectiveLocationLibrary',
       'item.effectiveLocationSpecific': 'item.effectiveLocationSpecific',
+      'effectiveLocationPrimaryServicePointName': 'effectiveLocationPrimaryServicePointName',
     },
     request: {
       'servicePointPickup': 'servicePointPickup',

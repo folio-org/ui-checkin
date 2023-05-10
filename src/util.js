@@ -93,6 +93,7 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
     'item.effectiveLocationCampus': item.effectiveLocationCampus,
     'item.effectiveLocationLibrary': item.effectiveLocationLibrary,
     'item.effectiveLocationSpecific': item.effectiveLocationSpecific,
+    'item.effectiveLocationPrimaryServicePointName': item.effectiveLocationPrimaryServicePointName,
     'request.servicePointPickup': request.servicePointPickup,
     'request.deliveryAddressType': request.deliveryAddressType,
     'request.requestExpirationDate': request.requestExpirationDate
