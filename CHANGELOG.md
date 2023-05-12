@@ -7,6 +7,7 @@
 * Support `feesfines` interface version `17.0` and `18.0`. Refs UICHKIN-379.
 * Populate the token "requester.departments" in the hold, request delivery and transit slips, with the data provided by the backend in the ui-checkin module. Refs UICHKIN-350.
 * Populate the token "currentDateTime" in the hold, request delivery and transit slips, with the data provided by the backend in the ui-checkin module. Refs UICHKIN-348.
+* Also support `circulation` `14.0`. Refs UICHKIN-381.
 
 ## [8.0.1] (https://github.com/folio-org/ui-checkin/tree/v8.0.1) (2023-03-28)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v8.0.0...v8.0.1)
