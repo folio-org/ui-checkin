@@ -99,7 +99,7 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
     'request.requestExpirationDate': request.requestExpirationDate
       ? intl.formatDate(request.requestExpirationDate, DEFAULT_DATE_OPTIONS)
       : request.requestExpirationDate,
-    'request.requestDate': request.requestDate ? intl.formatDate(request.requestDate, DEFAULT_DATE_OPTIONS): request.requestDate,
+    'request.requestDate' : request.requestDate ? intl.formatDate(request.requestDate, DEFAULT_DATE_OPTIONS) : request.requestDate,
     'request.holdShelfExpirationDate': request.holdShelfExpirationDate
       ? intl.formatDate(request.holdShelfExpirationDate, DEFAULT_DATE_OPTIONS)
       : request.holdShelfExpirationDate,
