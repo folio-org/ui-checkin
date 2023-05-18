@@ -106,6 +106,7 @@ describe('convertToSlipData', () => {
       'servicePointPickup': 'servicePointPickup',
       'deliveryAddressType': 'deliveryAddressType',
       'requestExpirationDate': 'requestExpirationDate',
+      'requestDate': 'requestDate',
       'holdShelfExpirationDate': 'holdShelfExpirationDate',
       'requestID': 'requestID',
       'patronComments': 'patronComments',
