@@ -121,7 +121,8 @@
     "prop-types": "^15.6.0",
     "react-barcode": "^1.3.2",
     "react-final-form": "^6.4.0",
-    "react-to-print": "^2.3.2"
+    "react-to-print": "^2.3.2",
+    "uuid": "^9.0.0"
   },
   "peerDependencies": {
     "@folio/stripes": "^8.0.0",
