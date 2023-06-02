@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment-timezone';
-import { escapeCqlValue } from '@folio/stripes/util';
 import {
   FormattedMessage,
   injectIntl,
@@ -13,7 +12,9 @@ import {
   upperFirst,
   cloneDeep,
 } from 'lodash';
+import { v4 as uuidv4 } from 'uuid';
 
+import { escapeCqlValue } from '@folio/stripes/util';
 import {
   Modal,
   ModalFooter,
@@ -38,6 +39,9 @@ import {
 } from './util';
 
 const REQUEST_DELIVERY_HEADING = 'Request delivery';
+const STATE_VARIABLES = {
+  sessionId: 'sessionId',
+};
 
 class Scan extends React.Component {
   static propTypes = {
@@ -198,6 +202,7 @@ class Scan extends React.Component {
 
     this.state = {
       loading: false,
+      [STATE_VARIABLES.sessionId]: uuidv4(),
       // itemClaimedReturnedResolution is a required checkin field for, unsurprisingly,
       // items with status 'Claimed returned'. It is set in ClaimedReturnedModal via
       // ModalManager.
@@ -243,6 +248,7 @@ class Scan extends React.Component {
 
     this.clearResources();
     this.clearForm();
+    this.updateSessionId();
 
     if (!isEmpty(uniquePatrons)) {
       const endSessions = uniquePatrons.map(patronId => ({
@@ -260,6 +266,12 @@ class Scan extends React.Component {
 
   clearResources() {
     this.props.mutator.scannedItems.replace([]);
+  }
+
+  updateSessionId() {
+    this.setState({
+      [STATE_VARIABLES.sessionId]: uuidv4(),
+    });
   }
 
   validate(item) {
@@ -342,12 +354,16 @@ class Scan extends React.Component {
       intl: { timeZone },
       okapi,
     } = this.props;
-    const { itemClaimedReturnedResolution } = this.state;
+    const {
+      itemClaimedReturnedResolution,
+      [STATE_VARIABLES.sessionId]: sessionId,
+    } = this.state;
 
     const servicePointId = get(okapi, 'currentUser.curServicePoint.id', '');
 
     const checkInDate = buildDateTime(checkinDate, checkinTime, timeZone, moment().tz(timeZone));
     const requestData = {
+      [STATE_VARIABLES.sessionId]: sessionId,
       servicePointId,
       checkInDate,
       itemBarcode: barcode.trim(),
