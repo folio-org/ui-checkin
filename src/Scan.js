@@ -39,9 +39,6 @@ import {
 } from './util';
 
 const REQUEST_DELIVERY_HEADING = 'Request delivery';
-const STATE_VARIABLES = {
-  sessionId: 'sessionId',
-};
 
 class Scan extends React.Component {
   static propTypes = {
@@ -56,6 +53,9 @@ class Scan extends React.Component {
           id: PropTypes.string,
         }),
       ),
+      checkInSession: PropTypes.shape({
+        sessionId: PropTypes.string,
+      }),
       requests: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
@@ -100,6 +100,9 @@ class Scan extends React.Component {
       scannedItems: PropTypes.shape({
         replace: PropTypes.func,
       }),
+      checkInSession: PropTypes.shape({
+        update: PropTypes.func,
+      }),
       staffSlips: PropTypes.shape({
         GET: PropTypes.func,
       }),
@@ -123,6 +126,7 @@ class Scan extends React.Component {
 
   static manifest = Object.freeze({
     scannedItems: { initialValue: [] },
+    checkInSession: { initialValue: {} },
     query: { initialValue: {} },
     accounts: {
       type: 'okapi',
@@ -202,7 +206,6 @@ class Scan extends React.Component {
 
     this.state = {
       loading: false,
-      [STATE_VARIABLES.sessionId]: uuidv4(),
       // itemClaimedReturnedResolution is a required checkin field for, unsurprisingly,
       // items with status 'Claimed returned'. It is set in ClaimedReturnedModal via
       // ModalManager.
@@ -248,7 +251,7 @@ class Scan extends React.Component {
 
     this.clearResources();
     this.clearForm();
-    this.updateSessionId();
+    await this.generateNewSessionId();
 
     if (!isEmpty(uniquePatrons)) {
       const endSessions = uniquePatrons.map(patronId => ({
@@ -268,10 +271,18 @@ class Scan extends React.Component {
     this.props.mutator.scannedItems.replace([]);
   }
 
-  updateSessionId() {
-    this.setState({
-      [STATE_VARIABLES.sessionId]: uuidv4(),
+  async generateNewSessionId() {
+    await this.props.mutator.checkInSession.update({
+      sessionId: uuidv4(),
     });
+  }
+
+  async getSessionId() {
+    if (!this.props.resources.checkInSession?.sessionId) {
+      await this.generateNewSessionId();
+    }
+
+    return this.props.resources.checkInSession.sessionId;
   }
 
   validate(item) {
@@ -338,7 +349,7 @@ class Scan extends React.Component {
     this.setFocusInput();
   };
 
-  checkIn = () => {
+  checkIn = async () => {
     if (this.state.loading) return undefined;
 
     const data = this.checkInData;
@@ -356,14 +367,16 @@ class Scan extends React.Component {
     } = this.props;
     const {
       itemClaimedReturnedResolution,
-      [STATE_VARIABLES.sessionId]: sessionId,
     } = this.state;
 
     const servicePointId = get(okapi, 'currentUser.curServicePoint.id', '');
 
     const checkInDate = buildDateTime(checkinDate, checkinTime, timeZone, moment().tz(timeZone));
+
+    await this.getSessionId();
+
     const requestData = {
-      [STATE_VARIABLES.sessionId]: sessionId,
+      sessionId: this.props.resources.checkInSession.sessionId,
       servicePointId,
       checkInDate,
       itemBarcode: barcode.trim(),
