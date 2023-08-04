@@ -5,6 +5,8 @@ import {
   screen,
 } from '@testing-library/react';
 
+import { runAxeTest } from '@folio/stripes-testing';
+
 import '../../../test/jest/__mock__';
 
 import CheckInFooter from './CheckInFooter';
@@ -20,6 +22,12 @@ describe('CheckInFooter', () => {
 
   beforeEach(() => {
     render(<CheckInFooter {...defaultProps} />);
+  });
+
+  it('should render with no axe errors', async () => {
+    await runAxeTest({
+      rootNode: document.body,
+    });
   });
 
   it('should render "endSession" button', () => {
