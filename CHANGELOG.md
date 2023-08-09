@@ -12,6 +12,7 @@
 * Add sessionId field to check-in request body JSON. Refs UICHKIN-385.
 * Upgrade babel config. Refs UICHKIN-389.
 * Add possible for run axe tests. Refs UICHKIN-386.
+* Update Node.js to v18 in GitHub Actions. Refs UICHKIN-390.
 
 ## [8.0.1] (https://github.com/folio-org/ui-checkin/tree/v8.0.1) (2023-03-28)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v8.0.0...v8.0.1)
