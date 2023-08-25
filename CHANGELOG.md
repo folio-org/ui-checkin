@@ -1,6 +1,6 @@
 # Change history for ui-checkin
 
-## IN PROGRESS
+## 9.0.0 IN PROGRESS
 
 * Use camel case notation for all data-testid. Refs UICHKIN-375.
 * UI tests replacement with RTL/Jest for CheckedInListItems. Refs UICHKIN-361.
@@ -13,6 +13,7 @@
 * Upgrade babel config. Refs UICHKIN-389.
 * Add possible for run axe tests. Refs UICHKIN-386.
 * Update Node.js to v18 in GitHub Actions. Refs UICHKIN-390.
+* *BREAKING* Upgrade React to v18. Refs UICHKIN-388.
 
 ## [8.0.1] (https://github.com/folio-org/ui-checkin/tree/v8.0.1) (2023-03-28)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v8.0.0...v8.0.1)

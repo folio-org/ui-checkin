@@ -3,7 +3,7 @@ import React from 'react';
 import {
   render,
   screen,
-} from '@testing-library/react';
+} from '@folio/jest-config-stripes/testing-library/react';
 import Barcode from 'react-barcode';
 
 import '../../../test/jest/__mock__';
