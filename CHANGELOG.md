@@ -14,6 +14,7 @@
 * Add possible for run axe tests. Refs UICHKIN-386.
 * Update Node.js to v18 in GitHub Actions. Refs UICHKIN-390.
 * *BREAKING* Upgrade React to v18. Refs UICHKIN-388.
+* *BREAKING* bump `react-intl` to `v6.4.4`. Refs UICHKIN-396.
 
 ## [8.0.1] (https://github.com/folio-org/ui-checkin/tree/v8.0.1) (2023-03-28)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v8.0.0...v8.0.1)
