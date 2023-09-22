@@ -3,6 +3,8 @@ import {
   render,
   screen,
   fireEvent,
+  waitFor,
+  cleanup,
 } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../test/jest/__mock__';
@@ -12,7 +14,9 @@ import { loan as loanFixture } from '../../../test/jest/fixtures/loan';
 import FeeFineDetailsButton from './FeeFineDetailsButton';
 
 const mockedQueryUpdate = jest.fn();
-
+const labelIds = {
+  feeFineDetails: 'ui-checkin.feeFineDetails',
+};
 let pushHistorySpy;
 const renderFeeFineDetailsButton = (loan, accountData) => {
   const {
@@ -42,8 +46,13 @@ const renderFeeFineDetailsButton = (loan, accountData) => {
   );
 };
 
-describe.skip('FeeFineDetailsButton', () => {
+describe('FeeFineDetailsButton', () => {
   let renderButton;
+
+  afterEach(() => {
+    cleanup();
+  });
+
   describe('component without props', () => {
     beforeEach(() => {
       renderButton = renderFeeFineDetailsButton({}, accountFixture);
@@ -65,18 +74,19 @@ describe.skip('FeeFineDetailsButton', () => {
 
   describe('component with props', () => {
     beforeEach(() => {
-      renderButton = renderFeeFineDetailsButton(loanFixture, accountFixture);
+      renderFeeFineDetailsButton(loanFixture, accountFixture);
     });
 
     afterEach(() => {
       jest.clearAllMocks();
     });
 
-    it('should be rendered', () => {
-      const { container } = renderButton;
-      const element = container.querySelector('[data-test-fee-fine-details]');
+    it('should be rendered', async () => {
+      await waitFor(() => {
+        const feeFineDetailsLabel = screen.getByText(labelIds.feeFineDetails);
 
-      expect(element).toBeVisible();
+        expect(feeFineDetailsLabel).toBeVisible();
+      });
     });
   });
 
@@ -90,10 +100,13 @@ describe.skip('FeeFineDetailsButton', () => {
         _path: `/users/${userId}/accounts/view/${feeFineId}`,
       };
 
-      await renderFeeFineDetailsButton(loanFixture, accountFixture);
+      renderFeeFineDetailsButton(loanFixture, accountFixture);
 
-      fireEvent.click(screen.getByRole(buttonRole));
-      expect(mockedQueryUpdate).toHaveBeenLastCalledWith(expectedResult);
+      await waitFor(() => {
+        fireEvent.click(screen.getByRole(buttonRole));
+
+        expect(mockedQueryUpdate).toHaveBeenLastCalledWith(expectedResult);
+      });
     });
 
     it('all open fee/fines', async () => {
@@ -113,10 +126,13 @@ describe.skip('FeeFineDetailsButton', () => {
         _path: `/users/${userId}/accounts/open`,
       };
 
-      await renderFeeFineDetailsButton(loanFixture, accountDataWithTwoOpenFeeFines);
+      renderFeeFineDetailsButton(loanFixture, accountDataWithTwoOpenFeeFines);
 
-      fireEvent.click(screen.getByRole(buttonRole));
-      expect(mockedQueryUpdate).toHaveBeenLastCalledWith(expectedResult);
+      await waitFor(() => {
+        fireEvent.click(screen.getByRole(buttonRole));
+
+        expect(mockedQueryUpdate).toHaveBeenLastCalledWith(expectedResult);
+      });
     });
 
     it('closed fee/fine directly', async () => {
@@ -139,10 +155,13 @@ describe.skip('FeeFineDetailsButton', () => {
         _path: `/users/${userId}/accounts/view/closedFeeFineId`,
       };
 
-      await renderFeeFineDetailsButton(loanFixture, accountDataWithOneClosedFeeFine);
+      renderFeeFineDetailsButton(loanFixture, accountDataWithOneClosedFeeFine);
 
-      fireEvent.click(screen.getByRole(buttonRole));
-      expect(mockedQueryUpdate).toHaveBeenLastCalledWith(expectedResult);
+      await waitFor(() => {
+        fireEvent.click(screen.getByRole(buttonRole));
+
+        expect(mockedQueryUpdate).toHaveBeenLastCalledWith(expectedResult);
+      });
     });
 
     it('all closed fee/fines', async () => {
@@ -168,10 +187,13 @@ describe.skip('FeeFineDetailsButton', () => {
         _path: `/users/${userId}/accounts/closed`,
       };
 
-      await renderFeeFineDetailsButton(loanFixture, accountDataWithTwoClosedFeeFines);
+      renderFeeFineDetailsButton(loanFixture, accountDataWithTwoClosedFeeFines);
 
-      fireEvent.click(screen.getByRole(buttonRole));
-      expect(mockedQueryUpdate).toHaveBeenLastCalledWith(expectedResult);
+      await waitFor(() => {
+        fireEvent.click(screen.getByRole(buttonRole));
+
+        expect(mockedQueryUpdate).toHaveBeenLastCalledWith(expectedResult);
+      });
     });
   });
 });

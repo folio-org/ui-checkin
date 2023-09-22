@@ -1,56 +1,72 @@
-import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 
 import {
   render,
   screen,
 } from '@folio/jest-config-stripes/testing-library/react';
 
-import '../test/jest/__mock__';
-
 import CheckInRouting from './index';
 
 const testIds = {
   scanComponent: 'scan-component',
+  noMatch: 'noMatch',
+};
+const checkinRoute = '/checkin';
+const basicProps = {
+  stripes: {
+    connect: (component) => component,
+  },
+  match: {
+    path: checkinRoute,
+  },
+  location: {
+    pathname: checkinRoute,
+  },
 };
 
 jest.mock('./Scan', () => () => <div data-testid={testIds.scanComponent}>Scan</div>);
 
 describe('UI CheckIn', () => {
-  const renderCheckIn = () => {
-    const component = (
-      <Router>
-        <CheckInRouting
-          stripes={{
-            connect: (item) => item,
-          }}
-          match={{
-            path: '/checkin',
-            url: '/checkin',
-            isExact: true,
-            params: {},
-          }}
-          location={{
-            pathname: '/checkin',
-            search: '',
-            hash: '',
-          }}
-        />
-      </Router>
-    );
+  describe('When route is matched', () => {
+    beforeEach(() => {
+      render(
+        <MemoryRouter initialEntries={[checkinRoute]}>
+          <CheckInRouting
+            {...basicProps}
+          />
+        </MemoryRouter>
+      );
+    });
 
-    return render(component);
-  };
-
-  it('should render', () => {
-    expect(renderCheckIn()).toBeDefined();
+    it('should render "Scan" component', () => {
+      expect(screen.getByTestId(testIds.scanComponent)).toBeInTheDocument();
+    });
   });
 
-  it.skip('should render checkin route', () => {
-    window.history.pushState({}, '', '/checkin');
+  describe('When route is not matched', () => {
+    const badRoute = '/bad-route';
+    const props = {
+      ...basicProps,
+      match: {
+        path: badRoute,
+      },
+      location: {
+        pathname: badRoute,
+      },
+    };
 
-    renderCheckIn();
+    beforeEach(() => {
+      render(
+        <MemoryRouter initialEntries={[checkinRoute]}>
+          <CheckInRouting
+            {...props}
+          />
+        </MemoryRouter>
+      );
+    });
 
-    expect(screen.getByTestId(testIds.scanComponent)).toBeInTheDocument();
+    it('should render "NoMatch" component', () => {
+      expect(screen.getByTestId(testIds.noMatch)).toBeInTheDocument();
+    });
   });
 });

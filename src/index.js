@@ -19,7 +19,7 @@ class CheckInRouting extends React.Component {
 
   NoMatch() {
     return (
-      <div>
+      <div data-testid="noMatch">
         <h2>Uh-oh!</h2>
         <p>
           How did you get to
