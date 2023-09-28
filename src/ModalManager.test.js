@@ -1,15 +1,13 @@
-import React from 'react';
+import {
+  orderBy,
+} from 'lodash';
+
 import {
   render,
   screen,
   fireEvent,
   cleanup,
 } from '@folio/jest-config-stripes/testing-library/react';
-import {
-  orderBy,
-} from 'lodash';
-
-import '../test/jest/__mock__';
 
 import { ConfirmationModal } from '@folio/stripes/components';
 

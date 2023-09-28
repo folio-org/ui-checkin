@@ -1,23 +1,23 @@
-import React from 'react';
 import {
   render,
   screen,
 } from '@folio/jest-config-stripes/testing-library/react';
-import '../../../test/jest/__mock__';
+
 import {
   Modal,
   Paneset,
   Pane,
   MultiColumnList,
 } from '@folio/stripes/components';
-import SelectItemModal,
-{
+
+import SelectItemModal, {
   formatter,
   COLUMN_NAMES,
   COLUMN_WIDTHS,
   COLUMN_MAP,
   MAX_HEIGHT,
 } from './SelectItemModal';
+
 import css from './SelectItemModal.css';
 
 describe('SelectItemModal', () => {

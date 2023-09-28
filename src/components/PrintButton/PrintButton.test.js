@@ -1,14 +1,12 @@
-import React from 'react';
+import ReactToPrint from 'react-to-print';
+
 import {
   render,
 } from '@folio/jest-config-stripes/testing-library/react';
 
-import '../../../test/jest/__mock__';
-
 import {
   Button,
 } from '@folio/stripes/components';
-import ReactToPrint from 'react-to-print';
 
 import PrintButton from './PrintButton';
 import ComponentToPrint from '../ComponentToPrint';

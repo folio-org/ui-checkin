@@ -1,12 +1,10 @@
 /* eslint-disable max-classes-per-file */
-import React from 'react';
+import Barcode from 'react-barcode';
+
 import {
   render,
   screen,
 } from '@folio/jest-config-stripes/testing-library/react';
-import Barcode from 'react-barcode';
-
-import '../../../test/jest/__mock__';
 
 import ComponentToPrint, {
   shouldProcessNode,

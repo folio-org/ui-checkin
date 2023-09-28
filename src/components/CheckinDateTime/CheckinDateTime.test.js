@@ -1,11 +1,8 @@
-import React from 'react';
 import {
   fireEvent,
   render,
   screen,
 } from '@folio/jest-config-stripes/testing-library/react';
-
-import '../../../test/jest/__mock__';
 
 import CheckinDateTime, {
   parser,
