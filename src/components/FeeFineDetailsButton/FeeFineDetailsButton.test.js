@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   render,
   screen,
@@ -6,8 +5,6 @@ import {
   waitFor,
   cleanup,
 } from '@folio/jest-config-stripes/testing-library/react';
-
-import '../../../test/jest/__mock__';
 
 import { account as accountFixture } from '../../../test/jest/fixtures/account';
 import { loan as loanFixture } from '../../../test/jest/fixtures/loan';
