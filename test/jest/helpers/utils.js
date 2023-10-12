@@ -1,7 +1,7 @@
 import {
   screen,
   within,
-} from '@testing-library/react';
+} from '@folio/jest-config-stripes/testing-library/react';
 
 export const getById = (id) => within(screen.getByTestId(id));
 
