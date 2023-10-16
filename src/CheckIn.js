@@ -86,7 +86,6 @@ class CheckIn extends React.Component {
     this.renderActions = this.renderActions.bind(this);
     this.handleOptionsChange = this.handleOptionsChange.bind(this);
     this.showPickers = this.showPickers.bind(this);
-    this.timer = undefined;
     this.readyPrefix = props.modules?.app?.find(el => el.module === '@folio/checkin')?.readyPrefix;
 
     this.state = {
@@ -116,7 +115,7 @@ class CheckIn extends React.Component {
       this.setupEventListeners();
     }
 
-    if (this.timer) {
+    if (window.checkInSessionEndTimer) {
       return;
     }
 
@@ -127,22 +126,21 @@ class CheckIn extends React.Component {
     const parsed = getCheckinSettings(checkinSettingsRecords);
 
     if (!parsed.checkoutTimeout) {
-      this.timer = null;
-
       return;
     }
 
     if (scannedItems.length) {
-      this.timer = createInactivityTimer(`${parsed.checkoutTimeoutDuration}m`, () => {
-        onSessionEnd();
+      window.checkInSessionEndTimer = createInactivityTimer(`${parsed.checkoutTimeoutDuration}m`, () => {
+        this.clearTimer();
+        this.removeUserActivityListeners();
+
+        if (window.location.pathname !== '/') {
+          onSessionEnd();
+        }
       });
 
       ['keydown', 'mousedown'].forEach((event) => {
-        document.addEventListener(event, () => {
-          if (this.timer) {
-            this.timer.signal();
-          }
-        });
+        document.addEventListener(event, this.listenUserActivities);
       });
     }
   }
@@ -160,6 +158,25 @@ class CheckIn extends React.Component {
     }
   }
 
+  clearTimer = () => {
+    if (window.checkInSessionEndTimer) {
+      window.checkInSessionEndTimer.clear();
+      window.checkInSessionEndTimer = null;
+    }
+  }
+
+  listenUserActivities = () => {
+    if (window.checkInSessionEndTimer) {
+      window.checkInSessionEndTimer.signal();
+    }
+  }
+
+  removeUserActivityListeners = () => {
+    ['keydown', 'mousedown'].forEach((event) => {
+      document.removeEventListener(event, this.listenUserActivities);
+    });
+  }
+
   removeEventListeners = () => {
     document.getElementById('ModuleMainHeading').removeEventListener('click', this.focusInput);
   }
@@ -173,6 +190,8 @@ class CheckIn extends React.Component {
       onSessionEnd,
     } = this.props;
 
+    this.clearTimer();
+    this.removeUserActivityListeners();
     this.setState({ showPickers: false });
     await onSessionEnd();
 
