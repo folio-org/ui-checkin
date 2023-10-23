@@ -1,6 +1,7 @@
 # Change history for ui-checkin
 
-## 9.1.0 IN PROGRESS
+## [9.0.1] (https://github.com/folio-org/ui-checkin/tree/v9.0.1) (2023-10-23)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v9.0.0...v9.0.1)
 * Fix circulation timeout issue. Refs UICHKIN-392.
 
 ## [9.0.0] (https://github.com/folio-org/ui-checkin/tree/v9.0.0) (2023-10-12)
