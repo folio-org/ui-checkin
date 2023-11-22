@@ -56,3 +56,7 @@ export const cancelFeeClaimReturned = {
 };
 
 export const MAX_RECORDS = '1000';
+
+export const DCB_USER = {
+  lastName: 'DcbSystem',
+};

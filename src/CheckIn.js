@@ -39,6 +39,7 @@ import CheckInFooter from './components/CheckInFooter';
 import {
   convertToSlipData,
   getCheckinSettings,
+  isDcbUser,
 } from './util';
 
 import styles from './checkin.css';
@@ -308,6 +309,7 @@ class CheckIn extends React.Component {
     const isCheckInNote = element => element.noteType === 'Check in';
     const checkinNotePresent = get(loan.item, ['circulationNotes'], []).some(isCheckInNote);
     const loanOpenRequest = loan?.staffSlipContext?.request ?? {};
+    const isVirtualUser = isDcbUser(loan?.borrower);
 
     const trigger = ({ getTriggerProps, triggerRef }) => (
       <IconButton
@@ -398,7 +400,7 @@ class CheckIn extends React.Component {
               mutator={this.props.mutator}
             />
           </IfPermission>
-          {loan.userId &&
+          {loan.userId && !isVirtualUser &&
             <Button
               role="menuitem"
               buttonStyle="dropdownItem"
