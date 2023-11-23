@@ -150,4 +150,8 @@ class FeeFineDetailsButton extends React.Component {
   }
 }
 
+FeeFineDetailsButton.defaultProps = {
+  isVirtualUser: false,
+};
+
 export default FeeFineDetailsButton;

@@ -6,7 +6,7 @@ import {
 
 import {
   DCB_USER,
-  statuses
+  statuses,
 } from './consts';
 
 export const escapeValue = (val) => {
