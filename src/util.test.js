@@ -324,14 +324,17 @@ describe('shouldConfirmStatusModalBeShown', () => {
 describe('isDcbUser', () => {
   it('should return true when user has lastName as "DcbSystem"', () => {
     const user = {
-      lastName: DCB_USER.lastName
+      lastName: DCB_USER.lastName,
     };
+
     expect(isDcbUser(user)).toBeTruthy();
   });
+
   it('should return false when user does not have lastName as "DcbSystem"', () => {
     const user = {
-      lastName: 'test'
+      lastName: 'test',
     };
+
     expect(isDcbUser(user)).toBeFalsy();
   });
 });

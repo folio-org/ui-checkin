@@ -395,6 +395,7 @@ class CheckIn extends React.Component {
           }
           <IfPermission perm="accounts.collection.get">
             <FeeFineDetailsButton
+              isVirtualUser={isVirtualUser}
               userId={loan.userId}
               itemId={loan.itemId}
               mutator={this.props.mutator}

@@ -9,6 +9,7 @@ import {
 import { account as accountFixture } from '../../../test/jest/fixtures/account';
 import { loan as loanFixture } from '../../../test/jest/fixtures/loan';
 import FeeFineDetailsButton from './FeeFineDetailsButton';
+import { DCB_USER } from '../../consts';
 
 const mockedQueryUpdate = jest.fn();
 const labelIds = {
@@ -191,6 +192,24 @@ describe('FeeFineDetailsButton', () => {
 
         expect(mockedQueryUpdate).toHaveBeenLastCalledWith(expectedResult);
       });
+    });
+  });
+
+  describe('when borrower is virtual user', () => {
+    it('should not render FeeFineDetails button', () => {
+      const alteredLoanFixture = {
+        ...loanFixture,
+        loan: {
+          ...loanFixture.loan,
+          borrower: {
+            ...loanFixture.loan.borrower,
+            lastName: DCB_USER.lastName,
+          }
+        }
+      };
+      renderFeeFineDetailsButton(alteredLoanFixture, accountFixture);
+
+      expect(screen.queryByText(labelIds.feeFineDetails)).toBeNull();
     });
   });
 });

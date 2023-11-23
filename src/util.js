@@ -4,7 +4,10 @@ import {
   includes,
 } from 'lodash';
 
-import { DCB_USER, statuses } from './consts';
+import {
+  DCB_USER,
+  statuses
+} from './consts';
 
 export const escapeValue = (val) => {
   if (typeof val === 'string' && val.startsWith('<Barcode>') && val.endsWith('</Barcode>')) {
