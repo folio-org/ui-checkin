@@ -4,7 +4,10 @@ import {
   includes,
 } from 'lodash';
 
-import { statuses } from './consts';
+import {
+  DCB_USER,
+  statuses,
+} from './consts';
 
 export const escapeValue = (val) => {
   if (typeof val === 'string' && val.startsWith('<Barcode>') && val.endsWith('</Barcode>')) {
@@ -163,5 +166,7 @@ export function shouldConfirmStatusModalBeShown(item) {
     statuses.UNKNOWN,
   ], item?.status?.name);
 }
+
+export const isDcbUser = (user) => user?.lastName === DCB_USER.lastName;
 
 export default {};
