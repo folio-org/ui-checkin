@@ -15,6 +15,7 @@ const FEE_FINES_STATUSES = {
 
 class FeeFineDetailsButton extends React.Component {
   static propTypes = {
+    isVirtualUser: PropTypes.bool,
     userId: PropTypes.string,
     itemId: PropTypes.string,
     mutator: PropTypes.shape({
@@ -116,12 +117,13 @@ class FeeFineDetailsButton extends React.Component {
     const {
       userId,
       itemId,
+      isVirtualUser,
     } = this.props;
     const {
       feeFinesCount,
     } = this.state;
 
-    return !userId || !itemId || !feeFinesCount;
+    return isVirtualUser || !userId || !itemId || !feeFinesCount;
   };
 
   render() {
@@ -147,5 +149,9 @@ class FeeFineDetailsButton extends React.Component {
     );
   }
 }
+
+FeeFineDetailsButton.defaultProps = {
+  isVirtualUser: false,
+};
 
 export default FeeFineDetailsButton;
