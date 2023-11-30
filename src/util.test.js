@@ -17,6 +17,8 @@ import {
 
 import {
   DCB_USER,
+  DCB_INSTANCE_ID,
+  DCB_HOLDINGS_RECORD_ID,
   statuses,
 } from './consts';
 
@@ -323,9 +325,7 @@ describe('shouldConfirmStatusModalBeShown', () => {
 
 describe('isDcbUser', () => {
   it('should return true when user has lastName as "DcbSystem"', () => {
-    const user = {
-      lastName: DCB_USER.lastName,
-    };
+    const user = DCB_USER;
 
     expect(isDcbUser(user)).toBeTruthy();
   });
@@ -336,5 +336,39 @@ describe('isDcbUser', () => {
     };
 
     expect(isDcbUser(user)).toBeFalsy();
+  });
+});
+
+describe('isDCBItem ', () => {
+  it('should return true when both item instance id and item holdings record id are DCB_INSTANCE_ID and DCB_HOLDINGS_RECORD_ID respectively', () => {
+    const item = {
+      instanceId: DCB_INSTANCE_ID,
+      holdingsRecordId: DCB_HOLDINGS_RECORD_ID,
+    };
+    expect(isDCBItem(item)).toBeTruthy();
+  });
+
+  it('should return false when item instance id is DCB_INSTANCE_ID and item holdings record id is not DCB_HOLDINGS_RECORD_ID', () => {
+    const item = {
+      instanceId: DCB_INSTANCE_ID,
+      holdingsRecordId: 'test',
+    };
+    expect(isDCBItem(item)).toBeFalsy();
+  });
+
+  it('should return false when item instance id is not DCB_INSTANCE_ID and item holdings record id is DCB_HOLDINGS_RECORD_ID', () => {
+    const item = {
+      instanceId: 'test',
+      holdingsRecordId: DCB_HOLDINGS_RECORD_ID,
+    };
+    expect(isDCBItem(item)).toBeFalsy();
+  });
+
+  it('should return false when item instance id is not DCB_INSTANCE_ID and item holdings record id is not DCB_HOLDINGS_RECORD_ID', () => {
+    const item = {
+      instanceId: 'test',
+      holdingsRecordId: 'test',
+    };
+    expect(isDCBItem(item)).toBeFalsy();
   });
 });

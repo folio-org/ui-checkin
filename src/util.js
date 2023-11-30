@@ -5,8 +5,10 @@ import {
 } from 'lodash';
 
 import {
-  DCB_USER,
+  DCB_USER_LASTNAME,
   statuses,
+  DCB_INSTANCE_ID,
+  DCB_HOLDINGS_RECORD_ID,
 } from './consts';
 
 export const escapeValue = (val) => {
@@ -167,6 +169,8 @@ export function shouldConfirmStatusModalBeShown(item) {
   ], item?.status?.name);
 }
 
-export const isDcbUser = (user) => user?.lastName === DCB_USER.lastName;
+export const isDcbUser = (user) => user?.personal?.lastName === DCB_USER_LASTNAME && user.type === 'dcb';
+
+export const isDCBItem = (item) => item.instanceId === DCB_INSTANCE_ID && item.holdingsRecordId === DCB_HOLDINGS_RECORD_ID;
 
 export default {};

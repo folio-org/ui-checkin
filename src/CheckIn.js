@@ -40,6 +40,7 @@ import {
   convertToSlipData,
   getCheckinSettings,
   isDcbUser,
+  isDCBItem,
 } from './util';
 
 import styles from './checkin.css';
@@ -305,6 +306,7 @@ class CheckIn extends React.Component {
         locale,
       },
     } = this.props;
+    console.log('props ', this.props);
 
     const isCheckInNote = element => element.noteType === 'Check in';
     const checkinNotePresent = get(loan.item, ['circulationNotes'], []).some(isCheckInNote);
