@@ -13,6 +13,7 @@ import {
   getCheckinSettings,
   shouldConfirmStatusModalBeShown,
   isDcbUser,
+  isDCBItem,
 } from './util';
 
 import {
