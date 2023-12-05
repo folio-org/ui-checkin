@@ -7,6 +7,8 @@ import {
 import {
   DCB_USER,
   statuses,
+  DCB_INSTANCE_ID,
+  DCB_HOLDINGS_RECORD_ID,
 } from './consts';
 
 export const escapeValue = (val) => {
@@ -168,5 +170,7 @@ export function shouldConfirmStatusModalBeShown(item) {
 }
 
 export const isDcbUser = (user) => user?.lastName === DCB_USER.lastName;
+
+export const isDCBItem = (item) => item.instanceId === DCB_INSTANCE_ID && item.holdingsRecordId === DCB_HOLDINGS_RECORD_ID;
 
 export default {};

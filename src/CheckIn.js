@@ -40,6 +40,7 @@ import {
   convertToSlipData,
   getCheckinSettings,
   isDcbUser,
+  isDCBItem,
 } from './util';
 
 import styles from './checkin.css';
@@ -304,12 +305,14 @@ class CheckIn extends React.Component {
         timezone,
         locale,
       },
+      scannedItems,
     } = this.props;
 
     const isCheckInNote = element => element.noteType === 'Check in';
     const checkinNotePresent = get(loan.item, ['circulationNotes'], []).some(isCheckInNote);
     const loanOpenRequest = loan?.staffSlipContext?.request ?? {};
     const isVirtualUser = isDcbUser(loan?.borrower);
+    const isVirtualItem = isDCBItem(get(scannedItems, [0, 'item']));
 
     const trigger = ({ getTriggerProps, triggerRef }) => (
       <IconButton
@@ -370,16 +373,21 @@ class CheckIn extends React.Component {
               >
                 <FormattedMessage id="ui-checkin.patronDetails" />
               </Button>
-            </div>}
+            </div>
+          }
           <div data-test-item-details>
-            <Button
-              role="menuitem"
-              buttonStyle="dropdownItem"
-              href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.item.id}`}
-              onClick={(e) => this.handleOptionsChange({ loan, action: 'showItemDetails' }, e)}
-            >
-              <FormattedMessage id="ui-checkin.itemDetails" />
-            </Button>
+            {
+            !isVirtualItem && (
+              <Button
+                role="menuitem"
+                buttonStyle="dropdownItem"
+                href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.item.id}`}
+                onClick={(e) => this.handleOptionsChange({ loan, action: 'showItemDetails' }, e)}
+              >
+                <FormattedMessage id="ui-checkin.itemDetails" />
+              </Button>
+            )
+          }
           </div>
           {!isEmpty(loanOpenRequest) &&
             <div data-test-request-details>
