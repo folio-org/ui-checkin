@@ -9,7 +9,7 @@ import {
 import { account as accountFixture } from '../../../test/jest/fixtures/account';
 import { loan as loanFixture } from '../../../test/jest/fixtures/loan';
 import FeeFineDetailsButton from './FeeFineDetailsButton';
-import { DCB_USER } from '../../consts';
+import { DCB_USER_LASTNAME } from '../../consts';
 
 const mockedQueryUpdate = jest.fn();
 const labelIds = {
@@ -203,7 +203,7 @@ describe('FeeFineDetailsButton', () => {
           ...loanFixture.loan,
           borrower: {
             ...loanFixture.loan.borrower,
-            lastName: DCB_USER.lastName,
+            lastName: DCB_USER_LASTNAME,
           }
         }
       };
