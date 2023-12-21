@@ -14,9 +14,7 @@ jest.mock('@folio/stripes/components', () => ({
       onClick={onClick}
       {...rest}
     >
-      <span>
-        {children}
-      </span>
+      {children}
     </button>
   )),
   Checkbox: jest.fn((props) => (
@@ -43,6 +41,24 @@ jest.mock('@folio/stripes/components', () => ({
     </div>
   )),
   Datepicker: jest.fn((props) => <div {...props} />),
+  Dropdown: jest.fn(({
+    renderMenu,
+    renderTrigger,
+  }) => (
+    <div>
+      {renderMenu({
+        onToggle: jest.fn(),
+      })}
+      {renderTrigger({
+        getTriggerProps: jest.fn(),
+      })}
+    </div>
+  )),
+  DropdownMenu: jest.fn(({ children }) => (
+    <div>
+      {children}
+    </div>
+  )),
   InfoPopover: jest.fn(({ content }) => <div>{content}</div>),
   Label: jest.fn(({
     htmlFor,
@@ -61,6 +77,7 @@ jest.mock('@folio/stripes/components', () => ({
       {value}
     </div>
   )),
+  Layout: jest.fn(({ children }) => <div>{children}</div>),
   Modal: jest.fn(({ children, label, footer, id, ...rest }) => (
     <div
       id={id}
@@ -95,6 +112,16 @@ jest.mock('@folio/stripes/components', () => ({
       <div>{label}</div>
     </div>
   )),
-  Pane: jest.fn((props) => (<div {...props} />)),
+  Pane: jest.fn(({
+    paneTitle,
+    children,
+    ...rest
+  }) => (
+    <div {...rest}>
+      <span>{paneTitle}</span>
+      {children}
+    </div>
+  )),
   Paneset: jest.fn((props) => (<div {...props} />)),
+  TextField: jest.fn((props) => (<input {...props} />))
 }));

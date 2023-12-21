@@ -7,12 +7,9 @@ jest.mock('react-final-form', () => ({
     'data-testid': testId,
     ...rest
   }) => (
-    <div
-      data-testid={testId}
-      {...rest}
-    >
+    <div data-testid={testId}>
       {label}
-      {component()}
+      {component(rest)}
     </div>
   )),
 }));

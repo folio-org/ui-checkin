@@ -317,6 +317,7 @@ class CheckIn extends React.Component {
     const trigger = ({ getTriggerProps, triggerRef }) => (
       <IconButton
         {...getTriggerProps()}
+        data-testid="actionMenuTrigger"
         icon="ellipsis"
         size="medium"
         aria-label={intl.formatMessage({ id: 'ui-checkin.actionsMenu' })}
@@ -490,6 +491,7 @@ class CheckIn extends React.Component {
                     <TitleManager prefix={(this.readyPrefix && this.state.readyToScan) ? this.readyPrefix : undefined}>
                       <Field
                         autoFocus
+                        data-testid="itemBarcodeInput"
                         id="input-item-barcode"
                         name="item.barcode"
                         validationEnabled={false}
