@@ -11,6 +11,10 @@ import {
   getCheckinSettings,
   isDCBItem,
 } from './util';
+import {
+  DCB_HOLDINGS_RECORD_ID,
+  DCB_INSTANCE_ID,
+} from './consts';
 import CheckIn from './CheckIn';
 
 const patronGroupId = 'patronGroupId';
@@ -423,7 +427,7 @@ describe('CheckIn', () => {
   });
 
   describe('Action menu', () => {
-    describe('When all data for buttons visibility are set', () => {
+    describe('When there is a loan on regular item', () => {
       const loan = {
         item: {
           circulationNotes: [
@@ -617,12 +621,12 @@ describe('CheckIn', () => {
       });
     });
 
-    describe('When all data for buttons visibility are not set', () => {
+    describe('When there is a loan on DCP item', () => {
       const loan = {
         item: {
           circulationNotes: [],
-          instanceId: 'instanceId',
-          holdingsRecordId: 'holdingsRecordId',
+          instanceId: DCB_INSTANCE_ID,
+          holdingsRecordId: DCB_HOLDINGS_RECORD_ID,
           id: 'itemId',
         },
         id: 'loanId',
