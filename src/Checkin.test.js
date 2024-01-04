@@ -621,7 +621,7 @@ describe('CheckIn', () => {
       });
     });
 
-    describe('When there is a loan on DCP item', () => {
+    describe('When there is a loan on DCB item', () => {
       const loan = {
         item: {
           circulationNotes: [],
