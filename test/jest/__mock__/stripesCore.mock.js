@@ -13,4 +13,13 @@ jest.mock('@folio/stripes/core', () => ({
   withStripes: (Component) => (props) => <Component {...props} />,
   withModules: (Component) => (props) => <Component {...props} />,
   IfPermission: jest.fn(({ children }) => <div>{children}</div>),
+  TitleManager: jest.fn(({
+    prefix,
+    children,
+  }) => (
+    <div>
+      <span>{prefix}</span>
+      {children}
+    </div>
+  )),
 }));

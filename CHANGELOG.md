@@ -4,6 +4,7 @@
 * Also support `feesfines` interface version `19.0`. Refs UICHKIN-401.
 * Hide fee/fine action menu items when requester is virtual user. Refs UICHKIN-398.
 * Hide “Item details” option in Actions menu when item is virtual. Refs UICHKIN-403.
+* UI tests replacement with RTL/Jest for view CheckIn. Refs UICHKIN-287.
 
 ## [9.0.1] (https://github.com/folio-org/ui-checkin/tree/v9.0.1) (2023-10-23)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v9.0.0...v9.0.1)
