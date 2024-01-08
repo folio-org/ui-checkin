@@ -26,6 +26,7 @@ import {
   statuses,
   cancelFeeClaimReturned,
   MAX_RECORDS,
+  REQUEST_STATUSES,
 } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
 import RouteForDeliveryModal from './components/RouteForDeliveryModal';
@@ -573,7 +574,7 @@ class Scan extends React.Component {
 
   fetchRequests(checkinResp) {
     const { item } = checkinResp;
-    const query = `(itemId==${item.id} and (status=="Open - Awaiting pickup" or status=="Open - Awaiting delivery"))`;
+    const query = `(itemId==${item.id} and (status=="${REQUEST_STATUSES.AWAITING_PICKUP}" or status=="${REQUEST_STATUSES.AWAITING_DELIVERY}"))`;
     const { mutator } = this.props;
     mutator.requests.reset();
     return mutator.requests.GET({ params: { query } }).then((requests) => {
@@ -737,6 +738,7 @@ class Scan extends React.Component {
 
     return (
       <ConfirmStatusModal
+        data-testid="holdModal"
         open={!!request}
         onConfirm={this.onModalClose}
         onCancel={this.handleOnAfterPrint}
@@ -772,6 +774,7 @@ class Scan extends React.Component {
 
     return (
       <RouteForDeliveryModal
+        data-testid="deliveryModal"
         open
         slipTemplate={this.getSlipTmpl('request delivery')}
         isPrintableByDefault={this.isPrintable('request delivery')}
@@ -826,6 +829,7 @@ class Scan extends React.Component {
 
     return (
       <ConfirmStatusModal
+        data-testid="transitionModal"
         open={!!loan}
         slipTemplate={this.getSlipTmpl('transit')}
         slipData={slipData}
