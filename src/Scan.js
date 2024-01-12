@@ -27,6 +27,7 @@ import {
   cancelFeeClaimReturned,
   MAX_RECORDS,
   REQUEST_STATUSES,
+  ACCOUNT_STATUS_NAMES,
 } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
 import RouteForDeliveryModal from './components/RouteForDeliveryModal';
@@ -455,7 +456,7 @@ class Scan extends React.Component {
       const updatedRec = cloneDeep(record);
       updatedRec.paymentStatus.name = cancelFeeClaimReturned.CANCEL_PAYMENT_STATUS;
       updatedRec.remaining = 0;
-      updatedRec.status.name = 'Closed';
+      updatedRec.status.name = ACCOUNT_STATUS_NAMES.CLOSED;
       return updatedRec;
     };
 
@@ -877,6 +878,7 @@ class Scan extends React.Component {
 
     return (
       <Modal
+        data-testid="errorModal"
         open
         size="small"
         label={label}
@@ -923,6 +925,7 @@ class Scan extends React.Component {
       <div data-test-check-in-scan>
         {checkedinItems &&
           <SelectItemModal
+            data-testid="selectItemModal"
             checkedinItems={checkedinItems}
             onClose={this.handleCloseSelectItemModal}
             onSelectItem={this.handleItemSelection}
@@ -930,6 +933,7 @@ class Scan extends React.Component {
         { /* manages pre checkin modals */}
         {checkedinItem &&
           <ModalManager
+            data-testid="checkinModalManager"
             checkedinItem={checkedinItem}
             checkinNotesMode={checkinNotesMode}
             claimedReturnedHandler={this.claimedReturnedHandler}

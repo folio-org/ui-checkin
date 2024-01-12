@@ -70,3 +70,7 @@ export const REQUEST_STATUSES = {
   AWAITING_DELIVERY: 'Open - Awaiting delivery',
   AWAITING_PICKUP: 'Open - Awaiting pickup',
 };
+
+export const ACCOUNT_STATUS_NAMES = {
+  CLOSED: 'Closed',
+};
