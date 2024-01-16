@@ -48,7 +48,7 @@
     "multipieceModal.item.numberOfMissingPieces": "Anzahl der fehlenden Teile",
     "multipieceModal.item.descriptionOfmissingPieces": "Beschreibung der fehlenden Teile",
     "newFeeFine": "Neue Forderungen",
-    "action.printHoldSlip": "Vormerkungszettel drucken",
+    "action.printHoldSlip": "Bereitstellungszettel drucken",
     "action.printTransitSlip": "Transportzettel drucken",
     "missingModal.heading": "Rückgabe eines Bandes im Status: Verloren",
     "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) hat den Exemplar-Status <strong>verloren</strong> {discoverySuppressMessage}",
