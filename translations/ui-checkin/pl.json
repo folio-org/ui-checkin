@@ -100,14 +100,14 @@
     "statuses.unknown": "Nieznany",
     "dateReturnedLabel": "Data zwrotu",
     "errorModal.unhandledError": "This is an unhandled exception.",
-    "selectItemModal.heading": "Select item",
-    "selectItemModal.resultCount": "{count} Records found",
-    "selectItemModal.barcode": "Barcode",
-    "selectItemModal.itemStatus": "Item status",
+    "selectItemModal.heading": "Wybierz egzemplarz",
+    "selectItemModal.resultCount": "Znaleziono: {count} rekord(-ów)",
+    "selectItemModal.barcode": "Kod kreskowy",
+    "selectItemModal.itemStatus": "Status egzemplarza",
     "selectItemModal.location": "Lokalizacja",
     "selectItemModal.materialType": "Rodzaj materiału",
-    "selectItemModal.loanType": "Loan type",
+    "selectItemModal.loanType": "Sposób wypożyczania",
     "selectItemModal.title": "Tytuł",
-    "selectItemModal.callNumber": "Call number",
-    "selectItemModal.itemListHeader": "List of items: choose one"
+    "selectItemModal.callNumber": "Sygnatura",
+    "selectItemModal.itemListHeader": "Lista egzemplarzy: wybierz jeden"
 }
