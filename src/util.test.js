@@ -89,6 +89,7 @@ describe('convertToSlipData', () => {
       'callNumber': 'callNumber',
       'callNumberPrefix': 'callNumberPrefix',
       'callNumberSuffix': 'callNumberSuffix',
+      'displaySummary': 'displaySummary',
       'enumeration': 'enumeration',
       'volume': 'volume',
       'chronology': 'chronology',
@@ -147,6 +148,7 @@ describe('convertToSlipData', () => {
     expect(o['item.callNumber']).toEqual(source.item.callNumber);
     expect(o['item.callNumberPrefix']).toEqual(source.item.callNumberPrefix);
     expect(o['item.callNumberSuffix']).toEqual(source.item.callNumberSuffix);
+    expect(o['item.displaySummary']).toEqual(source.item.displaySummary);
     expect(o['item.enumeration']).toEqual(source.item.enumeration);
     expect(o['item.volume']).toEqual(source.item.volume);
     expect(o['item.chronology']).toEqual(source.item.chronology);
