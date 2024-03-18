@@ -7,6 +7,7 @@
 * UI tests replacement with RTL/Jest for view CheckIn. Refs UICHKIN-287.
 * UI tests replacement with RTL/Jest for Scan component. Refs UICHKIN-289.
 * Add support for displaySummary token for Staff Slips. Refs UICHKIN-415.
+* Remove DST boundary adjustment for item return time. Refs UICHKIN-420.
 
 ## [9.0.1] (https://github.com/folio-org/ui-checkin/tree/v9.0.1) (2023-10-23)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v9.0.0...v9.0.1)
