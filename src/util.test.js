@@ -238,24 +238,31 @@ describe('buildDateTime', () => {
     expect(v).toMatch('2021-02-14T17:14:00.000Z');
   });
 
-  it('given an effective return date before DST, returns an ISO-8601 string', () => {
+  it('given an effective return date in non-DST, currenty in DST, returns an ISO-8601 string', () => {
     const d = '2021-03-13';
     const t = '12:14:00';
     const z = 'America/New_York';
+
     const now = moment('2021-03-14T12:14:00').tz(z);
     const v = buildDateTime(d, t, z, now);
 
-    expect(v).toMatch('2021-03-13T18:14:00.000Z');
+    // America/New_York is offset -4 hrs in DST, -5 hours in non-DST.
+    // expect to match the non-DST offset of 5 hours in UTC time...
+    const expected = moment.tz(`${d}T${t}`, 'UTC').add(5, 'hours').toISOString();
+    expect(v).toMatch(expected);
   });
 
-  it('given an effective return date after DST, returns an ISO-8601 string', () => {
+  it('given an effective return date in DST, currently non-DST, returns an ISO-8601 string', () => {
     const d = '2021-11-06';
     const t = '12:14:00';
     const z = 'America/New_York';
     const now = moment('2021-11-07T12:14:00').tz(z);
     const v = buildDateTime(d, t, z, now);
 
-    expect(v).toMatch('2021-11-06T15:14:00.000Z');
+    // America/New_York is offset -4 hrs in DST, -5 hours in non-DST.
+    // expect to match the DST offset of 4 hours in UTC time...
+    const expected = moment.tz(`${d}T${t}`, 'UTC').add(4, 'hours').toISOString();
+    expect(v).toMatch(expected);
   });
 });
 
