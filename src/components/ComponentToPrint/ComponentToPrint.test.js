@@ -30,6 +30,9 @@ jest.mock('../../util', () => ({
   buildTemplate: jest.fn(Template => (data) => (Template ? <Template {...data} /> : null)),
 }));
 jest.mock('react-barcode', () => jest.fn(() => null));
+jest.mock('dompurify', () => ({
+  sanitize: jest.fn((data) => (data)),
+}));
 
 describe('ComponentToPrint', () => {
   const buttonText = 'Test button string';
