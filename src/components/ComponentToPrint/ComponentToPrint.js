@@ -41,7 +41,7 @@ class ComponentToPrint extends React.Component {
     const {
       dataSource,
     } = this.props;
-    const componentStr = sanitize(this.template(dataSource));
+    const componentStr = sanitize(this.template(dataSource), { ADD_TAGS: ['Barcode'] });
     const Component = this.parser.parseWithInstructions(componentStr, () => true, this.rules) || null;
 
     return (
