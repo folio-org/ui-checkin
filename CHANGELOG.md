@@ -2,6 +2,10 @@
 
 ## 9.2.0 IN PROGRESS
 
+## [9.1.1] (https://github.com/folio-org/ui-checkin/tree/v9.1.1) (2024-03-27)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v9.1.0...v9.1.1)
+
+* Add support for Barcode tag with sanitize. Refs UICHKIN-421, UICHKIN-422.
 
 ## [9.1.0] (https://github.com/folio-org/ui-checkin/tree/v9.1.0) (2024-03-22)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v9.0.2...v9.1.0)
@@ -13,6 +17,11 @@
 * UI tests replacement with RTL/Jest for Scan component. Refs UICHKIN-289.
 * Add support for displaySummary token for Staff Slips. Refs UICHKIN-415.
 * Remove DST boundary adjustment for item return time. Refs UICHKIN-420.
+
+## [9.0.3] (https://github.com/folio-org/ui-checkin/tree/v9.0.3) (2024-03-27)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v9.0.2...v9.0.3)
+
+* Add support for Barcode tag with sanitize. Refs UICHKIN-421, UICHKIN-422.
 
 ## [9.0.2] (https://github.com/folio-org/ui-checkin/tree/v9.0.2) (2024-03-21)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v9.0.1...v9.0.2)
