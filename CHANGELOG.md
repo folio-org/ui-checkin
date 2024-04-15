@@ -4,6 +4,13 @@
 
 * Hide fee/fine action menu items when requester is virtual user. Refs UICHKIN-398.
 * Hide “Item details” option in Actions menu when item is virtual. Refs UICHKIN-403.
+## [9.0.3] (https://github.com/folio-org/ui-checkin/tree/v9.0.3) (2024-03-27)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v9.0.2...v9.0.3)
+* Add support for Barcode tag with sanitize. Refs UICHKIN-421, UICHKIN-422.
+
+## [9.0.2] (https://github.com/folio-org/ui-checkin/tree/v9.0.2) (2024-03-24)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v9.0.1...v9.0.2)
+* Only certain HTML tags should be rendered when displaying staff slips. Refs UICHKIN-421, UICHKIN-422.
 
 ## [9.0.1] (https://github.com/folio-org/ui-checkin/tree/v9.0.1) (2023-10-23)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v9.0.0...v9.0.1)
