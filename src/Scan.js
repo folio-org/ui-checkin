@@ -316,7 +316,7 @@ class Scan extends React.Component {
     }
     const parsed = getCheckinSettings(checkinSettings.records);
     const asterisk = parsed?.wildcardLookupEnabled ? '*' : '';
-    const barcode = `"${escapeCqlValue(data.item.barcode)}${asterisk}"`;
+    const barcode = `"${escapeCqlValue(data.item.barcode.trim())}${asterisk}"`;
     const checkedinItems = await this.fetchItems(barcode);
     const checkedinItem = checkedinItems[0];
 
@@ -381,7 +381,7 @@ class Scan extends React.Component {
       sessionId: this.props.resources.checkInSession.sessionId,
       servicePointId,
       checkInDate,
-      itemBarcode: barcode.trim(),
+      itemBarcode: barcode,
     };
 
     // For items that have the status 'Claimed returned', the claimedReturnedResolution
