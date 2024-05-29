@@ -1,7 +1,7 @@
 {
     "scanBarcode": "Wprowadź kod kreskowy aby zwrócić egzemplarz",
     "itemId": "ID egzemplarza",
-    "enter": "Wprowadź",
+    "enter": "Enter",
     "processedAs": "Przetwarzane jako",
     "actual": "Bieżący",
     "checkinDate": "Data rejestracji",
