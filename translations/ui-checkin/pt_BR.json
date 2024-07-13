@@ -103,7 +103,7 @@
     "selectItemModal.heading": "Selecione o item",
     "selectItemModal.resultCount": "{count} registros encontrados",
     "selectItemModal.barcode": "Código de barras",
-    "selectItemModal.itemStatus": "Estado do item",
+    "selectItemModal.itemStatus": "Status do item",
     "selectItemModal.location": "Localização",
     "selectItemModal.materialType": "Tipo de material",
     "selectItemModal.loanType": "Tipo de empréstimo",
