@@ -64,7 +64,7 @@
     "statusModal.delivery.heading": "Přeprava pro žádanku s doručením",
     "statusModal.delivery.closeAndCheckout": "Zavřít a vypůjčit",
     "statusModal.delivery.message": "Existuje požadavek na doručení pro <strong>{itemTitle} ({itemType})</strong> (Čárový kód: {itemBarcode}). <strong> Zkontrolujte prosím jednotku a trasu doručení.</strong>",
-    "effectiveCallNumber": "Efektivní signatura",
+    "effectiveCallNumber": "Řetězec efektivní signatury",
     "inHouseUse": "Vnitřní využití",
     "declaredLostModal.heading": "Vrátit Deklarovanou ztracenou jednotku?",
     "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Čárový kód: {barcode}) má stav jednotky <strong>Prohlášena za ztracenou.</strong>",
