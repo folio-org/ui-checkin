@@ -51,7 +51,7 @@
     "action.printHoldSlip": "Reservering printen",
     "action.printTransitSlip": "Pakbon printen",
     "missingModal.heading": "Itemstatus bevestigen: Ontbrekend",
-    "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) wordt gemarkeerd als <strong>ontbrekend</strong>.",
+    "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) wordt gemarkeerd als <strong>ontbrekend</strong> {discoverySuppressMessage}.",
     "missingModal.discoverySuppress": "en wordt in discovery verborgen",
     "note": "Opmerking",
     "checkinNoteModal.heading": "Inchecken bevestigen",
