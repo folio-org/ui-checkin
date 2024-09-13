@@ -2,6 +2,7 @@
 
 ## 9.2.0 IN PROGRESS
 * Remove bigtests from github actions. Refs UICHKIN-425.
+* Update upload-artifact actions from v1 and v2 to v4. Refs UICHKIN-431.
 
 ## [9.1.1] (https://github.com/folio-org/ui-checkin/tree/v9.1.1) (2024-03-27)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v9.1.0...v9.1.1)
