@@ -381,7 +381,7 @@ class Scan extends React.Component {
       sessionId: this.props.resources.checkInSession.sessionId,
       servicePointId,
       checkInDate,
-      itemBarcode: barcode.trim(),
+      itemBarcode: barcode,
     };
 
     // For items that have the status 'Claimed returned', the claimedReturnedResolution
