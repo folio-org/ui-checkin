@@ -98,7 +98,7 @@
     "statuses.longMissing": "Manquant depuis longtemps",
     "statuses.unavailable": "Indisponible",
     "statuses.unknown": "Inconnu",
-    "dateReturnedLabel": "Date returned",
+    "dateReturnedLabel": "Date de retour",
     "errorModal.unhandledError": "This is an unhandled exception.",
     "selectItemModal.heading": "Select item",
     "selectItemModal.resultCount": "{count} enregistrements trouvés",
