@@ -1,6 +1,8 @@
 # Change history for ui-checkin
 
-## 9.2.0 IN PROGRESS
+## [9.2.0] (https://github.com/folio-org/ui-checkin/tree/v9.2.0) (2024-10-30)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v9.1.1...v9.2.0)
+
 * Remove bigtests from github actions. Refs UICHKIN-425.
 * Update upload-artifact actions from v1 and v2 to v4. Refs UICHKIN-431.
 * Remove barcode trimming before it is sent to backend for processing. Refs UICHKIN-424.
