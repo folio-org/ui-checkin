@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import HtmlToReact, { Parser } from 'html-to-react';
 import Barcode from 'react-barcode';
-import { sanitize } from 'dompurify';
+import DOMPurify from 'dompurify';
 
 import { buildTemplate } from '../../util';
 
@@ -41,7 +41,7 @@ class ComponentToPrint extends React.Component {
     const {
       dataSource,
     } = this.props;
-    const componentStr = sanitize(this.template(dataSource), { ADD_TAGS: ['Barcode'] });
+    const componentStr = DOMPurify.sanitize(this.template(dataSource), { ADD_TAGS: ['Barcode'] });
     const Component = this.parser.parseWithInstructions(componentStr, () => true, this.rules) || null;
 
     return (
