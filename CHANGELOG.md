@@ -1,7 +1,10 @@
 # Change history for ui-checkin
 
 ## 9.3.0 IN PROGRESS
-* Fix DOMPurify import. Refs UICHKIN-435.
+
+## [9.2.1] (https://github.com/folio-org/ui-checkin/tree/v9.2.1) (2024-11-13)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v9.2.0...v9.2.1)
+* Fix `DOMPurify` import. Refs UICHKIN-435.
 
 ## [9.2.0] (https://github.com/folio-org/ui-checkin/tree/v9.2.0) (2024-10-30)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v9.1.1...v9.2.0)
