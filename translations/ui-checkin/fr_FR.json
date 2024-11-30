@@ -93,7 +93,7 @@
     "permission.all": "Retour : toutes les autorisations",
     "statusModal.hold.comment": "<strong>Commentaires usager :</strong> {comment}",
     "statuses.restricted": "Restreint",
-    "itemNotCheckedIn": "Exemplaire non rendu",
+    "itemNotCheckedIn": "L'exemplaire n'a pas pu être rendu",
     "statuses.inProcessNonRequestable": "En traitement (non réservable)",
     "statuses.longMissing": "Manquant depuis longtemps",
     "statuses.unavailable": "Indisponible",
