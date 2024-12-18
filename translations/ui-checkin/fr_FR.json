@@ -49,7 +49,7 @@
     "multipieceModal.item.descriptionOfmissingPieces": "Description des unités manquantes",
     "newFeeFine": "Nouveau frais/amende",
     "action.printHoldSlip": "Imprimer le bordereau",
-    "action.printTransitSlip": "Imprimer le bordereau de transport",
+    "action.printTransitSlip": "Imprimer le bordereau de navette",
     "missingModal.heading": "Exemplaire manquant ?",
     "missingModal.message": "<strong>{title} ({materialType}) </strong> (code-barres : {barcode}) a comme statut : <strong>Manquant</strong> {discoverySuppressMessage}",
     "missingModal.discoverySuppress": "est supprimé",
