@@ -173,7 +173,7 @@ class Scan extends React.Component {
     },
     checkIn: {
       type: 'okapi',
-      path: 'circulation/check-in-by-barcode',
+      path: 'circulation-bff/loans/check-in-by-barcode',
       fetch: false,
       throwErrors: false,
     },
