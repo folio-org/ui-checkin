@@ -1,11 +1,13 @@
 # Change history for ui-checkin
 
-## 10.0.0 IN PROGRESS
+## [10.0.0] (https://github.com/folio-org/ui-checkin/tree/v10.0.0) (2025-01-16)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v9.2.1...v10.0.0)
 
 * *BREAKING* Migrate from `circulation/check-in-by-barcode` to `circulation-bff/loans/check-in-by-barcode`. Refs UICHKIN-437.
 
 ## [9.2.1] (https://github.com/folio-org/ui-checkin/tree/v9.2.1) (2024-11-13)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v9.2.0...v9.2.1)
+
 * Fix `DOMPurify` import. Refs UICHKIN-435.
 
 ## [9.2.0] (https://github.com/folio-org/ui-checkin/tree/v9.2.0) (2024-10-30)
