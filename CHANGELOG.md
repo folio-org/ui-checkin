@@ -1,5 +1,9 @@
 # Change history for ui-checkin
 
+## 10.1.0 IN PROGRESS
+
+* Implement feature toggle for switch between `circulation/check-in-by-barcode` and `circulation-bff/loans/check-in-by-barcode`. Refs UICHKIN-439.
+
 ## [10.0.0] (https://github.com/folio-org/ui-checkin/tree/v10.0.0) (2025-01-16)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v9.2.1...v10.0.0)
 
