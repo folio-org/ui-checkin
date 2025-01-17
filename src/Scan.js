@@ -95,6 +95,9 @@ class Scan extends React.Component {
       checkIn: PropTypes.shape({
         POST: PropTypes.func,
       }),
+      checkInBFF: PropTypes.shape({
+        POST: PropTypes.func,
+      }),
       requests: PropTypes.shape({
         GET: PropTypes.func,
         reset: PropTypes.func,
@@ -172,6 +175,12 @@ class Scan extends React.Component {
       path: `service-points?limit=${MAX_RECORDS}`,
     },
     checkIn: {
+      type: 'okapi',
+      path: 'circulation/check-in-by-barcode',
+      fetch: false,
+      throwErrors: false,
+    },
+    checkInBFF: {
       type: 'okapi',
       path: 'circulation-bff/loans/check-in-by-barcode',
       fetch: false,
@@ -363,13 +372,17 @@ class Scan extends React.Component {
       },
     } = data;
     const {
-      mutator: { checkIn },
+      mutator: {
+        checkIn,
+        checkInBFF,
+      },
       intl: { timeZone },
       okapi,
     } = this.props;
     const {
       itemClaimedReturnedResolution,
     } = this.state;
+    const isEnabledEcsRequests = this.props.stripes?.config?.enableEcsRequests;
 
     const servicePointId = get(okapi, 'currentUser.curServicePoint.id', '');
 
@@ -392,7 +405,9 @@ class Scan extends React.Component {
 
     this.setState({ loading: true });
 
-    return checkIn.POST(requestData)
+    const checkInApiCall = isEnabledEcsRequests ? checkInBFF.POST(requestData) : checkIn.POST(requestData);
+
+    return checkInApiCall
       .then(checkinResp => this.processResponse(checkinResp))
       .then(checkinResp => this.processClaimReturned(checkinResp))
       .then(checkinResp => this.fetchRequests(checkinResp))
