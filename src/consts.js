@@ -55,6 +55,7 @@ export const cancelFeeClaimReturned = {
   TYPE_ACTION: 'Cancelled item returned',
 };
 
+export const PAGE_AMOUNT = 100;
 export const MAX_RECORDS = '1000';
 
 export const DCB_USER_LASTNAME = 'DcbSystem';

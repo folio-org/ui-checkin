@@ -1,11 +1,15 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+
 import {
   Modal,
   Paneset,
   Pane,
   MultiColumnList,
+  MCLPagingTypes,
 } from '@folio/stripes/components';
+
+import { PAGE_AMOUNT } from '../../consts';
 
 import css from './SelectItemModal.css';
 
@@ -52,13 +56,29 @@ const propTypes = {
   checkedinItems: PropTypes.arrayOf(PropTypes.object),
   onClose: PropTypes.func.isRequired,
   onSelectItem: PropTypes.func.isRequired,
+  totalRecords: PropTypes.number.isRequired,
+  onNeedMoreData: PropTypes.func.isRequired,
+  barcode: PropTypes.oneOfType([
+    PropTypes.oneOf([null, PropTypes.string])
+  ]).isRequired,
+  pagingOffset: PropTypes.number.isRequired,
 };
 
 const SelectItemModal = ({
   checkedinItems,
   onClose,
   onSelectItem,
+  totalRecords,
+  onNeedMoreData,
+  barcode,
+  pagingOffset,
 }) => {
+  const getMoreData = (askAmount, index) => {
+    onNeedMoreData(barcode, index);
+  };
+  const pagingCanGoPrevious = pagingOffset > 0;
+  const pagingCanGoNext = pagingOffset < totalRecords && totalRecords - pagingOffset > PAGE_AMOUNT;
+
   return (
     <Modal
       data-testid="selectItemModal"
@@ -77,7 +97,7 @@ const SelectItemModal = ({
         <Pane
           id="check-in-items-list"
           paneTitle={<FormattedMessage id="ui-checkin.selectItemModal.itemListHeader" />}
-          paneSub={<FormattedMessage id="ui-checkin.selectItemModal.resultCount" values={{ count: checkedinItems.length }} />}
+          paneSub={<FormattedMessage id="ui-checkin.selectItemModal.resultCount" values={{ count: totalRecords }} />}
           defaultWidth="fill"
         >
           <MultiColumnList
@@ -90,6 +110,13 @@ const SelectItemModal = ({
             formatter={formatter}
             maxHeight={MAX_HEIGHT}
             onRowClick={onSelectItem}
+            totalCount={totalRecords}
+            onNeedMoreData={getMoreData}
+            pageAmount={PAGE_AMOUNT}
+            pagingType={MCLPagingTypes.PREV_NEXT}
+            pagingCanGoPrevious={pagingCanGoPrevious}
+            pagingCanGoNext={pagingCanGoNext}
+            pagingOffset={pagingOffset}
           />
         </Pane>
       </Paneset>

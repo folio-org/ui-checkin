@@ -28,6 +28,7 @@ import {
   MAX_RECORDS,
   REQUEST_STATUSES,
   ACCOUNT_STATUS_NAMES,
+  PAGE_AMOUNT,
 } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
 import RouteForDeliveryModal from './components/RouteForDeliveryModal';
@@ -222,6 +223,9 @@ class Scan extends React.Component {
       // ModalManager.
       itemClaimedReturnedResolution: null,
       checkedinItems: null,
+      totalRecords: 0,
+      offset: 0,
+      selectedBarcode: null,
     };
   }
 
@@ -604,35 +608,34 @@ class Scan extends React.Component {
     });
   }
 
-  async fetchItems(barcode) {
+  fetchItems = async (barcode, offset = 0) => {
     const { mutator } = this.props;
-    const query = `barcode==${barcode}`;
+    const { selectedBarcode } = this.state;
+    const itemBarcode = barcode || selectedBarcode;
+    const query = `barcode==${itemBarcode}`;
 
     this.setState({
       checkedinItem: null,
-      checkedinItems: null,
     });
     mutator.items.reset();
-    const { items, totalRecords } = await mutator.items.GET({ params: { query, limit: MAX_RECORDS } });
 
-    if (totalRecords > MAX_RECORDS) {
-      // Split the request into chunks to avoid a too long response
-      const remainingItemsCount = totalRecords - MAX_RECORDS;
-      const chunksCount = Math.ceil(remainingItemsCount / MAX_RECORDS);
-      const requestsForItems = [];
-      let offset = 0;
+    const {
+      items,
+      totalRecords,
+    } = await mutator.items.GET({
+      params: {
+        limit: PAGE_AMOUNT,
+        query,
+        offset,
+      },
+    });
 
-      for (let i = 0; i < chunksCount; i++) {
-        offset += MAX_RECORDS;
-        const request = mutator.items.GET({ params: { query, limit: MAX_RECORDS, offset } });
-        requestsForItems.push(request);
-      }
-
-      let remainingItems = await Promise.all(requestsForItems);
-      remainingItems = remainingItems.map(itemResp => itemResp.items).flat();
-
-      return [...items, ...remainingItems];
-    }
+    this.setState({
+      selectedBarcode: itemBarcode,
+      checkedinItems: isEmpty(items) || items.length <= 1 ? null : items,
+      totalRecords,
+      offset,
+    });
 
     return items;
   }
@@ -934,6 +937,9 @@ class Scan extends React.Component {
       staffSlipContext,
       deliveryItem,
       loading,
+      totalRecords,
+      selectedBarcode,
+      offset,
     } = this.state;
 
     return (
@@ -944,6 +950,10 @@ class Scan extends React.Component {
             checkedinItems={checkedinItems}
             onClose={this.handleCloseSelectItemModal}
             onSelectItem={this.handleItemSelection}
+            pagingOffset={offset}
+            totalRecords={totalRecords}
+            barcode={selectedBarcode}
+            onNeedMoreData={this.fetchItems}
           />}
         { /* manages pre checkin modals */}
         {checkedinItem &&

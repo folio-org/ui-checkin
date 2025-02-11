@@ -1,6 +1,7 @@
 # Change history for ui-checkin
 
 ## 10.1.0 IN PROGRESS
+* Add pagination to the Select item dialog. Refs UICHKIN-428.
 
 
 ## [10.0.1] (https://github.com/folio-org/ui-checkin/tree/v10.0.1) (2025-01-23)
