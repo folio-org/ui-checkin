@@ -115,7 +115,7 @@ describe('CheckinNoteModal', () => {
       hideCancel: true,
     });
 
-    fireEvent.click(container.getByRole('button'));
+    fireEvent.click(container.getByText(confirmLabel));
 
     expect(initialProps.onConfirm).toHaveBeenCalled();
   });
@@ -126,7 +126,7 @@ describe('CheckinNoteModal', () => {
       hideConfirm: true,
     });
 
-    fireEvent.click(container.getByRole('button'));
+    fireEvent.click(container.getByText(cancelLabel));
 
     expect(initialProps.onCancel).toHaveBeenCalled();
   });

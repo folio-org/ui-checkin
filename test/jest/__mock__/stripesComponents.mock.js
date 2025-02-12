@@ -78,6 +78,9 @@ jest.mock('@folio/stripes/components', () => ({
     </div>
   )),
   Layout: jest.fn(({ children }) => <div>{children}</div>),
+  MCLPagingTypes: {
+    PREV_NEXT: 'prev-next',
+  },
   Modal: jest.fn(({ children, label, footer, id, ...rest }) => (
     <div
       id={id}
@@ -94,8 +97,18 @@ jest.mock('@folio/stripes/components', () => ({
       {children}
     </div>
   )),
-  MultiColumnList: jest.fn(({ children }) => (
+  MultiColumnList: jest.fn(({
+    children,
+    onNeedMoreData,
+  }) => (
     <div>
+      <button
+        type="button"
+        data-testid="loadMoreButton"
+        onClick={onNeedMoreData}
+      >
+        Load more
+      </button>
       {children}
     </div>
   )),

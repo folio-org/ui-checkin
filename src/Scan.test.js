@@ -10,9 +10,9 @@ import Scan from './Scan';
 import {
   statuses,
   cancelFeeClaimReturned,
-  MAX_RECORDS,
   REQUEST_STATUSES,
   ACCOUNT_STATUS_NAMES,
+  PAGE_AMOUNT,
 } from './consts';
 import {
   buildDateTime,
@@ -337,7 +337,8 @@ describe('Scan', () => {
             const expectedArgument = {
               params: {
                 query: `barcode==${barcode}`,
-                limit: MAX_RECORDS,
+                limit: PAGE_AMOUNT,
+                offset: 0,
               },
             };
 
@@ -947,7 +948,7 @@ describe('Scan', () => {
       });
 
       describe('When information on multiple items is received', () => {
-        const totalRecords = MAX_RECORDS + 1;
+        const totalRecords = PAGE_AMOUNT + 1;
         const items = {
           items: new Array(totalRecords).fill({}),
           totalRecords,
