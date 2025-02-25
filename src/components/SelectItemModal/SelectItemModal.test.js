@@ -10,6 +10,7 @@ import {
   Pane,
   MultiColumnList,
   MCLPagingTypes,
+  NoValue,
 } from '@folio/stripes/components';
 
 import SelectItemModal, {
@@ -34,6 +35,7 @@ describe('SelectItemModal', () => {
 
   describe('formatter', () => {
     const basicItem = {
+      callNumber: 'callNumber',
       status: {
         name: 'statusName',
       },
@@ -52,6 +54,10 @@ describe('SelectItemModal', () => {
     };
 
     describe('when all data exist', () => {
+      it('should return correct "callNumber"', () => {
+        expect(formatter.callNumber(basicItem)).toBe(basicItem.callNumber);
+      });
+
       it('should return correct "status.name"', () => {
         expect(formatter.itemStatus(basicItem)).toBe(basicItem.status.name);
       });
@@ -69,6 +75,17 @@ describe('SelectItemModal', () => {
       });
     });
 
+    describe('when "callNumber" does not have data', () => {
+      const item = {
+        ...basicItem,
+        callNumber: '',
+      };
+
+      it('should return empty string for "callNumber"', () => {
+        expect(formatter.callNumber(item)).toEqual(<NoValue />);
+      });
+    });
+
     describe('when "effectiveLocation" does not have data', () => {
       const item = {
         ...basicItem,
@@ -76,7 +93,7 @@ describe('SelectItemModal', () => {
       };
 
       it('should return empty string for "location"', () => {
-        expect(formatter.location(item)).toBe('');
+        expect(formatter.location(item)).toEqual(<NoValue />);
       });
     });
 
@@ -99,7 +116,7 @@ describe('SelectItemModal', () => {
       };
 
       it('should return empty string for "loanType"', () => {
-        expect(formatter.loanType(item)).toBe('');
+        expect(formatter.loanType(item)).toEqual(<NoValue />);
       });
     });
   });

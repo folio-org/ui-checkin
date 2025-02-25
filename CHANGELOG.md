@@ -6,6 +6,7 @@
 * Migrate to shared GA workflows. Refs UICHKIN-451.
 * Add pagination to the Select item dialog. Refs UICHKIN-428.
 * *BREAKING* Update stripes-* dependencies to latest version. Refs UICHKIN-452.
+* Implement support for fields without information. Refs UICHKIN-454.
 
 ## [10.0.1] (https://github.com/folio-org/ui-checkin/tree/v10.0.1) (2025-01-23)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v10.0.0...v10.0.1)

@@ -6,6 +6,7 @@ import {
 import {
   Icon,
   MultiColumnList,
+  NoValue,
 } from '@folio/stripes/components';
 import { effectiveCallNumber } from '@folio/stripes/util';
 
@@ -168,7 +169,7 @@ describe('CheckedInListItems', () => {
       };
       const inHouseUse = getItemListFormatter(mutator, renderActions)[COLUMNS_NAME.IN_HOUSE_USE](loan);
 
-      expect(inHouseUse).toBe('');
+      expect(inHouseUse).toEqual(<NoValue />);
     });
 
     it('should return status with service point', () => {

@@ -6,6 +6,7 @@ import { get } from 'lodash';
 import {
   Icon,
   MultiColumnList,
+  NoValue,
 } from '@folio/stripes/components';
 import { effectiveCallNumber } from '@folio/stripes/util';
 
@@ -74,7 +75,7 @@ export const getItemListFormatter = (mutator, renderActions) => ({
         icon="house"
         iconClassName={css.houseIcon}
       /> :
-      '';
+      <NoValue />;
   },
   [COLUMNS_NAME.STATUS]: (loan) => {
     const status = `${get(loan, ['item', 'status', 'name'])}`;
@@ -82,7 +83,7 @@ export const getItemListFormatter = (mutator, renderActions) => ({
 
     return (inTransitSp) ? `${status} - ${inTransitSp}` : status;
   },
-  [COLUMNS_NAME.EFFECTIVE_CALL_NUMBER]: (loan) => effectiveCallNumber(loan),
+  [COLUMNS_NAME.EFFECTIVE_CALL_NUMBER]: (loan) => effectiveCallNumber(loan) || <NoValue />,
   [COLUMNS_NAME.ACTION]: (loan) => renderActions(loan),
 });
 
