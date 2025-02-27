@@ -7,6 +7,7 @@ import {
   Pane,
   MultiColumnList,
   MCLPagingTypes,
+  NoValue,
 } from '@folio/stripes/components';
 
 import { PAGE_AMOUNT } from '../../consts';
@@ -44,10 +45,11 @@ export const COLUMN_MAP = {
 };
 
 export const formatter = {
+  callNumber: item => item.callNumber || <NoValue />,
   itemStatus: item => item.status.name,
-  location: item => item.effectiveLocation?.name ?? '',
+  location: item => item.effectiveLocation?.name ?? <NoValue />,
   materialType: item => item.materialType.name,
-  loanType: item => (item.temporaryLoanType?.name || item.permanentLoanType?.name || ''),
+  loanType: item => (item.temporaryLoanType?.name || item.permanentLoanType?.name || <NoValue />),
 };
 
 export const MAX_HEIGHT = 500;
