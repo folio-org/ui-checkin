@@ -107,6 +107,13 @@ describe('convertToSlipData', () => {
       'effectiveLocationLibrary': 'effectiveLocationLibrary',
       'item.effectiveLocationSpecific': 'item.effectiveLocationSpecific',
       'effectiveLocationPrimaryServicePointName': 'effectiveLocationPrimaryServicePointName',
+      'item.accessionNumber': 'accessionNumber',
+      'item.administrativeNotes': 'administrativeNotes',
+      'item.datesOfPublication': 'datesOfPublication',
+      'item.editions': 'editions',
+      'item.physicalDescriptions': 'physicalDescriptions',
+      'item.instanceHrid': 'instanceHrid',
+      'item.instanceHridImage': '<Barcode>instanceHrid</Barcode>',
     },
     request: {
       'servicePointPickup': 'servicePointPickup',
@@ -165,6 +172,13 @@ describe('convertToSlipData', () => {
     expect(o['item.effectiveLocationCampus']).toEqual(source.item.effectiveLocationCampus);
     expect(o['item.effectiveLocationLibrary']).toEqual(source.item.effectiveLocationLibrary);
     expect(o['item.effectiveLocationSpecific']).toEqual(source.item.effectiveLocationSpecific);
+    expect(o['item.accessionNumber']).toEqual(source.item.accessionNumber);
+    expect(o['item.administrativeNotes']).toEqual(source.item.administrativeNotes);
+    expect(o['item.datesOfPublication']).toEqual(source.item.datesOfPublication);
+    expect(o['item.editions']).toEqual(source.item.editions);
+    expect(o['item.physicalDescriptions']).toEqual(source.item.physicalDescriptions);
+    expect(o['item.instanceHrid']).toEqual(source.item.instanceHrid);
+    expect(o['item.instanceHridImage']).toEqual(`<Barcode>${source.item.instanceHrid}</Barcode>`);
 
     expect(o['request.servicePointPickup']).toEqual(source.request.servicePointPickup);
     expect(o['request.deliveryAddressType']).toEqual(source.request.deliveryAddressType);
