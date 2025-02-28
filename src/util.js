@@ -100,6 +100,13 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
     'item.effectiveLocationLibrary': item.effectiveLocationLibrary,
     'item.effectiveLocationSpecific': item.effectiveLocationSpecific,
     'item.effectiveLocationPrimaryServicePointName': item.effectiveLocationPrimaryServicePointName,
+    'item.accessionNumber': item.accessionNumber,
+    'item.administrativeNotes': item.administrativeNotes,
+    'item.datesOfPublication': item.datesOfPublication,
+    'item.editions': item.editions,
+    'item.physicalDescriptions': item.physicalDescriptions,
+    'item.instanceHrid': item.instanceHrid,
+    'item.instanceHridImage': `<Barcode>${item.instanceHrid}</Barcode>`,
     'request.servicePointPickup': request.servicePointPickup,
     'request.deliveryAddressType': request.deliveryAddressType,
     'request.requestExpirationDate': request.requestExpirationDate
