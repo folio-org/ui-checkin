@@ -268,9 +268,11 @@ class CheckIn extends React.Component {
         id,
       },
     } = loan;
+    console.log('SHOW_ITEM_DETAILS');
     const path = `/inventory/view/${instanceId}/${holdingsRecordId}/${id}`;
 
-    this.props.mutator.query.update({ _path: path });
+    // this.props.mutator.query.update({ _path: path });
+    this.props.history.push(path);
   }
 
   async newFeeFine(loan) {
