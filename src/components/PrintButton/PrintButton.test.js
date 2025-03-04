@@ -21,8 +21,9 @@ jest.mock('react-to-print', () => jest.fn(({ children, trigger, ...rest }) => (
   </div>
 )));
 
+const staffSlip = {};
 const defaultProps = {
-  dataSource: {},
+  dataSource: [staffSlip],
   template: 'testTemplate',
   onBeforePrint: jest.fn(),
   onAfterPrint: jest.fn(),
@@ -58,7 +59,7 @@ describe('PrintButton', () => {
   it('"ComponentToPrint" should be called with correct props', () => {
     const expectedProps = {
       template: defaultProps.template,
-      dataSource: defaultProps.dataSource,
+      dataSource: staffSlip,
     };
 
     expect(ComponentToPrint).toHaveBeenCalledWith(expect.objectContaining(expectedProps), {});

@@ -75,3 +75,8 @@ export const REQUEST_STATUSES = {
 export const ACCOUNT_STATUS_NAMES = {
   CLOSED: 'Closed',
 };
+
+export const STAFF_SLIP_TYPES = {
+  TRANSIT: 'Transit',
+  REQUEST_DELIVERY: 'Request delivery',
+};
