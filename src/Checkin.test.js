@@ -123,8 +123,10 @@ jest.mock('./components/CheckInFooter', () => jest.fn(({ handleSessionEnd }) => 
     </button>
   </>
 )));
-jest.mock('./util', () => ({
+jest.mock('@folio/stripes/util', () => ({
   convertToSlipData: jest.fn(),
+}));
+jest.mock('./util', () => ({
   getCheckinSettings: jest.fn(),
   isDcbUser: jest.fn(() => false),
   isDCBItem: jest.fn(() => false)

@@ -142,6 +142,7 @@ const checkinItem = {
 const mockedUuid = '550e8400-e29b-41d4-a716-446655440000';
 
 jest.mock('@folio/stripes/util', () => ({
+  convertToSlipData: jest.fn(),
   escapeCqlValue: jest.fn(value => value),
 }));
 jest.mock('uuid', () => ({
@@ -289,7 +290,6 @@ jest.mock('./components/RouteForDeliveryModal', () => jest.fn(({
 )));
 jest.mock('./util', () => ({
   buildDateTime: jest.fn(),
-  convertToSlipData: jest.fn(),
   getCheckinSettings: jest.fn(),
 }));
 jest.spyOn(React, 'createRef').mockReturnValue(createRefMock);

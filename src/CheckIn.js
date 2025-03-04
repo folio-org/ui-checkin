@@ -29,6 +29,9 @@ import {
   DropdownMenu,
   Dropdown,
 } from '@folio/stripes/components';
+import {
+  convertToSlipData,
+} from '@folio/stripes/util';
 import stripesFinalForm from '@folio/stripes/final-form';
 
 import PrintButton from './components/PrintButton';
@@ -37,11 +40,14 @@ import CheckinDateTime from './components/CheckinDateTime';
 import CheckedInListItems from './components/CheckedInListItems';
 import CheckInFooter from './components/CheckInFooter';
 import {
-  convertToSlipData,
   getCheckinSettings,
   isDcbUser,
   isDCBItem,
 } from './util';
+
+import {
+  STAFF_SLIP_TYPES,
+} from './consts';
 
 import styles from './checkin.css';
 
@@ -339,7 +345,7 @@ class CheckIn extends React.Component {
               data-test-print-hold-slip
               buttonStyle="dropdownItem"
               template={this.getTemplate('hold')}
-              dataSource={convertToSlipData(loan.staffSlipContext, intl, timezone, locale)}
+              dataSource={convertToSlipData([loan.staffSlipContext], intl, timezone, locale)}
             >
               <FormattedMessage id="ui-checkin.action.printHoldSlip" />
             </PrintButton>}
@@ -349,7 +355,9 @@ class CheckIn extends React.Component {
               data-test-print-transit-slip
               buttonStyle="dropdownItem"
               template={this.getTemplate('transit')}
-              dataSource={convertToSlipData(loan.staffSlipContext, intl, timezone, locale, 'Transit')}
+              dataSource={convertToSlipData([loan.staffSlipContext], intl, timezone, locale, {
+                slipName: STAFF_SLIP_TYPES.TRANSIT,
+              })}
             >
               <FormattedMessage id="ui-checkin.action.printTransitSlip" />
             </PrintButton>}
