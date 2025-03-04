@@ -18,7 +18,7 @@ class RouteForDeliveryModal extends React.Component {
     modalContent: PropTypes.node.isRequired,
     open: PropTypes.bool.isRequired,
     slipTemplate: PropTypes.string,
-    slipData: PropTypes.object,
+    slipData: PropTypes.arrayOf(PropTypes.object),
     isPrintableByDefault: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onCloseAndCheckout: PropTypes.func.isRequired,
