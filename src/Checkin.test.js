@@ -50,9 +50,6 @@ const basicProps = {
     },
   },
   mutator: {
-    query: {
-      update: jest.fn(),
-    },
     users: {
       GET: jest.fn().mockResolvedValue([
         {
@@ -66,6 +63,9 @@ const basicProps = {
   showCheckinNotes: jest.fn(),
   loading: false,
   pristine: true,
+  history: {
+    push: jest.fn(),
+  },
 };
 const labelIds = {
   scannedItemsTitle: 'ui-checkin.scannedItems',
@@ -547,9 +547,7 @@ describe('CheckIn', () => {
 
         fireEvent.click(loanDetailsButton);
 
-        expect(basicProps.mutator.query.update).toHaveBeenCalledWith({
-          _path: `/users/view/${loan.userId}?layer=loan&loan=${loan.id}`,
-        });
+        expect(basicProps.history.push).toHaveBeenCalledWith(`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`);
       });
 
       it('should update query pass after clicking on patron details button', () => {
@@ -557,9 +555,7 @@ describe('CheckIn', () => {
 
         fireEvent.click(patronDetailsButton);
 
-        expect(basicProps.mutator.query.update).toHaveBeenCalledWith({
-          _path: `/users/view/${loan.userId}`,
-        });
+        expect(basicProps.history.push).toHaveBeenCalledWith(`/users/view/${loan.userId}`);
       });
 
       it('should update query pass after clicking on item details button', () => {
@@ -567,9 +563,7 @@ describe('CheckIn', () => {
 
         fireEvent.click(itemDetailsButton);
 
-        expect(basicProps.mutator.query.update).toHaveBeenCalledWith({
-          _path: `/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.item.id}`,
-        });
+        expect(basicProps.history.push).toHaveBeenCalledWith(`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.item.id}`);
       });
 
       it('should update query pass after clicking on request details button', () => {
@@ -577,9 +571,7 @@ describe('CheckIn', () => {
 
         fireEvent.click(requestDetailsButton);
 
-        expect(basicProps.mutator.query.update).toHaveBeenCalledWith({
-          _path: `/requests/view/${loan.staffSlipContext.request.requestID}`,
-        });
+        expect(basicProps.history.push).toHaveBeenCalledWith(`/requests/view/${loan.staffSlipContext.request.requestID}`);
       });
 
       it('should trigger get request to receive user information', () => {
@@ -600,9 +592,7 @@ describe('CheckIn', () => {
         fireEvent.click(newFeeFineButton);
 
         await waitFor(() => {
-          expect(basicProps.mutator.query.update).toHaveBeenCalledWith({
-            _path: `/users/view/${loan.userId}?filters=pg.${groupName}&layer=charge&loan=${loan.id}`,
-          });
+          expect(basicProps.history.push).toHaveBeenCalledWith(`/users/view/${loan.userId}?filters=pg.${groupName}&layer=charge&loan=${loan.id}`);
         });
       });
 

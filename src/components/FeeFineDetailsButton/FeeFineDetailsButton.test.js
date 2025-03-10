@@ -11,7 +11,7 @@ import { loan as loanFixture } from '../../../test/jest/fixtures/loan';
 import FeeFineDetailsButton from './FeeFineDetailsButton';
 import { DCB_USER_LASTNAME } from '../../consts';
 
-const mockedQueryUpdate = jest.fn();
+const mockedHistoryPush = jest.fn();
 const labelIds = {
   feeFineDetails: 'ui-checkin.feeFineDetails',
 };
@@ -28,9 +28,9 @@ const renderFeeFineDetailsButton = (loan, accountData) => {
       GET: () => Promise.resolve(accountData),
       cancel: () => new Promise(jest.fn()),
     },
-    query: {
-      update: mockedQueryUpdate,
-    },
+  };
+  const history = {
+    push: mockedHistoryPush,
   };
   pushHistorySpy = jest.fn();
 
@@ -40,6 +40,7 @@ const renderFeeFineDetailsButton = (loan, accountData) => {
       itemId={itemId}
       mutator={parentMutator}
       onClick={pushHistorySpy}
+      history={history}
     />
   );
 };
@@ -94,16 +95,14 @@ describe('FeeFineDetailsButton', () => {
     const feeFineId = accountFixture.accounts[0].id;
 
     it('open fee/fine directly', async () => {
-      const expectedResult = {
-        _path: `/users/${userId}/accounts/view/${feeFineId}`,
-      };
+      const expectedResult = `/users/${userId}/accounts/view/${feeFineId}`;
 
       renderFeeFineDetailsButton(loanFixture, accountFixture);
 
       await waitFor(() => {
         fireEvent.click(screen.getByRole(buttonRole));
 
-        expect(mockedQueryUpdate).toHaveBeenLastCalledWith(expectedResult);
+        expect(mockedHistoryPush).toHaveBeenLastCalledWith(expectedResult);
       });
     });
 
@@ -120,16 +119,14 @@ describe('FeeFineDetailsButton', () => {
           diagnostics: [],
         },
       };
-      const expectedResult = {
-        _path: `/users/${userId}/accounts/open`,
-      };
+      const expectedResult = `/users/${userId}/accounts/open`;
 
       renderFeeFineDetailsButton(loanFixture, accountDataWithTwoOpenFeeFines);
 
       await waitFor(() => {
         fireEvent.click(screen.getByRole(buttonRole));
 
-        expect(mockedQueryUpdate).toHaveBeenLastCalledWith(expectedResult);
+        expect(mockedHistoryPush).toHaveBeenLastCalledWith(expectedResult);
       });
     });
 
@@ -149,16 +146,14 @@ describe('FeeFineDetailsButton', () => {
           diagnostics: [],
         },
       };
-      const expectedResult = {
-        _path: `/users/${userId}/accounts/view/closedFeeFineId`,
-      };
+      const expectedResult = `/users/${userId}/accounts/view/closedFeeFineId`;
 
       renderFeeFineDetailsButton(loanFixture, accountDataWithOneClosedFeeFine);
 
       await waitFor(() => {
         fireEvent.click(screen.getByRole(buttonRole));
 
-        expect(mockedQueryUpdate).toHaveBeenLastCalledWith(expectedResult);
+        expect(mockedHistoryPush).toHaveBeenLastCalledWith(expectedResult);
       });
     });
 
@@ -181,16 +176,14 @@ describe('FeeFineDetailsButton', () => {
           diagnostics: [],
         },
       };
-      const expectedResult = {
-        _path: `/users/${userId}/accounts/closed`,
-      };
+      const expectedResult = `/users/${userId}/accounts/closed`;
 
       renderFeeFineDetailsButton(loanFixture, accountDataWithTwoClosedFeeFines);
 
       await waitFor(() => {
         fireEvent.click(screen.getByRole(buttonRole));
 
-        expect(mockedQueryUpdate).toHaveBeenLastCalledWith(expectedResult);
+        expect(mockedHistoryPush).toHaveBeenLastCalledWith(expectedResult);
       });
     });
   });
