@@ -72,7 +72,7 @@
     "withdrawnModal.heading": "Vrátit staženou jednotku?",
     "withdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Čárový kód: {barcode}) má stav jednotky <strong>Stažena </strong> a je vyřazena z vyhledávání.",
     "withdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Čárový kód: {barcode}) má stav jednotky <strong>Stažena</strong>.",
-    "claimedReturnedModal.label": "Vrácení jednotky označené jako údajně vrácená",
+    "claimedReturnedModal.label": "Vrácení jednotky označené jako prohlášena za vrácenou",
     "claimedReturnedModal.message": "<strong>{title}</strong> (<strong>{materialType}</strong>) (Čárový kód: {barcode}) byla <strong>označena jako údajně vrácená</strong>.",
     "claimedReturnedModal.resolution.found": "Nalezeno knihovnou",
     "claimedReturnedModal.resolution.returned": "Vráceno čtenářem",
