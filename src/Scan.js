@@ -14,7 +14,10 @@ import {
 } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 
-import { escapeCqlValue } from '@folio/stripes/util';
+import {
+  escapeCqlValue,
+  convertToSlipData,
+} from '@folio/stripes/util';
 import {
   Modal,
   ModalFooter,
@@ -29,6 +32,7 @@ import {
   REQUEST_STATUSES,
   ACCOUNT_STATUS_NAMES,
   PAGE_AMOUNT,
+  STAFF_SLIP_TYPES,
 } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
 import RouteForDeliveryModal from './components/RouteForDeliveryModal';
@@ -37,11 +41,8 @@ import ModalManager from './ModalManager';
 
 import {
   buildDateTime,
-  convertToSlipData,
   getCheckinSettings,
 } from './util';
-
-const REQUEST_DELIVERY_HEADING = 'Request delivery';
 
 class Scan extends React.Component {
   static propTypes = {
@@ -730,7 +731,7 @@ class Scan extends React.Component {
       item = {},
       patronComments,
     } = request;
-    const slipData = convertToSlipData(staffSlipContext, intl, timezone, locale);
+    const slipData = convertToSlipData([staffSlipContext], intl, timezone, locale);
     const messages = [
       <FormattedMessage
         id="ui-checkin.statusModal.hold.message"
@@ -779,7 +780,9 @@ class Scan extends React.Component {
       },
     } = this.props;
 
-    const slipData = convertToSlipData(staffSlipContext, intl, timezone, locale, REQUEST_DELIVERY_HEADING);
+    const slipData = convertToSlipData([staffSlipContext], intl, timezone, locale, {
+      slipName: STAFF_SLIP_TYPES.REQUEST_DELIVERY,
+    });
     const message = (
       <FormattedMessage
         id="ui-checkin.statusModal.delivery.message"
@@ -831,7 +834,9 @@ class Scan extends React.Component {
     } = this.props;
 
     const { item = {} } = loan;
-    const slipData = convertToSlipData(staffSlipContext, intl, timezone, locale, 'Transit');
+    const slipData = convertToSlipData([staffSlipContext], intl, timezone, locale, {
+      slipName: STAFF_SLIP_TYPES.TRANSIT,
+    });
 
     const destinationServicePoint = get(item, 'inTransitDestinationServicePoint.name', '');
     const messages = [

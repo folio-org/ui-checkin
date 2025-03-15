@@ -8,7 +8,8 @@
 * Add pagination to the Select item dialog. Refs UICHKIN-428.
 * *BREAKING* Update stripes-* dependencies to latest version. Refs UICHKIN-452.
 * Implement support for fields without information. Refs UICHKIN-454.
-* Add support for new printing tokens in hold slips. Fixes UICHKIN-457.
+* Add support for new printing tokens in hold slips. Refs UICHKIN-457.
+* *BREAKING* Use `convertToSlipData` and supporting functions from `stripes-util`. Refs UICHKIN-456.
 
 ## [10.0.1] (https://github.com/folio-org/ui-checkin/tree/v10.0.1) (2025-01-23)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v10.0.0...v10.0.1)
