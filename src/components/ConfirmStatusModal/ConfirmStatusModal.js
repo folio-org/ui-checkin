@@ -98,7 +98,7 @@ ConfirmStatusModal.propTypes = {
   open: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   slipTemplate: PropTypes.string,
-  slipData: PropTypes.object,
+  slipData: PropTypes.arrayOf(PropTypes.object),
   isPrintable: PropTypes.bool,
 };
 
