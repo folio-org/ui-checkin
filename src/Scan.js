@@ -86,9 +86,6 @@ class Scan extends React.Component {
         GET: PropTypes.func.isRequired,
         POST: PropTypes.func.isRequired,
       }),
-      query: PropTypes.shape({
-        update: PropTypes.func,
-      }),
       items: PropTypes.shape({
         GET: PropTypes.func,
         PUT: PropTypes.func,
@@ -134,7 +131,6 @@ class Scan extends React.Component {
   static manifest = Object.freeze({
     scannedItems: { initialValue: [] },
     checkInSession: { initialValue: {} },
-    query: { initialValue: {} },
     accounts: {
       type: 'okapi',
       accumulate: 'true',

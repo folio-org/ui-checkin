@@ -23,9 +23,9 @@ class FeeFineDetailsButton extends React.Component {
         GET: PropTypes.func.isRequired,
         cancel: PropTypes.func.isRequired,
       }).isRequired,
-      query: PropTypes.shape({
-        update: PropTypes.func.isRequired,
-      }).isRequired,
+    }).isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
     }).isRequired,
   }
 
@@ -86,12 +86,10 @@ class FeeFineDetailsButton extends React.Component {
     event.stopPropagation();
 
     const {
-      mutator,
+      history,
     } = this.props;
 
-    mutator.query.update({
-      _path: this.getPath(),
-    });
+    history.push(this.getPath());
   };
 
   getPath = () => {

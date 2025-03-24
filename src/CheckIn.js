@@ -78,15 +78,15 @@ class CheckIn extends React.Component {
       app: PropTypes.arrayOf(PropTypes.object),
     }),
     mutator: PropTypes.shape({
-      query: PropTypes.shape({
-        update: PropTypes.func,
-      }),
       users: PropTypes.shape({
         GET: PropTypes.func,
       }),
     }).isRequired,
     loading: PropTypes.bool.isRequired,
     form: PropTypes.object.isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
   };
 
   constructor(props) {
@@ -237,9 +237,7 @@ class CheckIn extends React.Component {
   }
 
   showLoanDetails(loan) {
-    this.props.mutator.query.update({
-      _path: `/users/view/${loan.userId}?layer=loan&loan=${loan.id}`,
-    });
+    this.props.history.push(`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`);
   }
 
   showCheckinNotes(loan) {
@@ -247,9 +245,7 @@ class CheckIn extends React.Component {
   }
 
   showPatronDetails(loan) {
-    this.props.mutator.query.update({
-      _path: `/users/view/${loan.userId}`,
-    });
+    this.props.history.push(`/users/view/${loan.userId}`);
   }
 
   showRequestDetails(loan) {
@@ -261,9 +257,7 @@ class CheckIn extends React.Component {
       },
     } = loan;
 
-    this.props.mutator.query.update({
-      _path: `/requests/view/${requestID}`,
-    });
+    this.props.history.push(`/requests/view/${requestID}`);
   }
 
   showItemDetails(loan) {
@@ -276,7 +270,7 @@ class CheckIn extends React.Component {
     } = loan;
     const path = `/inventory/view/${instanceId}/${holdingsRecordId}/${id}`;
 
-    this.props.mutator.query.update({ _path: path });
+    this.props.history.push(path);
   }
 
   async newFeeFine(loan) {
@@ -291,7 +285,7 @@ class CheckIn extends React.Component {
     const pg = (patronGroups.find(p => p.id === patron) || {}).group;
     const path = `/users/view/${loan.userId}?filters=pg.${pg}&layer=charge&loan=${loan.id}`;
 
-    this.props.mutator.query.update({ _path: path });
+    this.props.history.push(path);
   }
 
   getTemplate(type) {
@@ -415,6 +409,7 @@ class CheckIn extends React.Component {
               userId={loan.userId}
               itemId={loan.itemId}
               mutator={this.props.mutator}
+              history={this.props.history}
             />
           </IfPermission>
           {loan.userId && !isVirtualUser &&
