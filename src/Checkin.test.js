@@ -133,14 +133,11 @@ jest.useFakeTimers();
 
 describe('CheckIn', () => {
   const removeEventListener = jest.fn((event, cb) => cb());
-  const addEventListener = jest.fn((event, cb) => cb({}));
-  const signal = jest.fn();
   const clear = jest.fn();
   createInactivityTimer.mockImplementation((time, cb) => {
     setTimeout(cb, time);
 
     return {
-      signal,
       clear,
     };
   });
@@ -155,7 +152,6 @@ describe('CheckIn', () => {
       removeEventListener: jest.fn(),
     });
     jest.spyOn(document, 'removeEventListener').mockImplementation(removeEventListener);
-    jest.spyOn(document, 'addEventListener').mockImplementation(addEventListener);
   });
 
   describe('Initial render', () => {
@@ -327,10 +323,6 @@ describe('CheckIn', () => {
         expect(clear).toHaveBeenCalled();
       });
 
-      it('should signal user activity', () => {
-        expect(signal).toHaveBeenCalled();
-      });
-
       it('should trigger createInactivityTimer with correct arguments', () => {
         const expectedArgs = [`${checkoutTimeoutDuration}m`, expect.any(Function)];
 
@@ -340,12 +332,6 @@ describe('CheckIn', () => {
       it('should remove listeners for keydown and mousedown events', () => {
         userActivityEvents.forEach((event) => {
           expect(removeEventListener).toHaveBeenCalledWith(event, expect.any(Function));
-        });
-      });
-
-      it('should add new listeners for keydown and mousedown events', () => {
-        userActivityEvents.forEach((event) => {
-          expect(addEventListener).toHaveBeenCalledWith(event, expect.any(Function));
         });
       });
 

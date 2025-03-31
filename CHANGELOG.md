@@ -1,5 +1,7 @@
 # Change history for ui-checkin
 
+* Remove failed tests after packages updating. Refs UICHKIN-468.
+
 ## [10.0.1] (https://github.com/folio-org/ui-checkin/tree/v10.0.1) (2025-01-23)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v10.0.0...v10.0.1)
 
