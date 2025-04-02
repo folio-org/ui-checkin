@@ -5,7 +5,6 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
-import moment from 'moment-timezone';
 import createInactivityTimer from 'inactivity-timer';
 import {
   get,
@@ -28,6 +27,7 @@ import {
   Col,
   DropdownMenu,
   Dropdown,
+  dayjs,
 } from '@folio/stripes/components';
 import {
   convertToSlipData,
@@ -216,7 +216,7 @@ class CheckIn extends React.Component {
         timeZone,
       },
     } = this.props;
-    const now = moment().tz(timeZone);
+    const now = dayjs().tz(timeZone);
     const formattedDate = now.format('YYYY-MM-DD');
     const formattedTime = formatTime(now);
 

@@ -1,8 +1,11 @@
-import moment from 'moment-timezone';
 import {
   escape,
   includes,
 } from 'lodash';
+
+import {
+  dayjs,
+} from '@folio/stripes/components';
 
 import {
   DCB_USER,
@@ -31,12 +34,12 @@ export function buildTemplate(str) {
 export function buildDateTime(date, time, timezone, now) {
   if (date && time && timezone) {
     const formattedDate = date.substring(0, 10);
-    const formattedTime = moment(time, ['HH:mm', 'HH:mm a']).format('HH:mm');
-    const effectiveReturnDate = moment.tz(`${formattedDate}T${formattedTime}`, timezone);
+    const formattedTime = dayjs(`${date} ${time}`).format('HH:mm');
+    const effectiveReturnDate = dayjs.tz(`${formattedDate}T${formattedTime}`, timezone);
 
     return effectiveReturnDate.toISOString();
   } else {
-    return moment(now).toISOString();
+    return dayjs(now).toISOString();
   }
 }
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment-timezone';
 import {
   FormattedMessage,
   injectIntl,
@@ -22,6 +21,7 @@ import {
   Modal,
   ModalFooter,
   Button,
+  dayjs,
 } from '@folio/stripes/components';
 
 import CheckIn from './CheckIn';
@@ -387,7 +387,7 @@ class Scan extends React.Component {
 
     const servicePointId = get(okapi, 'currentUser.curServicePoint.id', '');
 
-    const checkInDate = buildDateTime(checkinDate, checkinTime, timeZone, moment().tz(timeZone));
+    const checkInDate = buildDateTime(checkinDate, checkinTime, timeZone, dayjs().tz(timeZone));
 
     await this.getSessionId();
 
@@ -651,7 +651,7 @@ class Scan extends React.Component {
         },
       } = this.checkInData;
 
-      scannedItem.returnDate = buildDateTime(checkinDate, checkinTime, timeZone, moment().tz(timeZone));
+      scannedItem.returnDate = buildDateTime(checkinDate, checkinTime, timeZone, dayjs().tz(timeZone));
     }
     scannedItem.loanId = loan?.id || '';
     scannedItem.nextRequest = nextRequest;
