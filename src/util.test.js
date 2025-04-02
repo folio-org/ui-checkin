@@ -1,7 +1,10 @@
-import moment from 'moment-timezone';
 import {
   escape,
 } from 'lodash';
+
+import {
+  dayjs,
+} from '@folio/stripes/components';
 
 import {
   buildDateTime,
@@ -55,48 +58,61 @@ describe('buildTemplate', () => {
 });
 
 describe('buildDateTime', () => {
-  it('without separate date/time input, returns the "now" value', () => {
-    const ts = '2021-02-14T18:14:16.000Z';
-    const v = buildDateTime('', '', 'UTC', ts);
+  describe('When date, time and timezone are provided', () => {
+    const date = '2021-10-05';
+    const time = '12:14:00';
+    const timezone = 'America/New_York';
+    const timeFormat = 'HH:mm';
+    const formattedTime = '12:14';
+    const isoString = 'Wed Oct 05 2021 12:14:00 GMT-0400';
+    const format = jest.fn(() => formattedTime);
+    const toISOString = jest.fn(() => isoString);
+    const tz = jest.fn(() => ({
+      toISOString,
+    }));
 
-    expect(v).toEqual(ts);
+    beforeEach(() => {
+      dayjs.mockImplementation(() => ({
+        format,
+      }));
+      dayjs.tz = tz;
+    });
+
+    it('should generate time in "HH:mm" format', () => {
+      buildDateTime(date, time, timezone);
+
+      expect(format).toHaveBeenCalledWith(timeFormat);
+    });
+
+    it('should get timezone information with correct arguments', () => {
+      buildDateTime(date, time, timezone);
+
+      expect(tz).toHaveBeenCalledWith(`${date}T${formattedTime}`, timezone);
+    });
+
+    it('should return data format in ISO string', () => {
+      const result = buildDateTime(date, time, timezone);
+
+      expect(result).toBe(isoString);
+    });
   });
 
-  it('given an effective-return-date, returns an ISO-8601 string', () => {
-    const d = '2021-02-14';
-    const t = '12:14:00';
-    const z = 'America/New_York';
-    const now = moment(d).tz(z);
-    const v = buildDateTime(d, t, z, now);
+  describe('When date, time or timezone are not provided', () => {
+    const isoString = 'Wed Oct 05 2021 12:14:00 GMT-0400';
+    const now = '2021-10-05T12:14:00';
+    const toISOString = jest.fn(() => isoString);
 
-    expect(v).toMatch('2021-02-14T17:14:00.000Z');
-  });
+    beforeEach(() => {
+      dayjs.mockImplementation(() => ({
+        toISOString,
+      }));
+    });
 
-  it('given an effective return date in non-DST, currenty in DST, returns an ISO-8601 string', () => {
-    const d = '2021-03-13';
-    const t = '12:14:00';
-    const z = 'America/New_York';
+    it('should return data format in ISO string', () => {
+      const result = buildDateTime(null, null, null, now);
 
-    const now = moment('2021-03-14T12:14:00').tz(z);
-    const v = buildDateTime(d, t, z, now);
-
-    // America/New_York is offset -4 hrs in DST, -5 hours in non-DST.
-    // expect to match the non-DST offset of 5 hours in UTC time...
-    const expected = moment.tz(`${d}T${t}`, 'UTC').add(5, 'hours').toISOString();
-    expect(v).toMatch(expected);
-  });
-
-  it('given an effective return date in DST, currently non-DST, returns an ISO-8601 string', () => {
-    const d = '2021-11-06';
-    const t = '12:14:00';
-    const z = 'America/New_York';
-    const now = moment('2021-11-07T12:14:00').tz(z);
-    const v = buildDateTime(d, t, z, now);
-
-    // America/New_York is offset -4 hrs in DST, -5 hours in non-DST.
-    // expect to match the DST offset of 4 hours in UTC time...
-    const expected = moment.tz(`${d}T${t}`, 'UTC').add(4, 'hours').toISOString();
-    expect(v).toMatch(expected);
+      expect(result).toBe(isoString);
+    });
   });
 });
 

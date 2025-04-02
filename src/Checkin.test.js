@@ -88,11 +88,6 @@ const testIds = {
 };
 const userActivityEvents = ['keydown', 'mousedown'];
 
-jest.mock('moment-timezone', () => jest.fn(() => ({
-  tz: () => ({
-    format: jest.fn(),
-  }),
-})));
 jest.mock('inactivity-timer', () => jest.fn());
 jest.mock('./components/PrintButton', () => jest.fn(({ children }) => (
   <button type="button">
