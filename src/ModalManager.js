@@ -30,8 +30,16 @@ import css from './ModalManager.css';
 
 class ModalManager extends React.Component {
   static propTypes = {
-    intl: PropTypes.object,
-    checkedinItem: PropTypes.object.isRequired,
+    intl: PropTypes.shape({
+      formatMessage: PropTypes.func.isRequired,
+    }).isRequired,
+    checkedinItem: PropTypes.shape({
+      title: PropTypes.string,
+      barcode: PropTypes.string,
+      materialType:  PropTypes.shape({
+        name: PropTypes.string,
+      }),
+    }).isRequired,
     checkinNotesMode: PropTypes.bool,
     claimedReturnedHandler: PropTypes.func,
     onDone: PropTypes.func.isRequired,

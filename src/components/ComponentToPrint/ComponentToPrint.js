@@ -6,6 +6,10 @@ import DOMPurify from 'dompurify';
 
 import { buildTemplate } from '../../util';
 
+import {
+  SLIP_DATA_PROP_TYPES,
+} from '../../consts';
+
 export const shouldProcessNode = node => node.name === 'barcode';
 
 export const processNode = (node, children) => (<Barcode value={children[0] ? children[0].trim() : ' '} />);
@@ -13,7 +17,7 @@ export const processNode = (node, children) => (<Barcode value={children[0] ? ch
 class ComponentToPrint extends React.Component {
   static propTypes = {
     template: PropTypes.string.isRequired,
-    dataSource: PropTypes.object.isRequired,
+    dataSource: SLIP_DATA_PROP_TYPES,
   };
 
   constructor(props) {

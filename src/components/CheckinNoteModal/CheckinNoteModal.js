@@ -14,9 +14,21 @@ import css from './CheckinNoteModal.css';
 const propTypes = {
   cancelLabel: PropTypes.node,
   confirmLabel: PropTypes.node,
-  columnMapping: PropTypes.object,
-  columnWidths: PropTypes.object,
-  formatter: PropTypes.object,
+  columnMapping: PropTypes.shape({
+    date: PropTypes.string,
+    note: PropTypes.string,
+    source: PropTypes.string,
+  }),
+  columnWidths: PropTypes.shape({
+    date: PropTypes.string,
+    note: PropTypes.string,
+    source: PropTypes.string,
+  }),
+  formatter: PropTypes.shape({
+    date: PropTypes.func,
+    note: PropTypes.func,
+    source: PropTypes.func,
+  }),
   heading: PropTypes.node.isRequired,
   hideCancel: PropTypes.bool,
   hideConfirm: PropTypes.bool,
@@ -25,7 +37,11 @@ const propTypes = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]),
-  notes: PropTypes.arrayOf(PropTypes.object),
+  notes: PropTypes.arrayOf(PropTypes.shape({
+    date: PropTypes.string,
+    note: PropTypes.string,
+    source: PropTypes.string,
+  })),
   onCancel: PropTypes.func.isRequired,
   onConfirm: PropTypes.func,
   open: PropTypes.bool.isRequired,

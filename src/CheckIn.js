@@ -46,6 +46,7 @@ import {
 } from './util';
 
 import {
+  SLIPS_DATA_PROP_TYPES,
   STAFF_SLIP_TYPES,
 } from './consts';
 
@@ -53,9 +54,31 @@ import styles from './checkin.css';
 
 class CheckIn extends React.Component {
   static propTypes = {
-    stripes: PropTypes.object.isRequired,
-    intl: PropTypes.object,
-    scannedItems: PropTypes.arrayOf(PropTypes.object),
+    stripes: PropTypes.shape({
+      timezone: PropTypes.string.isRequired,
+      locale: PropTypes.string.isRequired,
+    }).isRequired,
+    intl: PropTypes.shape({
+      formatMessage: PropTypes.func.isRequired,
+      formatTime: PropTypes.func.isRequired,
+      timeZone: PropTypes.string.isRequired,
+    }).isRequired,
+    scannedItems: PropTypes.arrayOf({
+      title: PropTypes.string,
+      materialType: PropTypes.shape({
+        name: PropTypes.string,
+      }),
+      barcode: PropTypes.string,
+      location: PropTypes.shape({
+        name: PropTypes.string,
+      }),
+      status: PropTypes.shape({
+        name: PropTypes.string,
+      }),
+      inTransitDestinationServicePoint: PropTypes.shape({
+        name: PropTypes.string,
+      }),
+    }),
     showCheckinNotes: PropTypes.func,
     handleSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
@@ -63,19 +86,41 @@ class CheckIn extends React.Component {
     barcodeRef: PropTypes.shape({
       current: PropTypes.instanceOf(Element),
     }),
-    checkinFormRef: PropTypes.object,
+    checkinFormRef: PropTypes.shape({
+      current: PropTypes.instanceOf(Element),
+    }),
     onSessionEnd: PropTypes.func,
     resources: PropTypes.shape({
       checkinSettings: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
+        records: PropTypes.arrayOf(PropTypes.shape({
+          checkoutTimeout: PropTypes.bool,
+          checkoutTimeoutDuration: PropTypes.string,
+        })),
       }),
-      scannedItems: PropTypes.arrayOf(PropTypes.object),
+      scannedItems: PropTypes.arrayOf({
+        title: PropTypes.string,
+        materialType: PropTypes.shape({
+          name: PropTypes.string,
+        }),
+        barcode: PropTypes.string,
+        location: PropTypes.shape({
+          name: PropTypes.string,
+        }),
+        status: PropTypes.shape({
+          name: PropTypes.string,
+        }),
+        inTransitDestinationServicePoint: PropTypes.shape({
+          name: PropTypes.string,
+        }),
+      }),
       staffSlips: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
+        records: SLIPS_DATA_PROP_TYPES,
       }),
     }),
     modules: PropTypes.shape({
-      app: PropTypes.arrayOf(PropTypes.object),
+      app: PropTypes.arrayOf(PropTypes.shape({
+        module: PropTypes.string,
+      })),
     }),
     mutator: PropTypes.shape({
       users: PropTypes.shape({
@@ -83,7 +128,10 @@ class CheckIn extends React.Component {
       }),
     }).isRequired,
     loading: PropTypes.bool.isRequired,
-    form: PropTypes.object.isRequired,
+    form: PropTypes.shape({
+      change: PropTypes.func,
+      getState: PropTypes.func,
+    }).isRequired,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,

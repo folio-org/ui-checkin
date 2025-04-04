@@ -5,6 +5,7 @@
 * *BREAKING* Use `convertToSlipData` and supporting functions from `stripes-util`. Refs UICHKIN-456.
 * Remove failed tests after packages updating. Refs UICHKIN-468.
 * Replace moment with day.js. Refs UICHKIN-467.
+* Reduce count of eslint errors after update eslint-config-stripes. Refs UICHKIN-466.
 
 ## [11.0.0] (https://github.com/folio-org/ui-checkin/tree/v11.0.0) (2025-03-14)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v10.0.1...v11.0.0)

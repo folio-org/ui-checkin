@@ -77,8 +77,15 @@ const ReturnedTime = ({
 };
 
 ReturnedTime.propTypes = {
-  intl: PropTypes.object.isRequired,
-  mutator: PropTypes.object.isRequired,
+  intl: PropTypes.shape({
+    formatTime: PropTypes.func.isRequired,
+  }).isRequired,
+  mutator: PropTypes.shape({
+    accounts: PropTypes.shape({
+      GET: PropTypes.func.isRequired,
+      cancel: PropTypes.func.isRequired,
+    }).isRequired,
+  }).isRequired,
   loan: PropTypes.shape({
     id: PropTypes.string,
     itemId: PropTypes.string,

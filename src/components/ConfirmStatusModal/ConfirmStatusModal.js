@@ -13,6 +13,10 @@ import {
 
 import PrintButton from '../PrintButton';
 
+import {
+  SLIPS_DATA_PROP_TYPES,
+} from '../../consts';
+
 const ConfirmStatusModal = (props) => {
   const {
     onConfirm,
@@ -98,7 +102,7 @@ ConfirmStatusModal.propTypes = {
   open: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   slipTemplate: PropTypes.string,
-  slipData: PropTypes.arrayOf(PropTypes.object),
+  slipData: SLIPS_DATA_PROP_TYPES,
   isPrintable: PropTypes.bool,
 };
 
