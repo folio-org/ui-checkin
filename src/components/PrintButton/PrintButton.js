@@ -7,13 +7,18 @@ import {
 } from '@folio/stripes/components';
 
 import ComponentToPrint from '../ComponentToPrint';
+
+import {
+  SLIPS_DATA_PROP_TYPES,
+} from '../../consts';
+
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import '!style-loader!css-loader!./quillEditor.css';
 import css from './PrintButton.css';
 
 class PrintButton extends React.Component {
   static propTypes = {
-    dataSource: PropTypes.arrayOf(PropTypes.object),
+    dataSource: SLIPS_DATA_PROP_TYPES,
     template: PropTypes.string,
     onBeforePrint: PropTypes.func,
     onAfterPrint: PropTypes.func,

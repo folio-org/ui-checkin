@@ -33,6 +33,7 @@ import {
   ACCOUNT_STATUS_NAMES,
   PAGE_AMOUNT,
   STAFF_SLIP_TYPES,
+  SLIPS_DATA_PROP_TYPES,
 } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
 import RouteForDeliveryModal from './components/RouteForDeliveryModal';
@@ -46,11 +47,35 @@ import {
 
 class Scan extends React.Component {
   static propTypes = {
-    intl: PropTypes.object,
-    stripes: PropTypes.object,
+    intl: PropTypes.shape({
+      formatMessage: PropTypes.func.isRequired,
+      timeZone: PropTypes.string.isRequired,
+    }).isRequired,
+    stripes: PropTypes.shape({
+      timezone: PropTypes.string.isRequired,
+      locale: PropTypes.string.isRequired,
+      store: PropTypes.shape({
+        getState: PropTypes.func.isRequired,
+      }).isRequired,
+      user: PropTypes.shape({
+        curServicePoint: PropTypes.shape({
+          id: PropTypes.string,
+        }),
+      }),
+      config: PropTypes.shape({
+        enableEcsRequests: PropTypes.bool,
+      }),
+    }).isRequired,
     resources: PropTypes.shape({
       accounts: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
+        records: PropTypes.arrayOf(PropTypes.shape({
+          id: PropTypes.string,
+          feeFineType: PropTypes.string,
+          amount: PropTypes.string,
+          paymentStatus: PropTypes.shape({
+            name: PropTypes.string,
+          }),
+        })),
       }),
       scannedItems: PropTypes.arrayOf(
         PropTypes.shape({
@@ -61,19 +86,32 @@ class Scan extends React.Component {
         sessionId: PropTypes.string,
       }),
       requests: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
+        records: PropTypes.arrayOf(PropTypes.shape({
+          item: PropTypes.shape({
+            barcode: PropTypes.string,
+          }),
+        })),
       }),
       staffSlips: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
+        records: SLIPS_DATA_PROP_TYPES,
       }),
       servicePoints: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
+        records: PropTypes.arrayOf(PropTypes.shape({
+          id: PropTypes.string,
+        })),
       }),
       items: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
+        records: PropTypes.arrayOf(PropTypes.shape({
+          item: PropTypes.shape({
+            barcode: PropTypes.string,
+          }),
+        })),
       }),
       checkinSettings: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
+        records: PropTypes.arrayOf(PropTypes.shape({
+          checkoutTimeout: PropTypes.bool,
+          checkoutTimeoutDuration: PropTypes.string,
+        })),
       }),
     }),
 
@@ -124,7 +162,14 @@ class Scan extends React.Component {
       push: PropTypes.func,
     }),
     okapi: PropTypes.shape({
-      currentUser: PropTypes.object.isRequired,
+      currentUser: PropTypes.shape({
+        id: PropTypes.string,
+        lastName: PropTypes.string,
+        firstName: PropTypes.string,
+        curServicePoint: PropTypes.shape({
+          id: PropTypes.string,
+        }),
+      }).isRequired
     }).isRequired,
   };
 

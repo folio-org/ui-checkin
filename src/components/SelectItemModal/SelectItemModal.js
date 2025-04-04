@@ -55,7 +55,24 @@ export const formatter = {
 export const MAX_HEIGHT = 500;
 
 const propTypes = {
-  checkedinItems: PropTypes.arrayOf(PropTypes.object),
+  checkedinItems: PropTypes.arrayOf(PropTypes.shape({
+    callNumber: PropTypes.string,
+    status: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+    effectiveLocation: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+    materialType: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+    temporaryLoanType: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+    permanentLoanType: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+  })),
   onClose: PropTypes.func.isRequired,
   onSelectItem: PropTypes.func.isRequired,
   totalRecords: PropTypes.number.isRequired,
