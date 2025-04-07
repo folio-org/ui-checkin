@@ -12,13 +12,17 @@ import {
 
 import PrintButton from '../PrintButton';
 
+import {
+  SLIPS_DATA_PROP_TYPES,
+} from '../../consts';
+
 class RouteForDeliveryModal extends React.Component {
   static propTypes = {
     label: PropTypes.node.isRequired,
     modalContent: PropTypes.node.isRequired,
     open: PropTypes.bool.isRequired,
     slipTemplate: PropTypes.string,
-    slipData: PropTypes.arrayOf(PropTypes.object),
+    slipData: SLIPS_DATA_PROP_TYPES,
     isPrintableByDefault: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onCloseAndCheckout: PropTypes.func.isRequired,

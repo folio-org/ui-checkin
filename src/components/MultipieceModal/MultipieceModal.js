@@ -98,11 +98,23 @@ const MultipieceModal = (props) => {
 };
 
 MultipieceModal.propTypes = {
-  intl: PropTypes.object.isRequired,
+  intl: PropTypes.shape({
+    formatMessage: PropTypes.func.isRequired,
+  }).isRequired,
   open: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  item: PropTypes.object,
+  item: PropTypes.shape({
+    title: PropTypes.string,
+    barcode: PropTypes.string,
+    materialType: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+    descriptionOfPieces: PropTypes.string,
+    numberOfPieces: PropTypes.string,
+    numberOfMissingPieces: PropTypes.string,
+    missingPieces: PropTypes.string,
+  }),
 };
 
 export default injectIntl(MultipieceModal);
