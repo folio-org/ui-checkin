@@ -93,7 +93,7 @@
     "permission.all": "Všechna oprávnění Návratu",
     "statusModal.hold.comment": "<strong>Komentáře patrona:</strong> {comment}",
     "statuses.restricted": "Omezený",
-    "itemNotCheckedIn": "Jednotka není vrácena",
+    "itemNotCheckedIn": "Jednotka nebyla vrácena",
     "statuses.inProcessNonRequestable": "Probíhá (nevyžadováno)",
     "statuses.longMissing": "Dlouho chybějící",
     "statuses.unavailable": "Nedostupný",

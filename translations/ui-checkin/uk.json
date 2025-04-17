@@ -21,7 +21,7 @@
     "itemNoExist": "Примірника з таким штрихкодом не існує",
     "userNoExist": "Користувача {userId} не існує",
     "fillOut": "Будь ласка, заповніть цю форму, щоб продовжити",
-    "meta.title": "Check in",
+    "meta.title": "Повернення",
     "today": "сьогодні",
     "now": "зараз",
     "statusModal.back": "Back",

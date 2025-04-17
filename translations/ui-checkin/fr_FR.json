@@ -100,7 +100,7 @@
     "statuses.unknown": "Inconnu",
     "dateReturnedLabel": "Date de retour",
     "errorModal.unhandledError": "This is an unhandled exception.",
-    "selectItemModal.heading": "Select item",
+    "selectItemModal.heading": "Sélectionner l'exemplaire",
     "selectItemModal.resultCount": "{count} enregistrements trouvés",
     "selectItemModal.barcode": "Code-barres",
     "selectItemModal.itemStatus": "Statut de l'exemplaire",
@@ -109,5 +109,5 @@
     "selectItemModal.loanType": "Type de prêt",
     "selectItemModal.title": "Titre",
     "selectItemModal.callNumber": "Cote",
-    "selectItemModal.itemListHeader": "List of items: choose one"
+    "selectItemModal.itemListHeader": "Listes d'exemplaires : choisissez-en un"
 }
