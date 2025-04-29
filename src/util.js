@@ -118,6 +118,7 @@ export function convertToSlipData(source = {}, intl, timeZone, locale, slipName 
       : request.holdShelfExpirationDate,
     'request.requestID': request.requestID,
     'request.patronComments': request.patronComments,
+    'request.barcodeImage': request.requestID ? `<Barcode>${request.requestID}</Barcode>` : '',
   };
 
   return slipData;

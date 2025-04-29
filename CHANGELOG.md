@@ -1,5 +1,9 @@
 # Change history for ui-checkin
 
+## [11.0.1] (https://github.com/folio-org/ui-checkin/tree/v11.0.1) (2025-04-29)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v11.0.0...v11.0.1)
+
+* Add support for "Request barcode image" (request.barcodeImage). Refs UICHKIN-471.
 * Remove failed tests after packages updating. Refs UICHKIN-468.
 
 ## [11.0.0] (https://github.com/folio-org/ui-checkin/tree/v11.0.0) (2025-03-14)
