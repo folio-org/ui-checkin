@@ -3,9 +3,15 @@
 ## 12.0.0 IN PROGRESS
 
 * *BREAKING* Use `convertToSlipData` and supporting functions from `stripes-util`. Refs UICHKIN-456.
-* Remove failed tests after packages updating. Refs UICHKIN-468.
 * Replace moment with day.js. Refs UICHKIN-467.
 * Reduce count of eslint errors after update eslint-config-stripes. Refs UICHKIN-466.
+* Use `history.push` instead of `mutator.query` updating. Refs UICHKIN-460.
+
+## [11.0.1] (https://github.com/folio-org/ui-checkin/tree/v11.0.1) (2025-04-29)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v11.0.0...v11.0.0)
+
+* Add support for "Request barcode image" (request.barcodeImage). Refs UICHKIN-471.
+* Remove failed tests after packages updating. Refs UICHKIN-468.
 
 ## [11.0.0] (https://github.com/folio-org/ui-checkin/tree/v11.0.0) (2025-03-14)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v10.0.1...v11.0.0)
@@ -16,7 +22,12 @@
 * *BREAKING* Update stripes-* dependencies to latest version. Refs UICHKIN-452.
 * Implement support for fields without information. Refs UICHKIN-454.
 * Add support for new printing tokens in hold slips. Fixes UICHKIN-457.
-* Use `history.push` instead of `mutator.query` updating. Refs UICHKIN-460.
+
+## [10.0.2] (https://github.com/folio-org/ui-checkin/tree/v10.0.2) (2025-04-29)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v10.0.1...v10.0.2)
+
+* Add support for "Request barcode image" (request.barcodeImage). Refs UICHKIN-470.
+* Remove failed tests after packages updating. Refs UICHKIN-468.
 
 ## [10.0.1] (https://github.com/folio-org/ui-checkin/tree/v10.0.1) (2025-01-23)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v10.0.0...v10.0.1)
