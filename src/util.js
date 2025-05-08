@@ -33,8 +33,9 @@ export function buildTemplate(str) {
 
 export function buildDateTime(date, time, timezone, now) {
   if (date && time && timezone) {
+    const timeWithoutOffset = time.substring(0, 5);
     const formattedDate = date.substring(0, 10);
-    const formattedTime = dayjs(`${date} ${time}`).format('HH:mm');
+    const formattedTime = dayjs(`${date} ${timeWithoutOffset}`).format('HH:mm');
     const effectiveReturnDate = dayjs.tz(`${formattedDate}T${formattedTime}`, timezone);
 
     return effectiveReturnDate.toISOString();
