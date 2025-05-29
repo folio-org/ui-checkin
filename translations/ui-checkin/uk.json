@@ -1,5 +1,5 @@
 {
-    "scanBarcode": "Відскануйте або введіть штрихкод, щоб повернути примірник",
+    "scanBarcode": "Сканувати або ввести штрихкод примірника",
     "itemId": "ІД примірника",
     "enter": "Ввести",
     "processedAs": "Оброблено як",
@@ -26,7 +26,7 @@
     "now": "зараз",
     "statusModal.back": "Back",
     "statusModal.confirm": "Confirm",
-    "statusModal.transit.heading": "In transit",
+    "statusModal.transit.heading": "Доставляється",
     "statusModal.transit.message": "Route <strong>{title} ({materialType})</strong> (Barcode: {barcode}) to <strong>{servicePoint}</strong>.",
     "statusModal.hold.heading": "Очікує на отримання згідно із замовленням",
     "statusModal.hold.message": "Розмістіть <strong>{title} ({materialType})</strong> (Штрихкод: {barcode}) на бронеполицю <strong>{pickupServicePoint} </strong> згідно з замовленням.",
