@@ -269,18 +269,24 @@ class Scan extends React.Component {
       offset: 0,
       selectedBarcode: null,
     };
+
+    const servicePoints = props.resources?.servicePoints?.records || [];
+    const servicePointId = this.props.stripes?.user?.user?.curServicePoint?.id;
+    const servicePoint = servicePoints.filter(x => x.id === servicePointId)[0];
+    console.log('initial servicePoint =', servicePoint);
+    this.checkinInitialValues = {
+      item: {
+        checkinDate: '',
+        checkinTime: '',
+        action: servicePoint?.defaultCheckInActionForUseAtLocation,
+      },
+    };
   }
 
   store = this.props.stripes.store;
   barcode = React.createRef();
   checkInData = null;
   checkinFormRef = React.createRef();
-  checkinInitialValues = {
-    item: {
-      checkinDate: '',
-      checkinTime: '',
-    },
-  };
 
   setFocusInput = () => {
     this.barcode.current.focus();
