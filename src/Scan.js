@@ -273,7 +273,6 @@ class Scan extends React.Component {
     const servicePoints = props.resources?.servicePoints?.records || [];
     const servicePointId = this.props.stripes?.user?.user?.curServicePoint?.id;
     const servicePoint = servicePoints.filter(x => x.id === servicePointId)[0];
-    console.log('initial servicePoint =', servicePoint);
     this.checkinInitialValues = {
       item: {
         checkinDate: '',
