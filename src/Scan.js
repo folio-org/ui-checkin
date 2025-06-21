@@ -129,6 +129,9 @@ class Scan extends React.Component {
         PUT: PropTypes.func,
         reset: PropTypes.func,
       }),
+      loans: PropTypes.shape({
+        GET: PropTypes.func,
+      }),
       checkIn: PropTypes.shape({
         POST: PropTypes.func,
       }),
@@ -136,6 +139,9 @@ class Scan extends React.Component {
         POST: PropTypes.func,
       }),
       holdAtLocation: PropTypes.shape({
+        POST: PropTypes.func,
+      }),
+      holdAtLocationBFF: PropTypes.shape({
         POST: PropTypes.func,
       }),
       requests: PropTypes.shape({
@@ -202,6 +208,12 @@ class Scan extends React.Component {
       accumulate: 'true',
       fetch: false,
     },
+    loans: {
+      type: 'okapi',
+      path: 'circulation/loans',
+      accumulate: 'true',
+      fetch: false,
+    },
     requests: {
       type: 'okapi',
       records: 'requests',
@@ -235,6 +247,12 @@ class Scan extends React.Component {
     holdAtLocation: {
       type: 'okapi',
       path: 'circulation/hold-by-barcode-for-use-at-location',
+      fetch: false,
+      throwErrors: false,
+    },
+    holdAtLocationBFF: {
+      type: 'okapi',
+      path: 'circulation-bff/hold-by-barcode-for-use-at-location',
       fetch: false,
       throwErrors: false,
     },
@@ -437,6 +455,7 @@ class Scan extends React.Component {
         checkIn,
         checkInBFF,
         holdAtLocation,
+        holdAtLocationBFF,
       },
       intl: { timeZone },
       okapi,
@@ -467,7 +486,17 @@ class Scan extends React.Component {
 
     this.setState({ loading: true });
 
-    const checkInApiCall = isEnabledEcsRequests ? checkInBFF.POST(requestData) : checkIn.POST(requestData);
+    // The item may not have been checked out at all, in which case it
+    // is an "In-house use" loan; but it it was checked out, then it
+    // is a "Use at location" loan (which is a completely different
+    // thing) if any only if the `forUseAtLocation` structure is present.
+    const { checkedinItem } = this.state;
+    const loan = await this.getLoanForItem(checkedinItem);
+    const isUseAtLocation = !!loan && !!loan.forUseAtLocation;
+
+    const checkInApiCall = (isUseAtLocation && action === 'Keep_on_hold_shelf') ?
+      (isEnabledEcsRequests ? holdAtLocationBFF.POST(requestData) : holdAtLocation.POST(requestData)) :
+      (isEnabledEcsRequests ? checkInBFF.POST(requestData) : checkIn.POST(requestData));
 
     return checkInApiCall
       .then(checkinResp => this.processResponse(checkinResp))
@@ -477,6 +506,15 @@ class Scan extends React.Component {
       .then(() => this.clearField('item.barcode'))
       .catch(resp => this.processError(resp))
       .finally(() => this.processCheckInDone());
+  }
+
+  getLoanForItem = async (item) => {
+    const { loans } = await this.props.mutator.loans.GET({
+      params: {
+        query: `itemId=="${item.id}" and status.name==Open`,
+      },
+    });
+    return loans[0];
   }
 
   processClaimReturned(checkinResp) {
