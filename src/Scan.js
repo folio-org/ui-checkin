@@ -135,6 +135,9 @@ class Scan extends React.Component {
       checkInBFF: PropTypes.shape({
         POST: PropTypes.func,
       }),
+      holdAtLocation: PropTypes.shape({
+        POST: PropTypes.func,
+      }),
       requests: PropTypes.shape({
         GET: PropTypes.func,
         reset: PropTypes.func,
@@ -226,6 +229,12 @@ class Scan extends React.Component {
     checkInBFF: {
       type: 'okapi',
       path: 'circulation-bff/loans/check-in-by-barcode',
+      fetch: false,
+      throwErrors: false,
+    },
+    holdAtLocation: {
+      type: 'okapi',
+      path: 'circulation/hold-by-barcode-for-use-at-location',
       fetch: false,
       throwErrors: false,
     },
@@ -420,12 +429,14 @@ class Scan extends React.Component {
         barcode,
         checkinDate,
         checkinTime,
+        action,
       },
     } = data;
     const {
       mutator: {
         checkIn,
         checkInBFF,
+        holdAtLocation,
       },
       intl: { timeZone },
       okapi,
