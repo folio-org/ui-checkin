@@ -69,9 +69,24 @@ class ModalManager extends React.Component {
         exec: () => this.setState({ showCheckinNoteModal: true }),
       },
     ];
+
+    this.componentDidMount_has_run = false;
   }
 
   componentDidMount() {
+    if (this.componentDidMount_has_run) {
+      // In React v18.x, when Strict Mode is turned on in development,
+      // all componentDidMount methods are run twice, to help you
+      // detect when you inadvertently do non-idempotent things such
+      // as, well, checking in items. But the whole way this module
+      // works depends on doing checkin (in the execSteps method) as a
+      // side-effect of mounting the component. We should fix that;
+      // but until we do, we make development possible by explicitly
+      // guarding to ensure that this method only runs one.
+      return;
+    }
+    this.componentDidMount_has_run = true;
+
     if (this.state.checkinNotesMode) {
       this.setState({ showCheckinNoteModal: true });
     } else {
