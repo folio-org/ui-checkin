@@ -624,6 +624,11 @@ class Scan extends React.Component {
   }
 
   processResponse(checkinResp) {
+    if (!checkinResp.item) {
+      // This must be the differently-shaped response from hold-by-barcode-for-use-at-location
+      // In this case, we use the item that we previously search for by barcode
+      checkinResp.item = this.props.resources.items.records[0].items[0];
+    }
     const { loan, item, staffSlipContext } = checkinResp;
     const checkinRespItem = loan || { item };
     this.setState({ staffSlipContext, itemClaimedReturnedResolution: null });
