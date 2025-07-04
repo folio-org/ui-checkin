@@ -99,7 +99,7 @@
   "statuses.longMissing": "Long missing",
   "statuses.unavailable": "Unavailable",
   "statuses.unknown": "Unknown",
-  "defaultCheckinAction": "Default check-in action for use at location",
+  "defaultCheckinAction": "Check-in action for use at location",
   "defaultCheckinAction.Keep_on_hold_shelf": "Keep on hold shelf",
   "defaultCheckinAction.Close_loan_and_return_item": "Close loan and return item",
   "defaultCheckinAction.Ask_for_action": "Ask for action",
