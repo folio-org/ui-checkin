@@ -99,7 +99,7 @@
     "statuses.unavailable": "Niedostępny",
     "statuses.unknown": "Nieznany",
     "dateReturnedLabel": "Data zwrotu",
-    "errorModal.unhandledError": "This is an unhandled exception.",
+    "errorModal.unhandledError": "To jest nieobsłużony wyjątek.",
     "selectItemModal.heading": "Wybierz egzemplarz",
     "selectItemModal.resultCount": "Znaleziono: {count} rekord(-ów)",
     "selectItemModal.barcode": "Kod kreskowy",
