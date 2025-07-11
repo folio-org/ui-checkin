@@ -494,6 +494,13 @@ class Scan extends React.Component {
     const loan = await this.getLoanForItem(checkedinItem);
     const isUseAtLocation = !!loan && !!loan.forUseAtLocation;
 
+    /*
+    // Uncomment this if needed for debugging
+    const checkInApiCallName = (isUseAtLocation && action === 'Keep_on_hold_shelf') ?
+      (isEnabledEcsRequests ? 'holdAtLocationBFF' : 'holdAtLocation') :
+      (isEnabledEcsRequests ? 'checkInBFF' : 'checkIn');
+    console.log(`isUseAtLocation=${isUseAtLocation}, action=${action} -> ${checkInApiCallName}`);
+    */
     const checkInApiCall = (isUseAtLocation && action === 'Keep_on_hold_shelf') ?
       (isEnabledEcsRequests ? holdAtLocationBFF.POST(requestData) : holdAtLocation.POST(requestData)) :
       (isEnabledEcsRequests ? checkInBFF.POST(requestData) : checkIn.POST(requestData));
