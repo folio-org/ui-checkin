@@ -69,6 +69,7 @@
     "test": "yarn run test:jest",
     "test:jest": "jest --ci --coverage --colors",
     "lint": "eslint .",
+    "qlint": "eslint -f unix  --rule '{\"no-console\":\"off\"}' .",
     "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
     "formatjs-compile": "stripes translate compile"
   },
