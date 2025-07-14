@@ -7,6 +7,9 @@ import {
 } from '@folio/jest-config-stripes/testing-library/react';
 
 import Scan from './Scan';
+console.log('Scan =', Scan);
+console.log('Scan.prototype =', Scan.prototype);
+
 import {
   statuses,
   cancelFeeClaimReturned,
@@ -61,6 +64,14 @@ const basicProps = {
     checkInSession: {
       sessionId: 'sessionId',
     },
+    servicePoints: {
+      records: [
+        {
+          id: 'spId',                       // ← matches stripes.user.user.curServicePoint.id above
+          defaultCheckInActionForUseAtLocation: 'Check in',  // value isn’t important for the tests
+        },
+      ],
+    },
   },
   mutator: {
     accounts: {
@@ -89,6 +100,9 @@ const basicProps = {
     checkIn: {
       POST: jest.fn(),
     },
+    loans: {
+      GET: jest.fn().mockResolvedValue({ loans: [] }),
+    },
     feefineactions: {
       POST: jest.fn(),
     },
@@ -96,6 +110,9 @@ const basicProps = {
       reset: jest.fn(),
       GET: jest.fn(),
     },
+    loans: { GET: jest.fn() },
+    holdAtLocation: { POST: jest.fn() },
+    holdAtLocationBFF: { POST: jest.fn() },
   },
 };
 const testIds = {
@@ -294,6 +311,10 @@ jest.mock('./util', () => ({
 }));
 jest.spyOn(React, 'createRef').mockReturnValue(createRefMock);
 
+// The component now looks up an open loan before deciding which endpoint
+// to hit.  A simple stub keeps that extra step from affecting the tests.
+Scan.prototype.getLoanForItem = jest.fn().mockResolvedValue({ forUseAtLocation: false });
+
 describe('Scan', () => {
   afterEach(() => {
     jest.clearAllMocks();
@@ -441,6 +462,7 @@ describe('Scan', () => {
               path: `accounts?query=loanId=="${requestData.loan.id}"`,
             };
 
+            console.log('***', JSON.stringify(basicProps.mutator.accounts.GET.mock.calls, null, 2));
             expect(basicProps.mutator.accounts.GET).toHaveBeenCalledWith(expectedArgument);
           });
 
