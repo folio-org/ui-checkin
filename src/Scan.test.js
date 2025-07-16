@@ -7,9 +7,6 @@ import {
 } from '@folio/jest-config-stripes/testing-library/react';
 
 import Scan from './Scan';
-console.log('Scan =', Scan);
-console.log('Scan.prototype =', Scan.prototype);
-
 import {
   statuses,
   cancelFeeClaimReturned,
@@ -97,11 +94,14 @@ const basicProps = {
       reset: jest.fn(),
       GET: jest.fn(),
     },
+    loans: {
+      GET: (args) => {
+        process.stdout.write(` *** loan.GET ${JSON.stringify(args, null, 2)}\n`);
+        return jest.fn().mockResolvedValue({ loans: [] }),
+      },
+    },
     checkIn: {
       POST: jest.fn(),
-    },
-    loans: {
-      GET: jest.fn().mockResolvedValue({ loans: [] }),
     },
     feefineactions: {
       POST: jest.fn(),
