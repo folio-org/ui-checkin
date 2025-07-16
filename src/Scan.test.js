@@ -97,7 +97,7 @@ const basicProps = {
     loans: {
       GET: (args) => {
         process.stdout.write(` *** loan.GET ${JSON.stringify(args, null, 2)}\n`);
-        return jest.fn().mockResolvedValue({ loans: [] }),
+        return jest.fn().mockResolvedValue({ loans: [] });
       },
     },
     checkIn: {
