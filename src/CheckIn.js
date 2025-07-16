@@ -285,7 +285,7 @@ class CheckIn extends React.Component {
   }
 
   showLoanDetails(loan) {
-    this.props.history.push(`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`);
+    this.props.history.push(`/users/${loan.userId}/loans/view/${loan.id}`);
   }
 
   showCheckinNotes(loan) {
@@ -408,7 +408,7 @@ class CheckIn extends React.Component {
               <Button
                 role="menuitem"
                 buttonStyle="dropdownItem"
-                href={`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`}
+                href={`/users/${loan.userId}/loans/view/${loan.id}`}
                 onClick={(e) => this.handleOptionsChange({ loan, action: 'showLoanDetails' }, e)}
               >
                 <FormattedMessage id="ui-checkin.loanDetails" />
