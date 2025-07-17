@@ -312,6 +312,25 @@ describe('Scan', () => {
     jest.clearAllMocks();
   });
 
+  describe('getLoanForItem', () => {
+    const myScan = new RawScan(basicProps);
+
+    it('should return undefined for undefined item', async () => {
+      const loan = await myScan.getLoanForItem(undefined);
+      expect(loan).toBeUndefined();
+      expect(basicProps.mutator.loans.GET).toHaveBeenCalledTimes(0);
+    });
+
+    it('should return a loan for defined item', async () => {
+      const loan = await myScan.getLoanForItem({ id: 123 });
+      expect(loan).toBeDefined();
+      expect(typeof loan).toEqual('object');
+      expect(loan.name).toEqual('some loan');
+      expect(basicProps.mutator.loans.GET).toHaveBeenCalledTimes(1);
+      expect(basicProps.mutator.loans.GET).toHaveBeenCalledWith({ params: { query: 'itemId=="123" and status.name==Open'} });
+    });
+  });
+
   describe('Check in item', () => {
     describe('When checkedin process is successful', () => {
       const checkInDate = '2024-01-09T12:08:14.769Z';
@@ -1227,25 +1246,6 @@ describe('Scan', () => {
 
         expect(checkinModalManager).not.toBeInTheDocument();
       });
-    });
-  });
-
-  describe('getLoanForItem', () => {
-    const myScan = new RawScan(basicProps);
-
-    it('should return undefined for undefined item', async () => {
-      const loan = await myScan.getLoanForItem(undefined);
-      expect(loan).toBeUndefined();
-      expect(basicProps.mutator.loans.GET).toHaveBeenCalledTimes(0);
-    });
-
-    it('should return a loan for defined item', async () => {
-      const loan = await myScan.getLoanForItem({ id: 123 });
-      expect(loan).toBeDefined();
-      expect(typeof loan).toEqual('object');
-      expect(loan.name).toEqual('some loan');
-      expect(basicProps.mutator.loans.GET).toHaveBeenCalledTimes(1);
-      expect(basicProps.mutator.loans.GET).toHaveBeenCalledWith({ params: { query: 'itemId=="123" and status.name==Open'} });
     });
   });
 
