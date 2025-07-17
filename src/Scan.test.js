@@ -487,6 +487,10 @@ describe('Scan', () => {
             expect(basicProps.mutator.lostItemPolicy.GET).toHaveBeenCalledWith(expectedArgument);
           });
 
+          it('should not get loan information', () => {
+            expect(basicProps.mutator.loans.GET).not.toHaveBeenCalled();
+          });
+
           it('should send action information to the server', () => {
             const expectedArgument = {
               typeAction: cancelFeeClaimReturned.TYPE_ACTION,
