@@ -45,7 +45,7 @@ import {
   getCheckinSettings,
 } from './util';
 
-class Scan extends React.Component {
+export class Scan extends React.Component {
   static propTypes = {
     intl: PropTypes.shape({
       formatMessage: PropTypes.func.isRequired,
