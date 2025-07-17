@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 
+// eslint-disable-next-line import/no-named-as-default
 import Scan from './Scan';
 
 class CheckInRouting extends React.Component {

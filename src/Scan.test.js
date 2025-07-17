@@ -6,7 +6,10 @@ import {
   waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';
 
+// We need both the raw class (so we can instantiate it) and the wrapped component
+// eslint-disable-next-line import/no-named-as-default
 import Scan, { Scan as RawScan } from './Scan';
+
 import {
   statuses,
   cancelFeeClaimReturned,
@@ -95,7 +98,7 @@ const basicProps = {
       GET: jest.fn(),
     },
     loans: {
-      GET: jest.fn().mockResolvedValue({ loans: [{ name: 'some loan'}] }),
+      GET: jest.fn().mockResolvedValue({ loans: [{ name: 'some loan' }] }),
     },
     checkIn: {
       POST: jest.fn(),
@@ -328,7 +331,7 @@ describe('Scan', () => {
       expect(typeof loan).toEqual('object');
       expect(loan.name).toEqual('some loan');
       expect(basicProps.mutator.loans.GET).toHaveBeenCalledTimes(1);
-      expect(basicProps.mutator.loans.GET).toHaveBeenCalledWith({ params: { query: 'itemId=="123" and status.name==Open'} });
+      expect(basicProps.mutator.loans.GET).toHaveBeenCalledWith({ params: { query: 'itemId=="123" and status.name==Open' } });
     });
   });
 
