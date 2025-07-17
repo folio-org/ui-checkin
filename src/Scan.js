@@ -491,9 +491,7 @@ export class Scan extends React.Component {
     // is a "Use at location" loan (which is a completely different
     // thing) if any only if the `forUseAtLocation` structure is present.
     const { checkedinItem } = this.state;
-    process.stdout.write(`*** about to fetch loan for ${JSON.stringify(checkedinItem, null, 2)}\n`);
     const loan = await this.getLoanForItem(checkedinItem);
-    process.stdout.write(`  *** got loan ${JSON.stringify(loan, null, 2)}\n`);
     const isUseAtLocation = !!loan && !!loan.forUseAtLocation;
 
     /*
@@ -527,7 +525,6 @@ export class Scan extends React.Component {
         query: `itemId=="${item.id}" and status.name==Open`,
       },
     });
-    process.stdout.write(` *** -> ${loans[0]}\n`);
     return loans[0];
   }
 
