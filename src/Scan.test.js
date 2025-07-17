@@ -64,8 +64,8 @@ const basicProps = {
     servicePoints: {
       records: [
         {
-          id: 'spId',                       // ← matches stripes.user.user.curServicePoint.id above
-          defaultCheckInActionForUseAtLocation: 'Check in',  // value isn’t important for the tests
+          id: 'spId',
+          defaultCheckInActionForUseAtLocation: 'Close_loan_and_return_item',
         },
       ],
     },
