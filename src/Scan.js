@@ -304,7 +304,7 @@ class Scan extends React.Component {
       item: {
         checkinDate: '',
         checkinTime: '',
-        action: servicePoint?.defaultCheckInActionForUseAtLocation,
+        action: servicePoint?.defaultCheckInActionForUseAtLocation || 'Close_loan_and_return_item',
       },
     };
   }
