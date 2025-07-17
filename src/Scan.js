@@ -518,7 +518,10 @@ class Scan extends React.Component {
   }
 
   getLoanForItem = async (item) => {
-    process.stdout.write(` *** getLoanForItem: props = ${JSON.stringify(this.props, null, 2)}\n`);
+    if (!item) {
+      // When invoked as part of the test suite, this can be called with no item
+      return undefined;
+    }
     const { loans } = await this.props.mutator.loans.GET({
       params: {
         query: `itemId=="${item.id}" and status.name==Open`,

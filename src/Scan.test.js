@@ -110,7 +110,6 @@ const basicProps = {
       reset: jest.fn(),
       GET: jest.fn(),
     },
-    loans: { GET: jest.fn() },
     holdAtLocation: { POST: jest.fn() },
     holdAtLocationBFF: { POST: jest.fn() },
   },
@@ -311,10 +310,6 @@ jest.mock('./util', () => ({
 }));
 jest.spyOn(React, 'createRef').mockReturnValue(createRefMock);
 
-// The component now looks up an open loan before deciding which endpoint
-// to hit.  A simple stub keeps that extra step from affecting the tests.
-Scan.prototype.getLoanForItem = jest.fn().mockResolvedValue({ forUseAtLocation: false });
-
 describe('Scan', () => {
   afterEach(() => {
     jest.clearAllMocks();
@@ -462,7 +457,6 @@ describe('Scan', () => {
               path: `accounts?query=loanId=="${requestData.loan.id}"`,
             };
 
-            console.log('***', JSON.stringify(basicProps.mutator.accounts.GET.mock.calls, null, 2));
             expect(basicProps.mutator.accounts.GET).toHaveBeenCalledWith(expectedArgument);
           });
 
