@@ -313,6 +313,7 @@ describe('Scan', () => {
   });
 
   describe('getLoanForItem', () => {
+    // We need the raw class, not the decorated default export, to instantiate
     const myScan = new RawScan(basicProps);
 
     it('should return undefined for undefined item', async () => {
