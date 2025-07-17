@@ -87,7 +87,7 @@
     "statuses.withdrawn": "Retiré des collections",
     "statuses.lostAndPaid": "Perdu et payé",
     "feesFinesOwed": "(Frais/amendes dûs)",
-    "statuses.agedToLost": "Considéré comme perdu",
+    "statuses.agedToLost": "Perdu",
     "actions": "Actions",
     "actionsMenu": "Item actions",
     "permission.all": "Retour : toutes les autorisations",

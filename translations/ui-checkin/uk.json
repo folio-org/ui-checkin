@@ -68,7 +68,7 @@
     "inHouseUse": "Внутрішнє використання",
     "declaredLostModal.heading": "Повернути оголошений втраченим примірник?",
     "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Штрихкод: {barcode}) має статус <strong>Оголошено втраченим.</strong>",
-    "feeFineDetails": "Fee/fine details",
+    "feeFineDetails": "Деталі пені/штрафу",
     "withdrawnModal.heading": "Повернути списаний примірник?",
     "withdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Штрихкод: {barcode}) має статус примірника <strong>Списано</strong> та позначений як прихований у пошуковій системі.",
     "withdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Штрихкод: {barcode}) має статус примірника <strong>Списано</strong>.",
