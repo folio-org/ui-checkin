@@ -6,7 +6,7 @@ import {
   waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';
 
-import Scan from './Scan';
+import Scan, { Scan as RawScan } from './Scan';
 import {
   statuses,
   cancelFeeClaimReturned,
@@ -95,10 +95,7 @@ const basicProps = {
       GET: jest.fn(),
     },
     loans: {
-      GET: (args) => {
-        process.stdout.write(` *** loan.GET ${JSON.stringify(args, null, 2)}\n`);
-        return jest.fn().mockResolvedValue({ loans: [] });
-      },
+      GET: jest.fn().mockResolvedValue({ loans: [{ name: 'some loan'}] }),
     },
     checkIn: {
       POST: jest.fn(),
@@ -1230,6 +1227,25 @@ describe('Scan', () => {
 
         expect(checkinModalManager).not.toBeInTheDocument();
       });
+    });
+  });
+
+  describe('getLoanForItem', () => {
+    const myScan = new RawScan(basicProps);
+
+    it('should return undefined for undefined item', async () => {
+      const loan = await myScan.getLoanForItem(undefined);
+      expect(loan).toBeUndefined();
+      expect(basicProps.mutator.loans.GET).toHaveBeenCalledTimes(0);
+    });
+
+    it('should return a loan for defined item', async () => {
+      const loan = await myScan.getLoanForItem({ id: 123 });
+      expect(loan).toBeDefined();
+      expect(typeof loan).toEqual('object');
+      expect(loan.name).toEqual('some loan');
+      expect(basicProps.mutator.loans.GET).toHaveBeenCalledTimes(1);
+      expect(basicProps.mutator.loans.GET).toHaveBeenCalledWith({ params: { query: 'itemId=="123" and status.name==Open'} });
     });
   });
 
