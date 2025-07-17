@@ -64,7 +64,7 @@
     "statusModal.delivery.heading": "Ścieżka dla żądania dostawy",
     "statusModal.delivery.closeAndCheckout": "Zamknij i wypożycz",
     "statusModal.delivery.message": "Złożono zamówienie dostawy na <strong>{itemTitle} ({itemType})</strong> (Kod kreskowy: {itemBarcode}). <strong>Proszę zarejestrować egzemplarz i przekazać go do dostarczenia.</strong>",
-    "effectiveCallNumber": "Aktualna sygnatura całkowita",
+    "effectiveCallNumber": "Efektywna sygnatura całkowita",
     "inHouseUse": "Do udostępnienia na miejscu",
     "declaredLostModal.heading": "Zarejestrować egzemplarz Zadeklarowany jako zagubiony?",
     "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Kod kreskowy: {barcode}) egzemplarz ma status <strong> Zadeklarowany jako zagubiony.</strong>",
