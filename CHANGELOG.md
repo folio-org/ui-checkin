@@ -7,6 +7,7 @@
 * Reduce count of eslint errors after update eslint-config-stripes. Refs UICHKIN-466.
 * Use `history.push` instead of `mutator.query` updating. Refs UICHKIN-460.
 * Guard against multiple invocations of `componentDidMount`. Refs UICHKIN-474.
+* Fix Loan details link in Check in app. Refs UICHKIN-483.
 
 ## [11.0.1] (https://github.com/folio-org/ui-checkin/tree/v11.0.1) (2025-04-29)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v11.0.0...v11.0.0)

@@ -498,7 +498,7 @@ describe('CheckIn', () => {
       it('should set correct href to loan details button', () => {
         const loanDetailsButton = screen.getByText(labelIds.loanDetailsButton);
 
-        expect(loanDetailsButton).toHaveAttribute('href', `/users/view/${loan.userId}?layer=loan&loan=${loan.id}`);
+        expect(loanDetailsButton).toHaveAttribute('href', `/users/${loan.userId}/loans/view/${loan.id}`);
       });
 
       it('should set correct href to patron details button', () => {
@@ -530,7 +530,7 @@ describe('CheckIn', () => {
 
         fireEvent.click(loanDetailsButton);
 
-        expect(basicProps.history.push).toHaveBeenCalledWith(`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`);
+        expect(basicProps.history.push).toHaveBeenCalledWith(`/users/${loan.userId}/loans/view/${loan.id}`);
       });
 
       it('should update query pass after clicking on patron details button', () => {
