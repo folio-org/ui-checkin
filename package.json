@@ -53,6 +53,7 @@
           "accounts.item.get",
           "lost-item-fees-policies.collection.get",
           "circulation.check-in-by-barcode.post",
+          "circulation.hold-by-barcode-for-use-at-location.post",
           "circulation-bff.loans.check-in-by-barcode.execute",
           "circulation.requests.collection.get",
           "feefineactions.collection.get",
