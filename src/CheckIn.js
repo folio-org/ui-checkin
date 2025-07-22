@@ -54,6 +54,10 @@ import {
 
 import styles from './checkin.css';
 
+const getLoanDetailsLink = (loan) => (
+  `/users/${loan.userId}/loans/view/${loan.id}`
+);
+
 class CheckIn extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
@@ -287,7 +291,7 @@ class CheckIn extends React.Component {
   }
 
   showLoanDetails(loan) {
-    this.props.history.push(`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`);
+    this.props.history.push(getLoanDetailsLink(loan));
   }
 
   showCheckinNotes(loan) {
@@ -410,7 +414,7 @@ class CheckIn extends React.Component {
               <Button
                 role="menuitem"
                 buttonStyle="dropdownItem"
-                href={`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`}
+                href={getLoanDetailsLink(loan)}
                 onClick={(e) => this.handleOptionsChange({ loan, action: 'showLoanDetails' }, e)}
               >
                 <FormattedMessage id="ui-checkin.loanDetails" />
