@@ -154,3 +154,14 @@ export const STAFF_SLIP_TYPES = {
   TRANSIT: 'Transit',
   REQUEST_DELIVERY: 'Request delivery',
 };
+
+// Note that these string constants must be kept the same as those defined
+// in the enumeration for the `defaultCheckInActionForUseAtLocation` field
+// of the service-point schema at
+// https://github.com/folio-org/mod-inventory-storage/blob/master/ramls/servicepoint.json
+//
+export const CHECKIN_ACTIONS = {
+  HOLD: 'Keep_on_hold_shelf',
+  RETURN: 'Close_loan_and_return_item',
+  ASK: 'Ask_for_action',
+};

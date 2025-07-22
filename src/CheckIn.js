@@ -49,6 +49,7 @@ import {
 import {
   SLIPS_DATA_PROP_TYPES,
   STAFF_SLIP_TYPES,
+  CHECKIN_ACTIONS,
 } from './consts';
 
 import styles from './checkin.css';
@@ -527,7 +528,7 @@ class CheckIn extends React.Component {
     const scanBarcodeMsg = formatMessage({ id: 'ui-checkin.scanBarcode' });
     const itemIdLabel = formatMessage({ id: 'ui-checkin.itemId' });
     const scannedItemsLabel = formatMessage({ id: 'ui-checkin.scannedItems' });
-    const actionOptions = ['Keep_on_hold_shelf', 'Close_loan_and_return_item', 'Ask_for_action'].map(key => ({
+    const actionOptions = [CHECKIN_ACTIONS.HOLD, CHECKIN_ACTIONS.RETURN, CHECKIN_ACTIONS.ASK].map(key => ({
       label: formatMessage({ id: `ui-checkin.defaultCheckinAction.${key}` }),
       value: key
     }));

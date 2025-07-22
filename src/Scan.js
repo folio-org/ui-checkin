@@ -34,6 +34,7 @@ import {
   PAGE_AMOUNT,
   STAFF_SLIP_TYPES,
   SLIPS_DATA_PROP_TYPES,
+  CHECKIN_ACTIONS,
 } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
 import RouteForDeliveryModal from './components/RouteForDeliveryModal';
@@ -304,7 +305,7 @@ export class Scan extends React.Component {
       item: {
         checkinDate: '',
         checkinTime: '',
-        action: servicePoint?.defaultCheckInActionForUseAtLocation || 'Close_loan_and_return_item',
+        action: servicePoint?.defaultCheckInActionForUseAtLocation || CHECKIN_ACTIONS.RETURN,
       },
     };
   }
@@ -496,12 +497,12 @@ export class Scan extends React.Component {
 
     /*
     // Uncomment this if needed for debugging
-    const checkInApiCallName = (isUseAtLocation && action === 'Keep_on_hold_shelf') ?
+    const checkInApiCallName = (isUseAtLocation && action === CHECKIN_ACTIONS.HOLD) ?
       (isEnabledEcsRequests ? 'holdAtLocationBFF' : 'holdAtLocation') :
       (isEnabledEcsRequests ? 'checkInBFF' : 'checkIn');
     console.log(`isUseAtLocation=${isUseAtLocation}, action=${action} -> ${checkInApiCallName}`);
     */
-    const checkInApiCall = (isUseAtLocation && action === 'Keep_on_hold_shelf') ?
+    const checkInApiCall = (isUseAtLocation && action === CHECKIN_ACTIONS.HOLD) ?
       (isEnabledEcsRequests ? holdAtLocationBFF.POST(requestData) : holdAtLocation.POST(requestData)) :
       (isEnabledEcsRequests ? checkInBFF.POST(requestData) : checkIn.POST(requestData));
 

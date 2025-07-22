@@ -16,6 +16,7 @@ import {
   REQUEST_STATUSES,
   ACCOUNT_STATUS_NAMES,
   PAGE_AMOUNT,
+  CHECKIN_ACTIONS,
 } from './consts';
 import {
   buildDateTime,
@@ -68,7 +69,7 @@ const basicProps = {
       records: [
         {
           id: 'spId',
-          defaultCheckInActionForUseAtLocation: 'Close_loan_and_return_item',
+          defaultCheckInActionForUseAtLocation: CHECKIN_ACTIONS.RETURN,
         },
       ],
     },
