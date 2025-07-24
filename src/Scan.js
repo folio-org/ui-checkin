@@ -251,12 +251,6 @@ export class Scan extends React.Component {
       fetch: false,
       throwErrors: false,
     },
-    holdAtLocationBFF: {
-      type: 'okapi',
-      path: 'circulation-bff/hold-by-barcode-for-use-at-location',
-      fetch: false,
-      throwErrors: false,
-    },
     endSession: {
       type: 'okapi',
       path: 'circulation/end-patron-action-session',
@@ -456,7 +450,6 @@ export class Scan extends React.Component {
         checkIn,
         checkInBFF,
         holdAtLocation,
-        holdAtLocationBFF,
       },
       intl: { timeZone },
       okapi,
@@ -498,12 +491,12 @@ export class Scan extends React.Component {
     /*
     // Uncomment this if needed for debugging
     const checkInApiCallName = (isUseAtLocation && action === CHECKIN_ACTIONS.HOLD) ?
-      (isEnabledEcsRequests ? 'holdAtLocationBFF' : 'holdAtLocation') :
+      holdAtLocation :
       (isEnabledEcsRequests ? 'checkInBFF' : 'checkIn');
     console.log(`isUseAtLocation=${isUseAtLocation}, action=${action} -> ${checkInApiCallName}`);
     */
     const checkInApiCall = (isUseAtLocation && action === CHECKIN_ACTIONS.HOLD) ?
-      (isEnabledEcsRequests ? holdAtLocationBFF.POST(requestData) : holdAtLocation.POST(requestData)) :
+      holdAtLocation.POST(requestData) :
       (isEnabledEcsRequests ? checkInBFF.POST(requestData) : checkIn.POST(requestData));
 
     return checkInApiCall
