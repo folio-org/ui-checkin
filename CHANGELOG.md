@@ -8,6 +8,7 @@
 * Use `history.push` instead of `mutator.query` updating. Refs UICHKIN-460.
 * Guard against multiple invocations of `componentDidMount`. Refs UICHKIN-474.
 * Fix Loan details link in Check in app. Refs UICHKIN-483.
+* Avoid occasional null-pointer indirection. Fixes UICHKIN-486.
 * Support for returning use-at-location items to hold area. Refs UICHKIN-464.
 
 ## [11.0.1] (https://github.com/folio-org/ui-checkin/tree/v11.0.1) (2025-04-29)

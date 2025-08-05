@@ -86,7 +86,7 @@
     "statuses.declaredLost": "Оголошено втраченим",
     "statuses.withdrawn": "Списано",
     "statuses.lostAndPaid": "Втрачено та сплачено",
-    "feesFinesOwed": "(fees/fines owed)",
+    "feesFinesOwed": "(пеня/штрафи належать)",
     "statuses.agedToLost": "Визнано втраченим з часом",
     "actions": "Дії",
     "actionsMenu": "Дії з примірниками",

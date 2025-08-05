@@ -240,7 +240,11 @@ class CheckIn extends React.Component {
   }
 
   removeEventListeners = () => {
-    document.getElementById('ModuleMainHeading').removeEventListener('click', this.focusInput);
+    // On occasion, for reasons I do not understand, this will get
+    // called when the application opens, before the ModuleMainHeading
+    // element has come into existence. In this situation, we avoid
+    // trying to indirect through it, as this causes an NPE.
+    document.getElementById('ModuleMainHeading')?.removeEventListener('click', this.focusInput);
   }
 
   focusInput = () => {
