@@ -142,5 +142,6 @@ jest.mock('@folio/stripes/components', () => ({
   )),
   Paneset: jest.fn((props) => (<div {...props} />)),
   TextField: jest.fn((props) => (<input {...props} />)),
+  Select: jest.fn((props) => (<input {...props} />)),
   NoValue: jest.fn(() => <span>-</span>),
 }));

@@ -43,7 +43,7 @@ class CheckinDateTime extends React.Component {
 
     return (
       <>
-        <Col xs={12} smOffset={3} sm={2}>
+        <Col xs={12} sm={2}>
           {showPickers ? (
             <div data-test-process-date>
               <Field

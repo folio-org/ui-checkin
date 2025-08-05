@@ -6,13 +6,17 @@ import {
   waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';
 
-import Scan from './Scan';
+// We need both the raw class (so we can instantiate it) and the wrapped component
+// eslint-disable-next-line import/no-named-as-default
+import Scan, { Scan as RawScan } from './Scan';
+
 import {
   statuses,
   cancelFeeClaimReturned,
   REQUEST_STATUSES,
   ACCOUNT_STATUS_NAMES,
   PAGE_AMOUNT,
+  CHECKIN_ACTIONS,
 } from './consts';
 import {
   buildDateTime,
@@ -61,6 +65,14 @@ const basicProps = {
     checkInSession: {
       sessionId: 'sessionId',
     },
+    servicePoints: {
+      records: [
+        {
+          id: 'spId',
+          defaultCheckInActionForUseAtLocation: CHECKIN_ACTIONS.RETURN,
+        },
+      ],
+    },
   },
   mutator: {
     accounts: {
@@ -86,6 +98,9 @@ const basicProps = {
       reset: jest.fn(),
       GET: jest.fn(),
     },
+    loans: {
+      GET: jest.fn().mockResolvedValue({ loans: [{ name: 'some loan' }] }),
+    },
     checkIn: {
       POST: jest.fn(),
     },
@@ -96,6 +111,8 @@ const basicProps = {
       reset: jest.fn(),
       GET: jest.fn(),
     },
+    holdAtLocation: { POST: jest.fn() },
+    holdAtLocationBFF: { POST: jest.fn() },
   },
 };
 const testIds = {
@@ -299,6 +316,26 @@ describe('Scan', () => {
     jest.clearAllMocks();
   });
 
+  describe('getLoanForItem', () => {
+    // We need the raw class, not the decorated default export, to instantiate
+    const myScan = new RawScan(basicProps);
+
+    it('should return undefined for undefined item', async () => {
+      const loan = await myScan.getLoanForItem(undefined);
+      expect(loan).toBeUndefined();
+      expect(basicProps.mutator.loans.GET).toHaveBeenCalledTimes(0);
+    });
+
+    it('should return a loan for defined item', async () => {
+      const loan = await myScan.getLoanForItem({ id: 123 });
+      expect(loan).toBeDefined();
+      expect(typeof loan).toEqual('object');
+      expect(loan.name).toEqual('some loan');
+      expect(basicProps.mutator.loans.GET).toHaveBeenCalledTimes(1);
+      expect(basicProps.mutator.loans.GET).toHaveBeenCalledWith({ params: { query: 'itemId=="123" and status.name==Open' } });
+    });
+  });
+
   describe('Check in item', () => {
     describe('When checkedin process is successful', () => {
       const checkInDate = '2024-01-09T12:08:14.769Z';
@@ -452,6 +489,10 @@ describe('Scan', () => {
             };
 
             expect(basicProps.mutator.lostItemPolicy.GET).toHaveBeenCalledWith(expectedArgument);
+          });
+
+          it('should not get loan information', () => {
+            expect(basicProps.mutator.loans.GET).not.toHaveBeenCalled();
           });
 
           it('should send action information to the server', () => {

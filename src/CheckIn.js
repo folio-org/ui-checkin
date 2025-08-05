@@ -21,6 +21,7 @@ import {
   Pane,
   Button,
   TextField,
+  Select,
   IconButton,
   Layout,
   Row,
@@ -48,6 +49,7 @@ import {
 import {
   SLIPS_DATA_PROP_TYPES,
   STAFF_SLIP_TYPES,
+  CHECKIN_ACTIONS,
 } from './consts';
 
 import styles from './checkin.css';
@@ -534,6 +536,10 @@ class CheckIn extends React.Component {
     const scanBarcodeMsg = formatMessage({ id: 'ui-checkin.scanBarcode' });
     const itemIdLabel = formatMessage({ id: 'ui-checkin.itemId' });
     const scannedItemsLabel = formatMessage({ id: 'ui-checkin.scannedItems' });
+    const actionOptions = [CHECKIN_ACTIONS.HOLD, CHECKIN_ACTIONS.RETURN, CHECKIN_ACTIONS.ASK].map(key => ({
+      label: formatMessage({ id: `ui-checkin.defaultCheckinAction.${key}` }),
+      value: key
+    }));
 
     return (
       <form onSubmit={handleSubmit}>
@@ -545,7 +551,7 @@ class CheckIn extends React.Component {
               defaultWidth="100%"
             >
               <Row>
-                <Col xs={9} sm={4}>
+                <Col xs={9} sm={3}>
                   <Layout className="marginTopLabelSpacer">
                     <TitleManager prefix={(this.readyPrefix && this.state.readyToScan) ? this.readyPrefix : undefined}>
                       <Field
@@ -579,10 +585,22 @@ class CheckIn extends React.Component {
                     </Button>
                   </Layout>
                 </Col>
+                <Col sm={2} />
+                {/* <CheckinDateTime> provides two sm={2} columns for a total width of 4 */}
                 <CheckinDateTime
                   showPickers={showPickers}
                   onClick={this.showPickers}
                 />
+                <Col xs={12} sm={2}>
+                  <Field
+                    id="input-item-action"
+                    name="item.action"
+                    label={<FormattedMessage id="ui-checkin.defaultCheckinAction" />}
+                    component={Select}
+                    dataOptions={actionOptions}
+                    data-test-action
+                  />
+                </Col>
               </Row>
               <CheckedInListItems
                 loading={loading}

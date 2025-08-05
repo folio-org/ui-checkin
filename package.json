@@ -52,7 +52,9 @@
           "accounts.collection.get",
           "accounts.item.get",
           "lost-item-fees-policies.collection.get",
+	  "circulation.loans.collection.get",
           "circulation.check-in-by-barcode.post",
+          "circulation.hold-by-barcode-for-use-at-location.post",
           "circulation-bff.loans.check-in-by-barcode.execute",
           "circulation.requests.collection.get",
           "feefineactions.collection.get",
@@ -69,6 +71,7 @@
     "test": "yarn run test:jest",
     "test:jest": "jest --ci --coverage --colors",
     "lint": "eslint .",
+    "qlint": "eslint -f unix  --rule '{\"no-console\":\"off\"}' .",
     "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
     "formatjs-compile": "stripes translate compile"
   },

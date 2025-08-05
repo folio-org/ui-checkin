@@ -34,6 +34,7 @@ import {
   PAGE_AMOUNT,
   STAFF_SLIP_TYPES,
   SLIPS_DATA_PROP_TYPES,
+  CHECKIN_ACTIONS,
 } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
 import RouteForDeliveryModal from './components/RouteForDeliveryModal';
@@ -45,7 +46,7 @@ import {
   getCheckinSettings,
 } from './util';
 
-class Scan extends React.Component {
+export class Scan extends React.Component {
   static propTypes = {
     intl: PropTypes.shape({
       formatMessage: PropTypes.func.isRequired,
@@ -129,10 +130,19 @@ class Scan extends React.Component {
         PUT: PropTypes.func,
         reset: PropTypes.func,
       }),
+      loans: PropTypes.shape({
+        GET: PropTypes.func,
+      }),
       checkIn: PropTypes.shape({
         POST: PropTypes.func,
       }),
       checkInBFF: PropTypes.shape({
+        POST: PropTypes.func,
+      }),
+      holdAtLocation: PropTypes.shape({
+        POST: PropTypes.func,
+      }),
+      holdAtLocationBFF: PropTypes.shape({
         POST: PropTypes.func,
       }),
       requests: PropTypes.shape({
@@ -199,6 +209,12 @@ class Scan extends React.Component {
       accumulate: 'true',
       fetch: false,
     },
+    loans: {
+      type: 'okapi',
+      path: 'circulation/loans',
+      accumulate: 'true',
+      fetch: false,
+    },
     requests: {
       type: 'okapi',
       records: 'requests',
@@ -226,6 +242,12 @@ class Scan extends React.Component {
     checkInBFF: {
       type: 'okapi',
       path: 'circulation-bff/loans/check-in-by-barcode',
+      fetch: false,
+      throwErrors: false,
+    },
+    holdAtLocation: {
+      type: 'okapi',
+      path: 'circulation/hold-by-barcode-for-use-at-location',
       fetch: false,
       throwErrors: false,
     },
@@ -269,18 +291,23 @@ class Scan extends React.Component {
       offset: 0,
       selectedBarcode: null,
     };
+
+    const servicePoints = props.resources?.servicePoints?.records || [];
+    const servicePointId = this.props.stripes?.user?.user?.curServicePoint?.id;
+    const servicePoint = servicePoints.filter(x => x.id === servicePointId)[0];
+    this.checkinInitialValues = {
+      item: {
+        checkinDate: '',
+        checkinTime: '',
+        action: servicePoint?.defaultCheckInActionForUseAtLocation || CHECKIN_ACTIONS.RETURN,
+      },
+    };
   }
 
   store = this.props.stripes.store;
   barcode = React.createRef();
   checkInData = null;
   checkinFormRef = React.createRef();
-  checkinInitialValues = {
-    item: {
-      checkinDate: '',
-      checkinTime: '',
-    },
-  };
 
   setFocusInput = () => {
     this.barcode.current.focus();
@@ -415,12 +442,14 @@ class Scan extends React.Component {
         barcode,
         checkinDate,
         checkinTime,
+        action,
       },
     } = data;
     const {
       mutator: {
         checkIn,
         checkInBFF,
+        holdAtLocation,
       },
       intl: { timeZone },
       okapi,
@@ -451,7 +480,24 @@ class Scan extends React.Component {
 
     this.setState({ loading: true });
 
-    const checkInApiCall = isEnabledEcsRequests ? checkInBFF.POST(requestData) : checkIn.POST(requestData);
+    // The item may not have been checked out at all, in which case it
+    // is an "In-house use" loan; but it it was checked out, then it
+    // is a "Use at location" loan (which is a completely different
+    // thing) if any only if the `forUseAtLocation` structure is present.
+    const { checkedinItem } = this.state;
+    const loan = await this.getLoanForItem(checkedinItem);
+    const isUseAtLocation = !!loan && !!loan.forUseAtLocation;
+
+    /*
+    // Uncomment this if needed for debugging
+    const checkInApiCallName = (isUseAtLocation && action === CHECKIN_ACTIONS.HOLD) ?
+      holdAtLocation :
+      (isEnabledEcsRequests ? 'checkInBFF' : 'checkIn');
+    console.log(`isUseAtLocation=${isUseAtLocation}, action=${action} -> ${checkInApiCallName}`);
+    */
+    const checkInApiCall = (isUseAtLocation && action === CHECKIN_ACTIONS.HOLD) ?
+      holdAtLocation.POST(requestData) :
+      (isEnabledEcsRequests ? checkInBFF.POST(requestData) : checkIn.POST(requestData));
 
     return checkInApiCall
       .then(checkinResp => this.processResponse(checkinResp))
@@ -461,6 +507,19 @@ class Scan extends React.Component {
       .then(() => this.clearField('item.barcode'))
       .catch(resp => this.processError(resp))
       .finally(() => this.processCheckInDone());
+  }
+
+  getLoanForItem = async (item) => {
+    if (!item) {
+      // When invoked as part of the test suite, this can be called with no item
+      return undefined;
+    }
+    const { loans } = await this.props.mutator.loans.GET({
+      params: {
+        query: `itemId=="${item.id}" and status.name==Open`,
+      },
+    });
+    return loans[0];
   }
 
   processClaimReturned(checkinResp) {
@@ -570,6 +629,11 @@ class Scan extends React.Component {
   }
 
   processResponse(checkinResp) {
+    if (!checkinResp.item) {
+      // This must be the differently-shaped response from hold-by-barcode-for-use-at-location
+      // In this case, we use the item that we previously searched for by barcode
+      checkinResp.item = this.props.resources.items.records[0].items[0];
+    }
     const { loan, item, staffSlipContext } = checkinResp;
     const checkinRespItem = loan || { item };
     this.setState({ staffSlipContext, itemClaimedReturnedResolution: null });
