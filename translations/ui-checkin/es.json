@@ -109,5 +109,9 @@
     "selectItemModal.loanType": "Tipo de préstamo",
     "selectItemModal.title": "Título",
     "selectItemModal.callNumber": "Número de llamada",
-    "selectItemModal.itemListHeader": "Lista de ítemes: selecciona uno"
+    "selectItemModal.itemListHeader": "Lista de ítemes: selecciona uno",
+    "defaultCheckinAction": "Check-in action for use at location",
+    "defaultCheckinAction.Keep_on_hold_shelf": "Keep on hold shelf",
+    "defaultCheckinAction.Close_loan_and_return_item": "Close loan and return item",
+    "defaultCheckinAction.Ask_for_action": "Ask for action"
 }

@@ -109,5 +109,9 @@
     "selectItemModal.loanType": "Type lening",
     "selectItemModal.title": "Titel",
     "selectItemModal.callNumber": "Etiketnummer",
-    "selectItemModal.itemListHeader": "Lijst met items: kies er één"
+    "selectItemModal.itemListHeader": "Lijst met items: kies er één",
+    "defaultCheckinAction": "Check-in action for use at location",
+    "defaultCheckinAction.Keep_on_hold_shelf": "Keep on hold shelf",
+    "defaultCheckinAction.Close_loan_and_return_item": "Close loan and return item",
+    "defaultCheckinAction.Ask_for_action": "Ask for action"
 }

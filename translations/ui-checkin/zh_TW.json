@@ -109,5 +109,9 @@
     "selectItemModal.loanType": "借閱類型",
     "selectItemModal.title": "題名",
     "selectItemModal.callNumber": "索書號",
-    "selectItemModal.itemListHeader": "單件清單: 請選擇一個"
+    "selectItemModal.itemListHeader": "單件清單: 請選擇一個",
+    "defaultCheckinAction": "Check-in action for use at location",
+    "defaultCheckinAction.Keep_on_hold_shelf": "Keep on hold shelf",
+    "defaultCheckinAction.Close_loan_and_return_item": "Close loan and return item",
+    "defaultCheckinAction.Ask_for_action": "Ask for action"
 }
