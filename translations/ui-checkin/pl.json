@@ -109,5 +109,9 @@
     "selectItemModal.loanType": "Rodzaj wypożyczenia",
     "selectItemModal.title": "Tytuł",
     "selectItemModal.callNumber": "Sygnatura",
-    "selectItemModal.itemListHeader": "Lista egzemplarzy: wybierz jeden"
+    "selectItemModal.itemListHeader": "Lista egzemplarzy: wybierz jeden",
+    "defaultCheckinAction": "Check-in action for use at location",
+    "defaultCheckinAction.Keep_on_hold_shelf": "Keep on hold shelf",
+    "defaultCheckinAction.Close_loan_and_return_item": "Zamknij wypożyczenie i zwróć egzemplarz",
+    "defaultCheckinAction.Ask_for_action": "Ask for action"
 }
