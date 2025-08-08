@@ -109,5 +109,9 @@
     "selectItemModal.loanType": "Tipo de empréstimo",
     "selectItemModal.title": "Título",
     "selectItemModal.callNumber": "Número de chamada",
-    "selectItemModal.itemListHeader": "Lista de exemplares: escolha um"
+    "selectItemModal.itemListHeader": "Lista de exemplares: escolha um",
+    "defaultCheckinAction": "Ação de devolução para uso no local",
+    "defaultCheckinAction.Keep_on_hold_shelf": "Manter na prateleira de reserva",
+    "defaultCheckinAction.Close_loan_and_return_item": "Fechar empréstimo e devolver item",
+    "defaultCheckinAction.Ask_for_action": "Pergunte por uma ação"
 }

@@ -109,5 +109,9 @@
     "selectItemModal.loanType": "貸出種別",
     "selectItemModal.title": "タイトル",
     "selectItemModal.callNumber": "請求記号",
-    "selectItemModal.itemListHeader": "資料リスト: 1つを選択"
+    "selectItemModal.itemListHeader": "資料リスト: 1つを選択",
+    "defaultCheckinAction": "Check-in action for use at location",
+    "defaultCheckinAction.Keep_on_hold_shelf": "Keep on hold shelf",
+    "defaultCheckinAction.Close_loan_and_return_item": "Close loan and return item",
+    "defaultCheckinAction.Ask_for_action": "Ask for action"
 }
