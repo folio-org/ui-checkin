@@ -18,6 +18,7 @@ import {
   convertToSlipData,
 } from '@folio/stripes/util';
 import {
+  Loading,
   Modal,
   ModalFooter,
   Button,
@@ -290,17 +291,6 @@ export class Scan extends React.Component {
       totalRecords: 0,
       offset: 0,
       selectedBarcode: null,
-    };
-
-    const servicePoints = props.resources?.servicePoints?.records || [];
-    const servicePointId = this.props.stripes?.user?.user?.curServicePoint?.id;
-    const servicePoint = servicePoints.filter(x => x.id === servicePointId)[0];
-    this.checkinInitialValues = {
-      item: {
-        checkinDate: '',
-        checkinTime: '',
-        action: servicePoint?.defaultCheckInActionForUseAtLocation || CHECKIN_ACTIONS.RETURN,
-      },
     };
   }
 
@@ -1032,6 +1022,23 @@ export class Scan extends React.Component {
     });
   };
 
+  props2initialValues = () => {
+    const servicePointId = this.props.stripes?.user?.user?.curServicePoint?.id;
+    const servicePoints = this.props.resources?.servicePoints?.records;
+    if (!servicePointId || !servicePoints || servicePoints.length === 0) {
+      return undefined;
+    }
+
+    const servicePoint = servicePoints.filter(x => x.id === servicePointId)[0];
+    return {
+      item: {
+        checkinDate: '',
+        checkinTime: '',
+        action: servicePoint?.defaultCheckInActionForUseAtLocation || CHECKIN_ACTIONS.RETURN,
+      },
+    };
+  }
+
   render() {
     const { resources } = this.props;
     const scannedItems = resources.scannedItems || [];
@@ -1051,6 +1058,13 @@ export class Scan extends React.Component {
       selectedBarcode,
       offset,
     } = this.state;
+
+    if (!this.checkinInitialValues) {
+      this.checkinInitialValues = this.props2initialValues();
+    }
+    if (!this.checkinInitialValues) {
+      return <Loading />;
+    }
 
     return (
       <div data-test-check-in-scan>
