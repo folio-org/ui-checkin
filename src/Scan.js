@@ -36,6 +36,9 @@ import {
   STAFF_SLIP_TYPES,
   SLIPS_DATA_PROP_TYPES,
   CHECKIN_ACTIONS,
+  CIRCULATION_BFF_INVENTORY_INTERFACE_NAME,
+  CIRCULATION_BFF_INVENTORY_INTERFACE_VERSION,
+  CIRCULATION_BFF_INVENTORY_INTERFACE_ERROR,
 } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
 import RouteForDeliveryModal from './components/RouteForDeliveryModal';
@@ -46,6 +49,24 @@ import {
   buildDateTime,
   getCheckinSettings,
 } from './util';
+
+// eslint-disable-next-line consistent-return
+export const getMutatorFunction = (stripes, mutator) => {
+  const isEnabledEcsRequests = stripes?.config?.enableEcsRequests;
+
+  if (isEnabledEcsRequests) {
+    const isCorrectCirculationBFFInventoryInterface = stripes.hasInterface(CIRCULATION_BFF_INVENTORY_INTERFACE_NAME, CIRCULATION_BFF_INVENTORY_INTERFACE_VERSION);
+
+    if (isCorrectCirculationBFFInventoryInterface) {
+      return mutator.itemsBFF;
+    } else {
+      // eslint-disable-next-line no-console
+      console.warn(CIRCULATION_BFF_INVENTORY_INTERFACE_ERROR);
+    }
+  } else {
+    return mutator.items;
+  }
+};
 
 export class Scan extends React.Component {
   static propTypes = {
@@ -131,6 +152,10 @@ export class Scan extends React.Component {
         PUT: PropTypes.func,
         reset: PropTypes.func,
       }),
+      itemsBFF: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
       loans: PropTypes.shape({
         GET: PropTypes.func,
       }),
@@ -207,6 +232,12 @@ export class Scan extends React.Component {
     items: {
       type: 'okapi',
       path: 'inventory/items',
+      accumulate: 'true',
+      fetch: false,
+    },
+    itemsBFF: {
+      type: 'okapi',
+      path: 'circulation-bff/inventory/items',
       accumulate: 'true',
       fetch: false,
     },
@@ -705,20 +736,30 @@ export class Scan extends React.Component {
   }
 
   fetchItems = async (barcode, offset = 0) => {
-    const { mutator } = this.props;
+    const {
+      mutator,
+      stripes,
+    } = this.props;
     const { selectedBarcode } = this.state;
+    const isEnabledEcsRequests = stripes?.config?.enableEcsRequests;
     const itemBarcode = barcode || selectedBarcode;
     const query = `barcode==${itemBarcode}`;
 
     this.setState({
       checkedinItem: null,
     });
-    mutator.items.reset();
 
+    if (isEnabledEcsRequests) {
+      mutator.itemsBFF.reset();
+    } else {
+      mutator.items.reset();
+    }
+
+    const mutatorFunction = getMutatorFunction(stripes, mutator);
     const {
       items,
       totalRecords,
-    } = await mutator.items.GET({
+    } = await mutatorFunction.GET({
       params: {
         limit: PAGE_AMOUNT,
         query,
