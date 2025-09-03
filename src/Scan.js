@@ -50,7 +50,6 @@ import {
   getCheckinSettings,
 } from './util';
 
-// eslint-disable-next-line consistent-return
 export const getMutatorFunction = (stripes, mutator) => {
   const isEnabledEcsRequests = stripes?.config?.enableEcsRequests;
 
@@ -62,6 +61,7 @@ export const getMutatorFunction = (stripes, mutator) => {
     } else {
       // eslint-disable-next-line no-console
       console.warn(CIRCULATION_BFF_INVENTORY_INTERFACE_ERROR);
+      return {};
     }
   } else {
     return mutator.items;
@@ -741,7 +741,6 @@ export class Scan extends React.Component {
       stripes,
     } = this.props;
     const { selectedBarcode } = this.state;
-    const isEnabledEcsRequests = stripes?.config?.enableEcsRequests;
     const itemBarcode = barcode || selectedBarcode;
     const query = `barcode==${itemBarcode}`;
 
@@ -749,13 +748,13 @@ export class Scan extends React.Component {
       checkedinItem: null,
     });
 
-    if (isEnabledEcsRequests) {
-      mutator.itemsBFF.reset();
-    } else {
-      mutator.items.reset();
+    const mutatorFunction = getMutatorFunction(stripes, mutator);
+
+    if (isEmpty(mutatorFunction)) {
+      return undefined;
     }
 
-    const mutatorFunction = getMutatorFunction(stripes, mutator);
+    mutatorFunction.reset();
     const {
       items,
       totalRecords,
