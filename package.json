@@ -31,7 +31,8 @@
       "feesfines": "17.0 18.0 19.0"
     },
     "optionalOkapiInterfaces": {
-      "circulation-bff-loans": "1.0"
+      "circulation-bff-loans": "1.0",
+      "circulation-bff-inventory": "1.0"
     },
     "permissionSets": [
       {
@@ -48,6 +49,7 @@
           "usergroups.collection.get",
           "module.checkin.enabled",
           "inventory.items.collection.get",
+          "circulation-bff.inventory.items.collection.get",
           "inventory-storage.service-points.collection.get",
           "accounts.collection.get",
           "accounts.item.get",
