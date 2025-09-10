@@ -423,7 +423,7 @@ export class Scan extends React.Component {
     const checkedinItems = await this.fetchItems(barcode);
     const checkedinItem = checkedinItems[0];
 
-    if (checkedinItems.length > 1) {
+    if (checkedinItems?.length > 1) {
       this.setState({ checkedinItems });
     } else if (isEmpty(checkedinItems)) {
       this.checkInData.item.barcode = barcode.replace(/(^")|("$)/g, '');
@@ -751,7 +751,7 @@ export class Scan extends React.Component {
     const mutatorFunction = getMutatorFunction(stripes, mutator);
 
     if (isEmpty(mutatorFunction)) {
-      return undefined;
+      return [];
     }
 
     mutatorFunction.reset();
