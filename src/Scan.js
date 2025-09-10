@@ -29,6 +29,9 @@ import {
   REQUEST_STATUSES,
   ACCOUNT_STATUS_NAMES,
   PAGE_AMOUNT,
+  CIRCULATION_BFF_INVENTORY_INTERFACE_NAME,
+  CIRCULATION_BFF_INVENTORY_INTERFACE_VERSION,
+  CIRCULATION_BFF_INVENTORY_INTERFACE_ERROR,
 } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
 import RouteForDeliveryModal from './components/RouteForDeliveryModal';
@@ -42,6 +45,24 @@ import {
 } from './util';
 
 const REQUEST_DELIVERY_HEADING = 'Request delivery';
+
+export const getMutatorFunction = (stripes, mutator) => {
+  const isEnabledEcsRequests = stripes?.config?.enableEcsRequests;
+
+  if (isEnabledEcsRequests) {
+    const isCorrectCirculationBFFInventoryInterface = stripes.hasInterface(CIRCULATION_BFF_INVENTORY_INTERFACE_NAME, CIRCULATION_BFF_INVENTORY_INTERFACE_VERSION);
+
+    if (isCorrectCirculationBFFInventoryInterface) {
+      return mutator.itemsBFF;
+    } else {
+      // eslint-disable-next-line no-console
+      console.warn(CIRCULATION_BFF_INVENTORY_INTERFACE_ERROR);
+      return {};
+    }
+  } else {
+    return mutator.items;
+  }
+};
 
 class Scan extends React.Component {
   static propTypes = {
@@ -91,6 +112,10 @@ class Scan extends React.Component {
       items: PropTypes.shape({
         GET: PropTypes.func,
         PUT: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      itemsBFF: PropTypes.shape({
+        GET: PropTypes.func,
         reset: PropTypes.func,
       }),
       checkIn: PropTypes.shape({
@@ -154,6 +179,12 @@ class Scan extends React.Component {
     items: {
       type: 'okapi',
       path: 'inventory/items',
+      accumulate: 'true',
+      fetch: false,
+    },
+    itemsBFF: {
+      type: 'okapi',
+      path: 'circulation-bff/inventory/items',
       accumulate: 'true',
       fetch: false,
     },
@@ -333,7 +364,7 @@ class Scan extends React.Component {
     const checkedinItems = await this.fetchItems(barcode);
     const checkedinItem = checkedinItems[0];
 
-    if (checkedinItems.length > 1) {
+    if (checkedinItems?.length > 1) {
       this.setState({ checkedinItems });
     } else if (isEmpty(checkedinItems)) {
       this.checkInData.item.barcode = barcode.replace(/(^")|("$)/g, '');
@@ -609,7 +640,10 @@ class Scan extends React.Component {
   }
 
   fetchItems = async (barcode, offset = 0) => {
-    const { mutator } = this.props;
+    const {
+      mutator,
+      stripes,
+    } = this.props;
     const { selectedBarcode } = this.state;
     const itemBarcode = barcode || selectedBarcode;
     const query = `barcode==${itemBarcode}`;
@@ -617,12 +651,18 @@ class Scan extends React.Component {
     this.setState({
       checkedinItem: null,
     });
-    mutator.items.reset();
 
+    const mutatorFunction = getMutatorFunction(stripes, mutator);
+
+    if (isEmpty(mutatorFunction)) {
+      return [];
+    }
+
+    mutatorFunction.reset();
     const {
       items,
       totalRecords,
-    } = await mutator.items.GET({
+    } = await mutatorFunction.GET({
       params: {
         limit: PAGE_AMOUNT,
         query,

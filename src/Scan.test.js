@@ -6,13 +6,19 @@ import {
   waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';
 
-import Scan from './Scan';
+// We need both the raw class (so we can instantiate it) and the wrapped component
+// eslint-disable-next-line import/no-named-as-default
+import Scan, {
+  getMutatorFunction,
+} from './Scan';
+
 import {
   statuses,
   cancelFeeClaimReturned,
   REQUEST_STATUSES,
   ACCOUNT_STATUS_NAMES,
   PAGE_AMOUNT,
+  CIRCULATION_BFF_INVENTORY_INTERFACE_ERROR,
 } from './consts';
 import {
   buildDateTime,
@@ -1259,6 +1265,52 @@ describe('Scan', () => {
       };
 
       expect(basicProps.mutator.endSession.POST).toHaveBeenCalledWith(expectedArg);
+    });
+  });
+
+  describe('getMutatorFunction ', () => {
+    const stripes = {
+      hasInterface: () => true,
+      config: {
+        enableEcsRequests: true,
+      },
+    };
+    const mutatorFunction = {
+      itemsBFF: {
+        GET: 'itemsBFF',
+      },
+      items: {
+        GET: 'items',
+      },
+    };
+
+    it('should return GET mutator itemsBFF', () => {
+      expect(getMutatorFunction(stripes, mutatorFunction)).toEqual({
+        GET: 'itemsBFF',
+      });
+    });
+
+    it('should return GET mutator items', () => {
+      const stripesWithOutEcs = {
+        ...stripes,
+        config: {},
+      };
+
+      expect(getMutatorFunction(stripesWithOutEcs, mutatorFunction)).toEqual({
+        GET: 'items',
+      });
+    });
+
+    it('should return required okapi interfaces error', () => {
+      const stripesWithOutCirculationBffInventory = {
+        ...stripes,
+        hasInterface: () => false,
+      };
+      const spy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+      getMutatorFunction(stripesWithOutCirculationBffInventory, mutatorFunction);
+      expect(spy).toHaveBeenCalledWith(CIRCULATION_BFF_INVENTORY_INTERFACE_ERROR);
+      spy.mockRestore();
     });
   });
 });
