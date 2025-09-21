@@ -110,7 +110,7 @@
     "selectItemModal.title": "Назва",
     "selectItemModal.callNumber": "Шифр",
     "selectItemModal.itemListHeader": "Список примірників: виберіть один",
-    "defaultCheckinAction": "Check-in action for use at location",
+    "defaultCheckinAction": "Дія під час повернення для використання у місці розміщення",
     "defaultCheckinAction.Keep_on_hold_shelf": "Утримувати на бронеполиці",
     "defaultCheckinAction.Close_loan_and_return_item": "Закрити видачу та повернути примірник",
     "defaultCheckinAction.Ask_for_action": "Запитувати про дію"

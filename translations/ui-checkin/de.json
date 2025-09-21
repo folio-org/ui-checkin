@@ -113,5 +113,5 @@
     "defaultCheckinAction": "Rückgabe zur Verwendung am Standort",
     "defaultCheckinAction.Keep_on_hold_shelf": "Im Abholregal belassen",
     "defaultCheckinAction.Close_loan_and_return_item": "Ausleihe schließen und Exemplar zurückgeben",
-    "defaultCheckinAction.Ask_for_action": "Ask for action"
+    "defaultCheckinAction.Ask_for_action": "Aktion erforderlich"
 }
