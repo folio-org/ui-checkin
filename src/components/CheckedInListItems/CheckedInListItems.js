@@ -88,7 +88,9 @@ export const getItemListFormatter = (mutator, renderActions) => ({
     return (inTransitSp) ? `${status} - ${inTransitSp}` : status;
   },
   [COLUMNS_NAME.FOR_USE_AT_LOCATION]: (loan) => (
-    <FormattedMessage id={`ui-checkin.forUseAtLocation.${loan.forUseAtLocation?.status}`} />
+    loan.forUseAtLocation?.status ?
+      <FormattedMessage id={`ui-checkin.forUseAtLocation.${loan.forUseAtLocation.status}`} /> :
+      <NoValue />
   ),
   [COLUMNS_NAME.EFFECTIVE_CALL_NUMBER]: (loan) => effectiveCallNumber(loan) || <NoValue />,
   [COLUMNS_NAME.ACTION]: (loan) => renderActions(loan),
