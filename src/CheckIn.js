@@ -69,7 +69,7 @@ class CheckIn extends React.Component {
       formatTime: PropTypes.func.isRequired,
       timeZone: PropTypes.string.isRequired,
     }).isRequired,
-    scannedItems: PropTypes.arrayOf({
+    scannedItems: PropTypes.arrayOf(PropTypes.shape({
       title: PropTypes.string,
       materialType: PropTypes.shape({
         name: PropTypes.string,
@@ -84,7 +84,7 @@ class CheckIn extends React.Component {
       inTransitDestinationServicePoint: PropTypes.shape({
         name: PropTypes.string,
       }),
-    }),
+    })),
     showCheckinNotes: PropTypes.func,
     handleSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
@@ -92,9 +92,10 @@ class CheckIn extends React.Component {
     barcodeRef: PropTypes.shape({
       current: PropTypes.instanceOf(Element),
     }),
-    checkinFormRef: PropTypes.shape({
-      current: PropTypes.instanceOf(Element),
-    }),
+    checkinFormRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+    ]),
     onSessionEnd: PropTypes.func,
     resources: PropTypes.shape({
       checkinSettings: PropTypes.shape({
@@ -103,7 +104,7 @@ class CheckIn extends React.Component {
           checkoutTimeoutDuration: PropTypes.string,
         })),
       }),
-      scannedItems: PropTypes.arrayOf({
+      scannedItems: PropTypes.arrayOf(PropTypes.shape({
         title: PropTypes.string,
         materialType: PropTypes.shape({
           name: PropTypes.string,
@@ -118,7 +119,7 @@ class CheckIn extends React.Component {
         inTransitDestinationServicePoint: PropTypes.shape({
           name: PropTypes.string,
         }),
-      }),
+      })),
       staffSlips: PropTypes.shape({
         records: SLIPS_DATA_PROP_TYPES,
       }),
