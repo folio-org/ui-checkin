@@ -110,8 +110,8 @@
     "selectItemModal.title": "题名",
     "selectItemModal.callNumber": "索书号",
     "selectItemModal.itemListHeader": "单件清单 : 选择一个",
-    "defaultCheckinAction": "Check-in action for use at location",
-    "defaultCheckinAction.Keep_on_hold_shelf": "Keep on hold shelf",
-    "defaultCheckinAction.Close_loan_and_return_item": "Close loan and return item",
-    "defaultCheckinAction.Ask_for_action": "Ask for action"
+    "defaultCheckinAction": "归还后在馆藏地使用",
+    "defaultCheckinAction.Keep_on_hold_shelf": "保留在预约架上",
+    "defaultCheckinAction.Close_loan_and_return_item": "结束借阅并归还单件",
+    "defaultCheckinAction.Ask_for_action": "请求操作"
 }
