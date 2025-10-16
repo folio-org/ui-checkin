@@ -123,7 +123,6 @@ jest.mock('@folio/stripes/util', () => ({
 }));
 jest.mock('./util', () => ({
   getCheckinSettings: jest.fn(),
-  isDcbUser: jest.fn(() => false),
   isDCBItem: jest.fn(() => false)
 }));
 jest.useFakeTimers();

@@ -42,7 +42,6 @@ import CheckedInListItems from './components/CheckedInListItems';
 import CheckInFooter from './components/CheckInFooter';
 import {
   getCheckinSettings,
-  isDcbUser,
   isDCBItem,
 } from './util';
 
@@ -370,7 +369,7 @@ class CheckIn extends React.Component {
     const isCheckInNote = element => element.noteType === 'Check in';
     const checkinNotePresent = get(loan.item, ['circulationNotes'], []).some(isCheckInNote);
     const loanOpenRequest = loan?.staffSlipContext?.request ?? {};
-    const isVirtualUser = isDcbUser(loan?.borrower);
+    const isVirtualUser = loan?.isDcb;
     const isVirtualItem = isDCBItem(get(scannedItems, [0, 'item']));
 
     const trigger = ({ getTriggerProps, triggerRef }) => (
