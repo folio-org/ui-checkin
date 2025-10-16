@@ -126,7 +126,6 @@ jest.mock('./components/CheckInFooter', () => jest.fn(({ handleSessionEnd }) => 
 jest.mock('./util', () => ({
   convertToSlipData: jest.fn(),
   getCheckinSettings: jest.fn(),
-  isDcbUser: jest.fn(() => false),
   isDCBItem: jest.fn(() => false)
 }));
 jest.useFakeTimers();

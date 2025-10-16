@@ -12,12 +12,10 @@ import {
   escapeValue,
   getCheckinSettings,
   shouldConfirmStatusModalBeShown,
-  isDcbUser,
   isDCBItem,
 } from './util';
 
 import {
-  DCB_USER,
   DCB_INSTANCE_ID,
   DCB_HOLDINGS_RECORD_ID,
   statuses,
@@ -344,22 +342,6 @@ describe('shouldConfirmStatusModalBeShown', () => {
 
       expect(v).toBeTruthy();
     });
-  });
-});
-
-describe('isDcbUser', () => {
-  it('should return true when user has lastName as "DcbSystem"', () => {
-    const user = DCB_USER;
-
-    expect(isDcbUser(user)).toBeTruthy();
-  });
-
-  it('should return false when user does not have lastName as "DcbSystem"', () => {
-    const user = {
-      lastName: 'test',
-    };
-
-    expect(isDcbUser(user)).toBeFalsy();
   });
 });
 

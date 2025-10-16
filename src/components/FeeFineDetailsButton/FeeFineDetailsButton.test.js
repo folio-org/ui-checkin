@@ -1,3 +1,4 @@
+import { act } from 'react';
 import {
   render,
   screen,
@@ -9,14 +10,13 @@ import {
 import { account as accountFixture } from '../../../test/jest/fixtures/account';
 import { loan as loanFixture } from '../../../test/jest/fixtures/loan';
 import FeeFineDetailsButton from './FeeFineDetailsButton';
-import { DCB_USER_LASTNAME } from '../../consts';
 
 const mockedQueryUpdate = jest.fn();
 const labelIds = {
   feeFineDetails: 'ui-checkin.feeFineDetails',
 };
 let pushHistorySpy;
-const renderFeeFineDetailsButton = (loan, accountData) => {
+const renderFeeFineDetailsButton = (loan, accountData, otherProps = {}) => {
   const {
     loan: {
       itemId,
@@ -40,6 +40,7 @@ const renderFeeFineDetailsButton = (loan, accountData) => {
       itemId={itemId}
       mutator={parentMutator}
       onClick={pushHistorySpy}
+      {...otherProps}
     />
   );
 };
@@ -196,18 +197,14 @@ describe('FeeFineDetailsButton', () => {
   });
 
   describe('when borrower is virtual user', () => {
-    it('should not render FeeFineDetails button', () => {
+    it('should not render FeeFineDetails button', async () => {
       const alteredLoanFixture = {
-        ...loanFixture,
         loan: {
-          ...loanFixture.loan,
-          borrower: {
-            ...loanFixture.loan.borrower,
-            lastName: DCB_USER_LASTNAME,
-          }
+          itemId: 'item-id',
+          userId: 'user-id',
         }
       };
-      renderFeeFineDetailsButton(alteredLoanFixture, accountFixture);
+      await act(async () => renderFeeFineDetailsButton(alteredLoanFixture, accountFixture, { isVirtualUser: true }));
 
       expect(screen.queryByText(labelIds.feeFineDetails)).toBeNull();
     });
