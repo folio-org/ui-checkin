@@ -16,6 +16,7 @@
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v11.0.1...v11.0.2)
 
 * Add support for use circulation-bff for inventory-items. Refs UICHKIN-488.
+* In list of checked-out items, add "For use at location" column with action for librarian to perform. Refs UICHKIN-489.
 
 ## [11.0.1] (https://github.com/folio-org/ui-checkin/tree/v11.0.1) (2025-04-29)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v11.0.0...v11.0.0)
