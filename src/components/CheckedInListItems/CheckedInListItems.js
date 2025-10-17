@@ -99,7 +99,7 @@ export const getItemListFormatter = (mutator, renderActions) => ({
 class CheckedInListItems extends React.Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
-    scannedItems: PropTypes.arrayOf({
+    scannedItems: PropTypes.arrayOf(PropTypes.shape({
       title: PropTypes.string,
       barcode: PropTypes.string,
       materialType: PropTypes.shape({
@@ -114,7 +114,7 @@ class CheckedInListItems extends React.Component {
       inTransitDestinationServicePoint: PropTypes.shape({
         name: PropTypes.string,
       }),
-    }),
+    })),
     mutator: PropTypes.shape({
       accounts: PropTypes.shape({
         GET: PropTypes.func.isRequired,
