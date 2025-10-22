@@ -203,7 +203,7 @@ describe('CheckedInListItems', () => {
         forUseAtLocation: {
           status: 'Held',
         },
-      }
+      };
 
       const fual2 = getItemListFormatter(mutator, renderActions)[COLUMNS_NAME.FOR_USE_AT_LOCATION](enhancedLoan);
       expect(React.isValidElement(fual2)).toBe(true);
