@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   render,
   screen,
@@ -193,8 +195,19 @@ describe('CheckedInListItems', () => {
 
     it('should trigger "forUseAtLocation" with correct arguments', () => {
       const fual = getItemListFormatter(mutator, renderActions)[COLUMNS_NAME.FOR_USE_AT_LOCATION](basicLoan);
+      expect(React.isValidElement(fual)).toBe(true);
+      expect(fual.props.id).toBeUndefined();
 
-      expect(status).toBe('');
+      const enhancedLoan = {
+        ...basicLoan,
+        forUseAtLocation: {
+          status: 'Held',
+        },
+      }
+
+      const fual2 = getItemListFormatter(mutator, renderActions)[COLUMNS_NAME.FOR_USE_AT_LOCATION](enhancedLoan);
+      expect(React.isValidElement(fual2)).toBe(true);
+      expect(fual2.props.id).toBe('ui-checkin.forUseAtLocation.Held');
     });
 
     it('should trigger "effectiveCallNumber" with correct arguments', () => {
