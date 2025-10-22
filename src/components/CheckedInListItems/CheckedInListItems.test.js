@@ -27,6 +27,10 @@ const testIds = {
   returnedTime: 'returnedTime',
 };
 
+const labelIds = {
+  forUseAtLocationHeld: 'ui-checkin.forUseAtLocation.Held',
+};
+
 const loading = false;
 const scannedItems = [];
 const mutator = {};
@@ -193,11 +197,13 @@ describe('CheckedInListItems', () => {
       expect(status).toBe(basicLoan.item.status.name);
     });
 
-    it('should trigger "forUseAtLocation" with correct arguments', () => {
+    it('should trigger "forUseAtLocation" with no UAL status', () => {
       const fual = getItemListFormatter(mutator, renderActions)[COLUMNS_NAME.FOR_USE_AT_LOCATION](basicLoan);
       expect(React.isValidElement(fual)).toBe(true);
       expect(fual.props.id).toBeUndefined();
+    });
 
+    it('should trigger "forUseAtLocation" with "Held" UAL status', () => {
       const enhancedLoan = {
         ...basicLoan,
         forUseAtLocation: {
@@ -205,9 +211,9 @@ describe('CheckedInListItems', () => {
         },
       };
 
-      const fual2 = getItemListFormatter(mutator, renderActions)[COLUMNS_NAME.FOR_USE_AT_LOCATION](enhancedLoan);
-      expect(React.isValidElement(fual2)).toBe(true);
-      expect(fual2.props.id).toBe('ui-checkin.forUseAtLocation.Held');
+      const fual = getItemListFormatter(mutator, renderActions)[COLUMNS_NAME.FOR_USE_AT_LOCATION](enhancedLoan);
+      expect(React.isValidElement(fual)).toBe(true);
+      expect(fual.props.id).toBe(labelIds.forUseAtLocationHeld);
     });
 
     it('should trigger "effectiveCallNumber" with correct arguments', () => {

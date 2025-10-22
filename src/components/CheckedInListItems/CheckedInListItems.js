@@ -87,11 +87,18 @@ export const getItemListFormatter = (mutator, renderActions) => ({
 
     return (inTransitSp) ? `${status} - ${inTransitSp}` : status;
   },
-  [COLUMNS_NAME.FOR_USE_AT_LOCATION]: (loan) => (
-    loan.forUseAtLocation?.status ?
-      <FormattedMessage id={`ui-checkin.forUseAtLocation.${loan.forUseAtLocation.status}`} /> :
+  [COLUMNS_NAME.FOR_USE_AT_LOCATION]: (loan) => {
+    const forUseAtLocationStatus = {
+      held: 'Held',
+      returned: 'Returned',
+    };
+
+    return (
+      Object.values(forUseAtLocationStatus).includes(loan?.forUseAtLocation?.status) ?
+        <FormattedMessage id={`ui-checkin.forUseAtLocation.${loan.forUseAtLocation.status}`} /> :
       <NoValue />
-  ),
+    );
+  },
   [COLUMNS_NAME.EFFECTIVE_CALL_NUMBER]: (loan) => effectiveCallNumber(loan) || <NoValue />,
   [COLUMNS_NAME.ACTION]: (loan) => renderActions(loan),
 });
