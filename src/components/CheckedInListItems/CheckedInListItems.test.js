@@ -191,6 +191,12 @@ describe('CheckedInListItems', () => {
       expect(status).toBe(basicLoan.item.status.name);
     });
 
+    it('should trigger "forUseAtLocation" with correct arguments', () => {
+      const fual = getItemListFormatter(mutator, renderActions)[COLUMNS_NAME.FOR_USE_AT_LOCATION](basicLoan);
+
+      expect(status).toBe('');
+    });
+
     it('should trigger "effectiveCallNumber" with correct arguments', () => {
       getItemListFormatter(mutator, renderActions)[COLUMNS_NAME.EFFECTIVE_CALL_NUMBER](basicLoan);
 
