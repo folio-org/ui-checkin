@@ -96,7 +96,7 @@ export const getItemListFormatter = (mutator, renderActions) => ({
     return (
       Object.values(forUseAtLocationStatus).includes(loan?.forUseAtLocation?.status) ?
         <FormattedMessage id={`ui-checkin.forUseAtLocation.${loan.forUseAtLocation.status}`} /> :
-      <NoValue />
+        <NoValue />
     );
   },
   [COLUMNS_NAME.EFFECTIVE_CALL_NUMBER]: (loan) => effectiveCallNumber(loan) || <NoValue />,
