@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   render,
   screen,
@@ -23,6 +25,10 @@ const testIds = {
   listItemsLoading: 'listItemsLoading',
   listItems: 'listItems',
   returnedTime: 'returnedTime',
+};
+
+const labelIds = {
+  forUseAtLocationHeld: 'ui-checkin.forUseAtLocation.Held',
 };
 
 const loading = false;
@@ -189,6 +195,25 @@ describe('CheckedInListItems', () => {
       const status = getItemListFormatter(mutator, renderActions)[COLUMNS_NAME.STATUS](loan);
 
       expect(status).toBe(basicLoan.item.status.name);
+    });
+
+    it('should trigger "forUseAtLocation" with no UAL status', () => {
+      const fual = getItemListFormatter(mutator, renderActions)[COLUMNS_NAME.FOR_USE_AT_LOCATION](basicLoan);
+      expect(React.isValidElement(fual)).toBe(true);
+      expect(fual.props.id).toBeUndefined();
+    });
+
+    it('should trigger "forUseAtLocation" with "Held" UAL status', () => {
+      const enhancedLoan = {
+        ...basicLoan,
+        forUseAtLocation: {
+          status: 'Held',
+        },
+      };
+
+      const fual = getItemListFormatter(mutator, renderActions)[COLUMNS_NAME.FOR_USE_AT_LOCATION](enhancedLoan);
+      expect(React.isValidElement(fual)).toBe(true);
+      expect(fual.props.id).toBe(labelIds.forUseAtLocationHeld);
     });
 
     it('should trigger "effectiveCallNumber" with correct arguments', () => {

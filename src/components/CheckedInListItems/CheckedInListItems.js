@@ -22,6 +22,7 @@ export const COLUMNS_NAME = {
   LOCATION: 'location',
   IN_HOUSE_USE: 'inHouseUse',
   STATUS: 'status',
+  FOR_USE_AT_LOCATION: 'forUseAtLocation',
   ACTION: ' ',
 };
 export const visibleColumns = [
@@ -32,6 +33,7 @@ export const visibleColumns = [
   COLUMNS_NAME.LOCATION,
   COLUMNS_NAME.IN_HOUSE_USE,
   COLUMNS_NAME.STATUS,
+  COLUMNS_NAME.FOR_USE_AT_LOCATION,
   COLUMNS_NAME.ACTION,
 ];
 export const columnWidths = {
@@ -42,6 +44,7 @@ export const columnWidths = {
   [COLUMNS_NAME.LOCATION]: { max: 200 },
   [COLUMNS_NAME.IN_HOUSE_USE]: { max: 80 },
   [COLUMNS_NAME.STATUS]: { max: 120 },
+  [COLUMNS_NAME.FOR_USE_AT_LOCATION]: { max: 120 },
   [COLUMNS_NAME.ACTION]: { max: 80 },
 };
 export const columnMapping = {
@@ -52,6 +55,7 @@ export const columnMapping = {
   [COLUMNS_NAME.LOCATION]: <FormattedMessage id="ui-checkin.location" />,
   [COLUMNS_NAME.IN_HOUSE_USE]: <FormattedMessage id="ui-checkin.inHouseUse" />,
   [COLUMNS_NAME.STATUS]: <FormattedMessage id="ui-checkin.status" />,
+  [COLUMNS_NAME.FOR_USE_AT_LOCATION]: <FormattedMessage id="ui-checkin.forUseAtLocation" />,
   [COLUMNS_NAME.ACTION]: <FormattedMessage id="ui-checkin.actions" />,
 };
 export const getItemListFormatter = (mutator, renderActions) => ({
@@ -82,6 +86,18 @@ export const getItemListFormatter = (mutator, renderActions) => ({
     const inTransitSp = get(loan, ['item', 'inTransitDestinationServicePoint', 'name']);
 
     return (inTransitSp) ? `${status} - ${inTransitSp}` : status;
+  },
+  [COLUMNS_NAME.FOR_USE_AT_LOCATION]: (loan) => {
+    const forUseAtLocationStatus = {
+      held: 'Held',
+      returned: 'Returned',
+    };
+
+    return (
+      Object.values(forUseAtLocationStatus).includes(loan?.forUseAtLocation?.status) ?
+        <FormattedMessage id={`ui-checkin.forUseAtLocation.${loan.forUseAtLocation.status}`} /> :
+        <NoValue />
+    );
   },
   [COLUMNS_NAME.EFFECTIVE_CALL_NUMBER]: (loan) => effectiveCallNumber(loan) || <NoValue />,
   [COLUMNS_NAME.ACTION]: (loan) => renderActions(loan),
