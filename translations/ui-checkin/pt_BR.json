@@ -113,5 +113,8 @@
     "defaultCheckinAction": "Ação de devolução para uso no local",
     "defaultCheckinAction.Keep_on_hold_shelf": "Manter na prateleira de reserva",
     "defaultCheckinAction.Close_loan_and_return_item": "Fechar empréstimo e devolver item",
-    "defaultCheckinAction.Ask_for_action": "Pergunte por uma ação"
+    "defaultCheckinAction.Ask_for_action": "Pergunte por uma ação",
+    "forUseAtLocation": "Para uso no local",
+    "forUseAtLocation.Held": "Manter na prateleira de reserva",
+    "forUseAtLocation.Returned": "Fechar empréstimo e devolver item"
 }
