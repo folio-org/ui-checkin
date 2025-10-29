@@ -322,6 +322,7 @@ export class Scan extends React.Component {
       totalRecords: 0,
       offset: 0,
       selectedBarcode: null,
+      showActionChoiceModal: false,
     };
   }
 
@@ -454,7 +455,7 @@ export class Scan extends React.Component {
     this.setFocusInput();
   };
 
-  checkIn = async () => {
+  checkIn = async (explicitAction) => {
     if (this.state.loading) return undefined;
 
     const data = this.checkInData;
@@ -463,9 +464,14 @@ export class Scan extends React.Component {
         barcode,
         checkinDate,
         checkinTime,
-        action,
       },
     } = data;
+    const action = explicitAction || data.item.action;
+    if (action === CHECKIN_ACTIONS.ASK) {
+      this.setState({ showActionChoiceModal: true });
+      return undefined;
+    }
+
     const {
       mutator: {
         checkIn,
@@ -509,18 +515,11 @@ export class Scan extends React.Component {
     const loan = await this.getLoanForItem(checkedinItem);
     const isUseAtLocation = !!loan && !!loan.forUseAtLocation;
 
-    /*
-    // Uncomment this if needed for debugging
-    const checkInApiCallName = (isUseAtLocation && action === CHECKIN_ACTIONS.HOLD) ?
+    const checkInMutator = (isUseAtLocation && action === CHECKIN_ACTIONS.HOLD) ?
       holdAtLocation :
-      (isEnabledEcsRequests ? 'checkInBFF' : 'checkIn');
-    console.log(`isUseAtLocation=${isUseAtLocation}, action=${action} -> ${checkInApiCallName}`);
-    */
-    const checkInApiCall = (isUseAtLocation && action === CHECKIN_ACTIONS.HOLD) ?
-      holdAtLocation.POST(requestData) :
-      (isEnabledEcsRequests ? checkInBFF.POST(requestData) : checkIn.POST(requestData));
+      (isEnabledEcsRequests ? checkInBFF.POST(requestData) : checkIn);
 
-    return checkInApiCall
+    return checkInMutator.POST(requestData)
       .then(checkinResp => this.processResponse(checkinResp))
       .then(checkinResp => this.processClaimReturned(checkinResp))
       .then(checkinResp => this.fetchRequests(checkinResp))
@@ -1049,6 +1048,72 @@ export class Scan extends React.Component {
     );
   }
 
+  renderActionChoiceModal(item, servicePoint) {
+    const title = item?.title;
+    const materialType = item?.materialType?.name;
+    const { formatMessage } = this.props.intl;
+    const label = formatMessage({ id: 'ui-checkin.actionModal.title' });
+    const onClose = () => this.setState({ showActionChoiceModal: false });
+
+    // The footer format is:
+    // * "Cancel" button alone on the left
+    // * "Close loan" and "Keep on shelf" buttons together to the right, in that order
+    // Experimentally, this ordering and these CSS styles achieve that.
+    // I have absolutely no idea why.
+    //
+    const footer = (
+      <ModalFooter>
+        <div style={{ textAlign: 'right' }}>
+          <Button
+            data-test-action-return
+            onClick={() => { onClose(); this.checkIn(CHECKIN_ACTIONS.RETURN); }}
+          >
+            <FormattedMessage id="ui-checkin.defaultCheckinAction.Close_loan_and_return_item" />
+          </Button>
+          <Button
+            data-test-action-hold
+            buttonStyle="primary"
+            onClick={() => { onClose(); this.checkIn(CHECKIN_ACTIONS.HOLD); }}
+          >
+            <FormattedMessage id="ui-checkin.defaultCheckinAction.Keep_on_hold_shelf" />
+          </Button>
+        </div>
+        <div style={{ textAlign: 'left' }}>
+          <Button
+            data-test-action-cancel
+            onClick={onClose}
+          >
+            <FormattedMessage id="ui-checkin.actionModal.cancel" />
+          </Button>
+        </div>
+      </ModalFooter>
+    );
+
+    return (
+      <Modal
+        data-testid="actionModal"
+        open
+        size="small"
+        label={label}
+        footer={footer}
+        dismissible
+        onClose={onClose}
+      >
+        <FormattedMessage id="ui-checkin.actionModal.caption" />
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <b>
+          {title}
+          &nbsp;
+          ({materialType})
+        </b>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        (<FormattedMessage id="ui-checkin.actionModal.barcode" values={{ barcode: item.barcode }} />)
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        (<FormattedMessage id="ui-checkin.actionModal.servicePoint" values={{ servicePoint }} />)
+      </Modal>
+    );
+  }
+
   onCancel = () => {
     this.clearForm();
     this.processCheckInDone();
@@ -1080,7 +1145,7 @@ export class Scan extends React.Component {
   }
 
   render() {
-    const { resources } = this.props;
+    const { resources, stripes } = this.props;
     const scannedItems = resources.scannedItems || [];
     const items = resources.items || {};
     const {
@@ -1097,6 +1162,7 @@ export class Scan extends React.Component {
       totalRecords,
       selectedBarcode,
       offset,
+      showActionChoiceModal
     } = this.state;
 
     if (!this.checkinInitialValues) {
@@ -1133,6 +1199,9 @@ export class Scan extends React.Component {
         {nextRequest && deliveryItem && this.renderDeliveryModal(deliveryItem, staffSlipContext)}
         {transitItem && this.renderTransitionModal(transitItem, staffSlipContext)}
         {itemError && this.renderErrorModal(itemError)}
+        {showActionChoiceModal &&
+         this.renderActionChoiceModal(items.records?.[0]?.items?.[0],
+           stripes.user.user.curServicePoint?.name)}
 
         <CheckIn
           loading={loading}

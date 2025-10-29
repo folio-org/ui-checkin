@@ -117,5 +117,11 @@
   "selectItemModal.materialType": "Material type",
   "selectItemModal.loanType": "Loan type",
 
+  "actionModal.title": "For use at location",
+  "actionModal.caption": "This item is for use at location.",
+  "actionModal.barcode": "Barcode: {barcode}",
+  "actionModal.servicePoint": "{servicePoint} service point",
+  "actionModal.cancel": "Cancel",
+
   "permission.all": "Check in: All permissions"
 }
