@@ -113,5 +113,8 @@
     "defaultCheckinAction": "Inchecken voor gebruik op Locatie",
     "defaultCheckinAction.Keep_on_hold_shelf": "In de wacht bewaren",
     "defaultCheckinAction.Close_loan_and_return_item": "Uitlening sluiten en item retourneren",
-    "defaultCheckinAction.Ask_for_action": "Vraag om actie"
+    "defaultCheckinAction.Ask_for_action": "Vraag om actie",
+    "forUseAtLocation": "For use at location",
+    "forUseAtLocation.Held": "Keep on hold shelf",
+    "forUseAtLocation.Returned": "Close loan and return item"
 }

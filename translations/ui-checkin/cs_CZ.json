@@ -113,5 +113,8 @@
     "defaultCheckinAction": "V lokaci je možné provést návrat",
     "defaultCheckinAction.Keep_on_hold_shelf": "Uchovat na poličce",
     "defaultCheckinAction.Close_loan_and_return_item": "Uzavřít výpůjčku a vrátit jednotku",
-    "defaultCheckinAction.Ask_for_action": "Požádat o akci"
+    "defaultCheckinAction.Ask_for_action": "Požádat o akci",
+    "forUseAtLocation": "For use at location",
+    "forUseAtLocation.Held": "Keep on hold shelf",
+    "forUseAtLocation.Returned": "Close loan and return item"
 }
