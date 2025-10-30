@@ -1065,13 +1065,13 @@ export class Scan extends React.Component {
       <ModalFooter>
         <div style={{ textAlign: 'right' }}>
           <Button
-            data-test-action-return
+            data-testid="action-return"
             onClick={() => { onClose(); this.checkIn(CHECKIN_ACTIONS.RETURN); }}
           >
             <FormattedMessage id="ui-checkin.defaultCheckinAction.Close_loan_and_return_item" />
           </Button>
           <Button
-            data-test-action-hold
+            data-testid="action-hold"
             buttonStyle="primary"
             onClick={() => { onClose(); this.checkIn(CHECKIN_ACTIONS.HOLD); }}
           >
@@ -1080,7 +1080,7 @@ export class Scan extends React.Component {
         </div>
         <div style={{ textAlign: 'left' }}>
           <Button
-            data-test-action-cancel
+            data-testid="action-cancel"
             onClick={onClose}
           >
             <FormattedMessage id="ui-checkin.actionModal.cancel" />
