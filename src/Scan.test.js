@@ -118,6 +118,11 @@ const basicProps = {
     holdAtLocation: { POST: jest.fn() },
     holdAtLocationBFF: { POST: jest.fn() },
   },
+  intl: {
+    formatMessage: ({ id, values = {} }) => {
+      return [id, ...Object.values(values)].join(' ');
+    },
+  }
 };
 const testIds = {
   showNotesButton: 'showNotesButton',
@@ -1350,6 +1355,54 @@ describe('Scan', () => {
       getMutatorFunction(stripesWithOutCirculationBffInventory, mutatorFunction);
       expect(spy).toHaveBeenCalledWith(CIRCULATION_BFF_INVENTORY_INTERFACE_ERROR);
       spy.mockRestore();
+    });
+  });
+
+  describe('Scan - renderActionChoiceModal', () => {
+    const args = [{ barcode: '12345', title: 'Book Title', materialType: { name: 'Book' } }, 'Circ Desk A'];
+    it('renders the modal with item and service point details', () => {
+      const { container } = render(<Scan {...basicProps} />);
+      const instance = screen.getByTestId('showNotesButton'); // ensures component renders
+
+      // Manually call renderActionChoiceModal to inspect JSX output
+      const comp = new RawScan(basicProps);
+      const element = comp.renderActionChoiceModal(...args);
+      const { getByTestId, getByText } = render(element);
+      expect(getByTestId('actionModal')).toBeInTheDocument();
+      expect(getByText(/Book Title/i)).toBeInTheDocument();
+      expect(getByText(/\(Book\)/i)).toBeInTheDocument();
+      // We cannot test for presence of "Circ Desk A" as this is not rendered by the intl mock
+    });
+
+    it('clicking "Cancel" hides the modal', () => {
+      const comp = new RawScan(basicProps);
+      const setStateSpy = jest.spyOn(comp, 'setState');
+      const element = comp.renderActionChoiceModal(...args);
+      render(element);
+      fireEvent.click(screen.getByTestId('action-cancel'));
+      expect(setStateSpy).toHaveBeenCalledWith({ showActionChoiceModal: false });
+    });
+
+    it('clicking "Close loan" calls checkIn with RETURN', () => {
+      const comp = new RawScan(basicProps);
+      const checkInSpy = jest.spyOn(comp, 'checkIn').mockResolvedValue();
+      const setStateSpy = jest.spyOn(comp, 'setState');
+      const element = comp.renderActionChoiceModal(...args);
+      render(element);
+      fireEvent.click(screen.getByTestId('action-return'));
+      expect(setStateSpy).toHaveBeenCalledWith({ showActionChoiceModal: false });
+      expect(checkInSpy).toHaveBeenCalledWith(CHECKIN_ACTIONS.RETURN);
+    });
+
+    it('clicking "Keep on shelf" calls checkIn with HOLD', () => {
+      const comp = new RawScan(basicProps);
+      const checkInSpy = jest.spyOn(comp, 'checkIn').mockResolvedValue();
+      const setStateSpy = jest.spyOn(comp, 'setState');
+      const element = comp.renderActionChoiceModal(...args);
+      render(element);
+      fireEvent.click(screen.getByTestId('action-hold'));
+      expect(setStateSpy).toHaveBeenCalledWith({ showActionChoiceModal: false });
+      expect(checkInSpy).toHaveBeenCalledWith(CHECKIN_ACTIONS.HOLD);
     });
   });
 });
