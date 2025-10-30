@@ -113,5 +113,8 @@
     "defaultCheckinAction": "归还后在馆藏地使用",
     "defaultCheckinAction.Keep_on_hold_shelf": "保留在预约架上",
     "defaultCheckinAction.Close_loan_and_return_item": "结束借阅并归还单件",
-    "defaultCheckinAction.Ask_for_action": "请求操作"
+    "defaultCheckinAction.Ask_for_action": "请求操作",
+    "forUseAtLocation": "For use at location",
+    "forUseAtLocation.Held": "Keep on hold shelf",
+    "forUseAtLocation.Returned": "Close loan and return item"
 }
