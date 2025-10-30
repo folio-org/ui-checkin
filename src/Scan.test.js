@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import {
   fireEvent,
@@ -1361,6 +1362,9 @@ describe('Scan', () => {
   describe('Scan - renderActionChoiceModal', () => {
     const args = [{ barcode: '12345', title: 'Book Title', materialType: { name: 'Book' } }, 'Circ Desk A'];
     it('renders the modal with item and service point details', () => {
+      const props = _.cloneDeep(basicProps);
+      props.resources.servicePoints.records[0].defaultCheckInActionForUseAtLocation = CHECKIN_ACTIONS.ASK;
+
       const { container } = render(<Scan {...basicProps} />);
       const instance = screen.getByTestId('showNotesButton'); // ensures component renders
 
