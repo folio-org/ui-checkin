@@ -1365,7 +1365,7 @@ describe('Scan', () => {
       const props = _.cloneDeep(basicProps);
       props.resources.servicePoints.records[0].defaultCheckInActionForUseAtLocation = CHECKIN_ACTIONS.ASK;
 
-      const { container } = render(<Scan {...basicProps} />);
+      const { container } = render(<Scan {...props} />);
       const instance = screen.getByTestId('showNotesButton'); // ensures component renders
 
       // Manually call renderActionChoiceModal to inspect JSX output
