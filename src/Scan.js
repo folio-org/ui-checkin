@@ -1100,15 +1100,15 @@ export class Scan extends React.Component {
         onClose={onClose}
       >
         <FormattedMessage id="ui-checkin.actionModal.caption" />
-        &nbsp;&nbsp;&nbsp;&nbsp;
+        {' '}
         <b>
           {title}
-          &nbsp;
+          {' '}
           ({materialType})
         </b>
-        &nbsp;&nbsp;&nbsp;&nbsp;
+        {' '}
         (<FormattedMessage id="ui-checkin.actionModal.barcode" values={{ barcode: item.barcode }} />)
-        &nbsp;&nbsp;&nbsp;&nbsp;
+        {' '}
         (<FormattedMessage id="ui-checkin.actionModal.servicePoint" values={{ servicePoint }} />)
       </Modal>
     );
