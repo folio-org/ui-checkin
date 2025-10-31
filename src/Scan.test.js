@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import {
   fireEvent,
   render,
@@ -103,7 +103,7 @@ const basicProps = {
       GET: jest.fn(),
     },
     loans: {
-      GET: jest.fn().mockResolvedValue({ loans: [{ name: 'some loan' }] }),
+      GET: jest.fn().mockResolvedValue({ loans: [{ name: 'some loan', forUseAtLocation: {} }] }),
     },
     checkIn: {
       POST: jest.fn(),
@@ -1361,13 +1361,14 @@ describe('Scan', () => {
   describe('Scan - renderActionChoiceModal', () => {
     const args = [{ barcode: '12345', title: 'Book Title', materialType: { name: 'Book' } }, 'Circ Desk A'];
 
-    it('checkin method invokes action-choice modal', () => {
+    it('checkin method invokes action-choice modal', async () => {
       const comp = new RawScan(basicProps);
+      comp.state.checkedinItem = { id: 123 };
       comp.checkInData = {
         item: {},
       };
       const setStateSpy = jest.spyOn(comp, 'setState');
-      comp.checkIn(CHECKIN_ACTIONS.ASK);
+      await act(async () => comp.checkIn(CHECKIN_ACTIONS.ASK));
       expect(setStateSpy).toHaveBeenCalledWith({ showActionChoiceModal: true });
     });
 
