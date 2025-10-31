@@ -10,6 +10,10 @@
 * Fix Loan details link in Check in app. Refs UICHKIN-483.
 * Avoid occasional null-pointer indirection. Fixes UICHKIN-486.
 * Support for returning use-at-location items to hold area. Refs UICHKIN-464.
+
+## [11.0.3] (https://github.com/folio-org/ui-checkin/tree/v11.0.3) (2025-10-29)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v11.0.2...v11.0.3)
+
 * Use `loan.isDcb` instead of `loan.borrower.lastName` to determine whether the to hide fee fine buttons. Refs UICHKIN-495.
 * Support "Ask for action" default check-in action for use-at-location loans. Refs UICHKIN-465.
 
