@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 import {
   fireEvent,
@@ -1361,11 +1360,19 @@ describe('Scan', () => {
 
   describe('Scan - renderActionChoiceModal', () => {
     const args = [{ barcode: '12345', title: 'Book Title', materialType: { name: 'Book' } }, 'Circ Desk A'];
-    it('renders the modal with item and service point details', () => {
-      const props = _.cloneDeep(basicProps);
-      props.resources.servicePoints.records[0].defaultCheckInActionForUseAtLocation = CHECKIN_ACTIONS.ASK;
 
-      const { container } = render(<Scan {...props} />);
+    it('checkin method invokes action-choice modal', () => {
+      const comp = new RawScan(basicProps);
+      comp.checkInData = {
+        item: {},
+      };
+      const setStateSpy = jest.spyOn(comp, 'setState');
+      const element = comp.checkIn(CHECKIN_ACTIONS.ASK);
+      expect(setStateSpy).toHaveBeenCalledWith({ showActionChoiceModal: true });
+    });
+
+    it('renders the modal with item and service point details', () => {
+      const { container } = render(<Scan {...basicProps} />);
       const instance = screen.getByTestId('showNotesButton'); // ensures component renders
 
       // Manually call renderActionChoiceModal to inspect JSX output
