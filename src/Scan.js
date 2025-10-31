@@ -467,7 +467,16 @@ export class Scan extends React.Component {
       },
     } = data;
     const action = explicitAction || data.item.action;
-    if (action === CHECKIN_ACTIONS.ASK) {
+
+    // The item may not have been checked out at all, in which case it
+    // is an "In-house use" loan; but it it was checked out, then it
+    // is a "Use at location" loan (which is a completely different
+    // thing) if any only if the `forUseAtLocation` structure is present.
+    const { checkedinItem } = this.state;
+    const loan = await this.getLoanForItem(checkedinItem);
+    const isUseAtLocation = !!loan && !!loan.forUseAtLocation;
+
+    if (isUseAtLocation && action === CHECKIN_ACTIONS.ASK) {
       this.setState({ showActionChoiceModal: true });
       return undefined;
     }
@@ -506,14 +515,6 @@ export class Scan extends React.Component {
     }
 
     this.setState({ loading: true });
-
-    // The item may not have been checked out at all, in which case it
-    // is an "In-house use" loan; but it it was checked out, then it
-    // is a "Use at location" loan (which is a completely different
-    // thing) if any only if the `forUseAtLocation` structure is present.
-    const { checkedinItem } = this.state;
-    const loan = await this.getLoanForItem(checkedinItem);
-    const isUseAtLocation = !!loan && !!loan.forUseAtLocation;
 
     const checkInMutator = (isUseAtLocation && action === CHECKIN_ACTIONS.HOLD) ?
       holdAtLocation :
