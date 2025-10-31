@@ -1051,6 +1051,7 @@ export class Scan extends React.Component {
   renderActionChoiceModal(item, servicePoint) {
     const title = item?.title;
     const materialType = item?.materialType?.name;
+    const barcode = item?.barcode;
     const { formatMessage } = this.props.intl;
     const label = formatMessage({ id: 'ui-checkin.actionModal.title' });
     const onClose = () => this.setState({ showActionChoiceModal: false });
@@ -1099,17 +1100,10 @@ export class Scan extends React.Component {
         dismissible
         onClose={onClose}
       >
-        <FormattedMessage id="ui-checkin.actionModal.caption" />
-        {' '}
-        <b>
-          {title}
-          {' '}
-          ({materialType})
-        </b>
-        {' '}
-        (<FormattedMessage id="ui-checkin.actionModal.barcode" values={{ barcode: item.barcode }} />)
-        {' '}
-        (<FormattedMessage id="ui-checkin.actionModal.servicePoint" values={{ servicePoint }} />)
+        <FormattedMessage
+          id="ui-checkin.actionModal.text"
+          values={{ title, materialType, barcode, servicePoint }}
+        />
       </Modal>
     );
   }
