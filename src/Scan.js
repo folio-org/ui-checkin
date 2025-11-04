@@ -469,9 +469,9 @@ export class Scan extends React.Component {
     const action = explicitAction || data.item.action;
 
     // The item may not have been checked out at all, in which case it
-    // is an "In-house use" loan; but it it was checked out, then it
+    // is an "In-house use" loan; but if it was checked out, then it
     // is a "Use at location" loan (which is a completely different
-    // thing) if any only if the `forUseAtLocation` structure is present.
+    // thing) if and only if the `forUseAtLocation` structure is present.
     const { checkedinItem } = this.state;
     const loan = await this.getLoanForItem(checkedinItem);
     const isUseAtLocation = !!loan && !!loan.forUseAtLocation;
