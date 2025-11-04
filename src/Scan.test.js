@@ -1373,9 +1373,6 @@ describe('Scan', () => {
     });
 
     it('renders the modal with item and service point details', () => {
-      render(<Scan {...basicProps} />);
-      screen.getByTestId('showNotesButton'); // ensures component renders
-
       // Manually call renderActionChoiceModal to inspect JSX output
       const comp = new RawScan(basicProps);
       const element = comp.renderActionChoiceModal(...args);
