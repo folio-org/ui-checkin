@@ -516,9 +516,14 @@ export class Scan extends React.Component {
 
     this.setState({ loading: true });
 
-    const checkInMutator = (isUseAtLocation && action === CHECKIN_ACTIONS.HOLD) ?
-      holdAtLocation :
-      (isEnabledEcsRequests ? checkInBFF.POST(requestData) : checkIn);
+    let checkInMutator;
+    if (isUseAtLocation && action === CHECKIN_ACTIONS.HOLD) {
+      checkInMutator = holdAtLocation;
+    } else if (isEnabledEcsRequests) {
+      checkInMutator = checkInBFF;
+    } else {
+      checkInMutator = checkIn;
+    }
 
     return checkInMutator.POST(requestData)
       .then(checkinResp => this.processResponse(checkinResp))
