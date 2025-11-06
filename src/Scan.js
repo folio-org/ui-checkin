@@ -84,6 +84,11 @@ export class Scan extends React.Component {
         curServicePoint: PropTypes.shape({
           id: PropTypes.string,
         }),
+        user: PropTypes.shape({
+          curServicePoint: PropTypes.shape({
+            name: PropTypes.string,
+          }),
+        }),
       }),
       config: PropTypes.shape({
         enableEcsRequests: PropTypes.bool,
