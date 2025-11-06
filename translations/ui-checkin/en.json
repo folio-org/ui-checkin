@@ -119,7 +119,6 @@
 
   "actionModal.title": "For use at location",
   "actionModal.text": "Item <strong>{title} ({materialType})</strong> (Barcode {barcode}) is for use at location at <strong>{servicePoint}</strong>.",
-  "actionModal.cancel": "Cancel",
 
   "permission.all": "Check in: All permissions"
 }

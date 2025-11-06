@@ -1095,7 +1095,7 @@ export class Scan extends React.Component {
             data-testid="action-cancel"
             onClick={onClose}
           >
-            <FormattedMessage id="ui-checkin.actionModal.cancel" />
+            <FormattedMessage id="stripes-core.button.cancel" />
           </Button>
         </div>
       </ModalFooter>
