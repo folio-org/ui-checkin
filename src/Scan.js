@@ -1059,7 +1059,8 @@ export class Scan extends React.Component {
     );
   }
 
-  renderActionChoiceModal(item, servicePoint) {
+  renderActionChoiceModal(item) {
+    const servicePoint = this.props.stripes.user.user.curServicePoint?.name;
     const title = item?.title;
     const materialType = item?.materialType?.name;
     const barcode = item?.barcode;
@@ -1150,7 +1151,7 @@ export class Scan extends React.Component {
   }
 
   render() {
-    const { resources, stripes } = this.props;
+    const { resources } = this.props;
     const scannedItems = resources.scannedItems || [];
     const items = resources.items || {};
     const {
@@ -1176,6 +1177,8 @@ export class Scan extends React.Component {
     if (!this.checkinInitialValues) {
       return <Loading />;
     }
+
+    const itemToBeCheckedIn = items.records?.[0]?.items?.[0];
 
     return (
       <div data-test-check-in-scan>
@@ -1205,8 +1208,7 @@ export class Scan extends React.Component {
         {transitItem && this.renderTransitionModal(transitItem, staffSlipContext)}
         {itemError && this.renderErrorModal(itemError)}
         {showActionChoiceModal &&
-         this.renderActionChoiceModal(items.records?.[0]?.items?.[0],
-           stripes.user.user.curServicePoint?.name)}
+         this.renderActionChoiceModal(itemToBeCheckedIn)}
 
         <CheckIn
           loading={loading}
