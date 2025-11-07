@@ -1065,7 +1065,7 @@ export class Scan extends React.Component {
     const materialType = item?.materialType?.name;
     const barcode = item?.barcode;
     const { formatMessage } = this.props.intl;
-    const label = formatMessage({ id: 'ui-checkin.actionModal.title' });
+    const label = formatMessage({ id: 'ui-checkin.actionChoiceModal.title' });
     const onClose = () => this.setState({ showActionChoiceModal: false });
 
     // The footer format is:
@@ -1113,7 +1113,7 @@ export class Scan extends React.Component {
         onClose={onClose}
       >
         <FormattedMessage
-          id="ui-checkin.actionModal.text"
+          id="ui-checkin.actionChoiceModal.text"
           values={{ title, materialType, barcode, servicePoint }}
         />
       </Modal>
