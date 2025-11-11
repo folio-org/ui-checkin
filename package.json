@@ -10,7 +10,7 @@
   "main": "src/index.js",
   "stripes": {
     "actsAs": [
-      "app"
+      "app", "servicepointsConsumer"
     ],
     "displayName": "ui-checkin.meta.title",
     "route": "/checkin",
