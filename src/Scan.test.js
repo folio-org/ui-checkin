@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import {
   fireEvent,
   render,
@@ -103,7 +103,7 @@ const basicProps = {
       GET: jest.fn(),
     },
     loans: {
-      GET: jest.fn().mockResolvedValue({ loans: [{ name: 'some loan' }] }),
+      GET: jest.fn().mockResolvedValue({ loans: [{ name: 'some loan', forUseAtLocation: {} }] }),
     },
     checkIn: {
       POST: jest.fn(),
@@ -118,6 +118,11 @@ const basicProps = {
     holdAtLocation: { POST: jest.fn() },
     holdAtLocationBFF: { POST: jest.fn() },
   },
+  intl: {
+    formatMessage: ({ id, values = {} }) => {
+      return [id, ...Object.values(values)].join(' ');
+    },
+  }
 };
 const testIds = {
   showNotesButton: 'showNotesButton',
@@ -1350,6 +1355,61 @@ describe('Scan', () => {
       getMutatorFunction(stripesWithOutCirculationBffInventory, mutatorFunction);
       expect(spy).toHaveBeenCalledWith(CIRCULATION_BFF_INVENTORY_INTERFACE_ERROR);
       spy.mockRestore();
+    });
+  });
+
+  describe('Scan - renderActionChoiceModal', () => {
+    const args = [{ barcode: '12345', title: 'Book Title', materialType: { name: 'Book' } }, 'Circ Desk A'];
+
+    it('checkin method invokes action-choice modal', async () => {
+      const comp = new RawScan(basicProps);
+      comp.state.checkedinItem = { id: 123 };
+      comp.checkInData = {
+        item: {},
+      };
+      const setStateSpy = jest.spyOn(comp, 'setState');
+      await act(async () => comp.checkIn(CHECKIN_ACTIONS.ASK));
+      expect(setStateSpy).toHaveBeenCalledWith({ showActionChoiceModal: true });
+    });
+
+    it('renders the modal with item and service point details', () => {
+      // Manually call renderActionChoiceModal to inspect JSX output
+      const comp = new RawScan(basicProps);
+      const element = comp.renderActionChoiceModal(...args);
+      const { getByTestId } = render(element);
+      expect(getByTestId('actionModal')).toBeInTheDocument();
+      // We cannot test for presence of title/materialType/barcode/servicePoint as values are not rendered by the intl mock
+    });
+
+    it('clicking "Cancel" hides the modal', () => {
+      const comp = new RawScan(basicProps);
+      const setStateSpy = jest.spyOn(comp, 'setState');
+      const element = comp.renderActionChoiceModal(...args);
+      render(element);
+      fireEvent.click(screen.getByTestId('action-cancel'));
+      expect(setStateSpy).toHaveBeenCalledWith({ showActionChoiceModal: false });
+    });
+
+    it('clicking "Close loan" calls checkIn with RETURN', () => {
+      const comp = new RawScan(basicProps);
+      const checkInSpy = jest.spyOn(comp, 'checkIn').mockResolvedValue();
+      const setStateSpy = jest.spyOn(comp, 'setState');
+      const element = comp.renderActionChoiceModal(...args);
+      render(element);
+      fireEvent.click(screen.getByTestId('action-return'));
+      expect(setStateSpy).toHaveBeenCalledWith({ showActionChoiceModal: false });
+      expect(checkInSpy).toHaveBeenCalledWith(CHECKIN_ACTIONS.RETURN);
+    });
+
+    it('clicking "Keep on shelf" calls checkIn with HOLD', () => {
+      const comp = new RawScan(basicProps);
+      const checkInSpy = jest.spyOn(comp, 'checkIn').mockResolvedValue();
+      const setStateSpy = jest.spyOn(comp, 'setState');
+      const element = comp.renderActionChoiceModal(...args);
+      render(element);
+      fireEvent.click(screen.getByTestId('action-hold'));
+      expect(setStateSpy).toHaveBeenCalledWith({ showActionChoiceModal: false });
+      expect(checkInSpy).toHaveBeenCalledWith(CHECKIN_ACTIONS.HOLD);
     });
   });
 });

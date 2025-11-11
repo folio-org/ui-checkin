@@ -84,6 +84,11 @@ export class Scan extends React.Component {
         curServicePoint: PropTypes.shape({
           id: PropTypes.string,
         }),
+        user: PropTypes.shape({
+          curServicePoint: PropTypes.shape({
+            name: PropTypes.string,
+          }),
+        }),
       }),
       config: PropTypes.shape({
         enableEcsRequests: PropTypes.bool,
@@ -322,6 +327,7 @@ export class Scan extends React.Component {
       totalRecords: 0,
       offset: 0,
       selectedBarcode: null,
+      showActionChoiceModal: false,
     };
   }
 
@@ -454,7 +460,7 @@ export class Scan extends React.Component {
     this.setFocusInput();
   };
 
-  checkIn = async () => {
+  checkIn = async (explicitAction) => {
     if (this.state.loading) return undefined;
 
     const data = this.checkInData;
@@ -463,9 +469,23 @@ export class Scan extends React.Component {
         barcode,
         checkinDate,
         checkinTime,
-        action,
       },
     } = data;
+    const action = explicitAction || data.item.action;
+
+    // The item may not have been checked out at all, in which case it
+    // is an "In-house use" loan; but if it was checked out, then it
+    // is a "Use at location" loan (which is a completely different
+    // thing) if and only if the `forUseAtLocation` structure is present.
+    const { checkedinItem } = this.state;
+    const loan = await this.getLoanForItem(checkedinItem);
+    const isUseAtLocation = !!loan && !!loan.forUseAtLocation;
+
+    if (isUseAtLocation && action === CHECKIN_ACTIONS.ASK) {
+      this.setState({ showActionChoiceModal: true });
+      return undefined;
+    }
+
     const {
       mutator: {
         checkIn,
@@ -501,26 +521,16 @@ export class Scan extends React.Component {
 
     this.setState({ loading: true });
 
-    // The item may not have been checked out at all, in which case it
-    // is an "In-house use" loan; but it it was checked out, then it
-    // is a "Use at location" loan (which is a completely different
-    // thing) if any only if the `forUseAtLocation` structure is present.
-    const { checkedinItem } = this.state;
-    const loan = await this.getLoanForItem(checkedinItem);
-    const isUseAtLocation = !!loan && !!loan.forUseAtLocation;
+    let checkInMutator;
+    if (isUseAtLocation && action === CHECKIN_ACTIONS.HOLD) {
+      checkInMutator = holdAtLocation;
+    } else if (isEnabledEcsRequests) {
+      checkInMutator = checkInBFF;
+    } else {
+      checkInMutator = checkIn;
+    }
 
-    /*
-    // Uncomment this if needed for debugging
-    const checkInApiCallName = (isUseAtLocation && action === CHECKIN_ACTIONS.HOLD) ?
-      holdAtLocation :
-      (isEnabledEcsRequests ? 'checkInBFF' : 'checkIn');
-    console.log(`isUseAtLocation=${isUseAtLocation}, action=${action} -> ${checkInApiCallName}`);
-    */
-    const checkInApiCall = (isUseAtLocation && action === CHECKIN_ACTIONS.HOLD) ?
-      holdAtLocation.POST(requestData) :
-      (isEnabledEcsRequests ? checkInBFF.POST(requestData) : checkIn.POST(requestData));
-
-    return checkInApiCall
+    return checkInMutator.POST(requestData)
       .then(checkinResp => this.processResponse(checkinResp))
       .then(checkinResp => this.processClaimReturned(checkinResp))
       .then(checkinResp => this.fetchRequests(checkinResp))
@@ -1049,6 +1059,67 @@ export class Scan extends React.Component {
     );
   }
 
+  renderActionChoiceModal(item) {
+    const servicePoint = this.props.stripes.user.user.curServicePoint?.name;
+    const title = item?.title;
+    const materialType = item?.materialType?.name;
+    const barcode = item?.barcode;
+    const { formatMessage } = this.props.intl;
+    const label = formatMessage({ id: 'ui-checkin.actionChoiceModal.title' });
+    const onClose = () => this.setState({ showActionChoiceModal: false });
+
+    // The footer format is:
+    // * "Cancel" button alone on the left
+    // * "Close loan" and "Keep on shelf" buttons together to the right, in that order
+    // Experimentally, this ordering and these CSS styles achieve that.
+    // I have absolutely no idea why.
+    //
+    const footer = (
+      <ModalFooter>
+        <div style={{ textAlign: 'right' }}>
+          <Button
+            data-testid="action-return"
+            onClick={() => { onClose(); this.checkIn(CHECKIN_ACTIONS.RETURN); }}
+          >
+            <FormattedMessage id="ui-checkin.defaultCheckinAction.Close_loan_and_return_item" />
+          </Button>
+          <Button
+            data-testid="action-hold"
+            buttonStyle="primary"
+            onClick={() => { onClose(); this.checkIn(CHECKIN_ACTIONS.HOLD); }}
+          >
+            <FormattedMessage id="ui-checkin.defaultCheckinAction.Keep_on_hold_shelf" />
+          </Button>
+        </div>
+        <div style={{ textAlign: 'left' }}>
+          <Button
+            data-testid="action-cancel"
+            onClick={onClose}
+          >
+            <FormattedMessage id="stripes-core.button.cancel" />
+          </Button>
+        </div>
+      </ModalFooter>
+    );
+
+    return (
+      <Modal
+        data-testid="actionModal"
+        open
+        size="small"
+        label={label}
+        footer={footer}
+        dismissible
+        onClose={onClose}
+      >
+        <FormattedMessage
+          id="ui-checkin.actionChoiceModal.text"
+          values={{ title, materialType, barcode, servicePoint }}
+        />
+      </Modal>
+    );
+  }
+
   onCancel = () => {
     this.clearForm();
     this.processCheckInDone();
@@ -1097,6 +1168,7 @@ export class Scan extends React.Component {
       totalRecords,
       selectedBarcode,
       offset,
+      showActionChoiceModal
     } = this.state;
 
     if (!this.checkinInitialValues) {
@@ -1105,6 +1177,8 @@ export class Scan extends React.Component {
     if (!this.checkinInitialValues) {
       return <Loading />;
     }
+
+    const itemToBeCheckedIn = items.records?.[0]?.items?.[0];
 
     return (
       <div data-test-check-in-scan>
@@ -1133,6 +1207,8 @@ export class Scan extends React.Component {
         {nextRequest && deliveryItem && this.renderDeliveryModal(deliveryItem, staffSlipContext)}
         {transitItem && this.renderTransitionModal(transitItem, staffSlipContext)}
         {itemError && this.renderErrorModal(itemError)}
+        {showActionChoiceModal &&
+         this.renderActionChoiceModal(itemToBeCheckedIn)}
 
         <CheckIn
           loading={loading}

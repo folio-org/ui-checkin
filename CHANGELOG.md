@@ -15,6 +15,7 @@
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v11.0.2...v11.0.3)
 
 * Use `loan.isDcb` instead of `loan.borrower.lastName` to determine whether the to hide fee fine buttons. Refs UICHKIN-495.
+* Support "Ask for action" default check-in action for use-at-location loans. Refs UICHKIN-465.
 
 ## [11.0.2] (https://github.com/folio-org/ui-checkin/tree/v11.0.2) (2025-10-07)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v11.0.1...v11.0.2)

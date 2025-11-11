@@ -117,5 +117,8 @@
   "selectItemModal.materialType": "Material type",
   "selectItemModal.loanType": "Loan type",
 
+  "actionChoiceModal.title": "For use at location",
+  "actionChoiceModal.text": "Item <strong>{title} ({materialType})</strong> (Barcode {barcode}) is for use at location at <strong>{servicePoint}</strong>.",
+
   "permission.all": "Check in: All permissions"
 }
