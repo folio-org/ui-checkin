@@ -37,7 +37,11 @@
     "permissionSets": [
       {
         "permissionName": "module.checkin.enabled",
-        "displayName": "UI: Check in module is enabled"
+        "displayName": "UI: Check in module is enabled",
+        "subPermissions": [
+          "mod-settings.global.read.stripes-core.prefs.manage",
+          "mod-settings.entries.collection.get"
+        ]
       },
       {
         "permissionName": "ui-checkin.all",
@@ -54,7 +58,7 @@
           "accounts.collection.get",
           "accounts.item.get",
           "lost-item-fees-policies.collection.get",
-	  "circulation.loans.collection.get",
+          "circulation.loans.collection.get",
           "circulation.check-in-by-barcode.post",
           "circulation.hold-by-barcode-for-use-at-location.post",
           "circulation-bff.loans.check-in-by-barcode.execute",

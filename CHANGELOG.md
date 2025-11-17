@@ -10,6 +10,7 @@
 * Fix Loan details link in Check in app. Refs UICHKIN-483.
 * Avoid occasional null-pointer indirection. Fixes UICHKIN-486.
 * Support for returning use-at-location items to hold area. Refs UICHKIN-464.
+* Added global permissions for get read-access to values such as tenant’s locale, timezone, and currency. Refs UICHKIN-500.
 
 ## [11.0.3] (https://github.com/folio-org/ui-checkin/tree/v11.0.3) (2025-10-29)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v11.0.2...v11.0.3)
