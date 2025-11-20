@@ -599,6 +599,7 @@ class CheckIn extends React.Component {
                     component={Select}
                     dataOptions={actionOptions}
                     data-test-action
+                    isEqual={(a, b) => true}
                   />
                 </Col>
               </Row>
