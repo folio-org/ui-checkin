@@ -116,5 +116,7 @@
     "defaultCheckinAction.Ask_for_action": "Pergunte por uma ação",
     "forUseAtLocation": "Para uso no local",
     "forUseAtLocation.Held": "Manter na prateleira de reserva",
-    "forUseAtLocation.Returned": "Fechar empréstimo e devolver item"
+    "forUseAtLocation.Returned": "Fechar empréstimo e devolver item",
+    "actionChoiceModal.title": "Para uso no local",
+    "actionChoiceModal.text": "Item <strong>{title} ({materialType})</strong> (Código de barras {barcode}) é para uso local em <strong>{servicePoint}</strong>."
 }
