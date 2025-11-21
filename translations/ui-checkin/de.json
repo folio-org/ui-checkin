@@ -116,5 +116,7 @@
     "defaultCheckinAction.Ask_for_action": "Aktion erforderlich",
     "forUseAtLocation": "Zur Nutzung am Standort",
     "forUseAtLocation.Held": "Im Abholregal belassen",
-    "forUseAtLocation.Returned": "Ausleihe schließen und Exemplar zurückgeben"
+    "forUseAtLocation.Returned": "Ausleihe schließen und Exemplar zurückgeben",
+    "actionChoiceModal.title": "For use at location",
+    "actionChoiceModal.text": "Item <strong>{title} ({materialType})</strong> (Barcode {barcode}) is for use at location at <strong>{servicePoint}</strong>."
 }
