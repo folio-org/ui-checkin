@@ -25,7 +25,7 @@
     ],
     "okapiInterfaces": {
       "circulation": "9.0 10.0 11.0 12.0 13.0 14.0",
-      "configuration": "2.0",
+      "circulation-settings": "1.0",
       "inventory": "10.0 11.0 12.0 13.0 14.0",
       "loan-policy-storage": "1.0 2.0",
       "users": "15.0 16.0",
@@ -65,7 +65,7 @@
           "circulation-bff.loans.check-in-by-barcode.execute",
           "circulation.requests.collection.get",
           "feefineactions.collection.get",
-          "configuration.entries.collection.get",
+          "circulation.settings.collection.get",
           "circulation.end-patron-action-session.post",
           "circulation-storage.staff-slips.collection.get"
         ]
