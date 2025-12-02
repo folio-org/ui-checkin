@@ -114,9 +114,9 @@
     "defaultCheckinAction.Keep_on_hold_shelf": "In de wacht bewaren",
     "defaultCheckinAction.Close_loan_and_return_item": "Uitlening sluiten en item retourneren",
     "defaultCheckinAction.Ask_for_action": "Vraag om actie",
-    "forUseAtLocation": "For use at location",
-    "forUseAtLocation.Held": "Keep on hold shelf",
-    "forUseAtLocation.Returned": "Close loan and return item",
-    "actionChoiceModal.title": "For use at location",
-    "actionChoiceModal.text": "Item <strong>{title} ({materialType})</strong> (Barcode {barcode}) is for use at location at <strong>{servicePoint}</strong>."
+    "forUseAtLocation": "Voor gebruik op Locatie",
+    "forUseAtLocation.Held": "In de wacht bewaren",
+    "forUseAtLocation.Returned": "Uitlening sluiten en item retourneren",
+    "actionChoiceModal.title": "Voor gebruik op Locatie",
+    "actionChoiceModal.text": "Item <strong>{title} ({materialType})</strong> (Barcode {barcode}) is voor gebruik op Locatie op <strong>.{servicePoint}</strong>."
 }

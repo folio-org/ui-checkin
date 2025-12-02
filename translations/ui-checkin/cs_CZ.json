@@ -114,9 +114,9 @@
     "defaultCheckinAction.Keep_on_hold_shelf": "Uchovat na poličce",
     "defaultCheckinAction.Close_loan_and_return_item": "Uzavřít výpůjčku a vrátit jednotku",
     "defaultCheckinAction.Ask_for_action": "Požádat o akci",
-    "forUseAtLocation": "For use at location",
-    "forUseAtLocation.Held": "Keep on hold shelf",
-    "forUseAtLocation.Returned": "Close loan and return item",
-    "actionChoiceModal.title": "For use at location",
+    "forUseAtLocation": "Pro použití v lokaci",
+    "forUseAtLocation.Held": "Uchovat na poličce",
+    "forUseAtLocation.Returned": "Uzavřít výpůjčku a vrátit jednotku",
+    "actionChoiceModal.title": "Pro použití v lokaci",
     "actionChoiceModal.text": "Item <strong>{title} ({materialType})</strong> (Barcode {barcode}) is for use at location at <strong>{servicePoint}</strong>."
 }
