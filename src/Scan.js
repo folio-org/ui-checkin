@@ -295,8 +295,8 @@ export class Scan extends React.Component {
     },
     checkinSettings: {
       type: 'okapi',
-      records: 'configs',
-      path: 'configurations/entries?query=(module=CHECKOUT and configName=other_settings)',
+      records: 'circulationSettings',
+      path: 'circulation/settings?query=(name==other_settings)',
     },
     feefineactions: {
       type: 'okapi',
