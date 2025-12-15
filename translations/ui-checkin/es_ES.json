@@ -114,9 +114,9 @@
     "defaultCheckinAction.Keep_on_hold_shelf": "Keep on hold shelf",
     "defaultCheckinAction.Close_loan_and_return_item": "Close loan and return item",
     "defaultCheckinAction.Ask_for_action": "Ask for action",
-    "forUseAtLocation": "For use at location",
-    "forUseAtLocation.Held": "Keep on hold shelf",
-    "forUseAtLocation.Returned": "Close loan and return item",
-    "actionChoiceModal.title": "For use at location",
-    "actionChoiceModal.text": "Item <strong>{title} ({materialType})</strong> (Barcode {barcode}) is for use at location at <strong>{servicePoint}</strong>."
+    "forUseAtLocation": "Para uso en ubicación",
+    "forUseAtLocation.Held": "Mantener en estatntería de espera",
+    "forUseAtLocation.Returned": "Cerrar préstamo y devolver ejemplar",
+    "actionChoiceModal.title": "Para uso en ubicación",
+    "actionChoiceModal.text": "Ejemplar <strong>{title} ({materialType})</strong> (Código de barras {barcode}) es para uso en la ubicación en <strong>{servicePoint}</strong>."
 }

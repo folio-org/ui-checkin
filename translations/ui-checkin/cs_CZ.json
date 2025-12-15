@@ -118,5 +118,5 @@
     "forUseAtLocation.Held": "Uchovat na poličce",
     "forUseAtLocation.Returned": "Uzavřít výpůjčku a vrátit jednotku",
     "actionChoiceModal.title": "Pro použití v lokaci",
-    "actionChoiceModal.text": "Item <strong>{title} ({materialType})</strong> (Barcode {barcode}) is for use at location at <strong>{servicePoint}</strong>."
+    "actionChoiceModal.text": "Jednotka <strong>{title} ({materialType})</strong> (čárový kód {barcode}) je určena k použití na místě na adrese <strong>{servicePoint}</strong>."
 }
