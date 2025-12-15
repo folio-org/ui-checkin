@@ -114,9 +114,9 @@
     "defaultCheckinAction.Keep_on_hold_shelf": "保留在预约架上",
     "defaultCheckinAction.Close_loan_and_return_item": "结束借阅并归还单件",
     "defaultCheckinAction.Ask_for_action": "请求操作",
-    "forUseAtLocation": "For use at location",
-    "forUseAtLocation.Held": "Keep on hold shelf",
-    "forUseAtLocation.Returned": "Close loan and return item",
-    "actionChoiceModal.title": "For use at location",
-    "actionChoiceModal.text": "Item <strong>{title} ({materialType})</strong> (Barcode {barcode}) is for use at location at <strong>{servicePoint}</strong>."
+    "forUseAtLocation": "在现场使用",
+    "forUseAtLocation.Held": "保留在预约架上",
+    "forUseAtLocation.Returned": "结束借阅并归还单件",
+    "actionChoiceModal.title": "在现场使用",
+    "actionChoiceModal.text": "单件 <strong>{title} （{materialType}）</strong>（ 条码 {barcode}）用于位置 <strong>{servicePoint}</strong>。"
 }

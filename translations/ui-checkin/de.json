@@ -117,6 +117,6 @@
     "forUseAtLocation": "Zur Nutzung am Standort",
     "forUseAtLocation.Held": "Im Abholregal belassen",
     "forUseAtLocation.Returned": "Ausleihe schließen und Exemplar zurückgeben",
-    "actionChoiceModal.title": "For use at location",
-    "actionChoiceModal.text": "Item <strong>{title} ({materialType})</strong> (Barcode {barcode}) is for use at location at <strong>{servicePoint}</strong>."
+    "actionChoiceModal.title": "Zur Nutzung am Standort",
+    "actionChoiceModal.text": "Exemplar <strong>{title}({materialType})</strong> (Barcode {barcode} liegt an der Servicestelle <strong>{servicePoint}</strong> zur Nutzung am Standort."
 }
