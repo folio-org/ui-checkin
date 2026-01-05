@@ -111,11 +111,11 @@
     "selectItemModal.callNumber": "Sygnatura",
     "selectItemModal.itemListHeader": "Lista egzemplarzy: wybierz jeden",
     "defaultCheckinAction": "Akcja zwrotu używana w danej lokalizacji",
-    "defaultCheckinAction.Keep_on_hold_shelf": "Keep on hold shelf",
+    "defaultCheckinAction.Keep_on_hold_shelf": "Pozostaw na półce „Oczekujące na odbiór”",
     "defaultCheckinAction.Close_loan_and_return_item": "Zamknij wypożyczenie i zwróć egzemplarz",
     "defaultCheckinAction.Ask_for_action": "Zapytaj o działanie",
     "forUseAtLocation": "For use at location",
-    "forUseAtLocation.Held": "Keep on hold shelf",
+    "forUseAtLocation.Held": "Pozostaw na półce „Oczekujące na odbiór”",
     "forUseAtLocation.Returned": "Zamknij wypożyczenie i zwróć egzemplarz",
     "actionChoiceModal.title": "For use at location",
     "actionChoiceModal.text": "Item <strong>{title} ({materialType})</strong> (Barcode {barcode}) is for use at location at <strong>{servicePoint}</strong>."
