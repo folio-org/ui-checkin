@@ -12,6 +12,7 @@
 * Support for returning use-at-location items to hold area. Refs UICHKIN-464.
 * Added global permissions for get read-access to values such as tenant’s locale, timezone, and currency. Refs UICHKIN-500.
 * Changing check-in action for use at location does not inhibit navigating away to another app. Refs UICHKIN-501.
+* Add 'subscribesTo' field for servicepoints in package.json. Refs UICHKIN-413.
 
 ## [11.0.3] (https://github.com/folio-org/ui-checkin/tree/v11.0.3) (2025-10-29)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v11.0.2...v11.0.3)

@@ -15,6 +15,7 @@
     "displayName": "ui-checkin.meta.title",
     "route": "/checkin",
     "queryResource": "query",
+    "subscribesTo": ["servicepoints"],
     "icons": [
       {
         "name": "app",
