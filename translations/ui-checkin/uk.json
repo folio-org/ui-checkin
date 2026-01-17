@@ -117,6 +117,6 @@
     "forUseAtLocation": "For use at location",
     "forUseAtLocation.Held": "Keep on hold shelf",
     "forUseAtLocation.Returned": "Close loan and return item",
-    "actionChoiceModal.title": "For use at location",
+    "actionChoiceModal.title": "Для використання у місці розміщення",
     "actionChoiceModal.text": "Item <strong>{title} ({materialType})</strong> (Barcode {barcode}) is for use at location at <strong>{servicePoint}</strong>."
 }
