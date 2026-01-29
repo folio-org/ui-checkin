@@ -115,22 +115,16 @@ describe('buildDateTime', () => {
 });
 
 describe('getCheckinSettings', () => {
-  it('returns undefined given an empty array', () => {
-    const v = getCheckinSettings([]);
-
-    expect(v).toBeUndefined();
+  it('should returns undefined for empty array', () => {
+    expect(getCheckinSettings([])).toBeUndefined();
   });
 
-  it('returns {} given non-JSON data', () => {
-    const v = getCheckinSettings([{ value: 'not json data' }]);
+  it('should returns value of first element (object)', () => {
+    const obj = {
+      key: 'value',
+    };
 
-    expect(v).toMatchObject({});
-  });
-
-  it('receives an object given JSON data in av[0].value', () => {
-    const v = getCheckinSettings([{ value: '{ "key": "value" }' }]);
-
-    expect(v).toMatchObject({ key: 'value' });
+    expect(getCheckinSettings([{ value: obj }])).toBe(obj);
   });
 });
 

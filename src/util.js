@@ -48,11 +48,7 @@ export function getCheckinSettings(checkinSettings) {
     return undefined;
   }
 
-  try {
-    return JSON.parse(checkinSettings[0].value);
-  } catch (e) {
-    return {};
-  }
+  return checkinSettings[0].value;
 }
 
 export function shouldConfirmStatusModalBeShown(item) {
