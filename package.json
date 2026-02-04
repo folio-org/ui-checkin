@@ -32,6 +32,7 @@
       "feesfines": "17.0 18.0 19.0"
     },
     "optionalOkapiInterfaces": {
+      "inn-reach": "1.1",
       "circulation-bff-loans": "1.0",
       "circulation-bff-inventory": "1.0"
     },
@@ -59,6 +60,7 @@
           "accounts.collection.get",
           "accounts.item.get",
           "lost-item-fees-policies.collection.get",
+          "inn-reach.inn-reach-transactions.collection.get",
           "circulation.loans.collection.get",
           "circulation.check-in-by-barcode.post",
           "circulation.hold-by-barcode-for-use-at-location.post",

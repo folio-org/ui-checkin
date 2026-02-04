@@ -120,5 +120,8 @@
   "actionChoiceModal.title": "For use at location",
   "actionChoiceModal.text": "Item <strong>{title} ({materialType})</strong> (Barcode {barcode}) is for use at location at <strong>{servicePoint}</strong>.",
 
+  "innReachWarningModal.heading": "INN-Reach item detected",
+  "innReachWarningModal.warning": "Please use the INN-Reach Receive Item application to check in this item",
+
   "permission.all": "Check in: All permissions"
 }

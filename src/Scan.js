@@ -39,10 +39,14 @@ import {
   CIRCULATION_BFF_INVENTORY_INTERFACE_NAME,
   CIRCULATION_BFF_INVENTORY_INTERFACE_VERSION,
   CIRCULATION_BFF_INVENTORY_INTERFACE_ERROR,
+  INN_REACH_TRANSACTIONS_LIMIT,
+  INN_REACH_TRANSACTION_STATUSES,
+  INN_REACH_TRANSACTION_TYPES,
 } from './consts';
 import ConfirmStatusModal from './components/ConfirmStatusModal';
 import RouteForDeliveryModal from './components/RouteForDeliveryModal';
 import SelectItemModal from './components/SelectItemModal';
+import InnReachWarningModal from './components/InnReachWarningModal';
 import ModalManager from './ModalManager';
 
 import {
@@ -198,6 +202,10 @@ export class Scan extends React.Component {
       lostItemPolicy: PropTypes.shape({
         GET: PropTypes.func,
       }),
+      innReachTransactions: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
     }),
     history: PropTypes.shape({
       push: PropTypes.func,
@@ -311,6 +319,18 @@ export class Scan extends React.Component {
       fetch: false,
       accumulate: true,
     },
+    innReachTransactions: {
+      type: 'okapi',
+      path: (queryParams, pathComponents, resourceData, config, props) => {
+        if (props.stripes.hasInterface('inn-reach')) {
+          return 'inn-reach/transactions';
+        }
+        return null;
+      },
+      accumulate: 'true',
+      fetch: false,
+      throwErrors: false,
+    },
     activeAccount: {},
   });
 
@@ -328,6 +348,7 @@ export class Scan extends React.Component {
       offset: 0,
       selectedBarcode: null,
       showActionChoiceModal: false,
+      showInnReachWarningModal: false,
     };
   }
 
@@ -478,7 +499,19 @@ export class Scan extends React.Component {
     // is a "Use at location" loan (which is a completely different
     // thing) if and only if the `forUseAtLocation` structure is present.
     const { checkedinItem } = this.state;
-    const loan = await this.getLoanForItem(checkedinItem);
+
+    const [loan, isInnReachItem] = await Promise.all([
+      this.getLoanForItem(checkedinItem),
+      this.isInnReachItem(checkedinItem?.id),
+    ]);
+
+    // Check if item is part of an INN-Reach transaction first.
+    // This is a blocking check - user must use INN-Reach app instead.
+    if (isInnReachItem) {
+      this.setState({ showInnReachWarningModal: true });
+      return undefined;
+    }
+
     const isUseAtLocation = !!loan && !!loan.forUseAtLocation;
 
     if (isUseAtLocation && action === CHECKIN_ACTIONS.ASK) {
@@ -551,6 +584,27 @@ export class Scan extends React.Component {
       },
     });
     return loans[0];
+  }
+
+  isInnReachItem = async (itemId) => {
+    const { mutator } = this.props;
+
+    try {
+      mutator.innReachTransactions.reset();
+
+      const { transactions = [] } = await mutator.innReachTransactions.GET({
+        params: {
+          type: INN_REACH_TRANSACTION_TYPES.PATRON,
+          state: INN_REACH_TRANSACTION_STATUSES.ITEM_SHIPPED,
+          limit: INN_REACH_TRANSACTIONS_LIMIT,
+        },
+      });
+
+      return transactions.some(transaction => transaction.hold?.folioItemId === itemId);
+    } catch (error) {
+      // If INN-Reach module is not available, don't block the check-in
+      return false;
+    }
   }
 
   processClaimReturned(checkinResp) {
@@ -1125,6 +1179,13 @@ export class Scan extends React.Component {
     this.processCheckInDone();
   };
 
+  onCloseInnReachWarning = () => {
+    this.setState({ showInnReachWarningModal: false }, () => {
+      this.clearField('item.barcode');
+      this.setFocusInput();
+    });
+  };
+
   showCheckinNotes = (loan) => {
     const { item } = loan;
     this.setState({
@@ -1168,6 +1229,7 @@ export class Scan extends React.Component {
       totalRecords,
       selectedBarcode,
       offset,
+      showInnReachWarningModal,
       showActionChoiceModal
     } = this.state;
 
@@ -1209,7 +1271,11 @@ export class Scan extends React.Component {
         {itemError && this.renderErrorModal(itemError)}
         {showActionChoiceModal &&
          this.renderActionChoiceModal(itemToBeCheckedIn)}
-
+        <InnReachWarningModal
+          open={showInnReachWarningModal}
+          checkedinItem={checkedinItem}
+          onClose={this.onCloseInnReachWarning}
+        />
         <CheckIn
           loading={loading}
           scannedItems={scannedItems}

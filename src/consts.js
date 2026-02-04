@@ -163,3 +163,13 @@ export const CHECKIN_ACTIONS = {
   RETURN: 'Close_loan_and_return_item',
   ASK: 'Ask_for_action',
 };
+
+export const INN_REACH_TRANSACTION_TYPES = {
+  PATRON: 'PATRON',
+};
+
+export const INN_REACH_TRANSACTION_STATUSES = {
+  ITEM_SHIPPED: 'ITEM_SHIPPED',
+};
+
+export const INN_REACH_TRANSACTIONS_LIMIT = 9999;

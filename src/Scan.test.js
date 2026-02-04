@@ -109,6 +109,7 @@ const basicProps = {
       POST: jest.fn(),
     },
     feefineactions: {
+      GET: jest.fn(),
       POST: jest.fn(),
     },
     requests: {
@@ -117,6 +118,10 @@ const basicProps = {
     },
     holdAtLocation: { POST: jest.fn() },
     holdAtLocationBFF: { POST: jest.fn() },
+    innReachTransactions: {
+      reset: jest.fn(),
+      GET: jest.fn().mockResolvedValue({ transactions: [] }),
+    },
   },
   intl: {
     formatMessage: ({ id, values = {} }) => {
@@ -141,6 +146,8 @@ const testIds = {
   selectItemModal: 'selectItemModal',
   closeSelectModalButton: 'closeSelectModalButton',
   selectItemButton: 'selectItemButton',
+  innReachWarningModal: 'inn-reach-warning-modal',
+  innReachWarningModalCloseButton: 'inn-reach-warning-modal-close-button',
 };
 const labelIds = {
   transitionModalLabel: 'ui-checkin.statusModal.transit.heading',
@@ -177,6 +184,7 @@ jest.mock('uuid', () => ({
 jest.mock('./ModalManager', () => jest.fn(({
   'data-testid': testId,
   onCancel,
+  onDone,
 }) => (
   <div data-testid={testId}>
     <button
@@ -185,6 +193,13 @@ jest.mock('./ModalManager', () => jest.fn(({
       data-testid={testIds.cancelModalManagerButton}
     >
       Cancel
+    </button>
+    <button
+      type="button"
+      onClick={onDone}
+      data-testid="confirmModalManagerButton"
+    >
+      Confirm
     </button>
   </div>
 )));
@@ -314,6 +329,28 @@ jest.mock('./components/RouteForDeliveryModal', () => jest.fn(({
     </button>
   </div>
 )));
+jest.mock('./components/InnReachWarningModal', () => jest.fn(({
+  open,
+  onClose,
+}) => {
+  if (!open) {
+    return null;
+  }
+  return (
+    <div data-testid={testIds.innReachWarningModal}>
+      <p>
+        Please use the INN-Reach Receive Item application to check in this item
+      </p>
+      <button
+        onClick={onClose}
+        type="button"
+        data-testid={testIds.innReachWarningModalCloseButton}
+      >
+        Close
+      </button>
+    </div>
+  );
+}));
 jest.mock('./util', () => ({
   buildDateTime: jest.fn(),
   getCheckinSettings: jest.fn(),
@@ -1412,4 +1449,72 @@ describe('Scan', () => {
       expect(checkInSpy).toHaveBeenCalledWith(CHECKIN_ACTIONS.HOLD);
     });
   });
+
+  describe('Inn Reach warning modal', () => {
+    const checkedinItem = {
+      id: 'test-item-id',
+      barcode: 'itemBarcode',
+    };
+    const items = {
+      items: [checkedinItem],
+      totalRecords: 1,
+    };
+    const innReachTransactions = {
+      transactions: [
+        {
+          hold: {
+            folioItemId: 'test-item-id',
+          },
+        },
+      ],
+    };
+
+    beforeEach(async () => {
+      getCheckinSettings.mockReturnValue({
+        wildcardLookupEnabled: true,
+      });
+      basicProps.mutator.items.GET.mockReturnValue(items);
+      basicProps.mutator.checkIn.POST.mockResolvedValue({
+        item: checkedinItem,
+        loan: { id: 'loan-id' }
+      });
+      basicProps.mutator.innReachTransactions.GET.mockResolvedValue(innReachTransactions);
+
+      render(
+        <Scan
+          {...basicProps}
+        />
+      );
+
+      const submitButton = screen.getByTestId(testIds.submitButton);
+
+      fireEvent.click(submitButton);
+
+      // Wait for the checkin modal manager to appear
+      await waitFor(() => {
+        expect(screen.getByTestId(testIds.checkinModalManager)).toBeInTheDocument();
+      });
+
+      // Confirm the modal to trigger the actual checkIn
+      const confirmButton = screen.getByTestId('confirmModalManagerButton');
+      fireEvent.click(confirmButton);
+    });
+
+    it('should render inn-reach modal', async () => {
+      await waitFor(() => {
+        const innReachModal = screen.getByTestId(testIds.innReachWarningModal);
+
+        expect(basicProps.mutator.innReachTransactions.reset).toHaveBeenCalled();
+        expect(basicProps.mutator.innReachTransactions.GET).toHaveBeenCalledWith({
+          params: {
+            limit: 9999,
+            state: 'ITEM_SHIPPED',
+            type: 'PATRON',
+          },
+        });
+        expect(innReachModal).toBeInTheDocument();
+      });
+    });
+  });
 });
+
