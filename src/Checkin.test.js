@@ -556,25 +556,13 @@ describe('CheckIn', () => {
         expect(basicProps.history.push).toHaveBeenCalledWith(`/requests/view/${loan.staffSlipContext.request.requestID}`);
       });
 
-      it('should trigger get request to receive user information', () => {
-        const newFeeFineButton = screen.getByText(labelIds.newFeeFineButton);
-
-        fireEvent.click(newFeeFineButton);
-
-        expect(basicProps.mutator.users.GET).toHaveBeenCalledWith({
-          params: {
-            query: `id=${loan.userId}`,
-          },
-        });
-      });
-
       it('should update query pass after clicking on new fee fine button', async () => {
         const newFeeFineButton = screen.getByText(labelIds.newFeeFineButton);
 
         fireEvent.click(newFeeFineButton);
 
         await waitFor(() => {
-          expect(basicProps.history.push).toHaveBeenCalledWith(`/users/view/${loan.userId}?filters=pg.${groupName}&layer=charge&loan=${loan.id}`);
+          expect(basicProps.history.push).toHaveBeenCalledWith(`/users/${loan.userId}/charge/${loan.id}`);
         });
       });
 

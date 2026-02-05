@@ -332,16 +332,7 @@ class CheckIn extends React.Component {
   }
 
   async newFeeFine(loan) {
-    const {
-      resources,
-      mutator,
-    } = this.props;
-    const query = `id=${loan.userId}`;
-    const patronGroups = get(resources, ['patronGroups', 'records'], []);
-    const users = await mutator.users.GET({ params: { query } });
-    const patron = get(users, [0, 'patronGroup'], '');
-    const pg = (patronGroups.find(p => p.id === patron) || {}).group;
-    const path = `/users/view/${loan.userId}?filters=pg.${pg}&layer=charge&loan=${loan.id}`;
+    const path = `/users/${loan.userId}/charge/${loan.id}`;
 
     this.props.history.push(path);
   }
