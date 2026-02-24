@@ -13,7 +13,7 @@
     "title": "Title",
     "barcode": "บาร์โค้ด",
     "location": "Location",
-    "status": "Status",
+    "status": "สถานะ",
     "loanDetails": "Loan details",
     "itemDetails": "Item details",
     "patronDetails": "Patron details",
@@ -117,6 +117,6 @@
     "forUseAtLocation": "For use at location",
     "forUseAtLocation.Held": "Keep on hold shelf",
     "forUseAtLocation.Returned": "Close loan and return item",
-    "actionChoiceModal.title": "For use at location",
+    "actionChoiceModal.title": "สำหรับใช้งาน ณ สถานที่นั้น",
     "actionChoiceModal.text": "Item <strong>{title} ({materialType})</strong> (Barcode {barcode}) is for use at location at <strong>{servicePoint}</strong>."
 }
