@@ -61,7 +61,7 @@
     "checkinNotes.message": "<strong>{title} ({materialType})</strong> (Kod kreskowy: {barcode}) ma <strong>{count}</strong> {count, plural, one {uwagę} other {uwagi}}",
     "date": "Data",
     "source": "Źródło",
-    "statusModal.delivery.heading": "Ścieżka dla żądania dostawy",
+    "statusModal.delivery.heading": "Przekierowanie dla rezerwacji z dostawą",
     "statusModal.delivery.closeAndCheckout": "Zamknij i wypożycz",
     "statusModal.delivery.message": "Złożono zamówienie dostawy na <strong>{itemTitle} ({itemType})</strong> (Kod kreskowy: {itemBarcode}). <strong>Proszę zarejestrować egzemplarz i przekazać go do dostarczenia.</strong>",
     "effectiveCallNumber": "Efektywna sygnatura całkowita",
