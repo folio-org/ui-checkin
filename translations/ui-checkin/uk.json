@@ -114,9 +114,9 @@
     "defaultCheckinAction.Keep_on_hold_shelf": "Утримувати на бронеполиці",
     "defaultCheckinAction.Close_loan_and_return_item": "Закрити видачу та повернути примірник",
     "defaultCheckinAction.Ask_for_action": "Запитувати про дію",
-    "forUseAtLocation": "For use at location",
-    "forUseAtLocation.Held": "Keep on hold shelf",
+    "forUseAtLocation": "Для використання у місці розміщення",
+    "forUseAtLocation.Held": "Утримувати на бронеполиці",
     "forUseAtLocation.Returned": "Close loan and return item",
     "actionChoiceModal.title": "Для використання у місці розміщення",
-    "actionChoiceModal.text": "Item <strong>{title} ({materialType})</strong> (Barcode {barcode}) is for use at location at <strong>{servicePoint}</strong>."
+    "actionChoiceModal.text": "Примірник <strong>{title} ({materialType})</strong> (Штрихкод {barcode}) - для використання у місці розміщення для <strong>{servicePoint}</strong>."
 }
