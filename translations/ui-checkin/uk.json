@@ -116,7 +116,7 @@
     "defaultCheckinAction.Ask_for_action": "Запитувати про дію",
     "forUseAtLocation": "Для використання у місці розміщення",
     "forUseAtLocation.Held": "Утримувати на бронеполиці",
-    "forUseAtLocation.Returned": "Close loan and return item",
+    "forUseAtLocation.Returned": "Закрити видачу та повернути примірник",
     "actionChoiceModal.title": "Для використання у місці розміщення",
     "actionChoiceModal.text": "Примірник <strong>{title} ({materialType})</strong> (Штрихкод {barcode}) - для використання у місці розміщення для <strong>{servicePoint}</strong>."
 }
