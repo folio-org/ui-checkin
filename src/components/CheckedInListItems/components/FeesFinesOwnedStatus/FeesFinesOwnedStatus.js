@@ -26,6 +26,37 @@ class FeesFinesOwnedStatus extends React.Component {
   }
 
   componentDidMount() {
+    this.fetchFeesFinesStatus();
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      userId,
+      itemId,
+      loanId,
+      mutator,
+    } = this.props;
+
+    if (
+      userId !== prevProps.userId ||
+      itemId !== prevProps.itemId ||
+      loanId !== prevProps.loanId
+    ) {
+      mutator.accounts.cancel();
+
+      this.setState({ showFeesFinesOwnedStatus: false }, () => {
+        this.fetchFeesFinesStatus();
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    if (this._asyncRequest) {
+      this.props.mutator.accounts.cancel();
+    }
+  }
+
+  fetchFeesFinesStatus = () => {
     const {
       userId,
       itemId,
@@ -42,12 +73,6 @@ class FeesFinesOwnedStatus extends React.Component {
           showFeesFinesOwnedStatus: !!feeFines.totalRecords,
         });
       });
-    }
-  }
-
-  componentWillUnmount() {
-    if (this._asyncRequest) {
-      this.props.mutator.accounts.cancel();
     }
   }
 
