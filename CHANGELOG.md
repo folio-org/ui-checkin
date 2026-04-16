@@ -1,6 +1,7 @@
 # Change history for ui-checkin
 
-## 12.0.0 IN PROGRESS
+## [12.0.0] (https://github.com/folio-org/ui-checkin/tree/v12.0.0) (2026-04-16)
+[Full Changelog](https://github.com/folio-org/ui-checkin/compare/v11.0.3...v12.0.0)
 
 * *BREAKING* Use `convertToSlipData` and supporting functions from `stripes-util`. Refs UICHKIN-456.
 * Replace moment with day.js. Refs UICHKIN-467.
