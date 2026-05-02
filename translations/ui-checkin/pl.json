@@ -94,7 +94,7 @@
     "statusModal.hold.comment": "<strong>Uwagi czytelnika:</strong> {comment}",
     "statuses.restricted": "Ograniczone",
     "itemNotCheckedIn": "Egzemplarz nie został zwrócony",
-    "statuses.inProcessNonRequestable": "W toku (niewymagane)",
+    "statuses.inProcessNonRequestable": "W opracowaniu (nie można zamówić)",
     "statuses.longMissing": "Długotrwały brak",
     "statuses.unavailable": "Niedostępny",
     "statuses.unknown": "Nieznany",
