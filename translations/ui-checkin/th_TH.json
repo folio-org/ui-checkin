@@ -67,7 +67,7 @@
     "effectiveCallNumber": "Effective call number string",
     "inHouseUse": "In-house use",
     "declaredLostModal.heading": "Check in Declared lost item?",
-    "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Declared lost.</strong>",
+    "declaredLostModal.message": "<strong>{title} ({materialType})</strong> (บาร์โค้ด: {barcode}) มีสถานะรายการว่า <strong>แจ้งสูญหาย</strong>",
     "feeFineDetails": "Fee/fine details",
     "withdrawnModal.heading": "Check in Withdrawn item?",
     "withdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn </strong> and is suppressed from discovery.",
