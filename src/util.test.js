@@ -13,6 +13,7 @@ import {
   getCheckinSettings,
   shouldConfirmStatusModalBeShown,
   isDCBItem,
+  focusModalPrimaryButton,
 } from './util';
 
 import {
@@ -206,5 +207,72 @@ describe('isDCBItem ', () => {
       holdingsRecordId: 'test',
     };
     expect(isDCBItem(item)).toBeFalsy();
+  });
+});
+
+describe('focusModalPrimaryButton', () => {
+  it('does nothing when ref is null', () => {
+    // Should not throw even when the ref object itself is null/undefined
+    expect(() => focusModalPrimaryButton(null)).not.toThrow();
+    expect(() => focusModalPrimaryButton(undefined)).not.toThrow();
+  });
+
+  it('does nothing when ref.current is null', () => {
+    const ref = { current: null };
+
+    expect(() => focusModalPrimaryButton(ref)).not.toThrow();
+  });
+
+  it('calls focus() directly when ref.current is not a DIV (e.g. a Button element)', () => {
+    // Simulates a ref attached directly to a focusable <button> element.
+    // focusModalPrimaryButton should call focus() on it without walking the DOM.
+    const focus = jest.fn();
+    const ref = { current: { tagName: 'BUTTON', focus } };
+
+    focusModalPrimaryButton(ref);
+
+    expect(focus).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls focus() directly when ref.current is a non-DIV element (e.g. SPAN)', () => {
+    const focus = jest.fn();
+    const ref = { current: { tagName: 'SPAN', focus } };
+
+    focusModalPrimaryButton(ref);
+
+    expect(focus).toHaveBeenCalledTimes(1);
+  });
+
+  it('finds and focuses the first <button> inside a DIV wrapper (e.g. PrintButton)', () => {
+    // Simulates a ref attached to a <div> wrapper around a composite component
+    // like <PrintButton> that does not forward its own ref.
+    // focusModalPrimaryButton should walk the DOM via querySelector to find the button.
+    const focus = jest.fn();
+    const btn = { focus };
+    const ref = {
+      current: {
+        tagName: 'DIV',
+        querySelector: jest.fn().mockReturnValue(btn),
+      },
+    };
+
+    focusModalPrimaryButton(ref);
+
+    expect(ref.current.querySelector).toHaveBeenCalledWith('button');
+    expect(focus).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not throw when DIV wrapper contains no <button> child', () => {
+    // Edge case: the wrapper div exists but contains no focusable button yet
+    // (e.g. during an intermediate render). Should silently do nothing.
+    const ref = {
+      current: {
+        tagName: 'DIV',
+        querySelector: jest.fn().mockReturnValue(null),
+      },
+    };
+
+    expect(() => focusModalPrimaryButton(ref)).not.toThrow();
+    expect(ref.current.querySelector).toHaveBeenCalledWith('button');
   });
 });

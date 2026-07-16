@@ -28,6 +28,7 @@ const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
         <FormattedMessage id="ui-checkin.claimedReturnedModal.resolution.found" />
       </Button>
       <Button
+        autoFocus
         data-test-returned-button
         data-testid="returnedButton"
         onClick={() => onConfirm(claimedReturnedResolutions.RETURNED)}

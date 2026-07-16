@@ -26,6 +26,7 @@ const MultipieceModal = (props) => {
   const footer = (
     <ModalFooter data-testid="multipieceModalFooter">
       <Button
+        autoFocus
         data-testid="multipieceModalConfirmButton"
         buttonStyle="primary"
         data-test-checkin-button

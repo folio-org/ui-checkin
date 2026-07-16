@@ -71,6 +71,7 @@ const CheckinNoteModal = (props) => {
       {
         !hideConfirm &&
         <Button
+          autoFocus
           data-test-checkin-note-modal-confirm-button
           buttonStyle="primary"
           id={`clickable-${testId}-confirm`}

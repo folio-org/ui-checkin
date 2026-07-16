@@ -17,6 +17,7 @@
 * *BREAKING* Migrate config values to mod-configuration. Refs UICHKIN-476.
 * Fix link for navigate to New Fee/Fine modal. Refs UICHKIN-504.
 * Fix FeesFinesOwnedStatus to update on prop changes and cancel async requests on unmount. Refs UICHKIN-485.
+* Improve focus positioning and restoration for better usability. Refs UICHKIN-510.
 
 ## [11.0.3] (https://github.com/folio-org/ui-checkin/tree/v11.0.3) (2025-10-29)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v11.0.2...v11.0.3)
