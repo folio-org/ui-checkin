@@ -211,19 +211,19 @@ describe('isDCBItem ', () => {
 });
 
 describe('focusModalPrimaryButton', () => {
-  it('does nothing when ref is null', () => {
+  it('should do nothing when ref is null', () => {
     // Should not throw even when the ref object itself is null/undefined
     expect(() => focusModalPrimaryButton(null)).not.toThrow();
     expect(() => focusModalPrimaryButton(undefined)).not.toThrow();
   });
 
-  it('does nothing when ref.current is null', () => {
+  it('should do nothing when ref.current is null', () => {
     const ref = { current: null };
 
     expect(() => focusModalPrimaryButton(ref)).not.toThrow();
   });
 
-  it('calls focus() directly when ref.current is not a DIV (e.g. a Button element)', () => {
+  it('should call focus() directly when ref.current is not a DIV (e.g. a Button element)', () => {
     // Simulates a ref attached directly to a focusable <button> element.
     // focusModalPrimaryButton should call focus() on it without walking the DOM.
     const focus = jest.fn();
@@ -234,7 +234,7 @@ describe('focusModalPrimaryButton', () => {
     expect(focus).toHaveBeenCalledTimes(1);
   });
 
-  it('calls focus() directly when ref.current is a non-DIV element (e.g. SPAN)', () => {
+  it('should call focus() directly when ref.current is a non-DIV element (e.g. SPAN)', () => {
     const focus = jest.fn();
     const ref = { current: { tagName: 'SPAN', focus } };
 
@@ -243,7 +243,7 @@ describe('focusModalPrimaryButton', () => {
     expect(focus).toHaveBeenCalledTimes(1);
   });
 
-  it('finds and focuses the first <button> inside a DIV wrapper (e.g. PrintButton)', () => {
+  it('should find and focus the first <button> inside a DIV wrapper (e.g. PrintButton)', () => {
     // Simulates a ref attached to a <div> wrapper around a composite component
     // like <PrintButton> that does not forward its own ref.
     // focusModalPrimaryButton should walk the DOM via querySelector to find the button.
@@ -262,7 +262,7 @@ describe('focusModalPrimaryButton', () => {
     expect(focus).toHaveBeenCalledTimes(1);
   });
 
-  it('does not throw when DIV wrapper contains no <button> child', () => {
+  it('should not throw when DIV wrapper contains no <button> child', () => {
     // Edge case: the wrapper div exists but contains no focusable button yet
     // (e.g. during an intermediate render). Should silently do nothing.
     const ref = {

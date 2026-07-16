@@ -135,6 +135,7 @@ const testIds = {
   holdModal: 'holdModal',
   redirectToCheckoutButton: 'redirectToCheckoutButton',
   closeDeliveryModalButton: 'closeDeliveryModalButton',
+  afterPrintDeliveryModalButton: 'afterPrintDeliveryModalButton',
   errorModal: 'errorModal',
   checkinModalManager: 'checkinModalManager',
   cancelModalManagerButton: 'cancelModalManagerButton',
@@ -294,6 +295,7 @@ jest.mock('./components/RouteForDeliveryModal', () => jest.fn(({
   modalContent,
   onCloseAndCheckout,
   onClose,
+  onAfterPrint,
 }) => (
   <div data-testid={testId}>
     <span>{label}</span>
@@ -311,6 +313,13 @@ jest.mock('./components/RouteForDeliveryModal', () => jest.fn(({
       data-testid={testIds.closeDeliveryModalButton}
     >
       Close
+    </button>
+    <button
+      onClick={onAfterPrint}
+      type="button"
+      data-testid={testIds.afterPrintDeliveryModalButton}
+    >
+      After print
     </button>
   </div>
 )));
@@ -941,6 +950,19 @@ describe('Scan', () => {
               const deliveryModal = screen.queryByTestId(testIds.deliveryModal);
 
               expect(deliveryModal).not.toBeInTheDocument();
+            });
+          });
+
+          it('should restore focus to barcode input after printing in delivery modal', async () => {
+            // handleOnAfterPrint is passed as onAfterPrint to RouteForDeliveryModal.
+            // It calls setFocusInput which focuses the barcode ref, restoring focus
+            // after the OS print dialog is dismissed.
+            await waitFor(() => {
+              const afterPrintButton = screen.getByTestId(testIds.afterPrintDeliveryModalButton);
+
+              fireEvent.click(afterPrintButton);
+
+              expect(createRefMock.current.focus).toHaveBeenCalled();
             });
           });
 
