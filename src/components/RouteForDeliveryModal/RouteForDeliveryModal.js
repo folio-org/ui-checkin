@@ -15,9 +15,6 @@ import PrintButton from '../PrintButton';
 import {
   SLIPS_DATA_PROP_TYPES,
 } from '../../consts';
-import {
-  focusModalPrimaryButton,
-} from '../../util';
 
 class RouteForDeliveryModal extends React.Component {
   static propTypes = {
@@ -43,7 +40,7 @@ class RouteForDeliveryModal extends React.Component {
   }
 
   onModalOpen = () => {
-    focusModalPrimaryButton(this.primaryButtonRef);
+    this.primaryButtonRef?.current?.focus();
   }
 
   closeButtonContent = <FormattedMessage id="ui-checkin.statusModal.close" />;
@@ -76,18 +73,17 @@ class RouteForDeliveryModal extends React.Component {
 
     return (
       <>
-        <div ref={this.primaryButtonRef}>
-          <PrintButton
-            data-testid="closeAndCheckoutPrintButton"
-            buttonStyle="primary"
-            onBeforePrint={onCloseAndCheckout}
-            dataSource={slipData}
-            template={slipTemplate}
-            data-test="closeAndCheckout"
-          >
-            {this.closeAndCheckoutButtonContent}
-          </PrintButton>
-        </div>
+        <PrintButton
+          data-testid="closeAndCheckoutPrintButton"
+          buttonStyle="primary"
+          buttonRef={this.primaryButtonRef}
+          onBeforePrint={onCloseAndCheckout}
+          dataSource={slipData}
+          template={slipTemplate}
+          data-test="closeAndCheckout"
+        >
+          {this.closeAndCheckoutButtonContent}
+        </PrintButton>
         <PrintButton
           data-testid="closeButton"
           buttonStyle="primary"

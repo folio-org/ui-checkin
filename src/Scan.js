@@ -695,7 +695,15 @@ export class Scan extends React.Component {
       checkedinItem: null,
       loading: false,
       checkinNotesMode: false,
-    }, this.setFocusInput);
+    }, () => {
+      // Defer focus restoration to the next event-loop tick using setTimeout(0).
+      // The setState callback fires before the modal's unmount/closing cycle completes,
+      // so a synchronous focus() call would be overwritten by the modal's internal
+      // focus management returning focus to document.body.
+      // Deferring ensures the modal has fully unmounted before we move focus back
+      // to the barcode input.
+      setTimeout(this.setFocusInput, 0);
+    });
   }
 
   handleTextError(error) {

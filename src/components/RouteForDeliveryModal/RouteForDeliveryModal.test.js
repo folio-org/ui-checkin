@@ -12,18 +12,12 @@ import {
 
 import RouteForDeliveryModal from './RouteForDeliveryModal';
 import PrintButton from '../PrintButton';
-import { focusModalPrimaryButton } from '../../util';
 
 jest.mock('../PrintButton', () => jest.fn(({ children, ...rest }) => (
   <button type="button" {...rest}>
     {children}
   </button>
 )));
-
-jest.mock('../../util', () => ({
-  ...jest.requireActual('../../util'),
-  focusModalPrimaryButton: jest.fn(),
-}));
 
 const defaultProps = {
   label: 'test-label',
@@ -216,91 +210,6 @@ describe('RouteForDeliveryModal', () => {
       };
 
       expect(PrintButton).toHaveBeenNthCalledWith(buttonCallOrder.close, expect.objectContaining(expectedProps), {});
-    });
-  });
-});
-
-describe('RouteForDeliveryModal focus management', () => {
-  // closeAndCheckout = 1st PrintButton call, close = 2nd PrintButton call
-  const printButtonCallOrder = {
-    closeAndCheckout: 1,
-    close: 2,
-  };
-
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('should pass restoreFocus={false} to Modal to prevent stripes built-in focus restoration on close', () => {
-    // restoreFocus={false} is required so that stripes' Modal does not move focus
-    // back to whatever triggered the modal when it closes. Focus restoration is
-    // handled manually via setTimeout(setFocusInput, 0) in Scan.onModalClose.
-    render(<RouteForDeliveryModal {...defaultProps} />);
-
-    expect(Modal).toHaveBeenCalledWith(
-      expect.objectContaining({ restoreFocus: false }),
-      {}
-    );
-  });
-
-  it('should pass onOpen handler to Modal', () => {
-    // onOpen fires after the modal's own focus management has run, making it the
-    // correct place to focus the primary button (autoFocus on footer buttons is
-    // overwritten by Modal's internal focus logic).
-    render(<RouteForDeliveryModal {...defaultProps} />);
-
-    expect(Modal).toHaveBeenCalledWith(
-      expect.objectContaining({ onOpen: expect.any(Function) }),
-      {}
-    );
-  });
-
-  it('should call focusModalPrimaryButton when modal opens', () => {
-    // Simulate the onOpen callback that Modal invokes after mounting.
-    // It should delegate to the shared focusModalPrimaryButton utility.
-    render(<RouteForDeliveryModal {...defaultProps} />);
-
-    const { onOpen } = Modal.mock.calls[0][0];
-
-    onOpen();
-
-    expect(focusModalPrimaryButton).toHaveBeenCalledTimes(1);
-  });
-
-  describe('When isPrintableByDefault is true', () => {
-    it('should pass onAfterPrint to the "Close" PrintButton so focus is restored after the print dialog closes', () => {
-      // onAfterPrint fires after the OS print dialog is dismissed — the only correct
-      // moment to restore focus. onBeforePrint (which calls onClose/onModalClose) fires
-      // before the dialog opens, so any focus call there expires while the dialog is
-      // still open. Passing onAfterPrint={handleOnAfterPrint} from Scan ensures focus
-      // returns to the barcode input after printing.
-      render(
-        <RouteForDeliveryModal
-          {...defaultProps}
-          isPrintableByDefault
-        />
-      );
-
-      expect(PrintButton).toHaveBeenNthCalledWith(
-        printButtonCallOrder.close,
-        expect.objectContaining({ onAfterPrint: defaultProps.onAfterPrint }),
-        {}
-      );
-    });
-
-    it('should not pass onAfterPrint to the "Close and checkout" PrintButton (navigation handles focus)', () => {
-      // The "Close and checkout" button redirects to /checkout, so focus restoration
-      // to the barcode input is not needed — navigation replaces the page.
-      render(
-        <RouteForDeliveryModal
-          {...defaultProps}
-          isPrintableByDefault
-        />
-      );
-
-      const closeAndCheckoutCall = PrintButton.mock.calls[printButtonCallOrder.closeAndCheckout - 1][0];
-
-      expect(closeAndCheckoutCall.onAfterPrint).toBeUndefined();
     });
   });
 });

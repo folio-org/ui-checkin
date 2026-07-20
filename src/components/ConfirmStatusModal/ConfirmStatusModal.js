@@ -16,9 +16,6 @@ import PrintButton from '../PrintButton';
 import {
   SLIPS_DATA_PROP_TYPES,
 } from '../../consts';
-import {
-  focusModalPrimaryButton,
-} from '../../util';
 
 const ConfirmStatusModal = (props) => {
   const {
@@ -39,19 +36,18 @@ const ConfirmStatusModal = (props) => {
   const footer = useMemo(() => (
     <ModalFooter>
       {isPrintable ?
-        <div ref={primaryButtonRef}>
-          <PrintButton
-            data-test-confirm-button
-            buttonStyle="primary"
-            id={`clickable-${testId}-confirm`}
-            dataSource={slipData}
-            template={slipTemplate}
-            onBeforePrint={onConfirm}
-            onAfterPrint={onCancel}
-          >
-            <FormattedMessage id="ui-checkin.statusModal.close" />
-          </PrintButton>
-        </div> :
+        <PrintButton
+          data-test-confirm-button
+          buttonStyle="primary"
+          buttonRef={primaryButtonRef}
+          id={`clickable-${testId}-confirm`}
+          dataSource={slipData}
+          template={slipTemplate}
+          onBeforePrint={onConfirm}
+          onAfterPrint={onCancel}
+        >
+          <FormattedMessage id="ui-checkin.statusModal.close" />
+        </PrintButton> :
         <Button
           ref={primaryButtonRef}
           data-test-confirm-button
@@ -71,7 +67,7 @@ const ConfirmStatusModal = (props) => {
     setIsPrintable(!isPrintable);
   }, [isPrintable]);
 
-  const onModalOpen = useCallback(() => focusModalPrimaryButton(primaryButtonRef), []);
+  const onModalOpen = useCallback(() => primaryButtonRef?.current?.focus(), []);
 
   return (
     <Modal
