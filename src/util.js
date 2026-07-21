@@ -1,6 +1,5 @@
 import {
   escape,
-  includes,
 } from 'lodash';
 
 import {
@@ -52,7 +51,7 @@ export function getCheckinSettings(checkinSettings) {
 }
 
 export function shouldConfirmStatusModalBeShown(item) {
-  return includes([
+  return [
     statuses.WITHDRAWN,
     statuses.DECLARED_LOST,
     statuses.MISSING,
@@ -63,7 +62,7 @@ export function shouldConfirmStatusModalBeShown(item) {
     statuses.LONG_MISSING,
     statuses.UNAVAILABLE,
     statuses.UNKNOWN,
-  ], item?.status?.name);
+  ].includes(item?.status?.name);
 }
 
 export const isDCBItem = (item) => item.instanceId === DCB_INSTANCE_ID && item.holdingsRecordId === DCB_HOLDINGS_RECORD_ID;

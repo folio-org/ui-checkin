@@ -26,6 +26,7 @@ class RouteForDeliveryModal extends React.Component {
     isPrintableByDefault: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onCloseAndCheckout: PropTypes.func.isRequired,
+    onAfterPrint: PropTypes.func,
   };
 
   constructor(props) {
@@ -34,6 +35,12 @@ class RouteForDeliveryModal extends React.Component {
     this.state = {
       isPrintable: this.props.isPrintableByDefault
     };
+
+    this.primaryButtonRef = React.createRef();
+  }
+
+  onModalOpen = () => {
+    this.primaryButtonRef?.current?.focus();
   }
 
   closeButtonContent = <FormattedMessage id="ui-checkin.statusModal.close" />;
@@ -61,6 +68,7 @@ class RouteForDeliveryModal extends React.Component {
       slipData,
       onClose,
       onCloseAndCheckout,
+      onAfterPrint,
     } = this.props;
 
     return (
@@ -68,6 +76,7 @@ class RouteForDeliveryModal extends React.Component {
         <PrintButton
           data-testid="closeAndCheckoutPrintButton"
           buttonStyle="primary"
+          buttonRef={this.primaryButtonRef}
           onBeforePrint={onCloseAndCheckout}
           dataSource={slipData}
           template={slipTemplate}
@@ -79,6 +88,7 @@ class RouteForDeliveryModal extends React.Component {
           data-testid="closeButton"
           buttonStyle="primary"
           onBeforePrint={onClose}
+          onAfterPrint={onAfterPrint}
           dataSource={slipData}
           template={slipTemplate}
           data-test="close"
@@ -98,6 +108,7 @@ class RouteForDeliveryModal extends React.Component {
     return (
       <>
         <Button
+          ref={this.primaryButtonRef}
           buttonStyle="primary"
           onClick={onCloseAndCheckout}
           data-test="closeAndCheckout"
@@ -133,7 +144,9 @@ class RouteForDeliveryModal extends React.Component {
         footer={this.renderFooter()}
         scope="module"
         dismissible
+        restoreFocus={false}
         onClose={onClose}
+        onOpen={this.onModalOpen}
         data-test-delivery-modal
       >
         <p data-test-modal-content>

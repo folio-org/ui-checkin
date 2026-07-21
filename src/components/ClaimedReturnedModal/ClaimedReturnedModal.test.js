@@ -67,7 +67,7 @@ describe('ClaimedReturnedModal', () => {
     expect(Modal).toHaveBeenCalledWith(expect.objectContaining({
       dismissible: true,
       open,
-      onCancel,
+      onClose: onCancel,
     }), {});
   });
 

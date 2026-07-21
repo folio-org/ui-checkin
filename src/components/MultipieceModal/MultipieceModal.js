@@ -1,5 +1,8 @@
 import { get } from 'lodash';
-import React from 'react';
+import React, {
+  useRef,
+  useCallback,
+} from 'react';
 import {
   injectIntl,
   FormattedMessage,
@@ -22,10 +25,13 @@ const MultipieceModal = (props) => {
     onConfirm,
   } = props;
   const { title, barcode, materialType } = item;
+  const primaryButtonRef = useRef(null);
+  const onModalOpen = useCallback(() => primaryButtonRef?.current?.focus(), []);
 
   const footer = (
     <ModalFooter data-testid="multipieceModalFooter">
       <Button
+        ref={primaryButtonRef}
         data-testid="multipieceModalConfirmButton"
         buttonStyle="primary"
         data-test-checkin-button
@@ -50,6 +56,8 @@ const MultipieceModal = (props) => {
       footer={footer}
       dismissible
       label={formatMessage({ id: 'ui-checkin.multipieceModal.label' })}
+      restoreFocus={false}
+      onOpen={onModalOpen}
       {...props}
     >
       <p>

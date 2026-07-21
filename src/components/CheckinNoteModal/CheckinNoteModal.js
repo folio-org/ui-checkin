@@ -1,5 +1,8 @@
 import { uniqueId } from 'lodash';
-import React from 'react';
+import React, {
+  useRef,
+  useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -66,11 +69,14 @@ const CheckinNoteModal = (props) => {
     hideConfirm,
     hideCancel,
   } = props;
+  const primaryButtonRef = useRef(null);
+  const onModalOpen = useCallback(() => primaryButtonRef?.current?.focus(), []);
   const footer = (
     <ModalFooter>
       {
         !hideConfirm &&
         <Button
+          ref={primaryButtonRef}
           data-test-checkin-note-modal-confirm-button
           buttonStyle="primary"
           id={`clickable-${testId}-confirm`}
@@ -104,6 +110,8 @@ const CheckinNoteModal = (props) => {
       size="small"
       footer={footer}
       onClose={props.onCancel}
+      restoreFocus={false}
+      onOpen={onModalOpen}
     >
       <p>{props.message}</p>
       <div className={css.root}>

@@ -695,7 +695,15 @@ export class Scan extends React.Component {
       checkedinItem: null,
       loading: false,
       checkinNotesMode: false,
-    }, this.setFocusInput);
+    }, () => {
+      // Defer focus restoration to the next event-loop tick using setTimeout(0).
+      // The setState callback fires before the modal's unmount/closing cycle completes,
+      // so a synchronous focus() call would be overwritten by the modal's internal
+      // focus management returning focus to document.body.
+      // Deferring ensures the modal has fully unmounted before we move focus back
+      // to the barcode input.
+      setTimeout(this.setFocusInput, 0);
+    });
   }
 
   handleTextError(error) {
@@ -829,7 +837,16 @@ export class Scan extends React.Component {
       transitItem: null,
       holdItem: null,
       deliveryItem: null,
-    }, this.setFocusInput);
+    }, () => {
+      // Defer focus restoration to the next event-loop tick using setTimeout(0).
+      // When deliveryItem is set to null, React re-renders and RouteForDeliveryModal
+      // begins its unmount/closing cycle. The setState callback fires synchronously
+      // before that cycle completes, so any focus() call made here would be overwritten
+      // by the modal's internal focus management returning focus to document.body.
+      // Deferring with setTimeout(0) ensures the modal has fully unmounted before
+      // we move focus back to the barcode input.
+      setTimeout(this.setFocusInput, 0);
+    });
   };
 
   getSlipTmpl(type) {
@@ -950,6 +967,7 @@ export class Scan extends React.Component {
         modalContent={message}
         onClose={this.onModalClose}
         onCloseAndCheckout={this.redirectToCheckout}
+        onAfterPrint={this.handleOnAfterPrint}
       />
     );
   }

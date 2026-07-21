@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {
+  useRef,
+  useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -10,6 +13,8 @@ import {
 import { claimedReturnedResolutions } from '../../consts';
 
 const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
+  const primaryButtonRef = useRef(null);
+  const onModalOpen = useCallback(() => primaryButtonRef?.current?.focus(), []);
   const footer = (
     <div>
       <Button
@@ -28,6 +33,7 @@ const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
         <FormattedMessage id="ui-checkin.claimedReturnedModal.resolution.found" />
       </Button>
       <Button
+        ref={primaryButtonRef}
         data-test-returned-button
         data-testid="returnedButton"
         onClick={() => onConfirm(claimedReturnedResolutions.RETURNED)}
@@ -42,9 +48,11 @@ const ClaimedReturnedModal = ({ item, open, onCancel, onConfirm }) => {
       data-test-claimed-returned-modal
       dismissible
       open={open}
-      onCancel={onCancel}
+      onClose={onCancel}
       label={<FormattedMessage id="ui-checkin.claimedReturnedModal.label" />}
       footer={footer}
+      restoreFocus={false}
+      onOpen={onModalOpen}
     >
       <FormattedMessage
         id="ui-checkin.claimedReturnedModal.message"

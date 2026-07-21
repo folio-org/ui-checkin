@@ -25,6 +25,7 @@ const defaultProps = {
   open: true,
   onCloseAndCheckout: jest.fn(),
   onClose: jest.fn(),
+  onAfterPrint: jest.fn(),
   slipTemplate: 'test-template',
   slipData: {},
   isPrintableByDefault: false,
@@ -147,6 +148,7 @@ describe('RouteForDeliveryModal', () => {
       const expectedProps = {
         buttonStyle: 'primary',
         onBeforePrint: defaultProps.onClose,
+        onAfterPrint: defaultProps.onAfterPrint,
         dataSource: defaultProps.slipData,
         template: '',
       };
@@ -202,6 +204,7 @@ describe('RouteForDeliveryModal', () => {
       const expectedProps = {
         buttonStyle: 'primary',
         onBeforePrint: defaultProps.onClose,
+        onAfterPrint: defaultProps.onAfterPrint,
         dataSource: defaultProps.slipData,
         template: defaultProps.slipTemplate,
       };

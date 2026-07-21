@@ -18,6 +18,7 @@ import css from './PrintButton.css';
 
 class PrintButton extends React.Component {
   static propTypes = {
+    buttonRef: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({ current: PropTypes.instanceOf(Element) })]),
     dataSource: SLIPS_DATA_PROP_TYPES,
     template: PropTypes.string,
     onBeforePrint: PropTypes.func,
@@ -32,6 +33,7 @@ class PrintButton extends React.Component {
 
   render() {
     const {
+      buttonRef,
       dataSource,
       template,
       onBeforePrint,
@@ -39,7 +41,11 @@ class PrintButton extends React.Component {
       children,
     } = this.props;
 
-    const btnProps = omit(this.props, ['dataSource', 'template', 'onBeforePrint', 'onAfterPrint']);
+    const btnProps = omit(this.props, ['dataSource', 'template', 'onBeforePrint', 'onAfterPrint', 'buttonRef']);
+
+    if (buttonRef) {
+      btnProps.ref = buttonRef;
+    }
 
     return (
       <>

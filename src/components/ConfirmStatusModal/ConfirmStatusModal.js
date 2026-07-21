@@ -1,5 +1,5 @@
 import uniqueId from 'lodash/uniqueId';
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -29,8 +29,7 @@ const ConfirmStatusModal = (props) => {
   } = props;
 
   const [isPrintable, setIsPrintable] = useState(props.isPrintable);
-
-
+  const primaryButtonRef = useRef(null);
 
   const testId = uniqueId('confirm-status-');
 
@@ -40,6 +39,7 @@ const ConfirmStatusModal = (props) => {
         <PrintButton
           data-test-confirm-button
           buttonStyle="primary"
+          buttonRef={primaryButtonRef}
           id={`clickable-${testId}-confirm`}
           dataSource={slipData}
           template={slipTemplate}
@@ -49,6 +49,7 @@ const ConfirmStatusModal = (props) => {
           <FormattedMessage id="ui-checkin.statusModal.close" />
         </PrintButton> :
         <Button
+          ref={primaryButtonRef}
           data-test-confirm-button
           label={label}
           id={`clickable-${testId}-confirm`}
@@ -66,6 +67,8 @@ const ConfirmStatusModal = (props) => {
     setIsPrintable(!isPrintable);
   }, [isPrintable]);
 
+  const onModalOpen = useCallback(() => primaryButtonRef?.current?.focus(), []);
+
   return (
     <Modal
       data-test-confirm-status-modal
@@ -77,6 +80,8 @@ const ConfirmStatusModal = (props) => {
       scope="module"
       size="small"
       footer={footer}
+      restoreFocus={false}
+      onOpen={onModalOpen}
     >
       {messageParts}
       <Row>
