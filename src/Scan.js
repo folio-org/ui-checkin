@@ -13,6 +13,7 @@ import {
 } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 
+import { updateUser } from '@folio/stripes/core';
 import {
   escapeCqlValue,
   convertToSlipData,
@@ -331,10 +332,48 @@ export class Scan extends React.Component {
     };
   }
 
+  componentDidMount() {
+    if (process.env.NODE_ENV === 'development') { // Since we only want the behavior in local development mode
+      this.seedServicePointIfMissing();
+    }
+  }
+
+  componentDidUpdate() {
+    if (process.env.NODE_ENV === 'development') { // Since we only want the behavior in local development mode
+      this.seedServicePointIfMissing();
+    }
+  }
+
   store = this.props.stripes.store;
   barcode = React.createRef();
   checkInData = null;
   checkinFormRef = React.createRef();
+  servicePointSeeded = false;
+
+  /**
+   * Standalone ui-checkin has no ui-users to seed the session, so the logged-in
+   * user has no curServicePoint: the app would otherwise spin on <Loading />
+   * forever, and check-in-by-barcode would post an empty servicePointId. Once the
+   * service points have loaded, default to the first one. In a full platform this
+   * never runs, since a service point is already selected via the profile menu.
+   */
+  seedServicePointIfMissing = () => {
+    if (this.servicePointSeeded) {
+      return;
+    }
+
+    if (this.props.stripes?.user?.user?.curServicePoint?.id) {
+      return;
+    }
+
+    const servicePoints = this.props.resources?.servicePoints?.records;
+    if (!servicePoints?.length) {
+      return;
+    }
+
+    this.servicePointSeeded = true;
+    updateUser(this.store, { curServicePoint: servicePoints[0] });
+  };
 
   setFocusInput = () => {
     this.barcode.current.focus();
