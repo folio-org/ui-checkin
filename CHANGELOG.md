@@ -1,5 +1,9 @@
 # Change history for ui-checkin
 
+## IN PROGRESS
+
+* Version bumps for `@folio/stripes-webpack`, automatically set service point in development mode. Refs UICHKIN-512.
+
 ## [12.0.0] (https://github.com/folio-org/ui-checkin/tree/v12.0.0) (2026-04-16)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v11.0.3...v12.0.0)
 

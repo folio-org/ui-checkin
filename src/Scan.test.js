@@ -330,8 +330,27 @@ jest.mock('./util', () => ({
 jest.spyOn(React, 'createRef').mockReturnValue(createRefMock);
 
 describe('Scan', () => {
+  const originalNodeEnv = process.env.NODE_ENV;
+
   afterEach(() => {
+    process.env.NODE_ENV = originalNodeEnv;
     jest.clearAllMocks();
+  });
+
+  it('should only seed the service point in development mode', () => {
+    const instance = new RawScan(basicProps);
+    const seedSpy = jest.spyOn(instance, 'seedServicePointIfMissing').mockImplementation(() => {});
+
+    process.env.NODE_ENV = 'production';
+    instance.componentDidMount();
+    instance.componentDidUpdate();
+    expect(seedSpy).not.toHaveBeenCalled();
+
+    process.env.NODE_ENV = 'development';
+    seedSpy.mockClear();
+    instance.componentDidMount();
+    instance.componentDidUpdate();
+    expect(seedSpy).toHaveBeenCalledTimes(2);
   });
 
   describe('getLoanForItem', () => {

@@ -91,10 +91,11 @@ class CheckIn extends React.Component {
     barcodeRef: PropTypes.shape({
       current: PropTypes.instanceOf(Element),
     }),
-    checkinFormRef: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-    ]),
+    checkinFormRef: PropTypes.shape({ current: PropTypes.shape({
+      change: PropTypes.func.isRequired,
+      getState: PropTypes.func.isRequired,
+      reset: PropTypes.func.isRequired,
+    }) }).isRequired,
     onSessionEnd: PropTypes.func,
     resources: PropTypes.shape({
       checkinSettings: PropTypes.shape({
@@ -135,8 +136,9 @@ class CheckIn extends React.Component {
     }).isRequired,
     loading: PropTypes.bool.isRequired,
     form: PropTypes.shape({
-      change: PropTypes.func,
-      getState: PropTypes.func,
+      change: PropTypes.func.isRequired,
+      getState: PropTypes.func.isRequired,
+      reset: PropTypes.func.isRequired,
     }).isRequired,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
