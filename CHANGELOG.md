@@ -1,5 +1,9 @@
 # Change history for ui-checkin
 
+## 12.1.0 IN PROGRESS
+
+* Remove Item details option from Central tenant Check in menu. Refs UICHKIN-513.
+
 ## [12.0.0] (https://github.com/folio-org/ui-checkin/tree/v12.0.0) (2026-04-16)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v11.0.3...v12.0.0)
 
