@@ -12,6 +12,7 @@ import {
 } from 'lodash';
 
 import {
+  checkIfUserInCentralTenant,
   IfPermission,
   TitleManager,
   withModules,
@@ -350,6 +351,7 @@ class CheckIn extends React.Component {
   renderActions(loan) {
     const {
       intl,
+      stripes,
       stripes: {
         timezone,
         locale,
@@ -362,6 +364,7 @@ class CheckIn extends React.Component {
     const loanOpenRequest = loan?.staffSlipContext?.request ?? {};
     const isVirtualUser = loan?.isDcb;
     const isVirtualItem = isDCBItem(get(scannedItems, [0, 'item']));
+    const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
     const trigger = ({ getTriggerProps, triggerRef }) => (
       <IconButton
@@ -428,7 +431,7 @@ class CheckIn extends React.Component {
             </div>}
           <div data-test-item-details>
             {
-            !isVirtualItem && (
+            !isVirtualItem && !isUserInCentralTenant && (
               <Button
                 role="menuitem"
                 buttonStyle="dropdownItem"
