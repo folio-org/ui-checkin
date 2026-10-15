@@ -120,5 +120,10 @@
   "actionChoiceModal.title": "For use at location",
   "actionChoiceModal.text": "Item <strong>{title} ({materialType})</strong> (Barcode {barcode}) is for use at location at <strong>{servicePoint}</strong>.",
 
-  "permission.all": "Check in: All permissions"
+  "permission.all": "Check in: All permissions",
+
+  "inHouseUseConfirmModal.title": "Confirm in-house use",
+  "inHouseUseConfirmModal.message": "This item is currently checked out. Are you sure you want to log it for <strong>in-house use</strong>?",
+  "inHouseUseConfirmModal.checkIn": "Check in",
+  "inHouseUseConfirmModal.cancel": "Cancel"
 }

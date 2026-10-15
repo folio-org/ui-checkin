@@ -23,6 +23,7 @@ import {
   Button,
   TextField,
   Select,
+  Checkbox,
   IconButton,
   Layout,
   Row,
@@ -579,7 +580,17 @@ class CheckIn extends React.Component {
                     </Button>
                   </Layout>
                 </Col>
-                <Col sm={2} />
+                <Col sm={2}>
+                  <Layout className="marginTopLabelSpacer">
+                    <Field
+                      id="inHouseUseCheckbox"
+                      name="item.inHouseUse"
+                      component={Checkbox}
+                      type="checkbox"
+                      label={<FormattedMessage id="ui-checkin.inHouseUse" />}
+                    />
+                  </Layout>
+                </Col>
                 {/* <CheckinDateTime> provides two sm={2} columns for a total width of 4 */}
                 <CheckinDateTime
                   showPickers={showPickers}

@@ -79,6 +79,7 @@ const labelIds = {
   requestDetailsButton: 'ui-checkin.requestDetails',
   newFeeFineButton: 'ui-checkin.newFeeFine',
   checkinNotesButton: 'ui-checkin.checkinNotes',
+  inHouseUseLabel: 'ui-checkin.inHouseUse',
 };
 const testIds = {
   showPickersButton: 'showPickersButton',
@@ -182,6 +183,10 @@ describe('CheckIn', () => {
         const enterButton = screen.getByText(labelIds.enterButton);
 
         expect(enterButton).toBeDisabled();
+      });
+
+      it('should render in-house use checkbox', () => {
+        expect(screen.getByText(labelIds.inHouseUseLabel)).toBeInTheDocument();
       });
 
       it('should trigger form change twice after clicking on show pickers button', () => {

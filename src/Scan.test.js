@@ -142,6 +142,9 @@ const testIds = {
   selectItemModal: 'selectItemModal',
   closeSelectModalButton: 'closeSelectModalButton',
   selectItemButton: 'selectItemButton',
+  inHouseUseConfirmModal: 'inHouseUseConfirmModal',
+  inHouseUseConfirmButton: 'inHouseUseConfirmButton',
+  inHouseUseCancelButton: 'inHouseUseCancelButton',
 };
 const labelIds = {
   transitionModalLabel: 'ui-checkin.statusModal.transit.heading',
@@ -328,6 +331,19 @@ jest.mock('./util', () => ({
   getCheckinSettings: jest.fn(),
 }));
 jest.spyOn(React, 'createRef').mockReturnValue(createRefMock);
+jest.mock('./components/InHouseUseConfirmModal', () => jest.fn(({
+  onConfirm,
+  onCancel,
+}) => (
+  <div data-testid="inHouseUseConfirmModal">
+    <button type="button" data-testid="inHouseUseConfirmButton" onClick={onConfirm}>
+      Confirm
+    </button>
+    <button type="button" data-testid="inHouseUseCancelButton" onClick={onCancel}>
+      Cancel
+    </button>
+  </div>
+)));
 
 describe('Scan', () => {
   afterEach(() => {
@@ -595,6 +611,54 @@ describe('Scan', () => {
             await waitFor(() => {
               expect(createRefMock.current.focus).toHaveBeenCalled();
             });
+          });
+        });
+
+        describe('With retrieved loan and subsequentCheckIns', () => {
+          const subsequentItem1 = { item: { id: 'subItemId1' }, inHouseUse: true };
+          const subsequentItem2 = { item: { id: 'subItemId2' }, inHouseUse: true };
+          const requestDataWithSubsequent = {
+            loan: {
+              id: 'loanId',
+              lostItemPolicyId: 'lostItemPolicyId',
+              item: {},
+            },
+            item: { id: 'itemId' },
+            nextRequest: {},
+            transitItem: {},
+            holdItem: {},
+            staffSlipContext: {},
+            inHouseUse: true,
+            subsequentCheckIns: [subsequentItem1, subsequentItem2],
+          };
+
+          beforeEach(() => {
+            buildDateTime.mockReturnValue(checkInDate);
+            render(<Scan {...basicProps} />);
+            getCheckinSettings.mockReturnValue({ wildcardLookupEnabled: false });
+            basicProps.mutator.checkIn.POST.mockResolvedValue(requestDataWithSubsequent);
+            basicProps.mutator.requests.GET.mockResolvedValue([]);
+
+            fireEvent.click(screen.getByTestId(testIds.submitButton));
+          });
+
+          it('should add primary item and all subsequentCheckIns to scannedItems', () => {
+            const expectedArgument = [
+              {
+                ...requestDataWithSubsequent.loan,
+                loanId: requestDataWithSubsequent.loan.id,
+                nextRequest: requestDataWithSubsequent.nextRequest,
+                transitItem: requestDataWithSubsequent.transitItem,
+                holdItem: requestDataWithSubsequent.holdItem,
+                staffSlipContext: requestDataWithSubsequent.staffSlipContext,
+                inHouseUse: requestDataWithSubsequent.inHouseUse,
+              },
+              { ...subsequentItem1, returnDate: checkInDate },
+              { ...subsequentItem2, returnDate: checkInDate },
+              ...basicProps.resources.scannedItems,
+            ];
+
+            expect(basicProps.mutator.scannedItems.replace).toHaveBeenCalledWith(expectedArgument);
           });
         });
 
@@ -1206,6 +1270,92 @@ describe('Scan', () => {
         });
       });
 
+      describe('When error code is CHECKED_OUT_ITEM_IN_HOUSE_USE_REQUIRES_CONFIRMATION', () => {
+        const inHouseUseError = {
+          errors: [
+            {
+              code: 'CHECKED_OUT_ITEM_IN_HOUSE_USE_REQUIRES_CONFIRMATION',
+            }
+          ],
+        };
+        const errorResponse = {
+          headers: { get: () => 'application/json' },
+          json: jest.fn().mockResolvedValue(inHouseUseError),
+        };
+
+        beforeEach(() => {
+          render(<Scan {...basicProps} />);
+          basicProps.mutator.checkIn.POST.mockRejectedValue(errorResponse);
+
+          fireEvent.click(screen.getByTestId(testIds.submitButton));
+        });
+
+        it('should render InHouseUseConfirmModal', async () => {
+          await waitFor(() => {
+            expect(screen.getByTestId(testIds.inHouseUseConfirmModal)).toBeInTheDocument();
+          });
+        });
+
+        it('should not render the standard error modal', async () => {
+          await waitFor(() => {
+            expect(screen.queryByTestId(testIds.errorModal)).not.toBeInTheDocument();
+          });
+        });
+
+        it('should close the modal and re-submit with override flag when confirm is clicked', async () => {
+          basicProps.mutator.checkIn.POST.mockResolvedValue({ item: { id: 'itemId' } });
+          basicProps.mutator.requests.GET.mockResolvedValue([]);
+
+          await waitFor(() => {
+            expect(screen.getByTestId(testIds.inHouseUseConfirmModal)).toBeInTheDocument();
+          });
+
+          fireEvent.click(screen.getByTestId(testIds.inHouseUseConfirmButton));
+
+          await waitFor(() => {
+            expect(screen.queryByTestId(testIds.inHouseUseConfirmModal)).not.toBeInTheDocument();
+          });
+
+          expect(basicProps.mutator.checkIn.POST).toHaveBeenLastCalledWith(
+            expect.objectContaining({ checkedOutItemInHouseUseOverride: true })
+          );
+        });
+
+        it('should close the modal when cancel is clicked', async () => {
+          await waitFor(() => {
+            expect(screen.getByTestId(testIds.inHouseUseConfirmModal)).toBeInTheDocument();
+          });
+
+          fireEvent.click(screen.getByTestId(testIds.inHouseUseCancelButton));
+
+          await waitFor(() => {
+            expect(screen.queryByTestId(testIds.inHouseUseConfirmModal)).not.toBeInTheDocument();
+          });
+        });
+
+        it('should clear the barcode field when cancel is clicked', async () => {
+          await waitFor(() => {
+            expect(screen.getByTestId(testIds.inHouseUseConfirmModal)).toBeInTheDocument();
+          });
+
+          fireEvent.click(screen.getByTestId(testIds.inHouseUseCancelButton));
+
+          expect(createRefMock.current.change).toHaveBeenCalledWith('item.barcode', '');
+        });
+
+        it('should restore focus to the barcode input when cancel is clicked', async () => {
+          await waitFor(() => {
+            expect(screen.getByTestId(testIds.inHouseUseConfirmModal)).toBeInTheDocument();
+          });
+
+          fireEvent.click(screen.getByTestId(testIds.inHouseUseCancelButton));
+
+          await waitFor(() => {
+            expect(createRefMock.current.focus).toHaveBeenCalled();
+          });
+        });
+      });
+
       describe('When response type is not set', () => {
         const error = 'Error message';
         const response = {
@@ -1286,6 +1436,15 @@ describe('Scan', () => {
 
         expect(checkinModalManager).not.toBeInTheDocument();
       });
+    });
+
+    it('should call clearField with item.barcode (not reset the whole form) on cancel', () => {
+      const cancelModalManagerButton = screen.getByTestId(testIds.cancelModalManagerButton);
+
+      fireEvent.click(cancelModalManagerButton);
+
+      expect(createRefMock.current.change).toHaveBeenCalledWith('item.barcode', '');
+      expect(createRefMock.current.reset).not.toHaveBeenCalled();
     });
   });
 
