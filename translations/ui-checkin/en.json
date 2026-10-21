@@ -22,6 +22,8 @@
   "effectiveCallNumber": "Effective call number string",
   "location": "Location",
   "inHouseUse": "In-house use",
+  "inHouseUse.yes": "In-house use, Yes",
+  "inHouseUse.no": "In-house use, No",
   "status": "Status",
   "forUseAtLocation": "For use at location",
   "forUseAtLocation.Held": "Keep on hold shelf",

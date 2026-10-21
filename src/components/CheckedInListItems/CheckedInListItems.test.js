@@ -19,6 +19,7 @@ import CheckedInListItems, {
   columnMapping,
   columnWidths,
   getItemListFormatter,
+  InHouseUseCell,
 } from './CheckedInListItems';
 
 const testIds = {
@@ -29,6 +30,8 @@ const testIds = {
 
 const labelIds = {
   forUseAtLocationHeld: 'ui-checkin.forUseAtLocation.Held',
+  inHouseUseYes: 'ui-checkin.inHouseUse.yes',
+  inHouseUseNo: 'ui-checkin.inHouseUse.no',
 };
 
 const loading = false;
@@ -156,26 +159,22 @@ describe('CheckedInListItems', () => {
       expect(location).toBe(basicLoan.item.location.name);
     });
 
-    it('should trigger "Icon" with correct props', () => {
-      const inHouseUse = getItemListFormatter(mutator, renderActions)[COLUMNS_NAME.IN_HOUSE_USE](basicLoan);
-      const expectedProps = {
-        icon: 'house',
-        iconClassName: 'houseIcon',
-      };
+    it('should render "InHouseUseCell" with inHouseUse true', () => {
+      const result = getItemListFormatter(mutator, renderActions)[COLUMNS_NAME.IN_HOUSE_USE](basicLoan);
 
-      render(inHouseUse);
-
-      expect(Icon).toHaveBeenCalledWith(expectedProps, {});
+      expect(result.type).toBe(InHouseUseCell);
+      expect(result.props.inHouseUse).toBe(true);
     });
 
-    it('should return empty string as "In house use" column', () => {
+    it('should render "InHouseUseCell" with inHouseUse false', () => {
       const loan = {
         ...basicLoan,
         inHouseUse: false,
       };
-      const inHouseUse = getItemListFormatter(mutator, renderActions)[COLUMNS_NAME.IN_HOUSE_USE](loan);
+      const result = getItemListFormatter(mutator, renderActions)[COLUMNS_NAME.IN_HOUSE_USE](loan);
 
-      expect(inHouseUse).toEqual(<NoValue />);
+      expect(result.type).toBe(InHouseUseCell);
+      expect(result.props.inHouseUse).toBe(false);
     });
 
     it('should return status with service point', () => {
@@ -227,5 +226,21 @@ describe('CheckedInListItems', () => {
 
       expect(renderActions).toHaveBeenCalledWith(basicLoan);
     });
+  });
+});
+
+describe('InHouseUseCell', () => {
+  it('should set aria-label to "In-house use, Yes" and render house icon when inHouseUse is true', () => {
+    const { container } = render(<InHouseUseCell inHouseUse />);
+
+    expect(container.firstChild).toHaveAttribute('aria-label', labelIds.inHouseUseYes);
+    expect(Icon).toHaveBeenCalledWith(expect.objectContaining({ icon: 'house' }), {});
+  });
+
+  it('should set aria-label to "In-house use, No" and render NoValue when inHouseUse is false', () => {
+    const { container } = render(<InHouseUseCell inHouseUse={false} />);
+
+    expect(container.firstChild).toHaveAttribute('aria-label', labelIds.inHouseUseNo);
+    expect(NoValue).toHaveBeenCalled();
   });
 });
