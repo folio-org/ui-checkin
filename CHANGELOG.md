@@ -2,7 +2,9 @@
 
 ## 12.1.0 IN PROGRESS
 
+* Improve focus positioning and restoration for better usability. Refs UICHKIN-510.
 * Remove Item details option from Central tenant Check in menu. Refs UICHKIN-513.
+* Add In-house Use Option to Check in Interface. Refs UICHKIN-515.
 
 ## [12.0.0] (https://github.com/folio-org/ui-checkin/tree/v12.0.0) (2026-04-16)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v11.0.3...v12.0.0)
@@ -21,7 +23,6 @@
 * *BREAKING* Migrate config values to mod-configuration. Refs UICHKIN-476.
 * Fix link for navigate to New Fee/Fine modal. Refs UICHKIN-504.
 * Fix FeesFinesOwnedStatus to update on prop changes and cancel async requests on unmount. Refs UICHKIN-485.
-* Improve focus positioning and restoration for better usability. Refs UICHKIN-510.
 
 ## [11.0.3] (https://github.com/folio-org/ui-checkin/tree/v11.0.3) (2025-10-29)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v11.0.2...v11.0.3)

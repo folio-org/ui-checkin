@@ -43,6 +43,7 @@ import {
 import ConfirmStatusModal from './components/ConfirmStatusModal';
 import RouteForDeliveryModal from './components/RouteForDeliveryModal';
 import SelectItemModal from './components/SelectItemModal';
+import InHouseUseConfirmModal from './components/InHouseUseConfirmModal';
 import ModalManager from './ModalManager';
 
 import {
@@ -328,11 +329,13 @@ export class Scan extends React.Component {
       offset: 0,
       selectedBarcode: null,
       showActionChoiceModal: false,
+      showInHouseUseConfirmModal: false,
     };
   }
 
   store = this.props.stripes.store;
   barcode = React.createRef();
+  inHouseUseConfirmButtonRef = React.createRef();
   checkInData = null;
   checkinFormRef = React.createRef();
 
@@ -460,7 +463,7 @@ export class Scan extends React.Component {
     this.setFocusInput();
   };
 
-  checkIn = async (explicitAction) => {
+  checkIn = async (explicitAction, checkedOutItemInHouseUseOverride = false) => {
     if (this.state.loading) return undefined;
 
     const data = this.checkInData;
@@ -469,6 +472,7 @@ export class Scan extends React.Component {
         barcode,
         checkinDate,
         checkinTime,
+        inHouseUse,
       },
     } = data;
     const action = explicitAction || data.item.action;
@@ -511,12 +515,17 @@ export class Scan extends React.Component {
       servicePointId,
       checkInDate,
       itemBarcode: barcode,
+      inHouseUse: !!inHouseUse,
     };
 
     // For items that have the status 'Claimed returned', the claimedReturnedResolution
     // parameter is required for checkin. For any other status, we don't want it.
     if (itemClaimedReturnedResolution) {
       requestData.claimedReturnedResolution = itemClaimedReturnedResolution;
+    }
+
+    if (checkedOutItemInHouseUseOverride) {
+      requestData.checkedOutItemInHouseUseOverride = true;
     }
 
     this.setState({ loading: true });
@@ -720,9 +729,16 @@ export class Scan extends React.Component {
       {
         parameters,
         message,
+        code,
       } = {},
     ] = [],
   }) {
+    if (code === 'CHECKED_OUT_ITEM_IN_HOUSE_USE_REQUIRES_CONFIRMATION') {
+      this.setState({ showInHouseUseConfirmModal: true });
+
+      return;
+    }
+
     const itemError = (parameters?.length)
       ? {
         message,
@@ -795,7 +811,7 @@ export class Scan extends React.Component {
   }
 
   addScannedItem(checkinResp) {
-    const { loan, item, nextRequest, transitItem, holdItem, staffSlipContext, inHouseUse } = checkinResp;
+    const { loan, item, nextRequest, transitItem, holdItem, staffSlipContext, inHouseUse, subsequentCheckIns } = checkinResp;
     const { mutator, resources, intl: { timeZone } } = this.props;
     const { checkedinItem } = this.state;
     const scannedItem = loan || { item };
@@ -817,7 +833,22 @@ export class Scan extends React.Component {
     scannedItem.item.circulationNotes = (checkedinItem || {}).circulationNotes || [];
     scannedItem.staffSlipContext = staffSlipContext;
     scannedItem.inHouseUse = inHouseUse;
-    const scannedItems = [scannedItem].concat(resources.scannedItems);
+
+    let additionalItems = Array.isArray(subsequentCheckIns) ? subsequentCheckIns : [];
+
+    if (additionalItems?.length) {
+      const {
+        checkinDate,
+        checkinTime,
+      } = this.checkInData.item;
+
+      additionalItems = additionalItems.map(checkIn => ({
+        ...checkIn,
+        returnDate: buildDateTime(checkinDate, checkinTime, timeZone, dayjs().tz(timeZone))
+      }));
+    }
+
+    const scannedItems = [scannedItem, ...additionalItems].concat(resources.scannedItems);
 
     return mutator.scannedItems.replace(scannedItems);
   }
@@ -1138,8 +1169,20 @@ export class Scan extends React.Component {
     );
   }
 
+  handleInHouseUseConfirm = async () => {
+    this.setState({ showInHouseUseConfirmModal: false });
+    await this.checkIn(undefined, true);
+  };
+
+  handleInHouseUseCancel = () => {
+    this.setState({ showInHouseUseConfirmModal: false }, () => {
+      this.clearField('item.barcode');
+      setTimeout(this.setFocusInput, 0);
+    });
+  };
+
   onCancel = () => {
-    this.clearForm();
+    this.clearField('item.barcode');
     this.processCheckInDone();
   };
 
@@ -1186,7 +1229,8 @@ export class Scan extends React.Component {
       totalRecords,
       selectedBarcode,
       offset,
-      showActionChoiceModal
+      showActionChoiceModal,
+      showInHouseUseConfirmModal,
     } = this.state;
 
     if (!this.checkinInitialValues) {
@@ -1227,6 +1271,14 @@ export class Scan extends React.Component {
         {itemError && this.renderErrorModal(itemError)}
         {showActionChoiceModal &&
          this.renderActionChoiceModal(itemToBeCheckedIn)}
+        {showInHouseUseConfirmModal && (
+          <InHouseUseConfirmModal
+            open={showInHouseUseConfirmModal}
+            confirmButtonRef={this.inHouseUseConfirmButtonRef}
+            onConfirm={this.handleInHouseUseConfirm}
+            onCancel={this.handleInHouseUseCancel}
+          />
+        )}
 
         <CheckIn
           loading={loading}

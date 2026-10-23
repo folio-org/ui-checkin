@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { get } from 'lodash';
 
 import {
@@ -13,6 +13,24 @@ import { effectiveCallNumber } from '@folio/stripes/util';
 import ReturnedTime from './components/ReturnedTime';
 
 import css from './CheckedInListItems.css';
+
+export const InHouseUseCell = ({ inHouseUse }) => {
+  const { formatMessage } = useIntl();
+  const ariaLabel = formatMessage({
+    id: inHouseUse ? 'ui-checkin.inHouseUse.yes' : 'ui-checkin.inHouseUse.no',
+  });
+
+  return (
+    <span aria-label={ariaLabel}>
+      <span aria-hidden="true">
+        {inHouseUse
+          ? <Icon icon="house" iconClassName={css.houseIcon} />
+          : <NoValue />
+        }
+      </span>
+    </span>
+  );
+};
 
 export const COLUMNS_NAME = {
   TIME_RETURNED: 'timeReturned',
@@ -73,14 +91,9 @@ export const getItemListFormatter = (mutator, renderActions) => ({
   },
   [COLUMNS_NAME.BARCODE]: (loan) => `${get(loan, ['item', 'barcode'])}`,
   [COLUMNS_NAME.LOCATION]: (loan) => `${get(loan, ['item', 'location', 'name'])}`,
-  [COLUMNS_NAME.IN_HOUSE_USE]: loan => {
-    return get(loan, 'inHouseUse') ?
-      <Icon
-        icon="house"
-        iconClassName={css.houseIcon}
-      /> :
-      <NoValue />;
-  },
+  [COLUMNS_NAME.IN_HOUSE_USE]: loan => (
+    <InHouseUseCell inHouseUse={get(loan, 'inHouseUse')} />
+  ),
   [COLUMNS_NAME.STATUS]: (loan) => {
     const status = `${get(loan, ['item', 'status', 'name'])}`;
     const inTransitSp = get(loan, ['item', 'inTransitDestinationServicePoint', 'name']);
