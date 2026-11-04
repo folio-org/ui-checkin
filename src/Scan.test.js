@@ -644,6 +644,8 @@ describe('Scan', () => {
 
           it('should add primary item and all subsequentCheckIns to scannedItems', () => {
             const expectedArgument = [
+              { ...subsequentItem1, returnDate: checkInDate },
+              { ...subsequentItem2, returnDate: checkInDate },
               {
                 ...requestDataWithSubsequent.loan,
                 loanId: requestDataWithSubsequent.loan.id,
@@ -653,8 +655,6 @@ describe('Scan', () => {
                 staffSlipContext: requestDataWithSubsequent.staffSlipContext,
                 inHouseUse: requestDataWithSubsequent.inHouseUse,
               },
-              { ...subsequentItem1, returnDate: checkInDate },
-              { ...subsequentItem2, returnDate: checkInDate },
               ...basicProps.resources.scannedItems,
             ];
 

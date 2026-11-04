@@ -5,6 +5,7 @@
 * Improve focus positioning and restoration for better usability. Refs UICHKIN-510.
 * Remove Item details option from Central tenant Check in menu. Refs UICHKIN-513.
 * Add In-house Use Option to Check in Interface. Refs UICHKIN-515.
+* Add In-house Use Option to Check in Interface. Refs UICHKIN-516.
 
 ## [12.0.0] (https://github.com/folio-org/ui-checkin/tree/v12.0.0) (2026-04-16)
 [Full Changelog](https://github.com/folio-org/ui-checkin/compare/v11.0.3...v12.0.0)
