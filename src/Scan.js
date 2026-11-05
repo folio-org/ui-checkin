@@ -848,7 +848,7 @@ export class Scan extends React.Component {
       }));
     }
 
-    const scannedItems = [scannedItem, ...additionalItems].concat(resources.scannedItems);
+    const scannedItems = [...additionalItems, scannedItem].concat(resources.scannedItems);
 
     return mutator.scannedItems.replace(scannedItems);
   }
