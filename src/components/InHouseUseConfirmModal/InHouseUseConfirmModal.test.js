@@ -14,24 +14,28 @@ import InHouseUseConfirmModal from './InHouseUseConfirmModal';
 const labelIds = {
   title: 'ui-checkin.inHouseUseConfirmModal.title',
   message: 'ui-checkin.inHouseUseConfirmModal.message',
-  checkIn: 'ui-checkin.inHouseUseConfirmModal.checkIn',
+  checkInForInHouseUse: 'ui-checkin.inHouseUseConfirmModal.checkInForInHouseUse',
+  checkInOnly: 'ui-checkin.inHouseUseConfirmModal.checkInOnly',
   cancel: 'ui-checkin.inHouseUseConfirmModal.cancel',
 };
 
 const testIds = {
   modal: 'inHouseUseConfirmModal',
   confirmButton: 'inHouseUseConfirmButton',
+  checkInOnlyButton: 'inHouseUseCheckInOnlyButton',
   cancelButton: 'inHouseUseCancelButton',
 };
 
 describe('InHouseUseConfirmModal', () => {
   const onConfirm = jest.fn();
+  const onCheckInOnly = jest.fn();
   const onCancel = jest.fn();
   const confirmButtonRef = { current: { focus: jest.fn() } };
 
   const defaultProps = {
     open: true,
     onConfirm,
+    onCheckInOnly,
     onCancel,
     confirmButtonRef,
   };
@@ -62,7 +66,15 @@ describe('InHouseUseConfirmModal', () => {
     });
 
     it('renders the confirm button label', () => {
-      expect(screen.getByText(labelIds.checkIn)).toBeInTheDocument();
+      expect(screen.getByText(labelIds.checkInForInHouseUse)).toBeInTheDocument();
+    });
+
+    it('renders the check in only button', () => {
+      expect(screen.getByTestId(testIds.checkInOnlyButton)).toBeInTheDocument();
+    });
+
+    it('renders the check in only button label', () => {
+      expect(screen.getByText(labelIds.checkInOnly)).toBeInTheDocument();
     });
 
     it('renders the cancel button', () => {
@@ -97,6 +109,16 @@ describe('InHouseUseConfirmModal', () => {
       );
     });
 
+    it('calls check in only "Button" with correct props', () => {
+      expect(Button).toHaveBeenCalledWith(
+        expect.objectContaining({
+          'data-testid': testIds.checkInOnlyButton,
+          onClick: onCheckInOnly,
+        }),
+        {}
+      );
+    });
+
     it('calls cancel "Button" with correct props', () => {
       expect(Button).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -111,6 +133,12 @@ describe('InHouseUseConfirmModal', () => {
       fireEvent.click(screen.getByTestId(testIds.confirmButton));
 
       expect(onConfirm).toHaveBeenCalledTimes(1);
+    });
+
+    it('calls "onCheckInOnly" when check in only button is clicked', () => {
+      fireEvent.click(screen.getByTestId(testIds.checkInOnlyButton));
+
+      expect(onCheckInOnly).toHaveBeenCalledTimes(1);
     });
 
     it('calls "onCancel" when cancel button is clicked', () => {

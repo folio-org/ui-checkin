@@ -126,6 +126,7 @@
 
   "inHouseUseConfirmModal.title": "Confirm in-house use",
   "inHouseUseConfirmModal.message": "This item is currently checked out. Are you sure you want to log it for <strong>in-house use</strong>?",
-  "inHouseUseConfirmModal.checkIn": "Check in",
+  "inHouseUseConfirmModal.checkInForInHouseUse": "Check in for in-house use",
+  "inHouseUseConfirmModal.checkInOnly": "Check in only",
   "inHouseUseConfirmModal.cancel": "Cancel"
 }
