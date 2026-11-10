@@ -125,8 +125,8 @@
   "permission.all": "Check in: All permissions",
 
   "inHouseUseConfirmModal.title": "Confirm in-house use",
-  "inHouseUseConfirmModal.message": "This item is currently checked out. Are you sure you want to log it for <strong>in-house use</strong>?",
-  "inHouseUseConfirmModal.checkInForInHouseUse": "Check in for in-house use",
+  "inHouseUseConfirmModal.message": "This item is currently checked out. Do you want to check in only or check in and register an in-house use?",
+  "inHouseUseConfirmModal.checkInForInHouseUse": "Check in and in-house use",
   "inHouseUseConfirmModal.checkInOnly": "Check in only",
   "inHouseUseConfirmModal.cancel": "Cancel"
 }
