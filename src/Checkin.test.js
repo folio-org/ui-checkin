@@ -6,6 +6,8 @@ import {
   waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';
 
+import { checkIfUserInCentralTenant } from '@folio/stripes/core';
+
 import CheckedInListItems from './components/CheckedInListItems';
 import {
   getCheckinSettings,
@@ -185,7 +187,7 @@ describe('CheckIn', () => {
         expect(enterButton).toBeDisabled();
       });
 
-      it('should render in-house use checkbox', () => {
+      it('should render in-house use checkbox when user is not in central tenant', () => {
         expect(screen.getByText(labelIds.inHouseUseLabel)).toBeInTheDocument();
       });
 
@@ -195,6 +197,26 @@ describe('CheckIn', () => {
         fireEvent.click(showPickersButton);
 
         expect(basicProps.form.change).toHaveBeenCalledTimes(2);
+      });
+    });
+
+    describe('When user is in central tenant', () => {
+      beforeEach(() => {
+        checkIfUserInCentralTenant.mockReturnValue(true);
+
+        render(
+          <CheckIn
+            {...basicProps}
+          />
+        );
+      });
+
+      afterEach(() => {
+        checkIfUserInCentralTenant.mockReset();
+      });
+
+      it('should not render in-house use checkbox', () => {
+        expect(screen.queryByText(labelIds.inHouseUseLabel)).not.toBeInTheDocument();
       });
     });
 
