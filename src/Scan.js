@@ -463,7 +463,7 @@ export class Scan extends React.Component {
     this.setFocusInput();
   };
 
-  checkIn = async (explicitAction, checkedOutItemInHouseUseOverride = false) => {
+  checkIn = async (explicitAction, checkedOutItemInHouseUseOverride = false, inHouseUseOverride = undefined) => {
     if (this.state.loading) return undefined;
 
     const data = this.checkInData;
@@ -515,7 +515,7 @@ export class Scan extends React.Component {
       servicePointId,
       checkInDate,
       itemBarcode: barcode,
-      inHouseUse: !!inHouseUse,
+      inHouseUse: inHouseUseOverride !== undefined ? inHouseUseOverride : !!inHouseUse,
     };
 
     // For items that have the status 'Claimed returned', the claimedReturnedResolution
@@ -1174,6 +1174,11 @@ export class Scan extends React.Component {
     await this.checkIn(undefined, true);
   };
 
+  handleCheckInOnly = async () => {
+    this.setState({ showInHouseUseConfirmModal: false });
+    await this.checkIn(undefined, false, false);
+  };
+
   handleInHouseUseCancel = () => {
     this.setState({ showInHouseUseConfirmModal: false }, () => {
       this.clearField('item.barcode');
@@ -1276,6 +1281,7 @@ export class Scan extends React.Component {
             open={showInHouseUseConfirmModal}
             confirmButtonRef={this.inHouseUseConfirmButtonRef}
             onConfirm={this.handleInHouseUseConfirm}
+            onCheckInOnly={this.handleCheckInOnly}
             onCancel={this.handleInHouseUseCancel}
           />
         )}

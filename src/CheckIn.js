@@ -516,6 +516,7 @@ class CheckIn extends React.Component {
       form,
       scannedItems,
       pristine,
+      stripes,
       barcodeRef,
       loading,
     } = this.props;
@@ -581,15 +582,17 @@ class CheckIn extends React.Component {
                   </Layout>
                 </Col>
                 <Col sm={2}>
-                  <Layout className="marginTopLabelSpacer">
-                    <Field
-                      id="inHouseUseCheckbox"
-                      name="item.inHouseUse"
-                      component={Checkbox}
-                      type="checkbox"
-                      label={<FormattedMessage id="ui-checkin.inHouseUse" />}
-                    />
-                  </Layout>
+                  { !checkIfUserInCentralTenant(stripes) &&
+                    <Layout className="marginTopLabelSpacer">
+                      <Field
+                        id="inHouseUseCheckbox"
+                        name="item.inHouseUse"
+                        component={Checkbox}
+                        type="checkbox"
+                        label={<FormattedMessage id="ui-checkin.inHouseUse" />}
+                      />
+                    </Layout>
+                  }
                 </Col>
                 {/* <CheckinDateTime> provides two sm={2} columns for a total width of 4 */}
                 <CheckinDateTime

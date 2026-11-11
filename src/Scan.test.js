@@ -144,6 +144,7 @@ const testIds = {
   selectItemButton: 'selectItemButton',
   inHouseUseConfirmModal: 'inHouseUseConfirmModal',
   inHouseUseConfirmButton: 'inHouseUseConfirmButton',
+  inHouseUseCheckInOnlyButton: 'inHouseUseCheckInOnlyButton',
   inHouseUseCancelButton: 'inHouseUseCancelButton',
 };
 const labelIds = {
@@ -333,11 +334,15 @@ jest.mock('./util', () => ({
 jest.spyOn(React, 'createRef').mockReturnValue(createRefMock);
 jest.mock('./components/InHouseUseConfirmModal', () => jest.fn(({
   onConfirm,
+  onCheckInOnly,
   onCancel,
 }) => (
   <div data-testid="inHouseUseConfirmModal">
     <button type="button" data-testid="inHouseUseConfirmButton" onClick={onConfirm}>
       Confirm
+    </button>
+    <button type="button" data-testid="inHouseUseCheckInOnlyButton" onClick={onCheckInOnly}>
+      Check in only
     </button>
     <button type="button" data-testid="inHouseUseCancelButton" onClick={onCancel}>
       Cancel
@@ -1352,6 +1357,55 @@ describe('Scan', () => {
 
           await waitFor(() => {
             expect(createRefMock.current.focus).toHaveBeenCalled();
+          });
+        });
+
+        it('should close the modal when check in only is clicked', async () => {
+          basicProps.mutator.checkIn.POST.mockResolvedValue({ item: { id: 'itemId' } });
+          basicProps.mutator.requests.GET.mockResolvedValue([]);
+
+          await waitFor(() => {
+            expect(screen.getByTestId(testIds.inHouseUseConfirmModal)).toBeInTheDocument();
+          });
+
+          fireEvent.click(screen.getByTestId(testIds.inHouseUseCheckInOnlyButton));
+
+          await waitFor(() => {
+            expect(screen.queryByTestId(testIds.inHouseUseConfirmModal)).not.toBeInTheDocument();
+          });
+        });
+
+        it('should re-submit with inHouseUse: false when check in only is clicked', async () => {
+          basicProps.mutator.checkIn.POST.mockResolvedValue({ item: { id: 'itemId' } });
+          basicProps.mutator.requests.GET.mockResolvedValue([]);
+
+          await waitFor(() => {
+            expect(screen.getByTestId(testIds.inHouseUseConfirmModal)).toBeInTheDocument();
+          });
+
+          fireEvent.click(screen.getByTestId(testIds.inHouseUseCheckInOnlyButton));
+
+          await waitFor(() => {
+            expect(basicProps.mutator.checkIn.POST).toHaveBeenLastCalledWith(
+              expect.objectContaining({ inHouseUse: false })
+            );
+          });
+        });
+
+        it('should not include checkedOutItemInHouseUseOverride when check in only is clicked', async () => {
+          basicProps.mutator.checkIn.POST.mockResolvedValue({ item: { id: 'itemId' } });
+          basicProps.mutator.requests.GET.mockResolvedValue([]);
+
+          await waitFor(() => {
+            expect(screen.getByTestId(testIds.inHouseUseConfirmModal)).toBeInTheDocument();
+          });
+
+          fireEvent.click(screen.getByTestId(testIds.inHouseUseCheckInOnlyButton));
+
+          await waitFor(() => {
+            expect(basicProps.mutator.checkIn.POST).toHaveBeenLastCalledWith(
+              expect.not.objectContaining({ checkedOutItemInHouseUseOverride: true })
+            );
           });
         });
       });
